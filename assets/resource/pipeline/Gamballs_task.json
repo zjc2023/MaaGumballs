@@ -1,0 +1,161 @@
+{
+    "启动游戏": {
+        "recognition": "DirectHit",
+        "action": "StartApp",
+        "package": "com.leiting.gumballs.leiting",
+        "post_delay": 10000,
+        "next": "开始游戏"
+    },
+    "开始游戏": {
+        "recognition": "OCR",
+        "expected": "开始游戏",
+        "action": "Click",
+        "post_wait_freezes": 5000,
+        "next": [
+            "炼金资源",
+            "冈布奥的便签",
+            "伊甸识别"
+        ]
+    },
+    "炼金资源": {
+        "recognition": "OCR",
+        "expected": "炼金资源",
+        "timeout": 1000,
+        "action": "Click",
+        "next": "炼金资源确定",
+        "on_error": "冈布奥的便签"
+    },
+    "炼金资源确定": {
+        "recognition": "OCR",
+        "expected": "确定",
+        "action": "Click",
+        "next": "冈布奥的便签"
+    },
+    "冈布奥的便签": {
+        "recognition": "OCR",
+        "expected": "冈布奥的便签",
+        "action": "DoNothing",
+        "timeout": 1000,
+        "next": "暂时离开",
+        "on_error": "伊甸识别"
+    },
+    "暂时离开": {
+        "recognition": "OCR",
+        "expected": "暂时离开",
+        "action": "Click",
+        "next": "伊甸识别"
+    },
+    "伊甸识别": {
+        "recognition": "TemplateMatch",
+        "template": "大厅伊甸.png",
+        "action": "Click",
+        "next": [
+            "进入战术大厅"
+        ]
+    },
+    "进入战术大厅": {
+        "recognition": "TemplateMatch",
+        "template": "战术大厅.png",
+        "action": "Click",
+        "next": [
+            "签到",
+            "马戏团任务",
+            "炼金招牌",
+            "蜥蜴",
+            "探索荒野",
+            "遗迹挑战",
+            "天空探索"
+        ]
+    },
+    "签到": {
+        "recognition": "TemplateMatch",
+        "template": "每日签到.png",
+        "action": "Click",
+        "next": [
+            "签到确定"
+        ]
+    },
+    "签到确定": {
+        "recognition": "OCR",
+        "expected": "确定",
+        "action": "Click"
+    },
+    "马戏团任务": {
+        "recognition": "TemplateMatch",
+        "template": "马戏团.png",
+        "action": "Click",
+        "next": [
+            "马戏团任务确定"
+        ]
+    },
+    "马戏团任务确定": {
+        "recognition": "OCR",
+        "expected": "确定",
+        "action": "Click"
+    },
+    "炼金招牌": {
+        "recognition": "TemplateMatch",
+        "template": "炼金招牌.png",
+        "action": "Click",
+        "next": [
+            "炼金招牌确定"
+        ]
+    },
+    "炼金招牌确定": {
+        "recognition": "OCR",
+        "expected": "确定",
+        "action": "Click"
+    },
+    "蜥蜴": {
+        "recognition": "TemplateMatch",
+        "template": "蜥蜴.png",
+        "action": "Click",
+        "next": [
+            "蜥蜴确定"
+        ]
+    },
+    "蜥蜴确定": {
+        "recognition": "OCR",
+        "expected": "确定",
+        "action": "Click"
+    },
+    "探索荒野": {
+        "recognition": "TemplateMatch",
+        "template": "探索荒野.png",
+        "action": "Click",
+        "next": [
+            "探索荒野确定"
+        ]
+    },
+    "探索荒野确定": {
+        "recognition": "OCR",
+        "expected": "确定",
+        "action": "Click"
+    },
+    "遗迹挑战": {
+        "recognition": "TemplateMatch",
+        "template": "遗迹挑战.png",
+        "action": "Click",
+        "next": [
+            "遗迹挑战确定"
+        ]
+    },
+    "遗迹挑战确定": {
+        "recognition": "OCR",
+        "expected": "确定",
+        "action": "Click"
+    },
+    "天空探索": {
+        "recognition": "TemplateMatch",
+        "template": "天空探索.png",
+        "action": "Click",
+        "next": [
+            "天空探索确定"
+        ]
+    },
+    "天空探索确定": {
+        "recognition": "OCR",
+        "expected": "确定",
+        "action": "Click"
+    }
+}

@@ -7,5 +7,32 @@
         "custom_recognition": "my_reco_222",
         "action": "Custom",
         "custom_action": "my_action_111"
+    },
+    "点击存储": {
+        "recognition": "OCR",
+        "expected": "存储",
+        "action": "Click",
+        "next": "向下滑动"
+    },
+    "向下滑动": {
+        "action": "Swipe",
+        "begin": [
+            100,
+            500,
+            10,
+            10
+        ],
+        "end": [
+            100,
+            100,
+            10,
+            10
+        ],
+        "next": "点击应用图标"
+    },
+    "点击应用图标": {
+        "recognition": "TemplateMatch",
+        "template": "应用的图标.png",
+        "action": "Click"
     }
 }
