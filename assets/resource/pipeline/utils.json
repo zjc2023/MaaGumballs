@@ -1,0 +1,99 @@
+{
+    "Sub_BackButton": {
+        "is_sub": true,
+        "recognition": "TemplateMatch",
+        "template": [
+            "Utils/BackButton.png"
+        ],
+        "roi": [
+            494,
+            1173,
+            184,
+            75
+        ],
+        "action": "Click"
+    },
+    "Sub_BackText": {
+        "is_sub": true,
+        "recognition": "OCR",
+        "expected": [
+            "返回"
+        ],
+        "roi": [
+            494,
+            1173,
+            184,
+            75
+        ],
+        "action": "Click"
+    },
+    "BackButton": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "Utils/BackButton.png"
+        ],
+        "roi": [
+            494,
+            1173,
+            184,
+            75
+        ],
+        "action": "Click"
+    },
+    "BackText": {
+        "recognition": "OCR",
+        "expected": [
+            "返回"
+        ],
+        "roi": [
+            494,
+            1173,
+            184,
+            75
+        ],
+        "action": "Click"
+    },
+    "BackButton_Twice": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "Utils/BackButton.png"
+        ],
+        "roi": [
+            494,
+            1173,
+            184,
+            75
+        ],
+        "action": "Click",
+        "next": "BackButton"
+    },
+    "BackButton_Third": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "Utils/BackButton.png"
+        ],
+        "roi": [
+            494,
+            1173,
+            184,
+            75
+        ],
+        "action": "Click",
+        "next": "BackButton_Twice"
+    },
+    "Sub_Flip": {
+        "is_sub": true,
+        "recognition": "OCR",
+        "expected": "下一页",
+        "action": "Click"
+    },
+    "Sub_ConfirmButton": {
+        "is_sub": true,
+        "recognition": "OCR",
+        "expected": [
+            "确定",
+            "确认"
+        ],
+        "action": "Click"
+    }
+}

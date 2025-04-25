@@ -1,0 +1,78 @@
+{
+    "Sub_StartUp": {
+        "is_sub": true,
+        "next": [
+            "GumBallsFlag",
+            "StartGame",
+            "Sub_StartGumballs"
+        ]
+    },
+    "Sub_StartGumballs": {
+        "is_sub": true,
+        "action": "StartApp",
+        "package": "com.leiting.gumballs.leiting",
+        "post_delay": 10000,
+        "next": "StartGame"
+    },
+    "RestartGumballs": {
+        "action": "StopApp",
+        "package": "com.leiting.gumballs.leiting",
+        "post_delay": 1000,
+        "next": [
+            "Sub_StartGumballs"
+        ]
+    },
+    "StartGame": {
+        "recognition": "OCR",
+        "expected": [
+            "开始游戏"
+        ],
+        "roi": [
+            220,
+            757,
+            269,
+            43
+        ],
+        "action": "Click",
+        "post_delay": 5000,
+        "timeout": 10000,
+        "on_error": [
+            "RestartGumballs"
+        ],
+        "next": [
+            "Sub_AlchemyReward",
+            "GumBallsFlag"
+        ]
+    },
+    "Sub_AlchemyReward": {
+        "is_sub": true,
+        "recognition": "OCR",
+        "expected": "炼金资源",
+        "roi": [
+            276,
+            331,
+            168,
+            61
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "target": [
+            310,
+            874,
+            101,
+            44
+        ]
+    },
+    "GumBallsFlag": {
+        "recognition": "TemplateMatch",
+        "template": "startUp/Gumballs_WorldMap.png",
+        "roi": [
+            103,
+            463,
+            85,
+            66
+        ],
+        "threshold": 0.8,
+        "action": "DoNothing"
+    }
+}

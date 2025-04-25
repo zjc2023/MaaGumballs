@@ -1,0 +1,416 @@
+{
+    "EntryEden": {
+        "is_sub": true,
+        "recognition": "OCR",
+        "expected": [
+            "伊甸"
+        ],
+        "roi": [
+            22,
+            1228,
+            110,
+            46
+        ],
+        "action": "Click",
+        "next": [
+            "EntryHall"
+        ]
+    },
+    "EntryHall": {
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/EntryHall.png",
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "WildernessExplore",
+            "SendLizards"
+        ]
+    },
+    "DailySweep": {
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/Sweep.png",
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "Sub_DailySweep_Entry",
+            "DailySweep_Start"
+        ]
+    },
+    "Sub_DailySweep_Entry": {
+        "is_sub": true,
+        "recognition": "OCR",
+        "expected": "扫荡计划",
+        "roi": [
+            78,
+            352,
+            147,
+            51
+        ],
+        "action": "Click",
+        "post_delay": 500
+    },
+    "DailySweep_Start": {
+        "recognition": "OCR",
+        "expected": [
+            "扫荡",
+            "开始扫荡"
+        ],
+        "roi": [
+            248,
+            892,
+            210,
+            58
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "DailySweep_Fail",
+            "DailySweep_Finish"
+        ]
+    },
+    "DailySweep_Finish": {
+        "recognition": "OCR",
+        "expected": [
+            "扫荡完成"
+        ],
+        "roi": [
+            279,
+            136,
+            155,
+            42
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "next": [
+            "BackButton_Third"
+        ]
+    },
+    "DailySweep_Fail": {
+        "recognition": "OCR",
+        "expected": "活力不足",
+        "roi": [
+            228,
+            385,
+            270,
+            123
+        ],
+        "post_delay": 200,
+        "next": [
+            "BackButton_Twice"
+        ]
+    },
+    "WildernessExplore": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "dailyTask/WildernessExplore.png"
+        ],
+        "action": "Click",
+        "next": [
+            "WildernessExploring",
+            "WildernessExplore_start"
+        ]
+    },
+    "WildernessExploring": {
+        "recognition": "OCR",
+        "expected": "荒野探索中",
+        "post_delay": 200,
+        "next": "BackButton"
+    },
+    "WildernessExplored": {
+        "recognition": "OCR",
+        "expected": "探索结束",
+        "post_delay": 200,
+        "timeout": 2000,
+        "action": "Click",
+        "target": [
+            360,
+            916,
+            10,
+            10
+        ],
+        "next": [
+            "Sub_Flip",
+            "Sub_ConfirmButton"
+        ]
+    },
+    "WildernessExplore_start": {
+        "recognition": "OCR",
+        "expected": "开始探索",
+        "roi": [
+            270,
+            896,
+            176,
+            56
+        ],
+        "post_delay": 200,
+        "timeout": 2000,
+        "action": "Click",
+        "next": "BackButton"
+    },
+    "SendLizards": {
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/MagicLizard.png",
+        "action": "Click",
+        "next": [
+            "SendLizards_finish",
+            "SendLizards_start"
+        ]
+    },
+    "SendLizards_finish": {
+        "recognition": "OCR",
+        "expected": "距离下次领取",
+        "roi": [
+            217,
+            738,
+            175,
+            33
+        ],
+        "next": "BackButton"
+    },
+    "SendLizards_start": {
+        "recognition": "OCR",
+        "expected": "派遣魔蜥",
+        "roi": [
+            279,
+            880,
+            162,
+            44
+        ],
+        "action": "Click",
+        "next": "BackButton"
+    },
+    "AlchemySignboard": {
+        "recognition": "TemplateMatch",
+        "template": "炼金招牌.png",
+        "action": "Click",
+        "next": [
+            "AlchemySignboard_finish",
+            "AlchemySignboard_Start"
+        ]
+    },
+    "AlchemySignboard_finish": {
+        "recognition": "OCR",
+        "expected": "距离下次领取",
+        "roi": [
+            217,
+            738,
+            175,
+            33
+        ],
+        "next": "BackButton"
+    },
+    "AlchemySignboard_Start": {
+        "recognition": "OCR",
+        "expected": "领取",
+        "roi": [
+            279,
+            880,
+            162,
+            44
+        ],
+        "action": "Click",
+        "next": [
+            "Sub_ConfirmButton",
+            "BackButton"
+        ]
+    },
+    "DailySignIn": {
+        "recognition": "TemplateMatch",
+        "template": "每日签到.png",
+        "action": "Click",
+        "post_delay": 200,
+        "next": [
+            "DailySigned",
+            "DailySignIn_start"
+        ]
+    },
+    "DailySigned": {
+        "recognition": "OCR",
+        "expected": [
+            "可再次签到"
+        ],
+        "roi": [
+            338,
+            213,
+            183,
+            60
+        ],
+        "post_delay": 200,
+        "next": "BackButton"
+    },
+    "DailySignIn_start": {
+        "recognition": "OCR",
+        "expected": [
+            "签到",
+            "签到按钮"
+        ],
+        "roi": [
+            61,
+            1177,
+            144,
+            65
+        ],
+        "post_delay": 500,
+        "action": "Click",
+        "next": [
+            "Sub_ConfirmButton",
+            "BackButton"
+        ]
+    },
+    "SkyExplore": {
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/SkyExplore.png",
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "SkyExplore_Start"
+        ]
+    },
+    "SkyExplore_Start": {
+        "recognition": "OCR",
+        "expected": "自动探索",
+        "post_delay": 500,
+        "action": "Click",
+        "roi": [
+            270,
+            898,
+            140,
+            47
+        ],
+        "next": [
+            "SkyExplore_LackOfEnergy",
+            "SkyExplore_LackOfBox",
+            "SkyExplore_Finish"
+        ]
+    },
+    "SkyExplore_LackOfEnergy": {
+        "recognition": "OCR",
+        "expected": "能量不足",
+        "post_delay": 500,
+        "next": "BackButton"
+    },
+    "SkyExplore_LackOfBox": {
+        "recognition": "OCR",
+        "expected": "天空雷达无法显示更多目标",
+        "post_delay": 500,
+        "next": "BackButton"
+    },
+    "SkyExplore_Finish": {
+        "recognition": "OCR",
+        "expected": "返回",
+        "roi": [
+            494,
+            1173,
+            184,
+            75
+        ],
+        "post_delay": 500,
+        "action": "Click",
+        "next": "BackButton"
+    },
+    "RuinsExplore": {
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/RuinsExplore.png",
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "RuinsExplore_MineCar"
+        ]
+    },
+    "RuinsExplore_MineCar": {
+        "recognition": "OCR",
+        "expected": "遗迹矿车",
+        "roi": [
+            68,
+            352,
+            151,
+            58
+        ],
+        "post_delay": 500,
+        "next": [
+            "RuinsExplore_Resource"
+        ]
+    },
+    "RuinsExplore_Resource": {
+        "recognition": "OCR",
+        "expected": [
+            "资源获取"
+        ],
+        "roi": [
+            36,
+            474,
+            353,
+            255
+        ],
+        "post_delay": 500,
+        "action": "Click",
+        "next": [
+            "RuinsExplore_Nothing",
+            "Sub_RuinsExplore_Rubbish",
+            "RuinsExplore_EntryFight"
+        ]
+    },
+    "RuinsExplore_Nothing": {
+        "recognition": "OCR",
+        "expected": [
+            "当前没有可挑战目标"
+        ],
+        "roi": [
+            137,
+            548,
+            437,
+            70
+        ],
+        "post_delay": 500,
+        "action": "Click",
+        "next": "BackButton_Twice"
+    },
+    "Sub_RuinsExplore_Rubbish": {
+        "is_sub": true,
+        "recognition": "OCR",
+        "expected": [
+            "散落的物资"
+        ],
+        "roi": [
+            58,
+            345,
+            597,
+            248
+        ],
+        "post_delay": 500,
+        "action": "Click"
+    },
+    "RuinsExplore_EntryFight": {
+        "recognition": "OCR",
+        "expected": [
+            "快速挑战"
+        ],
+        "roi": [
+            58,
+            345,
+            597,
+            248
+        ],
+        "post_delay": 500,
+        "action": "Click",
+        "next": "RuinsExplore_Fight"
+    },
+    "RuinsExplore_Fight": {
+        "recognition": "OCR",
+        "expected": [
+            "开始挑战"
+        ],
+        "roi": [
+            252,
+            872,
+            210,
+            60
+        ],
+        "post_delay": 500,
+        "action": "Click",
+        "next": [
+            "Sub_ConfirmButton",
+            "BackButton_Twice"
+        ]
+    }
+}
