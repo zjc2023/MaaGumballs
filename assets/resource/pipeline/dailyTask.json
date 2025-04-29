@@ -1,6 +1,5 @@
 {
     "EntryEden": {
-        "is_sub": true,
         "recognition": "OCR",
         "expected": [
             "伊甸"
@@ -20,17 +19,13 @@
         "recognition": "TemplateMatch",
         "template": "dailyTask/EntryHall.png",
         "action": "Click",
-        "post_delay": 500,
-        "next": [
-            "WildernessExplore",
-            "SendLizards"
-        ]
+        "post_delay": 500
     },
     "DailySweep": {
         "recognition": "TemplateMatch",
         "template": "dailyTask/Sweep.png",
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 1000,
         "next": [
             "Sub_DailySweep_Entry",
             "DailySweep_Start"
@@ -105,6 +100,7 @@
             "dailyTask/WildernessExplore.png"
         ],
         "action": "Click",
+        "post_delay": 1000,
         "next": [
             "WildernessExploring",
             "WildernessExplore_start"
@@ -151,6 +147,7 @@
         "recognition": "TemplateMatch",
         "template": "dailyTask/MagicLizard.png",
         "action": "Click",
+        "post_delay": 1000,
         "next": [
             "SendLizards_finish",
             "SendLizards_start"
@@ -181,8 +178,9 @@
     },
     "AlchemySignboard": {
         "recognition": "TemplateMatch",
-        "template": "炼金招牌.png",
+        "template": "dailyTask/AlchemySignboard.png",
         "action": "Click",
+        "post_delay": 1000,
         "next": [
             "AlchemySignboard_finish",
             "AlchemySignboard_Start"
@@ -216,9 +214,9 @@
     },
     "DailySignIn": {
         "recognition": "TemplateMatch",
-        "template": "每日签到.png",
+        "template": "dailyTask/SignIn.png",
         "action": "Click",
-        "post_delay": 200,
+        "post_delay": 1000,
         "next": [
             "DailySigned",
             "DailySignIn_start"
@@ -261,7 +259,7 @@
         "recognition": "TemplateMatch",
         "template": "dailyTask/SkyExplore.png",
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 500,
         "next": [
             "SkyExplore_Start"
         ]
@@ -269,7 +267,7 @@
     "SkyExplore_Start": {
         "recognition": "OCR",
         "expected": "自动探索",
-        "post_delay": 500,
+        "post_delay": 200,
         "action": "Click",
         "roi": [
             270,
@@ -291,7 +289,13 @@
     },
     "SkyExplore_LackOfBox": {
         "recognition": "OCR",
-        "expected": "天空雷达无法显示更多目标",
+        "expected": "无法显示更多目标",
+        "roi": [
+            96,
+            350,
+            533,
+            113
+        ],
         "post_delay": 500,
         "next": "BackButton"
     },
@@ -326,6 +330,7 @@
             151,
             58
         ],
+        "action": "Click",
         "post_delay": 500,
         "next": [
             "RuinsExplore_Resource"
