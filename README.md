@@ -5,7 +5,7 @@
 
 <div align="center">
 
-# MaaPracticeBoilerplate
+# MaaGumballs
 
 </div>
 
@@ -26,7 +26,7 @@
 1. 完整克隆本项目及子项目（地址请修改为您基于本模板创建的新项目地址）。
 
     ```bash
-    git clone --recursive https://github.com/MaaXYZ/MaaPracticeBoilerplate.git
+    git clone --recursive https://github.com/KhazixW2/MaaGumballs.git
     ```
 
     **请注意，一定要完整克隆子项目，不要漏了 `--recursive`，也不要下载 zip 包！**  
@@ -88,14 +88,6 @@
 
 7. 更多操作，请参考[个性化配置](./docs/zh_cn/个性化配置.md)（可选）
 
-## 生态共建
-
-MAA 正计划建设为一类项目，而非舟的单一软件。
-
-若您的项目依赖于 MaaFramework，我们欢迎您将它命名为 MaaXXX, MXA, MAX 等等。当然，这是许可而不是限制，您也可以自由选择其他与 MAA 无关的名字，完全取决于您自己的想法！
-
-同时，我们也非常欢迎您提出 PR，在 [最佳实践列表](https://github.com/MaaXYZ/MaaFramework#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5) 中添加上您的项目！
-
 ## FAQ
 
 ### 1. 我是第一次使用 Python，在命令行输入 `python ./configure.py` 或 `python -m pip install MaaFW` 之后没有反应？没有报错，也没有提示成功，什么都没有
@@ -136,4 +128,4 @@ Win10 或者 Win11 系统自带了一份 "Python"，但它其实只是一个安�
 
 感谢以下开发者对本项目作出的贡献（下面链接改成你自己的项目地址）:
 
-[![Contributors](https://contrib.rocks/image?repo=MaaXYZ/MaaFramework&max=1000)](https://github.com/MaaXYZ/MaaFramework/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=KhazixW2/MaaGumballs)](https://github.com/KhazixW2/MaaGumballs/graphs/contributors)
