@@ -1,9 +1,36 @@
 {
+    "controller": [
+        {
+            "name": "桌面端",
+            "type": "Win32",
+            "win32": {
+                "class_regex": ".*",
+                "window_regex": "Visual Studio"
+            }
+        }
+    ],
+    "resource": [
+        {
+            "name": "官服",
+            "path": [
+                "{PROJECT_DIR}/resource"
+            ]
+        }
+    ],
     "agent": {
         "child_exec": "python",
         "child_args": [
             "{PROJECT_DIR}/agent/main.py"
         ]
     },
-    "task": []
+    "task": [
+        {
+            "name": "启动游戏",
+            "entry": "Sub_StartUp"
+        },
+        {
+            "name": "每日收菜",
+            "entry": "EntryEden"
+        }
+    ]
 }
