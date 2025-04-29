@@ -10,6 +10,7 @@ from maa.define import TaskDetail
 from maa.resource import Resource
 from maa.tasker import Tasker
 from maa.toolkit import Toolkit
+import os
 
 
 resource = Resource()
@@ -33,7 +34,10 @@ class MaaWorker:
         self.send_log("MAA初始化成功")
 
         # 启动日志消费者线程
-        self.log_file = "logs.txt"
+        log_dir = "logs"
+        os.makedirs(log_dir, exist_ok=True)
+        current_time = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+        self.log_file = os.path.join(log_dir, f"logs_{current_time}.txt")
         self.log_thread = Thread(target=lambda: self.log_consumer_to_screen_and_file(self.log_file))
         self.log_thread.start()
 
