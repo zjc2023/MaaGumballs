@@ -10,6 +10,7 @@ from maa.define import TaskDetail
 from maa.resource import Resource
 from maa.tasker import Tasker
 from maa.toolkit import Toolkit
+from maa.context import Context
 import os
 
 
@@ -28,6 +29,7 @@ class MaaWorker:
         self.queue = queue
         self.tasker = Tasker()
         self.connected = False
+        self.context = Context
         # self.ai_resolver = AIResolver(api_key=api_key)
         self.stop_flag = False
         self.pause_flag = False
@@ -157,8 +159,9 @@ class MaaWorker:
         self.send_log("每日任务完成")
         time.sleep(0.5)
 
-if __name__ == "__main__":
-    
+
+
+def mainFunc():
     worker = MaaWorker(SimpleQueue(), "123456")
     adb_devices = worker.get_device()
 
@@ -182,3 +185,93 @@ if __name__ == "__main__":
     worker.queue.put("STOP")  # 向队列发送停止信号
     worker.log_thread.join()  # 等待线程结束
     # worker.send_log("日志线程已退出")
+
+
+def calCoordinate():
+    start_x, start_y = 15, 220
+    width, height = 135, 125
+    cols, rows = 5, 6
+
+    roi_list = []
+
+    for r in range(rows):
+        for c in range(cols):
+            x = start_x + c * width
+            y = start_y + r * height
+            roi = [x, y, width, height]
+            roi_list.append(roi)
+
+    return roi_list
+
+
+def testFunc():
+    worker = MaaWorker(SimpleQueue(), "123456")
+    adb_devices = worker.get_device()
+
+    if not adb_devices:
+        print("没有找到可用设备，请检查终端日志")
+        worker.send_log("没有找到可用设备，请检查终端日志")
+    else:
+        print("找到可用设备：")
+        for device in adb_devices:
+            if worker.connect_device(device):
+                break
+    roi_list = calCoordinate()
+    # 启动游戏
+    for roi in roi_list:
+        # 调用 override_pipeline 方法
+        worker.context.override_pipeline({"DetectWhiteTile": {"roi": [1, 1, 114, 514]}})
+        print(f"格子({roi[0]},{roi[1]}): ROI = {roi}")
+        # worker.tasker.post_task("DetectWhiteTile", pipeline_json=pipeline_override).wait()
+        time.sleep(0.5)
+
+    # 停止日志消费者线程
+    worker.queue.put("STOP")  # 向队列发送停止信号
+    worker.log_thread.join()  # 等待线程结束
+    # worker.send_log("日志线程已退出")
+    
+if __name__ == "__main__":
+    testFunc()
+
+
+
+"""
+计算结果说明：
+
+格子1: ROI = [15, 220, 135, 125]    # 第一行第一列
+格子2: ROI = [150, 220, 135, 125]   # 第一行第二列
+格子3: ROI = [285, 220, 135, 125]   # 第一行第三列
+格子4: ROI = [420, 220, 135, 125]   # 第一行第四列
+格子5: ROI = [555, 220, 135, 125]   # 第一行第五列
+
+格子6: ROI = [15, 345, 135, 125]    # 第二行第一列
+格子7: ROI = [150, 345, 135, 125]
+格子8: ROI = [285, 345, 135, 125]
+格子9: ROI = [420, 345, 135, 125]
+格子10: ROI = [555, 345, 135, 125]
+
+格子11: ROI = [15, 470, 135, 125]   # 第三行第一列
+格子12: ROI = [150, 470, 135, 125]
+格子13: ROI = [285, 470, 135, 125]
+格子14: ROI = [420, 470, 135, 125]
+格子15: ROI = [555, 470, 135, 125]
+
+格子16: ROI = [15, 595, 135, 125]   # 第四行第一列
+格子17: ROI = [150, 595, 135, 125]
+格子18: ROI = [285, 595, 135, 125]
+格子19: ROI = [420, 595, 135, 125]
+格子20: ROI = [555, 595, 135, 125]
+
+格子21: ROI = [15, 720, 135, 125]   # 第五行第一列
+格子22: ROI = [150, 720, 135, 125]
+格子23: ROI = [285, 720, 135, 125]
+格子24: ROI = [420, 720, 135, 125]
+格子25: ROI = [555, 720, 135, 125]
+
+格子26: ROI = [15, 845, 135, 125]   # 第六行第一列
+格子27: ROI = [150, 845, 135, 125]
+格子28: ROI = [285, 845, 135, 125]
+格子29: ROI = [420, 845, 135, 125]
+格子30: ROI = [555, 845, 135, 125]
+
+"""

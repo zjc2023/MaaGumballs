@@ -1,0 +1,31 @@
+{
+    "MonsterLayerStart": {
+        "action": "DoNothing",
+        "next": [
+            "DetectWhiteTile"
+        ]
+    },
+    "DetectWhiteTile": {
+        "recognition": "ColorMatch",
+        "method": 40,
+        "lower": [
+            0,
+            0,
+            150
+        ],
+        "upper": [
+            40,
+            60,
+            255
+        ],
+        "count": 300,
+        "order_by": "Score",
+        "index": 0,
+        "action": "Click",
+        "pre_delay": 80,
+        "post_delay": 120,
+        "next": [
+            "MonsterLayerStart"
+        ]
+    }
+}

@@ -1,0 +1,89 @@
+{
+    "MonsterLayerStart": {
+        "action": "DoNothing",
+        "next": [
+            "ClickWhiteTile",
+            "ClickDoor"
+        ]
+    },
+    "ClickWhiteTile": {
+        "recognition": "TemplateMatch",
+        "template": "white_tile",
+        "action": "Click",
+        "pre_delay": 100,
+        "post_delay": 200,
+        "next": [
+            "DetectMonster",
+            "DetectKey",
+            "MonsterLayerStart"
+        ]
+    },
+    "DetectWhiteTile": {
+        "recognition": "ColorMatch",
+        "method": 40,
+        "lower": [
+            0,
+            0,
+            150
+        ],
+        "upper": [
+            40,
+            60,
+            255
+        ],
+        "count": 300,
+        "order_by": "Score",
+        "index": 0,
+        "action": "Click",
+        "pre_delay": 80,
+        "post_delay": 120,
+        "next": [
+            "DetectMonster",
+            "DetectKey",
+            "MonsterLayerStart"
+        ]
+    },
+    "DetectMonster": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "melee_monster",
+            "ranged_monster"
+        ],
+        "threshold": 0.6,
+        "action": "Click",
+        "target": true,
+        "pre_delay": 100,
+        "post_delay": 200,
+        "next": [
+            "AttackMonster",
+            "MonsterLayerStart"
+        ],
+        "is_sub": true
+    },
+    "AttackMonster": {
+        "action": "Click",
+        "target": "DetectMonster",
+        "post_delay": 1200,
+        "next": [
+            "MonsterLayerStart"
+        ]
+    },
+    "DetectKey": {
+        "recognition": "TemplateMatch",
+        "template": "key_icon",
+        "action": "Click",
+        "pre_delay": 100,
+        "post_delay": 200,
+        "next": [
+            "MonsterLayerStart"
+        ]
+    },
+    "ClickDoor": {
+        "recognition": "TemplateMatch",
+        "template": "door_lock",
+        "action": "Click",
+        "pre_delay": 100,
+        "post_delay": 500,
+        "next": []
+    }
+}
