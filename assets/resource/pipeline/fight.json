@@ -5,27 +5,127 @@
             "DetectWhiteTile"
         ]
     },
+    "CheckDoor": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/openedDoor.png",
+            "fight/openedDoor1.png"
+        ],
+        "action": "Click",
+        "threshold": 0.90,
+        "timeout": 200
+    },
     "DetectWhiteTile": {
         "recognition": "ColorMatch",
-        "method": 40,
+        "roi": [
+            157,
+            736,
+            136,
+            117
+        ],
+        "method": 4,
         "lower": [
-            0,
-            0,
-            150
+            130,
+            135,
+            143
         ],
         "upper": [
-            40,
-            60,
-            255
+            170,
+            175,
+            183
         ],
-        "count": 300,
-        "order_by": "Score",
-        "index": 0,
         "action": "Click",
+        "target_offset": [
+            0,
+            0,
+            65,
+            -65
+        ],
+        "count": 50,
         "pre_delay": 80,
         "post_delay": 120,
-        "next": [
-            "MonsterLayerStart"
+        "inverse": true,
+        "timeout": 50,
+        "next": []
+    },
+    "checkMonster": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            21,
+            217,
+            682,
+            762
+        ],
+        "template": [
+            "monster/m1.png",
+            "monster/m2.png",
+            "monster/m3.png",
+            "monster/m4.png",
+            "monster/m5.png"
+        ],
+        "action": "Click",
+        "threshold": 0.6,
+        "timeout": 50
+    },
+    "checkCenterGrid": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "grid/1.png",
+            "grid/2.png",
+            "grid/3.png",
+            "grid/4.png",
+            "grid/5.png",
+            "grid/6.png",
+            "grid/7.png",
+            "grid/8.png"
+        ],
+        "threshold": 0.95,
+        "timeout": 100
+    },
+    "checkEdgeGrid": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "grid/edge1.png",
+            "grid/edge2.png",
+            "grid/edge3.png",
+            "grid/edge4.png",
+            "grid/edge5.png",
+            "grid/edge6.png",
+            "grid/edge7.png",
+            "grid/edge8.png"
+        ],
+        "threshold": 0.95,
+        "timeout": 100
+    },
+    "checkSpecialGrid": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "grid/monster1.png",
+            "grid/special_cell1.png",
+            "grid/special_cell2.png",
+            "grid/special_cell3.png",
+            "grid/special_cell4.png"
+        ],
+        "threshold": 0.95,
+        "timeout": 100
+    },
+    "DetectAreaNode": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            21,
+            217,
+            682,
+            762
+        ],
+        "template": "左下角格子.png",
+        "action": "Click",
+        "threshold": 0.996,
+        "order_by": "Score",
+        "target_offset": [
+            0,
+            0,
+            65,
+            -65
         ]
     }
 }

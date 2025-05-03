@@ -25,7 +25,8 @@
             184,
             75
         ],
-        "action": "Click"
+        "action": "Click",
+        "timeout": 100
     },
     "BackButton": {
         "recognition": "TemplateMatch",
@@ -51,7 +52,8 @@
             184,
             75
         ],
-        "action": "Click"
+        "action": "Click",
+        "timeout": 100
     },
     "BackButton_Twice": {
         "recognition": "TemplateMatch",

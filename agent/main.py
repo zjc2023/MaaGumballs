@@ -1,8 +1,12 @@
 from queue import SimpleQueue
+from collections import deque
 import sys
 from threading import Thread
 import time
 import random
+import cv2
+import numpy as np
+
 
 from maa.controller import AdbController
 from maa.custom_recognition import CustomRecognition
@@ -13,12 +17,15 @@ from maa.toolkit import Toolkit
 from maa.context import Context
 import os
 
+import utils
+
+project_path = os.path.dirname(os.getcwd())
+print(project_path)
+resource_path = os.path.join(project_path, "MaaGumballs","assets", "resource","image")
 
 resource = Resource()
 resource.set_cpu()
 resource.post_bundle("./assets/resource").wait()
-
-
 
 
 class MaaWorker:
@@ -91,7 +98,7 @@ class MaaWorker:
         else:
             self.send_log("设备连接失败，请检查终端日志")
         return self.connected
-    
+
     def task(self, tasks):
         self.stop_flag = False
         if not self.connected:
@@ -100,7 +107,7 @@ class MaaWorker:
         if not tasks:
             self.send_log("没有任务，请检查终端日志")
             return False
-        
+
         for task in tasks:
             if self.stop_flag:
                 self.send_log("任务已停止")
@@ -119,7 +126,7 @@ class MaaWorker:
                 self.send_log(f"未知任务类型：{task}")
         self.send_log("所有任务完成")
         time.sleep(0.5)
-    
+
     def startUpGame(self):
         self.send_log("开始执行启动游戏任务")
         if not self.connected:
@@ -161,6 +168,204 @@ class MaaWorker:
 
 
 
+    def bfs_explore1(self, roi_matrix):
+        rows, cols = len(roi_matrix), len(roi_matrix[0])
+        visited = [[False for _ in range(cols)] for _ in range(rows)]  # 记录是否访问过
+        queue = deque()
+
+        cnt = 10
+        while cnt > 0:
+            cnt -= 1
+            # 初始化队列，将所有偏白色的格子加入队列
+            image = self.tasker.controller.post_screencap().wait().get()
+            # backCheck :TaskDetail =self.tasker.post_task("BackText").wait().get()
+            # if backCheck.nodes:
+            #     self.send_log("close backButton")
+            #     self.tasker.controller.post_click(backCheck.nodes[0].recognition.box.x,
+            #                                         backCheck.nodes[0].recognition.box.y).wait()
+
+            for r in range(rows):
+                for c in range(cols):
+                    x, y, w, h = roi_matrix[r][c]
+                    roi_image = image[y:y + h, x:x + w]
+
+                    # 修正文件名格式
+                                    # 修正文件名格式
+                    file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
+                    cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
+
+                    # 自定义颜色匹配逻辑，仅检测左下角 20x20 的区域
+                    roi_hsv = cv2.cvtColor(roi_image, cv2.COLOR_BGR2HSV)
+                    h, w = roi_image.shape[:2]
+                    # if not r  == rows -1 :
+                    left_bottom_roi = roi_image[h-15:h, w - 20: w]  # 提取左下角 20x20 区域
+
+                    file_name = f"./grid/littleGrid{r + 1}_{c + 1}.png"
+                    cv2.imwrite(file_name, left_bottom_roi)  # 保存当前格子图像用于调试
+                    lower_bound = np.array([130,135,143])  # 偏白色的下界
+                    upper_bound = np.array([170,175,183])  # 偏白色的上界
+                    mask = cv2.inRange(left_bottom_roi, lower_bound, upper_bound)
+                    white_pixel_count = cv2.countNonZero(mask)
+
+                    # 如果白色像素数量超过阈值，则认为匹配到
+                    threshold = 10  # 根据实际情况调整阈值
+                    if white_pixel_count > threshold:
+                        self.send_log(f"格子加入队列: ({r + 1}, {c + 1}), 白色像素数量: {white_pixel_count}")
+                        self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
+                        time.sleep(0.05)
+                        queue.append((r, c))
+                        visited[r][c] = True
+                            # 点击当前格子
+                    # else :
+                    #     # 检测最后一行的格子是否可点击
+                    #     last_row_roi = roi_image[h - 40: h, 0 : w]
+                    #     lower_bound = np.array([70, 70, 70])  # 偏白色的下界
+                    #     upper_bound = np.array([100, 100, 100])  # 偏白色的下界 
+                    #     mask = cv2.inRange(last_row_roi, lower_bound, upper_bound)
+                    #     white_pixel_count = cv2.countNonZero(mask)
+                    #     threshold = 1000  # 根据实际情况调整阈值
+                    #     if white_pixel_count > threshold:
+                    #         self.send_log(f"格子加入队列: ({r + 1}, {c + 1}), 白色像素数量: {white_pixel_count}")
+                    #         self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
+                    #         time.sleep(0.05)
+                    #         queue.append((r, c))
+                    #         visited[r][c] = True
+                    #         # 点击当前格子
+
+            check:TaskDetail = self.tasker.post_task("checkMonster").wait().get()
+            # utils.checkMonster_py(image, roi_matrix)
+            if check.nodes:
+                x, y, w, h = check.nodes[0].recognition.box
+                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
+                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
+                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
+                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()    
+                self.send_log("快速點擊五次") 
+
+        # check 门
+        check:TaskDetail = self.tasker.post_task("CheckDoor").wait().get()
+        if check.nodes:
+            print("check door!!")
+            time.sleep(2)
+
+    def bfs_explore(self, roi_matrix):
+        """
+        使用 BFS 策略探索地图，点击颜色偏白的格子。
+        param:roi_matrix: 6x5 的二维矩阵，包含每个格子的 ROI 信息
+        """
+        rows, cols = len(roi_matrix), len(roi_matrix[0])
+        visited = [[False for _ in range(cols)] for _ in range(rows)]  # 记录是否访问过
+        queue = deque()
+
+        # 定义颜色范围（偏白色）
+        lower_bound = [0, 0, 150]
+        upper_bound = [40, 60, 255]
+        
+        # 初始化队列，将所有偏白色的格子加入队列
+        image = self.tasker.controller.post_screencap().wait().get()
+        for r in range(rows):
+            for c in range(cols):
+                x, y, w, h = roi_matrix[r][c]
+                roi_image = image[y:y + h, x:x + w]
+
+                # 修正文件名格式
+                file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
+                cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
+
+                if utils.color_match(roi_image, lower_bound, upper_bound):
+                    queue.append((r, c))
+                    visited[r][c] = True
+                    self.send_log(f"初始可点击格子加入队列: ({r + 1}, {c + 1})")
+
+        # 定义方向向量（八方向）
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
+
+        # BFS 循环
+        while queue:
+            r, c = queue.popleft()
+            x, y, w, h = roi_matrix[r][c]
+
+            # 点击当前格子
+            self.send_log(f"点击格子: ({r}, {c})")
+            self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
+            time.sleep(0.3)
+
+            # 更新屏幕截图
+            image = self.tasker.controller.post_screencap().wait().get()
+            # 检查周围八个方向的格子
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < rows and 0 <= nc < cols and not visited[nr][nc]:
+                    nx, ny, nw, nh = roi_matrix[nr][nc]
+                    roi_image = image[ny:ny + nh, nx:nx + nw]
+
+                    centerFlag =  (nr == 0 and nc == 0) or (nr == rows - 1 and nc == cols - 1)
+                    newFlag = False
+                    # 检测中心格子是否可点击
+                    
+                    if centerFlag:  ## 中心格子
+                        gridResult: TaskDetail = self.tasker.post_task("checkCenterGrid").wait().get()
+                        if gridResult.nodes:
+                            queue.append((nr, nc))
+                            visited[nr][nc] = True
+                            gridDetail = gridResult.nodes[0].recognition.best_result
+                            self.send_log(f"中心格子加入队列: ({nr + 1}, {nc + 1}), 分数: {gridDetail.score}")
+                            newFlag = True
+                            continue
+                    else:   # 检测边缘格子是否可点击
+                        edgeGridResult: TaskDetail = (
+                            self.tasker.post_task("checkEdgeGrid").wait().get()
+                        )
+                        if edgeGridResult.nodes:
+                            queue.append((nr, nc))
+                            visited[nr][nc] = True
+                            gridDetail = edgeGridResult.nodes[0].recognition.best_result
+                            self.send_log(
+                                f"边缘格子加入队列: ({nr + 1}, {nc + 1}), 分数: {gridDetail.score}"
+                            )
+                            newFlag = True
+                            continue
+
+                    # 检测特殊格子是否可点击
+                    specialGridResult: TaskDetail = self.tasker.post_task("checkSpecialGrid").wait().get()
+                    if specialGridResult.nodes:
+                        queue.append((nr, nc))
+                        visited[nr][nc] = True
+                        gridDetail = specialGridResult.nodes[0].recognition.best_result
+                        self.send_log(f"特殊格子加入队列: ({nr + 1}, {nc + 1}), 分数: {gridDetail.score}")
+                        newFlag = True
+                        continue
+
+                    # 如果检测到偏白色，点击当前格子
+                    if  newFlag:
+                        self.tasker.controller.post_click(nx + nw // 2, ny + nh // 2).wait()
+
+            monster = self.tasker.post_task("checkMonster").wait().get()
+            if monster:
+                # 如果发现怪物，点击当前格子
+                x, y, w, h = roi_matrix[r][c]
+                self.send_log(f"发现怪物，点击格子: ({r + 1}, {c + 1})")
+                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
+                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
+                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
+
+    def clearGrid(self):
+        # 获取当前屏幕截图
+        image = self.tasker.controller.post_screencap().wait().get()
+        # 计算ROI坐标
+        roi_list = utils.calCoordinate()
+        # 将 roi_list 转换为 6x5 的二维矩阵
+        rows, cols = 6, 5
+        roi_matrix = [roi_list[i * cols:(i + 1) * cols] for i in range(rows)]
+
+        self.bfs_explore1(roi_matrix)
+        print("下一轮")
+        self.bfs_explore1(roi_matrix)
+        print("下一轮")        
+        self.bfs_explore1(roi_matrix)
+        print("下一轮")
+
+
 def mainFunc():
     worker = MaaWorker(SimpleQueue(), "123456")
     adb_devices = worker.get_device()
@@ -187,23 +392,6 @@ def mainFunc():
     # worker.send_log("日志线程已退出")
 
 
-def calCoordinate():
-    start_x, start_y = 15, 220
-    width, height = 135, 125
-    cols, rows = 5, 6
-
-    roi_list = []
-
-    for r in range(rows):
-        for c in range(cols):
-            x = start_x + c * width
-            y = start_y + r * height
-            roi = [x, y, width, height]
-            roi_list.append(roi)
-
-    return roi_list
-
-
 def testFunc():
     worker = MaaWorker(SimpleQueue(), "123456")
     adb_devices = worker.get_device()
@@ -216,62 +404,14 @@ def testFunc():
         for device in adb_devices:
             if worker.connect_device(device):
                 break
-    roi_list = calCoordinate()
-    # 启动游戏
-    for roi in roi_list:
-        # 调用 override_pipeline 方法
-        worker.context.override_pipeline({"DetectWhiteTile": {"roi": [1, 1, 114, 514]}})
-        print(f"格子({roi[0]},{roi[1]}): ROI = {roi}")
-        # worker.tasker.post_task("DetectWhiteTile", pipeline_json=pipeline_override).wait()
-        time.sleep(0.5)
+    
+    worker.clearGrid()
+    
 
     # 停止日志消费者线程
     worker.queue.put("STOP")  # 向队列发送停止信号
     worker.log_thread.join()  # 等待线程结束
     # worker.send_log("日志线程已退出")
-    
+
 if __name__ == "__main__":
     testFunc()
-
-
-
-"""
-计算结果说明：
-
-格子1: ROI = [15, 220, 135, 125]    # 第一行第一列
-格子2: ROI = [150, 220, 135, 125]   # 第一行第二列
-格子3: ROI = [285, 220, 135, 125]   # 第一行第三列
-格子4: ROI = [420, 220, 135, 125]   # 第一行第四列
-格子5: ROI = [555, 220, 135, 125]   # 第一行第五列
-
-格子6: ROI = [15, 345, 135, 125]    # 第二行第一列
-格子7: ROI = [150, 345, 135, 125]
-格子8: ROI = [285, 345, 135, 125]
-格子9: ROI = [420, 345, 135, 125]
-格子10: ROI = [555, 345, 135, 125]
-
-格子11: ROI = [15, 470, 135, 125]   # 第三行第一列
-格子12: ROI = [150, 470, 135, 125]
-格子13: ROI = [285, 470, 135, 125]
-格子14: ROI = [420, 470, 135, 125]
-格子15: ROI = [555, 470, 135, 125]
-
-格子16: ROI = [15, 595, 135, 125]   # 第四行第一列
-格子17: ROI = [150, 595, 135, 125]
-格子18: ROI = [285, 595, 135, 125]
-格子19: ROI = [420, 595, 135, 125]
-格子20: ROI = [555, 595, 135, 125]
-
-格子21: ROI = [15, 720, 135, 125]   # 第五行第一列
-格子22: ROI = [150, 720, 135, 125]
-格子23: ROI = [285, 720, 135, 125]
-格子24: ROI = [420, 720, 135, 125]
-格子25: ROI = [555, 720, 135, 125]
-
-格子26: ROI = [15, 845, 135, 125]   # 第六行第一列
-格子27: ROI = [150, 845, 135, 125]
-格子28: ROI = [285, 845, 135, 125]
-格子29: ROI = [420, 845, 135, 125]
-格子30: ROI = [555, 845, 135, 125]
-
-"""
