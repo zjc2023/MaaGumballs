@@ -1,0 +1,154 @@
+{
+    "TL01_Start": {
+        "recognition": "TemplateMatch",
+        "template": "monster/TL01/entry.png",
+        "roi": [
+            333,
+            273,
+            156,
+            690
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 1500,
+        "next": [
+            "TL01_EntryMaze"
+        ],
+        "interrupt": [
+            "TL01_SelectSample"
+        ]
+    },
+    "TL01_SelectSample": {
+        "recognition": "OCR",
+        "expected": "简单模式",
+        "roi": [
+            52,
+            330,
+            621,
+            553
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 200
+    },
+    "TL01_EntryMaze": {
+        "recognition": "OCR",
+        "expected": "进入迷宫",
+        "roi": [
+            173,
+            867,
+            398,
+            87
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 200
+    },
+    "TL01_CheckLayer": {
+        "recognition": "OCR",
+        "recognition_doc": "DetectNumberWithRegex",
+        "expected": "\\d+",
+        "roi": [
+            91,
+            21,
+            233,
+            54
+        ],
+        "action": "DoNothing",
+        "timeout": 100,
+        "post_delay": 200
+    },
+    "TL01_checkMonster": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            21,
+            217,
+            682,
+            762
+        ],
+        "template": [
+            "monster/TL01/m1.png",
+            "monster/TL01/m2.png"
+        ],
+        "action": "Click",
+        "threshold": 0.7,
+        "timeout": 100
+    },
+    "TL01_checkBossMons": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            314,
+            277,
+            94,
+            69
+        ],
+        "template": [
+            "monster/TL01/m3.png"
+        ],
+        "action": "DoNothing",
+        "next": [
+            "TL01_checkClosedDoor"
+        ],
+        "on_error": [
+            "TL01_checkOpenedDoor"
+        ],
+        "timeout": 1500
+    },
+    "TL01_checkOpenedDoor": {
+        "recognition": "TemplateMatch",
+        "template": "monster/TL01/opened_door1.png",
+        "roi": [
+            588,
+            890,
+            89,
+            78
+        ],
+        "pre_delay": 3000,
+        "action": "Click",
+        "post_delay": 500,
+        "next": [],
+        "timeout": 200
+    },
+    "TL01_checkClosedDoor": {
+        "recognition": "TemplateMatch",
+        "template": "monster/TL01/closed_door1.png",
+        "roi": [
+            562,
+            871,
+            136,
+            90
+        ],
+        "action": "DoNothing",
+        "next": [
+            "TL01_AttckBoss"
+        ],
+        "timeout": 1000
+    },
+    "TL01_AttckBoss": {
+        "action": "Click",
+        "target": [
+            242,
+            547,
+            251,
+            186
+        ],
+        "next": [
+            "TL01_checkClosedDoor",
+            "TL01_checkOpenedDoor"
+        ],
+        "post_delay": 200
+    },
+    "TL01_OpenRewardBox": {
+        "recognition": "OCR",
+        "expected": "打开",
+        "roi": [
+            177,
+            433,
+            375,
+            284
+        ],
+        "action": "Click",
+        "timeout": 100,
+        "post_delay": 200
+    }
+}

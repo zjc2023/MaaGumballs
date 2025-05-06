@@ -12,16 +12,16 @@
             "fight/openedDoor1.png"
         ],
         "action": "Click",
-        "threshold": 0.90,
-        "timeout": 200
+        "threshold": 0.7,
+        "timeout": 100
     },
     "DetectWhiteTile": {
         "recognition": "ColorMatch",
         "roi": [
-            157,
-            736,
-            136,
-            117
+            21,
+            217,
+            682,
+            762
         ],
         "method": 4,
         "lower": [
@@ -44,7 +44,7 @@
         "count": 50,
         "pre_delay": 80,
         "post_delay": 120,
-        "inverse": true,
+        "inverse": false,
         "timeout": 50,
         "next": []
     },
@@ -127,5 +127,57 @@
             65,
             -65
         ]
+    },
+    "OCR_HP": {
+        "recognition": "OCR",
+        "roi": "TL01_checkMonster",
+        "roi_offset": [
+            5,
+            5,
+            25,
+            25
+        ],
+        "expected": "\\d+",
+        "threshold": 0.3,
+        "order_by": "Length",
+        "index": 0,
+        "action": "DoNothing",
+        "next": [
+            "OCR_ATK"
+        ]
+    },
+    "OCR_ATK": {
+        "recognition": "OCR",
+        "roi": "DetectCell",
+        "roi_offset": [
+            5,
+            65,
+            25,
+            25
+        ],
+        "expected": "\\d+",
+        "threshold": 0.3,
+        "order_by": "Length",
+        "index": 0,
+        "action": "DoNothing",
+        "next": [
+            "OCR_DEF"
+        ]
+    },
+    "OCR_DEF": {
+        "recognition": "OCR",
+        "roi": "DetectCell",
+        "roi_offset": [
+            65,
+            65,
+            25,
+            25
+        ],
+        "expected": "\\d+",
+        "threshold": 0.8,
+        "order_by": "Length",
+        "index": 0,
+        "action": "DoNothing",
+        "next": []
     }
 }

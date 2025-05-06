@@ -1,3 +1,4 @@
+from math import ceil
 from queue import SimpleQueue
 from collections import deque
 import sys
@@ -6,6 +7,7 @@ import time
 import random
 import cv2
 import numpy as np
+# import my_reco
 
 
 from maa.controller import AdbController
@@ -173,31 +175,31 @@ class MaaWorker:
         visited = [[False for _ in range(cols)] for _ in range(rows)]  # 记录是否访问过
         queue = deque()
 
-        cnt = 10
+        cnt = 15
         while cnt > 0:
             cnt -= 1
             # 初始化队列，将所有偏白色的格子加入队列
             image = self.tasker.controller.post_screencap().wait().get()
-            # backCheck :TaskDetail =self.tasker.post_task("BackText").wait().get()
-            # if backCheck.nodes:
-            #     self.send_log("close backButton")
-            #     self.tasker.controller.post_click(backCheck.nodes[0].recognition.box.x,
-            #                                         backCheck.nodes[0].recognition.box.y).wait()
-
+            '''
+            检查返回按钮，点击返回
+            backCheck :TaskDetail =self.tasker.post_task("BackText").wait().get()
+            if backCheck.nodes:
+                self.send_log("close backButton")
+                self.tasker.controller.post_click(backCheck.nodes[0].recognition.box.x,
+                                                    backCheck.nodes[0].recognition.box.y).wait()
+            '''
             for r in range(rows):
                 for c in range(cols):
                     x, y, w, h = roi_matrix[r][c]
                     roi_image = image[y:y + h, x:x + w]
 
                     # 修正文件名格式
-                                    # 修正文件名格式
                     file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
                     cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
 
                     # 自定义颜色匹配逻辑，仅检测左下角 20x20 的区域
                     roi_hsv = cv2.cvtColor(roi_image, cv2.COLOR_BGR2HSV)
                     h, w = roi_image.shape[:2]
-                    # if not r  == rows -1 :
                     left_bottom_roi = roi_image[h-15:h, w - 20: w]  # 提取左下角 20x20 区域
 
                     file_name = f"./grid/littleGrid{r + 1}_{c + 1}.png"
@@ -215,38 +217,22 @@ class MaaWorker:
                         time.sleep(0.05)
                         queue.append((r, c))
                         visited[r][c] = True
-                            # 点击当前格子
-                    # else :
-                    #     # 检测最后一行的格子是否可点击
-                    #     last_row_roi = roi_image[h - 40: h, 0 : w]
-                    #     lower_bound = np.array([70, 70, 70])  # 偏白色的下界
-                    #     upper_bound = np.array([100, 100, 100])  # 偏白色的下界 
-                    #     mask = cv2.inRange(last_row_roi, lower_bound, upper_bound)
-                    #     white_pixel_count = cv2.countNonZero(mask)
-                    #     threshold = 1000  # 根据实际情况调整阈值
-                    #     if white_pixel_count > threshold:
-                    #         self.send_log(f"格子加入队列: ({r + 1}, {c + 1}), 白色像素数量: {white_pixel_count}")
-                    #         self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                    #         time.sleep(0.05)
-                    #         queue.append((r, c))
-                    #         visited[r][c] = True
-                    #         # 点击当前格子
 
-            check:TaskDetail = self.tasker.post_task("checkMonster").wait().get()
+
+            check:TaskDetail = self.tasker.post_task("TL01_checkMonster").wait().get()
             # utils.checkMonster_py(image, roi_matrix)
             if check.nodes:
-                x, y, w, h = check.nodes[0].recognition.box
-                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()    
-                self.send_log("快速點擊五次") 
+                for node in check.nodes:
+                    x, y, w, h = node.recognition.box
+                    self.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
+                    self.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
+                    self.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
+                    self.send_log("快速點擊三次") 
+                    time.sleep(0.05)
 
-        # check 门
-        check:TaskDetail = self.tasker.post_task("CheckDoor").wait().get()
-        if check.nodes:
-            print("check door!!")
-            time.sleep(2)
+
+            
+
 
     def bfs_explore(self, roi_matrix):
         """
@@ -350,34 +336,62 @@ class MaaWorker:
                 self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
 
     def clearGrid(self):
-        # 获取当前屏幕截图
-        image = self.tasker.controller.post_screencap().wait().get()
         # 计算ROI坐标
         roi_list = utils.calCoordinate()
         # 将 roi_list 转换为 6x5 的二维矩阵
         rows, cols = 6, 5
         roi_matrix = [roi_list[i * cols:(i + 1) * cols] for i in range(rows)]
+        self.send_log("开始探索地图")
+        # self.tasker.post_task("TL01_Start").wait()
 
-        self.bfs_explore1(roi_matrix)
-        print("下一轮")
-        self.bfs_explore1(roi_matrix)
-        print("下一轮")        
-        self.bfs_explore1(roi_matrix)
-        print("下一轮")
+        # 检查当前层数
+        layers = 1
+
+        # 检查当前层数是否小于5层
+        while layers < 5:
+            check:TaskDetail = self.tasker.post_task("TL01_CheckLayer").wait().get()
+            layers = utils.extract_numbers(check.nodes[0].recognition.best_result.text)
+            self.send_log(f"当前层数是 {layers}")
+            self.bfs_explore1(roi_matrix)
+
+            # 检查是否有奖励
+            self.tasker.post_task("TL01_OpenRewardBox").wait()
+            self.send_log(f"第{layers + 1}层探索完成")
+            
+            # check 门
+            check:TaskDetail = self.tasker.post_task("CheckDoor").wait().get()
+            if check.nodes:
+                print("check door!!")
+                time.sleep(3)
+            
+        
+        self.send_log("小怪层探索完成,检测是否存在boos")
+        time.sleep(3)
+        # 检查是否有Boss
+        self.tasker.post_task("TL01_checkBossMons").wait()
+        self.send_log("探索完成，开始领取奖励")
+        self.tasker.post_task("BackButton").wait()
+        self.tasker.post_task("AlchemyReward").wait()
+        
 
 
 def mainFunc():
     worker = MaaWorker(SimpleQueue(), "123456")
     adb_devices = worker.get_device()
-
-    if not adb_devices:
+    print(adb_devices)
+    if not adb_devices.__sizeof__:
         print("没有找到可用设备，请检查终端日志")
         worker.send_log("没有找到可用设备，请检查终端日志")
+        return
     else:
         print("找到可用设备：")
         for device in adb_devices:
             if worker.connect_device(device):
                 break
+            else :
+                print("设备连接失败，请检查终端日志")
+                worker.send_log("设备连接失败，请检查终端日志")
+                return 
     
     # 启动游戏
     worker.startUpGame()
@@ -399,15 +413,20 @@ def testFunc():
     if not adb_devices:
         print("没有找到可用设备，请检查终端日志")
         worker.send_log("没有找到可用设备，请检查终端日志")
+        return
     else:
         print("找到可用设备：")
         for device in adb_devices:
             if worker.connect_device(device):
                 break
-    
+            else :
+                print("设备连接失败，请检查终端日志")
+                worker.send_log("设备连接失败，请检查终端日志")
+                return 
+
+
     worker.clearGrid()
     
-
     # 停止日志消费者线程
     worker.queue.put("STOP")  # 向队列发送停止信号
     worker.log_thread.join()  # 等待线程结束

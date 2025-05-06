@@ -1,6 +1,6 @@
 import cv2
+import re
 import numpy as np
-import pytesseract
 def calCoordinate():
     start_x, start_y = 15, 222
     width, height = 138, 126
@@ -15,6 +15,7 @@ def calCoordinate():
             roi = [x, y, width, height]
             roi_list.append(roi)
 
+    # print (roi_list)
     return roi_list
 
 
@@ -138,3 +139,13 @@ def checkMonster_py(image, roi_matrix):
                 # self.send_log(f"检测到偏白色格子: ({r + 1}, {c + 1})")
                 # self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
                 # time.sleep(0.3)
+
+# 从一个字符串里面识仅识别一串数字, 并返回
+def extract_numbers(input_string):
+    # 使用正则表达式匹配所有的数字
+    numbers = re.findall(r'\d+', input_string)
+    # 如果找到数字，返回第一个数字，否则返回 None, 返回类型为 int
+    if numbers:
+        return int(numbers[0])
+    else:
+        return None
