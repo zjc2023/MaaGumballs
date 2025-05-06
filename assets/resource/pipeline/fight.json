@@ -18,10 +18,10 @@
     "DetectWhiteTile": {
         "recognition": "ColorMatch",
         "roi": [
-            21,
-            217,
-            682,
-            762
+            524,
+            847,
+            101,
+            150
         ],
         "method": 4,
         "lower": [

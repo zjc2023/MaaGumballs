@@ -41,7 +41,7 @@
             87
         ],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 5000,
         "timeout": 200
     },
     "TL01_CheckLayer": {
@@ -142,10 +142,10 @@
         "recognition": "OCR",
         "expected": "打开",
         "roi": [
-            177,
-            433,
-            375,
-            284
+            150,
+            785,
+            426,
+            95
         ],
         "action": "Click",
         "timeout": 100,

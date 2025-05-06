@@ -449,6 +449,7 @@ tools/ImageCropper/**/*.png
 
 config
 debug
+grid
 
 # Log
 logs
