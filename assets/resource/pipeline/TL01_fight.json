@@ -15,7 +15,10 @@
             "TL01_EntryMaze"
         ],
         "interrupt": [
-            "TL01_SelectSample"
+            "TL01_SelectSample",
+            "TL01_BuyPower",
+            "ConfirmButton",
+            "ClickCenter"
         ]
     },
     "TL01_SelectSample": {
@@ -26,6 +29,19 @@
             330,
             621,
             553
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 200
+    },
+    "TL01_BuyPower": {
+        "recognition": "OCR",
+        "expected": "购买",
+        "roi": [
+            151,
+            704,
+            426,
+            73
         ],
         "action": "Click",
         "post_delay": 500,

@@ -98,5 +98,31 @@
             "确认"
         ],
         "action": "Click"
+    },
+    "ConfirmButton": {
+        "recognition": "OCR",
+        "expected": [
+            "确定",
+            "确认"
+        ],
+        "action": "Click",
+        "post_delay": 200,
+        "timeout": 100
+    },
+    "ClickCenter": {
+        "recognition": "OCR",
+        "expected": [
+            "确定",
+            "确认"
+        ],
+        "action": "Click",
+        "target": [
+            237,
+            602,
+            242,
+            149
+        ],
+        "post_delay": 200,
+        "timeout": 100
     }
 }
