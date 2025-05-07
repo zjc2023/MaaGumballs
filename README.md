@@ -65,6 +65,12 @@
 
 5. 更多操作，请参考[个性化配置](./docs/zh_cn/个性化配置.md)（可选）
 
+## 常用工具
+
+1. 调试：[MaaDebugger](https://github.com/MaaXYZ/MaaDebugger) 进行调试json节点.
+2. 截图、取色、取区域: [MFATools](https://github.com/SweetSmellFox/MFATools)
+3. 代码集成环境：[集成开发环境文档](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/2.1-%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
+
 ## Todo（先画饼）
 
 - [x]启动

@@ -126,7 +126,7 @@ class MaaWorker:
                 # self.tasker.post_task(TaskDetail.Store).wait()
             elif task == "活动副本":
                 self.send_log("开始执行限时副本任务")
-                for i in range(1, 32):
+                for i in range(1, 3):
                     # 清除格子
                     self.clearGrid()
                     print(f"完成{i}次探索") 
@@ -179,10 +179,13 @@ class MaaWorker:
 
     def bfs_explore1(self, roi_matrix):
         rows, cols = len(roi_matrix), len(roi_matrix[0])
-
+        FailCheckMonsterCnt = 0
+        checkGridCnt = 0
         cnt = 15
+
         while cnt > 0:
             cnt -= 1
+            checkGridCnt = 0
             # 初始化队列，将所有偏白色的格子加入队列
             image = self.tasker.controller.post_screencap().wait().get()
             for r in range(rows):
@@ -216,10 +219,11 @@ class MaaWorker:
                     
                     if white_pixel_count > threshold or white_pixel_count2 > threshold:
                         self.send_log(f"点开地板: ({r + 1}, {c + 1}), 白色像素数量: {white_pixel_count, white_pixel_count2}")
+                        checkGridCnt += 1
                         self.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
                         time.sleep(0.05)
 
-
+            # 检测怪物并进行攻击
             check:TaskDetail = self.tasker.post_task("TL01_checkMonster").wait().get()
             if check.nodes:
                 for result in check.nodes[0].recognition.all_results:
@@ -231,6 +235,15 @@ class MaaWorker:
                     time.sleep(0.05)
                     self.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
                     time.sleep(0.05)
+            else :
+                FailCheckMonsterCnt += 1
+                self.send_log(f"FailCheckMonsterCnt: {FailCheckMonsterCnt}")
+            
+            # 如果提前清理完该层，那么不需要继续等待，可以提前退出
+            if FailCheckMonsterCnt >= 5 and checkGridCnt == 0:
+                self.send_log("FailCheckMonsterCnt 5 次, 提前退出")
+                break
+        self.send_log("bfs explore finish")
 
     def clearGrid(self):
         # 计算ROI坐标
@@ -265,7 +278,8 @@ class MaaWorker:
             # check 门
             check:TaskDetail = self.tasker.post_task("CheckDoor").wait().get()
             if check.nodes:
-                print("check door!!")
+                self.send_log("check door!!")
+                # 场景切换等待
                 time.sleep(3)
 
             # 检查当前层数
@@ -287,23 +301,20 @@ class MaaWorker:
 def mainFunc(tasks):
     worker = MaaWorker(SimpleQueue(), "123456")
     adb_devices = worker.get_device()
-    print(adb_devices)
     if not adb_devices.__sizeof__:
         print("没有找到可用设备，请检查终端日志")
         worker.send_log("没有找到可用设备，请检查终端日志")
         return
     else:
-        print("找到可用设备：")
         for device in adb_devices:
             if worker.connect_device(device):
+                print("设备连接成功")
+                worker.send_log("设备连接成功")
                 break
             else :
                 print("设备连接失败，请检查终端日志")
                 worker.send_log("设备连接失败，请检查终端日志")
                 return 
-    
-    # 启动游戏
-    worker.startUpGame()
 
     # 启动任务
     worker.task(tasks)
@@ -314,8 +325,9 @@ def mainFunc(tasks):
     worker.send_log("日志线程已退出")
 
 if __name__ == "__main__":
-    tasks = ["启动游戏"]
-    tasks.append("伊甸收菜")
-    # tasks.append("活动副本")
+    tasks = []
+    # tasks.append("启动游戏")
+    # tasks.append("伊甸收菜")
+    tasks.append("活动副本")
     mainFunc(tasks)
     # testFunc()
