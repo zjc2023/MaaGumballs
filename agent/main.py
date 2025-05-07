@@ -117,13 +117,20 @@ class MaaWorker:
 
             if task == "启动游戏":
                 self.send_log("开始执行启动游戏任务")
+                self.startUpGame()
             elif task == "伊甸收菜":
                 self.send_log("开始执行伊甸收菜任务")
                 self.dailyTask()
-                # self.tasker.post_task(TaskDetail.Eden).wait()
             elif task == "商店":
                 self.send_log("开始执行商店任务")
                 # self.tasker.post_task(TaskDetail.Store).wait()
+            elif task == "活动副本":
+                self.send_log("开始执行限时副本任务")
+                for i in range(1, 32):
+                    # 清除格子
+                    self.clearGrid()
+                    print(f"完成{i}次探索") 
+                    time.sleep(3)
             else:
                 self.send_log(f"未知任务类型：{task}")
         self.send_log("所有任务完成")
@@ -165,10 +172,10 @@ class MaaWorker:
             time.sleep(random.randint(3, 4))
             self.send_log(f"执行完成{task}任务")
 
+        self.tasker.post_task("BackButton_Third").wait()
         self.send_log("每日任务完成")
+
         time.sleep(0.5)
-
-
 
     def bfs_explore1(self, roi_matrix):
         rows, cols = len(roi_matrix), len(roi_matrix[0])
@@ -277,8 +284,7 @@ class MaaWorker:
         self.tasker.post_task("AlchemyReward").wait()
         
 
-
-def mainFunc():
+def mainFunc(tasks):
     worker = MaaWorker(SimpleQueue(), "123456")
     adb_devices = worker.get_device()
     print(adb_devices)
@@ -300,43 +306,16 @@ def mainFunc():
     worker.startUpGame()
 
     # 启动任务
-    tasks = ["伊甸收菜"]
     worker.task(tasks)
 
-    # 停止日志消费者线程
-    worker.queue.put("STOP")  # 向队列发送停止信号
-    worker.log_thread.join()  # 等待线程结束
-    # worker.send_log("日志线程已退出")
-
-
-def testFunc():
-    worker = MaaWorker(SimpleQueue(), "123456")
-    adb_devices = worker.get_device()
-
-    if not adb_devices:
-        print("没有找到可用设备，请检查终端日志")
-        worker.send_log("没有找到可用设备，请检查终端日志")
-        return
-    else:
-        print("找到可用设备：")
-        for device in adb_devices:
-            if worker.connect_device(device):
-                break
-            else :
-                print("设备连接失败，请检查终端日志")
-                worker.send_log("设备连接失败，请检查终端日志")
-                return 
-    
-    for i in range(1, 32):
-        # 清除格子
-        worker.clearGrid()
-        print(f"完成{i}次探索") 
-        time.sleep(3)
-    
     # 停止日志消费者线程
     worker.queue.put("STOP")  # 向队列发送停止信号
     worker.log_thread.join()  # 等待线程结束
     worker.send_log("日志线程已退出")
 
 if __name__ == "__main__":
-    testFunc()
+    tasks = ["启动游戏"]
+    tasks.append("伊甸收菜")
+    # tasks.append("活动副本")
+    mainFunc(tasks)
+    # testFunc()

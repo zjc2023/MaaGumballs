@@ -11,7 +11,8 @@
             184,
             75
         ],
-        "action": "Click"
+        "action": "Click",
+        "post_delay": 200
     },
     "Sub_BackText": {
         "is_sub": true,
@@ -26,6 +27,7 @@
             75
         ],
         "action": "Click",
+        "post_delay": 200,
         "timeout": 100
     },
     "BackButton": {
@@ -40,6 +42,7 @@
             75
         ],
         "action": "Click",
+        "post_delay": 200,
         "timeout": 100
     },
     "BackText": {
@@ -54,6 +57,7 @@
             75
         ],
         "action": "Click",
+        "post_delay": 200,
         "timeout": 100
     },
     "BackButton_Twice": {
@@ -68,7 +72,9 @@
             75
         ],
         "action": "Click",
-        "next": "BackButton"
+        "next": "BackButton",
+        "post_delay": 200,
+        "timeout": 100
     },
     "BackButton_Third": {
         "recognition": "TemplateMatch",
@@ -82,7 +88,9 @@
             75
         ],
         "action": "Click",
-        "next": "BackButton_Twice"
+        "next": "BackButton_Twice",
+        "post_delay": 200,
+        "timeout": 100
     },
     "Sub_Flip": {
         "is_sub": true,
