@@ -9,7 +9,6 @@ import cv2
 import numpy as np
 # import my_reco
 
-
 from maa.controller import AdbController
 from maa.custom_recognition import CustomRecognition
 from maa.define import TaskDetail
@@ -21,13 +20,31 @@ import os
 
 import utils
 
-project_path = os.path.dirname(os.getcwd())
-print(project_path)
-resource_path = os.path.join(project_path, "MaaGumballs","assets", "resource","image")
+# 默认编码 utf-8
+sys.stdout.reconfigure(encoding="utf-8")
+# 获取当前main.py所在路径并设置上级目录为工作目录
+current_file_path = os.path.abspath(__file__)
+current_dir = os.path.dirname(current_file_path)
+parent_dir = os.path.dirname(current_dir)
+os.chdir(parent_dir)
+print(f"设置工作目录为: {parent_dir}")
 
+# 将当前目录添加到路径
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
+
+# 获取当前工作目录
 resource = Resource()
 resource.set_cpu()
-resource.post_bundle("./assets/resource").wait()
+resource_path = f"{parent_dir}/resource"
+assets_resource_path = f"{parent_dir}/assets/resource"
+
+# 检查路径是否存在，如果存在再绑定
+if os.path.exists(resource_path):
+    resource.post_bundle(resource_path).wait()
+
+if os.path.exists(assets_resource_path):
+    resource.post_bundle(assets_resource_path).wait()
 
 
 class MaaWorker:
