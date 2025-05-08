@@ -58,7 +58,6 @@ class CheckGrid(CustomAction):
                     cv2.imwrite(leftButtonName, left_bottom_roi)  # 保存当前格子图像用于调试
                     cv2.imwrite(rightButtonName, right_bottom_roi)  # 保存当前格子图像用于调试
 
-                    # 由于 cv2.inRange 实际上可以接受列表作为参数，因此可以直接用列表替代 np.array
                     lower_bound = np.array([130,135,143])  # 偏白色的下界
                     upper_bound = np.array([170,175,183])  # 偏白色的上界
                     mask = cv2.inRange(left_bottom_roi, lower_bound, upper_bound)
