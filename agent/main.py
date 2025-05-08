@@ -1,23 +1,23 @@
-from math import ceil
 from queue import SimpleQueue
 from collections import deque
-import sys
 from threading import Thread
+import numpy as np
+import sys
 import time
 import random
 import cv2
-import numpy as np
-# import my_reco
 
+from maa.agent.agent_server import AgentServer
 from maa.controller import AdbController
-from maa.custom_recognition import CustomRecognition
 from maa.define import TaskDetail
 from maa.resource import Resource
 from maa.tasker import Tasker
 from maa.toolkit import Toolkit
 from maa.context import Context
-import os
 
+from action import CheckGrid
+
+import os
 import utils
 
 # 默认编码 utf-8
@@ -34,6 +34,7 @@ if current_dir not in sys.path:
     sys.path.insert(0, current_dir)
 
 # 获取当前工作目录
+'''
 resource = Resource()
 resource.set_cpu()
 resource_path = f"{parent_dir}/resource"
@@ -45,7 +46,7 @@ if os.path.exists(resource_path):
 
 if os.path.exists(assets_resource_path):
     resource.post_bundle(assets_resource_path).wait()
-
+'''
 
 class MaaWorker:
     def __init__(self, queue: SimpleQueue, api_key):
@@ -210,15 +211,15 @@ class MaaWorker:
                     x, y, w, h = roi_matrix[r][c]
                     roi_image = image[y:y + h, x:x + w]
 
-                    # 修正文件名格式
-                    file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
-                    cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
 
                     # 自定义颜色匹配逻辑，仅检测左下角 20x20 的区域
                     h, w = roi_image.shape[:2]
                     left_bottom_roi = roi_image[h-15:h, 0: 20]  # 提取左下角 20x20 区域
                     right_bottom_roi = roi_image[h-15:h, w - 20: w]  # 提取右下角 20x20 区域
                     
+                    # 修正文件名格式
+                    file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
+                    cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
                     leftButtonName = f"./grid/leftGrid{r + 1}_{c + 1}.png"
                     rightButtonName = f"./grid/rightGrid{r + 1}_{c + 1}.png"
                     cv2.imwrite(leftButtonName, left_bottom_roi)  # 保存当前格子图像用于调试
@@ -342,9 +343,19 @@ def mainFunc(tasks):
     worker.send_log("日志线程已退出")
 
 if __name__ == "__main__":
-    tasks = []
+    Toolkit.init_option("./")
+    if len(sys.argv) > 1:
+        print("使用自定义socket_id: " + sys.argv[-1])
+        socket_id = sys.argv[-1]
+    else:
+        print("使用默认socket_id: MAA_AGENT_SOCKET")
+        socket_id = "MAA_AGENT_SOCKET"
+    AgentServer.start_up(socket_id)
+    AgentServer.join()
+    AgentServer.shut_down()
+
     # tasks.append("启动游戏")
     # tasks.append("伊甸收菜")
-    tasks.append("活动副本")
-    mainFunc(tasks)
+    # tasks.append("活动副本")
+    # mainFunc(tasks)
     # testFunc()

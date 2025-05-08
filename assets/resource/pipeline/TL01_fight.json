@@ -21,6 +21,12 @@
             "ClickCenter"
         ]
     },
+    "TL01_CheckGrid": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 200
+    },
     "TL01_SelectSample": {
         "recognition": "OCR",
         "expected": "简单模式",

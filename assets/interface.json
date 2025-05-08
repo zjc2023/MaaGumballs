@@ -27,8 +27,8 @@
             "entry": "Sub_StartUp"
         },
         {
-            "name": "每日收菜",
-            "entry": "EntryEden"
+            "name": "test1",
+            "entry": "repoTest1"
         }
     ]
 }
