@@ -47,7 +47,7 @@ class CheckGrid(CustomAction):
         if checkMonsterDetail:
             for result in checkMonsterDetail.all_results:
                 x, y, w, h = result.box
-                print(f"快速點擊三次 {x}, {y}, {w}, {h}") 
+                # print(f"Kill the monster {x}, {y}, {w}, {h}") 
                 context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
                 time.sleep(0.05)
                 context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()

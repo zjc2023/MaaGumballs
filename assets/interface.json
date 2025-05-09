@@ -28,13 +28,94 @@
         },
         {
             "name": "TL01_Start",
-            "entry": "TL01_Start",
-            "repeatable": false,
-            "repeat_count": 1
+            "entry": "TL01_Start_Count",
+            "option": [
+                "刷取次数"
+            ]
         },
         {
             "name": "TL01_Fighting",
             "entry": "TL01_Fighting"
+        },
+        {
+            "name": "TL01_Start_Count",
+            "entry": "TL01_Start_Count"
         }
-    ]
+    ],
+    "option": {
+        "刷取次数": {
+            "cases": [
+                {
+                    "name": "1",
+                    "pipeline_override": {
+                        "TL01_Start_Count": {
+                            "custom_action_param": {
+                                "count": 0,
+                                "target_count": 1,
+                                "next_node": [
+                                    "BackButton"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "2",
+                    "pipeline_override": {
+                        "TL01_Start_Count": {
+                            "custom_action_param": {
+                                "count": 0,
+                                "target_count": 2,
+                                "next_node": [
+                                    "BackButton"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "3",
+                    "pipeline_override": {
+                        "TL01_Start_Count": {
+                            "custom_action_param": {
+                                "count": 0,
+                                "target_count": 3,
+                                "next_node": [
+                                    "BackButton"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "4",
+                    "pipeline_override": {
+                        "TL01_Start_Count": {
+                            "custom_action_param": {
+                                "count": 0,
+                                "target_count": 4,
+                                "next_node": [
+                                    "BackButton"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "5",
+                    "pipeline_override": {
+                        "TL01_Start_Count": {
+                            "custom_action_param": {
+                                "count": 0,
+                                "target_count": 5,
+                                "next_node": [
+                                    "BackButton"
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
 }

@@ -17,6 +17,7 @@ from maa.context import Context
 
 from action import CheckGrid
 from action import TL01_Fighting
+from action import Count
 
 import os
 import utils
@@ -28,7 +29,7 @@ current_file_path = os.path.abspath(__file__)
 current_dir = os.path.dirname(current_file_path)
 parent_dir = os.path.dirname(current_dir)
 os.chdir(parent_dir)
-print(f"设置工作目录为: {parent_dir}")
+print(f"set parent_dir : {parent_dir}")
 
 # 将当前目录添加到路径
 if current_dir not in sys.path:
