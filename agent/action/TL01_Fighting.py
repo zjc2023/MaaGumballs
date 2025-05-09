@@ -28,12 +28,12 @@ class TL01_Fighting(CustomAction):
         RunResult = context.run_task("TL01_CheckLayer")
         if RunResult.nodes:
             layers = self.extract_numbers(RunResult.nodes[0].recognition.best_result.text)
-            print(f"current layer {layers}")
+            # print(f"current layer {layers}")
 
         # 检查当前层数是否小于5层
         while layers < 5:
             # 小怪层开始探索
-            print(f"Start Explore {layers} 层")
+            print(f"Start Explore {layers} layer.")
             context.run_task("TL01_clearMonsterLayer")
             time.sleep(3)
             
@@ -41,7 +41,7 @@ class TL01_Fighting(CustomAction):
             RunResult = context.run_task("TL01_CheckLayer")
             if RunResult.nodes:
                 layers = self.extract_numbers(RunResult.nodes[0].recognition.best_result.text)
-                print(f"current layer :{layers}")
+                # print(f"current layer :{layers}")
                 
         
         # print("小怪层探索完成,检测是否存在boos")

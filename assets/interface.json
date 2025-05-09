@@ -114,6 +114,34 @@
                             }
                         }
                     }
+                },
+                {
+                    "name": "10",
+                    "pipeline_override": {
+                        "TL01_Start_Count": {
+                            "custom_action_param": {
+                                "count": 0,
+                                "target_count": 10,
+                                "next_node": [
+                                    "BackButton"
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "20",
+                    "pipeline_override": {
+                        "TL01_Start_Count": {
+                            "custom_action_param": {
+                                "count": 0,
+                                "target_count": 20,
+                                "next_node": [
+                                    "BackButton"
+                                ]
+                            }
+                        }
+                    }
                 }
             ]
         }

@@ -21,7 +21,7 @@ class Count(CustomAction):
                     },
                 }
             )
-            print(f"执行 {argv.get('count')} 次 TL01_Start")
+            print(f"execute {argv.get('count')}  TL01_Start")
             context.run_task("TL01_Start")
         else:
             context.override_pipeline(
@@ -56,7 +56,7 @@ class CountTask(CustomAction):
         target_count = argv.get("target_count")
         print(f"count = {count}, target_count = {target_count}")
         while count < target_count:
-            print(f"excute {count} 次 TL01_Start")
+            print(f"excute {count} TL01_Start")
             context.run_task("TL01_Start")
             count += 1
 
