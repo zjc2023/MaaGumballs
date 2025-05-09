@@ -63,14 +63,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Install Python
-        shell: bash
-        env:
-          TARGET_OS: ${{ matrix.os }}
-        run: |
-          python ./install.py ${{ needs.meta.outputs.tag }}
-
-
       - name: Download MaaFramework
         uses: robinraju/release-downloader@v1
         with:
