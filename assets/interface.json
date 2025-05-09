@@ -28,7 +28,9 @@
         },
         {
             "name": "TL01_Start",
-            "entry": "TL01_Start"
+            "entry": "TL01_Start",
+            "repeatable": false,
+            "repeat_count": 1
         },
         {
             "name": "TL01_Fighting",
