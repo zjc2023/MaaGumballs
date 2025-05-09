@@ -68,6 +68,16 @@ jobs:
         run: |
           python ./install.py ${{ needs.meta.outputs.tag }}
 
+      - name: Download MaaFramework
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: MaaXYZ/MaaFramework
+          fileName: "MAA-${{ matrix.os }}-${{ matrix.arch }}*"
+          latest: true
+          preRelease: false
+          out-file-path: "deps"
+          extract: true
+
       - name: Download MFA
         if: ${{ matrix.os != 'android' }}
         uses: robinraju/release-downloader@v1
