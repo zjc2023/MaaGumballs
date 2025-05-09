@@ -18,52 +18,54 @@
 
 - [📄 快速开始](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/1.1-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B.md)
 - [🎞️ 视频教程](https://www.bilibili.com/video/BV1yr421E7MW)
+- [流水线协议](https://github.com/KhazixW2/MaaGumballs/docs/3.1-任务流水线协议)
 
-## 如何开发
+## 如何使用
 
-0. 使用右上角 `Use this template` - `Create a new repository` 来基于本模板创建您自己的项目。
+1. 点击链接下载最新[Release](https://github.com/KhazixW2/MaaGumballs/releases/tag/v0.7)包
 
-1. 完整克隆本项目及子项目（地址请修改为您基于本模板创建的新项目地址）。
+2. 解压后双击`MFAAvalonia.exe`即可运行
 
-    ```bash
-    git clone --recursive https://github.com/KhazixW2/MaaGumballs.git
-    ```
+### Windows
 
-    **请注意，一定要完整克隆子项目，不要漏了 `--recursive`，也不要下载 zip 包！**  
-    这步未正确操作会导致所有 OCR（文字识别）失败！
+- 对于绝大部分用户，请下载 MaaGumballs-win-x86_64.zip
+- 若确定自己的电脑是 arm 架构，请下载 MaaGumballs-win-aarch64.zip
+- 请注意！Windows 的电脑几乎全都是 x86_64 的，可能占 99.999%，除非你非常确定自己是 arm，否则别下这个！_
+- 解压后运行 MFAAvalonia.exe（图形化界面，推荐使用，老版本UI为MFAWPF.exe）或 MaaPiCli.exe（命令行）即可
 
-2. 下载 MaaFramework 的 [Release 包](https://github.com/MaaXYZ/MaaFramework/releases)，解压到 `deps` 文件夹中。
+### macOS
 
-3. 配置资源文件。
+- 若使用 Intel 处理器，请下载 `MaaGumballs-macos-x86_64.zip`
+- 若使用 M1, M2 等 arm 处理器，请下载 `MaaGumballs-macos-aarch64.zip`
+- 使用方式：
 
-    ```bash
-    python ./configure.py
-    ```
+  ```bash
+  chmod a+x MaaPiCli
+  ./MaaPiCli
+  ```
 
-4. 按需求修改 `assets` 中的资源文件，请参考 MaaFramework 相关文档。
+### Linux
 
-    - 可使用 [MaaDebugger](https://github.com/MaaXYZ/MaaDebugger) 进行调试；
-    - 也可以在本地安装后测试：
+~~用 Linux 的大佬应该不需要我教~~
 
-        1. 执行安装脚本
+## 图形化界面
 
-            ```bash
-            python ./install.py
-            ```
+- <span style="font-size:25px;">[MFAAvalonia](https://github.com/SweetSmellFox/MFAAvalonia/)</span>  
+- 由社区大佬[SweetSmellFox](https://github.com/SweetSmellFox)编写的基于Avalonia的GUI,通过内置的MAAframework来直接控制任务流程  
+- 打开本程序和模拟器后，先在右上方选择要控制的模拟器  
+- 勾选想要执行的任务后**开始任务**，任务会顺序执行，***进入游戏***会启动游戏程序，其他任务需要游戏为开启状态  
+- 点击部分任务右方的设置，可以配置任务属性和查看任务帮助
+![alt text](GUI.png)
+![alt text](GUI-2.png)
 
-        2. 执行`MaaPiCli`
+## 注意事项
 
-            - **Windows**
-
-                运行 `install/MaaPiCli.exe`
-
-            - **Linux/macOS**
-
-                > 如果提示缺少启动权限，可通过 `chmod a+x install/MaaPiCli` 命令添加
-
-                运行 `install/MaaPiCli`
-
-5. 更多操作，请参考[个性化配置](./docs/zh_cn/个性化配置.md)（可选）
+- 提示“应用程序错误”，一般是缺少运行库，请安装一下 [vc_redist](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+- 添加 `-d` 参数可跳过交互直接运行任务，如 `./MaaPiCli.exe -d`
+- MAA framework 2.0 版本已支持 mumu 后台保活，会在 run task 时获取 mumu 最前台的 tab
+- 基于mumu模拟器1600x900 dpi240开发，其它模拟器或分辨率如遇到问题，可首先尝试上述配置
+- 因MAA基于720p开发图像识别，1280*720(240DPI)理论上有最强适配性，如1080p遇到问题，可换720p尝试
+- 反馈问题请附上日志文件 `debug/maa.log`以及问题界面的截图，谢谢！
 
 ## 常用工具
 
@@ -95,6 +97,7 @@
   - [ ]混沌商店——默认不购买
 
 - [ ]战斗————阵容和地图隐藏可能要单独写，或者合并写
+  - [√]自动刷失落降临限时副本
   - [ ]养狗速刷100层
   - [ ]王帝夜100层
   - [ ]白学100层
