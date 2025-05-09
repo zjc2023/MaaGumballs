@@ -27,8 +27,12 @@
             "entry": "Sub_StartUp"
         },
         {
-            "name": "test1",
-            "entry": "repoTest1"
+            "name": "TL01_Start",
+            "entry": "TL01_Start"
+        },
+        {
+            "name": "TL01_Fighting",
+            "entry": "TL01_Fighting"
         }
     ]
 }

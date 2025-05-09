@@ -3,10 +3,6 @@ from maa.custom_action import CustomAction
 from maa.context import Context
 from maa.define import RecognitionDetail
 import time
-# import numpy as np
-# import cv2
-
-from maa.job import TaskDetail
 
 @AgentServer.custom_action("CheckGrid")
 class CheckGrid(CustomAction):
@@ -24,6 +20,43 @@ class CheckGrid(CustomAction):
                 roi = [x, y, width, height]
                 roi_list.append(roi)
         return roi_list
+
+    def CheckMonster(self, context: Context, image):
+        #检测是否有怪物
+        checkMonsterDetail = context.run_recognition("GridCheckMonster",
+                                image,
+                                pipeline_override={
+                                    "GridCheckMonster": {
+                                        "recognition": "TemplateMatch",
+                                        "template": [
+                                            "monster/TL01/m1.png",
+                                            "monster/TL01/m2.png"
+                                        ],
+                                        "roi": [
+                                            21,
+                                            217,
+                                            682,
+                                            762
+                                        ],
+                                        "threshold": 0.7
+                                    }
+                                }
+                            )
+
+        # 对检测到的每个怪物进行攻击
+        if checkMonsterDetail:
+            for result in checkMonsterDetail.all_results:
+                x, y, w, h = result.box
+                print(f"快速點擊三次 {x}, {y}, {w}, {h}") 
+                context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
+                time.sleep(0.05)
+                context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
+                time.sleep(0.05)
+                context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
+                time.sleep(0.05)
+            return True
+        else:
+            return False
 
     def run(
         self,
@@ -50,13 +83,15 @@ class CheckGrid(CustomAction):
                     left_bottom_roi = roi_image[h-15:h, 0: 20].copy()  # 提取左下角 20x20 区域
                     right_bottom_roi = roi_image[h-15:h, w - 20: w].copy()  # 提取右下角 20x20 区域
                     
-                    # 修正文件名格式
-                    # file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
-                    # cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
-                    # leftButtonName = f"./grid/leftGrid{r + 1}_{c + 1}.png"
-                    # rightButtonName = f"./grid/rightGrid{r + 1}_{c + 1}.png"
-                    # cv2.imwrite(leftButtonName, left_bottom_roi)  # 保存当前格子图像用于调试
-                    # cv2.imwrite(rightButtonName, right_bottom_roi)  # 保存当前格子图像用于调试
+                    {
+                        # 修正文件名格式
+                        # file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
+                        # cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
+                        # leftButtonName = f"./grid/leftGrid{r + 1}_{c + 1}.png"
+                        # rightButtonName = f"./grid/rightGrid{r + 1}_{c + 1}.png"
+                        # cv2.imwrite(leftButtonName, left_bottom_roi)  # 保存当前格子图像用于调试
+                        # cv2.imwrite(rightButtonName, right_bottom_roi)  # 保存当前格子图像用于调试
+                    }
 
                     left_reco_detail = context.run_recognition(
                         "GridCheckTemplate",
@@ -83,18 +118,7 @@ class CheckGrid(CustomAction):
                         time.sleep(0.05)
 
             # 检测怪物并进行攻击
-            check: TaskDetail = context.run_task("TL01_checkMonster")
-            if check.nodes:
-                for result in check.nodes[0].recognition.all_results:
-                    x, y, w, h = result.box
-                    print(f"快速點擊三次 {x}, {y}, {w}, {h}") 
-                    context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
-                    time.sleep(0.05)
-                    context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
-                    time.sleep(0.05)
-                    context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
-                    time.sleep(0.05)
-            else :
+            if not self.CheckMonster(context, img):
                 FailCheckMonsterCnt += 1
                 print(f"FailCheckMonsterCnt: {FailCheckMonsterCnt}")
             

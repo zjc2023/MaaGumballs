@@ -1,8 +1,0 @@
-{
-    "repoTest1": {
-        "recognition": "DirectHit",
-        "action": "Custom",
-        "custom_action": "CheckGrid",
-        "post_delay": 500
-    }
-}

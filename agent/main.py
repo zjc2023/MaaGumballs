@@ -16,6 +16,7 @@ from maa.toolkit import Toolkit
 from maa.context import Context
 
 from action import CheckGrid
+from action import TL01_Fighting
 
 import os
 import utils

@@ -64,15 +64,25 @@
         ],
         "action": "Click",
         "post_delay": 5000,
-        "timeout": 200
+        "timeout": 200,
+        "next": [
+            "TL01_Fighting"
+        ]
     },
-    "TL01_Fighting": {
+    "TL01_CheckLayerDoor": {
         "recognition": "TemplateMatch",
         "template": [
-            "monster/TL01/fight.png",
-            "monster/TL01/fight1.png"
+            "fight/openedDoor.png",
+            "fight/openedDoor1.png"
         ],
         "action": "Click",
+        "threshold": 0.7,
+        "timeout": 100
+    },
+    "TL01_Fighting": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "TL01_Fighting_Test",
         "post_delay": 500,
         "timeout": 200
     },
@@ -175,12 +185,14 @@
         "action": "Custom",
         "custom_action": "CheckGrid",
         "post_delay": 300,
+        "timeout": 1000,
         "next": [
-            "TL01_checkOpenedDoor"
+            "TL01_CheckLayerDoor"
         ],
         "interrupt": [
-            "TL01_checkClosedDoor",
-            "BackButton"
+            "TL01_OpenRewardBox",
+            "BackButton",
+            "TL01_checkOpenedDoor"
         ]
     },
     "TL01_OpenRewardBox": {
