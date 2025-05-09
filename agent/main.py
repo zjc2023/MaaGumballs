@@ -346,10 +346,10 @@ def mainFunc(tasks):
 if __name__ == "__main__":
     Toolkit.init_option("./")
     if len(sys.argv) > 1:
-        print("使用自定义socket_id: " + sys.argv[-1])
+        print("use socket_id: " + sys.argv[-1])
         socket_id = sys.argv[-1]
     else:
-        print("使用默认socket_id: MAA_AGENT_SOCKET")
+        print("Use Default socket_id: MAA_AGENT_SOCKET")
         socket_id = "MAA_AGENT_SOCKET"
     AgentServer.start_up(socket_id)
     AgentServer.join()

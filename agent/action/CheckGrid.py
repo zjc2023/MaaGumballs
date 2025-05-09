@@ -111,7 +111,7 @@ class CheckGrid(CustomAction):
 
                     if left_reco_detail or right_reco_detail:
                         count = left_reco_detail.best_result.count if left_reco_detail else right_reco_detail.best_result.count
-                        print(f"点开地板: ({r + 1}, {c + 1}) , count = {count}")
+                        # print(f"点开地板: ({r + 1}, {c + 1}) , count = {count}")
                         click_job = context.tasker.controller.post_click(x + w // 2, y + h // 2)
                         click_job.wait()
                         checkGridCnt += 1
@@ -120,11 +120,11 @@ class CheckGrid(CustomAction):
             # 检测怪物并进行攻击
             if not self.CheckMonster(context, img):
                 FailCheckMonsterCnt += 1
-                print(f"FailCheckMonsterCnt: {FailCheckMonsterCnt}")
+                # print(f"FailCheckMonsterCnt: {FailCheckMonsterCnt}")
             
             # 如果提前清理完该层，那么不需要继续等待，可以提前退出
             if FailCheckMonsterCnt >= 5 and checkGridCnt == 0:
-                print("FailCheckMonsterCnt 5 次, 提前退出")
+                # print("FailCheckMonsterCnt 5 次, 提前退出")
                 return CustomAction.RunResult(success=True)
         
         print("CheckGrid is running!")
