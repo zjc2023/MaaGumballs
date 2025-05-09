@@ -3,8 +3,8 @@ from maa.custom_action import CustomAction
 from maa.context import Context
 from maa.define import RecognitionDetail
 import time
-import cv2
-import numpy as np
+# import numpy as np
+# import cv2
 
 from maa.job import TaskDetail
 
@@ -47,58 +47,43 @@ class CheckGrid(CustomAction):
                 for c in range(cols):  # 重试次数
                     x, y, w, h = roi_matrix[r][c]
                     roi_image = img[y:y + h, x:x + w]
-                    left_bottom_roi = roi_image[h-15:h, 0: 20]  # 提取左下角 20x20 区域
-                    right_bottom_roi = roi_image[h-15:h, w - 20: w]  # 提取右下角 20x20 区域
+                    left_bottom_roi = roi_image[h-15:h, 0: 20].copy()  # 提取左下角 20x20 区域
+                    right_bottom_roi = roi_image[h-15:h, w - 20: w].copy()  # 提取右下角 20x20 区域
                     
                     # 修正文件名格式
-                    file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
-                    cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
-                    leftButtonName = f"./grid/leftGrid{r + 1}_{c + 1}.png"
-                    rightButtonName = f"./grid/rightGrid{r + 1}_{c + 1}.png"
-                    cv2.imwrite(leftButtonName, left_bottom_roi)  # 保存当前格子图像用于调试
-                    cv2.imwrite(rightButtonName, right_bottom_roi)  # 保存当前格子图像用于调试
+                    # file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
+                    # cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
+                    # leftButtonName = f"./grid/leftGrid{r + 1}_{c + 1}.png"
+                    # rightButtonName = f"./grid/rightGrid{r + 1}_{c + 1}.png"
+                    # cv2.imwrite(leftButtonName, left_bottom_roi)  # 保存当前格子图像用于调试
+                    # cv2.imwrite(rightButtonName, right_bottom_roi)  # 保存当前格子图像用于调试
 
-                    lower_bound = np.array([130,135,143])  # 偏白色的下界
-                    upper_bound = np.array([170,175,183])  # 偏白色的上界
-                    mask = cv2.inRange(left_bottom_roi, lower_bound, upper_bound)
-                    mask2 = cv2.inRange(right_bottom_roi, lower_bound, upper_bound)  # 右下角区域
-                    white_pixel_count = cv2.countNonZero(mask)
-                    white_pixel_count2 = cv2.countNonZero(mask2)  # 右下角区域
-                    
-                    threshold = 10  # 根据实际情况调整阈值
-                    if white_pixel_count > threshold or white_pixel_count2 > threshold:
-                        # self.send_log(f"点开地板: ({r + 1}, {c + 1}), 白色像素数量: {white_pixel_count, white_pixel_count2}")
+                    left_reco_detail = context.run_recognition(
+                        "GridCheckTemplate",
+                        left_bottom_roi,
+                        pipeline_override={
+                            "GridCheckTemplate": {
+                                "recognition": "ColorMatch",
+                                "method": 4,
+                                "lower": [130, 135, 143],
+                                "upper": [170, 175, 183],
+                                "count": 10
+                            }
+                        },
+                    )
+                    right_context = context.clone()
+                    right_reco_detail = right_context.run_recognition("GridCheckTemplate", right_bottom_roi)
+
+                    if left_reco_detail or right_reco_detail:
+                        count = left_reco_detail.best_result.count if left_reco_detail else right_reco_detail.best_result.count
+                        print(f"点开地板: ({r + 1}, {c + 1}) , count = {count}")
+                        click_job = context.tasker.controller.post_click(x + w // 2, y + h // 2)
+                        click_job.wait()
                         checkGridCnt += 1
-                        context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
                         time.sleep(0.05)
-
-                    # left_reco_detail = context.run_recognition(
-                    #     "GridCheckTemplate",
-                    #     left_bottom_roi,
-                    #     pipeline_override={
-                    #         "GridCheckTemplate": {
-                    #             "recognition": "ColorMatch",
-                    #             "method": 4,
-                    #             "lower": [130, 135, 143],
-                    #             "upper": [170, 175, 183],
-                    #             "count": 10
-                    #         }
-                    #     },
-                    # )
-                    # right_context = context.clone()
-                    # right_reco_detail = right_context.run_recognition("GridCheckTemplate", right_bottom_roi)
-
-                    # if left_reco_detail or right_reco_detail:
-                    #     count = left_reco_detail.best_result.count if left_reco_detail else right_reco_detail.best_result.count
-                    #     print(f"点开地板: ({r + 1}, {c + 1}) , count = {count}")
-                    #     click_job = context.tasker.controller.post_click(x + w // 2, y + h // 2)
-                    #     click_job.wait()
-                    #     checkGridCnt += 1
-
 
             # 检测怪物并进行攻击
             check: TaskDetail = context.run_task("TL01_checkMonster")
-            # check: TaskDetail= context.tasker.post_task("TL01_checkMonster").wait().get()
             if check.nodes:
                 for result in check.nodes[0].recognition.all_results:
                     x, y, w, h = result.box

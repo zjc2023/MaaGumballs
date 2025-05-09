@@ -66,6 +66,16 @@
         "post_delay": 5000,
         "timeout": 200
     },
+    "TL01_Fighting": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "monster/TL01/fight.png",
+            "monster/TL01/fight1.png"
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 200
+    },
     "TL01_CheckLayer": {
         "recognition": "OCR",
         "recognition_doc": "DetectNumberWithRegex",
@@ -159,6 +169,19 @@
             "TL01_checkOpenedDoor"
         ],
         "post_delay": 200
+    },
+    "TL01_clearMonsterLayer": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "CheckGrid",
+        "post_delay": 300,
+        "next": [
+            "TL01_checkOpenedDoor"
+        ],
+        "interrupt": [
+            "TL01_checkClosedDoor",
+            "BackButton"
+        ]
     },
     "TL01_OpenRewardBox": {
         "recognition": "OCR",
