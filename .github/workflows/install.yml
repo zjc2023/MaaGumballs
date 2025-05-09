@@ -73,11 +73,6 @@ jobs:
           out-file-path: "deps"
           extract: true
 
-      - name: Setup Embed Python
-        shell: powershell
-        run: |
-          ./ci/setup_embed_python.ps1
-        
       - name: Install Python
         shell: bash
         env:
