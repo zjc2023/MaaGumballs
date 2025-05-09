@@ -1,5 +1,4 @@
 from pathlib import Path
-import PyInstaller.__main__
 import shutil
 import sys
 import json
