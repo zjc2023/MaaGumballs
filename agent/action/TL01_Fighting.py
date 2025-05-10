@@ -47,10 +47,11 @@ class TL01_Fighting(CustomAction):
         # print("小怪层探索完成,检测是否存在boos")
         time.sleep(3)
         # 检查是否有Boss
-        print("check Boss and fight.")
+        print("Start BossBattle.")
         context.run_task("TL01_checkBossMons")
-        print("Boss fight complete.")
+        print("Finish And Return")
         context.run_task("BackButton")
+        print("Click AlchemyReward")
         context.run_task("AlchemyReward")
 
         return CustomAction.RunResult(success=True)

@@ -35,7 +35,6 @@
         ],
         "action": "Click",
         "post_delay": 5000,
-        "timeout": 10000,
         "on_error": [
             "RestartGumballs"
         ],
@@ -49,36 +48,37 @@
         "recognition": "OCR",
         "expected": "炼金资源",
         "roi": [
-            276,
-            331,
-            168,
-            61
+            223,
+            334,
+            275,
+            155
         ],
         "action": "Click",
         "post_delay": 500,
         "target": [
-            310,
-            874,
-            101,
-            44
+            124,
+            802,
+            467,
+            112
         ]
     },
     "AlchemyReward": {
         "recognition": "OCR",
         "expected": "炼金资源",
+        "pre_delay": 1000,
         "roi": [
-            276,
-            331,
-            168,
-            61
+            223,
+            334,
+            275,
+            155
         ],
         "action": "Click",
         "post_delay": 500,
         "target": [
-            310,
-            874,
-            101,
-            44
+            124,
+            802,
+            467,
+            112
         ]
     },
     "GumBallsFlag": {

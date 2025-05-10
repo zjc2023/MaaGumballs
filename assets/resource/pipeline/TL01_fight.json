@@ -15,19 +15,14 @@
             "TL01_EntryMaze"
         ],
         "interrupt": [
-            "TL01_SelectSample",
+            "TL01_SelectEasy_Interrupt",
+            "TL01_SelectEasy",
             "TL01_BuyPower",
             "ConfirmButton",
             "ClickCenter"
         ]
     },
-    "TL01_CheckGrid": {
-        "recognition": "DirectHit",
-        "action": "Click",
-        "post_delay": 500,
-        "timeout": 200
-    },
-    "TL01_SelectSample": {
+    "TL01_SelectEasy": {
         "recognition": "OCR",
         "expected": "简单模式",
         "roi": [
@@ -38,7 +33,20 @@
         ],
         "action": "Click",
         "post_delay": 500,
-        "timeout": 200
+        "timeout": 500
+    },
+    "TL01_SelectEasy_Interrupt": {
+        "recognition": "OCR",
+        "expected": "进入联动迷宫",
+        "roi": [
+            152,
+            649,
+            423,
+            88
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 500
     },
     "TL01_BuyPower": {
         "recognition": "OCR",
@@ -51,7 +59,7 @@
         ],
         "action": "Click",
         "post_delay": 500,
-        "timeout": 200
+        "timeout": 500
     },
     "TL01_EntryMaze": {
         "recognition": "OCR",
@@ -63,10 +71,27 @@
             87
         ],
         "action": "Click",
-        "post_delay": 5000,
-        "timeout": 200,
+        "post_delay": 500,
+        "timeout": 500,
         "next": [
+            "TL01_EntryMazeUpdate",
             "TL01_Fighting"
+        ]
+    },
+    "TL01_EntryMazeUpdate": {
+        "recognition": "OCR",
+        "expected": "更换",
+        "roi": [
+            102,
+            701,
+            223,
+            70
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 500,
+        "next": [
+            "TL01_EntryMaze"
         ]
     },
     "TL01_CheckLayerDoor": {
@@ -82,6 +107,7 @@
     "TL01_Fighting": {
         "recognition": "DirectHit",
         "action": "Custom",
+        "pre_delay": 7000,
         "custom_action": "TL01_Fighting_Test",
         "post_delay": 500,
         "timeout": 200

@@ -24,22 +24,21 @@
     "task": [
         {
             "name": "启动游戏",
-            "entry": "Sub_StartUp"
-        },
-        {
-            "name": "TL01_Start",
-            "entry": "TL01_Start_Count",
-            "option": [
-                "刷取次数"
-            ]
-        },
-        {
-            "name": "TL01_Fighting",
-            "entry": "TL01_Fighting"
+            "entry": "Sub_StartUp",
+            "doc": "需要打开模拟器，之后自动启动游戏，功能在测试中，遇到问题记录反馈给作者。先试着手动启动游戏。"
         },
         {
             "name": "TL01_Start_Count",
-            "entry": "TL01_Start_Count"
+            "entry": "TL01_Start_Count",
+            "option": [
+                "刷取次数"
+            ],
+            "doc": "该任务是从大地图到迷宫打怪自动的全过程，如果已经在迷宫里面了请使用TL01_Fighting，需要点开该项，并设置刷取次数，再点击开始任务"
+        },
+        {
+            "name": "TL01_Fighting",
+            "entry": "TL01_Fighting",
+            "doc": "该任务是已经在活动迷宫里时，开启，仅作战一次"
         }
     ],
     "option": {

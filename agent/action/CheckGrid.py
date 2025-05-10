@@ -82,16 +82,6 @@ class CheckGrid(CustomAction):
                     roi_image = img[y:y + h, x:x + w]
                     left_bottom_roi = roi_image[h-15:h, 0: 20].copy()  # 提取左下角 20x20 区域
                     right_bottom_roi = roi_image[h-15:h, w - 20: w].copy()  # 提取右下角 20x20 区域
-                    
-                    {
-                        # 修正文件名格式
-                        # file_name = f"./grid/roi_image_{r + 1}_{c + 1}.png"
-                        # cv2.imwrite(file_name, roi_image)  # 保存当前格子图像用于调试
-                        # leftButtonName = f"./grid/leftGrid{r + 1}_{c + 1}.png"
-                        # rightButtonName = f"./grid/rightGrid{r + 1}_{c + 1}.png"
-                        # cv2.imwrite(leftButtonName, left_bottom_roi)  # 保存当前格子图像用于调试
-                        # cv2.imwrite(rightButtonName, right_bottom_roi)  # 保存当前格子图像用于调试
-                    }
 
                     left_reco_detail = context.run_recognition(
                         "GridCheckTemplate",
@@ -126,6 +116,5 @@ class CheckGrid(CustomAction):
             if FailCheckMonsterCnt >= 5 and checkGridCnt == 0:
                 # print("FailCheckMonsterCnt 5 次, 提前退出")
                 return CustomAction.RunResult(success=True)
-        
-        print("CheckGrid is running!")
+            
         return CustomAction.RunResult(success=True)
