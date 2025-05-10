@@ -166,15 +166,16 @@
         "recognition": "TemplateMatch",
         "template": "monster/TL01/opened_door1.png",
         "roi": [
-            588,
-            890,
-            89,
-            78
+            148,
+            625,
+            555,
+            371
         ],
         "pre_delay": 3000,
         "action": "Click",
         "post_delay": 500,
         "next": [],
+        "threshold": 0.7,
         "timeout": 200
     },
     "TL01_checkClosedDoor": {
