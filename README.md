@@ -19,6 +19,7 @@
 - [📄 快速开始](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/1.1-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B.md)
 - [🎞️ 视频教程](https://www.bilibili.com/video/BV1yr421E7MW)
 - [流水线协议](https://github.com/KhazixW2/MaaGumballs/docs/3.1-任务流水线协议)
+- [集成开发环境文档](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/2.1-%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
 
 ## 如何使用
 
@@ -71,7 +72,7 @@
 
 1. 调试：[MaaDebugger](https://github.com/MaaXYZ/MaaDebugger) 进行调试json节点.
 2. 截图、取色、取区域: [MFATools](https://github.com/SweetSmellFox/MFATools)
-3. 代码集成环境：[集成开发环境文档](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/2.1-%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
+3. 
 
 ## Todo（先画饼）
 
@@ -107,7 +108,6 @@
 - [ ]外域探索
   - [ ]每日星域探索/征收——设置资源星/小行星
   - [ ]速刷情报
-  - [ ]
 
 - [ ]奖励
   - [ ]联盟任务一键完成
