@@ -132,5 +132,24 @@
         ],
         "post_delay": 200,
         "timeout": 100
+    },
+    "ReturnHall": {
+        "recognition": "DirectHit",
+        "next": [
+            "CheckHall"
+        ],
+        "interrupt": [
+            "BackText"
+        ]
+    },
+    "CheckHall": {
+        "recognition": "OCR",
+        "roi": [
+            201,
+            280,
+            330,
+            163
+        ],
+        "expected": "战术大厅"
     }
 }
