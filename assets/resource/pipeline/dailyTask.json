@@ -69,6 +69,9 @@
             "SkyExplore": 1,
             "RuinsExplore": 1
         },
+        "next": [
+            "ReturnBigMap"
+        ],
         "post_delay": 1000
     },
     "DailySweep": {

@@ -151,5 +151,24 @@
             163
         ],
         "expected": "战术大厅"
+    },
+    "ReturnBigMap": {
+        "recognition": "DirectHit",
+        "next": [
+            "CheckBigMap"
+        ],
+        "interrupt": [
+            "BackText"
+        ]
+    },
+    "CheckBigMap": {
+        "recognition": "OCR",
+        "roi": [
+            479,
+            1148,
+            240,
+            131
+        ],
+        "expected": "商店"
     }
 }
