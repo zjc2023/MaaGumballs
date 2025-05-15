@@ -112,6 +112,10 @@
 - 因MAA基于720p开发图像识别，1280*720(240DPI)理论上有最强适配性，如1080p遇到问题，可换720p尝试
 - 反馈问题请附上日志文件 `debug/maa.log`以及问题界面的截图，谢谢！
 
+## Join us
+交流反馈 QQ 群：853222152
+MaaFramework 开发交流 QQ 群: 595990173
+
 ## 常用工具
 
 1. 调试：[MaaDebugger](https://github.com/MaaXYZ/MaaDebugger) 进行调试json节点.
