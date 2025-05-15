@@ -1,11 +1,12 @@
 <!-- markdownlint-disable MD033 MD041 -->
 <p align="center">
-  <img alt="LOGO" src="https://cdn.jsdelivr.net/gh/MaaAssistantArknights/design@main/logo/maa-logo_512x512.png" width="256" height="256" />
+  <img alt="LOGO" src="Icon.png" width="256" height="256" />
 </p>
 
 <div align="center">
 
 # MaaGumballs
+
 基于全新架构的 不思议迷宫 小助手。图像技术 + 模拟控制，解放双手！
 由 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 强力驱动！
 
@@ -57,7 +58,7 @@
   - [ ]联盟礼包
   - [ ]邮件奖励
   - [ ]地图彩蛋
- 
+
 ## 如何使用
 
 1. 点击链接下载最新[Release](https://github.com/KhazixW2/MaaGumballs/releases/tag/v0.7)包
@@ -113,6 +114,7 @@
 - 反馈问题请附上日志文件 `debug/maa.log`以及问题界面的截图，谢谢！
 
 ## Join us
+
 - 交流反馈 QQ 群：853222152
 - MaaFramework 开发交流 QQ 群: 595990173
 
@@ -120,9 +122,6 @@
 
 1. 调试：[MaaDebugger](https://github.com/MaaXYZ/MaaDebugger) 进行调试json节点.
 2. 截图、取色、取区域: [MFATools](https://github.com/SweetSmellFox/MFATools)
-3. 
-
-
 
 ## 鸣谢
 
