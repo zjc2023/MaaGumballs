@@ -7,22 +7,9 @@ from action import CheckGrid
 from action import TL01_Fighting
 from action import Count
 from action import DailyTask
+from action import CircusReward
 
 # 获取当前工作目录
-'''
-resource = Resource()
-resource.set_cpu()
-resource_path = f"{parent_dir}/resource"
-assets_resource_path = f"{parent_dir}/assets/resource"
-
-# 检查路径是否存在，如果存在再绑定
-if os.path.exists(resource_path):
-    resource.post_bundle(resource_path).wait()
-
-if os.path.exists(assets_resource_path):
-    resource.post_bundle(assets_resource_path).wait()
-'''
-
 
 if __name__ == "__main__":
     Toolkit.init_option("./")

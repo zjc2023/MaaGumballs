@@ -93,12 +93,20 @@
         "timeout": 100
     },
     "Sub_Flip": {
+        "post_delay": 1000,
         "is_sub": true,
         "recognition": "OCR",
         "expected": "下一页",
         "action": "Click"
     },
+    "FlipPage": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "expected": "下一页",
+        "action": "Click"
+    },
     "Sub_ConfirmButton": {
+        "post_delay": 1000,
         "is_sub": true,
         "recognition": "OCR",
         "expected": [
@@ -114,8 +122,8 @@
             "确认"
         ],
         "action": "Click",
-        "post_delay": 200,
-        "timeout": 100
+        "post_delay": 1000,
+        "timeout": 500
     },
     "ClickCenter": {
         "recognition": "OCR",
@@ -189,5 +197,44 @@
             467,
             112
         ]
+    },
+    "PowerLack": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "expected": "体力不足",
+        "roi": [
+            22,
+            414,
+            696,
+            447
+        ],
+        "action": "DoNothing",
+        "next": [
+            "PowerBuy"
+        ]
+    },
+    "PowerBuy": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "expected": "购买",
+        "roi": [
+            22,
+            414,
+            696,
+            447
+        ],
+        "action": "Click"
+    },
+    "drawReward": {
+        "recognition": "OCR",
+        "expected": "领取",
+        "roi": [
+            120,
+            630,
+            478,
+            335
+        ],
+        "action": "Click",
+        "post_delay": 1000
     }
 }
