@@ -39,6 +39,16 @@
             "name": "TL01_Fighting",
             "entry": "TL01_Fighting",
             "doc": "该任务是已经在活动迷宫里时，开启，仅作战一次"
+        },
+        {
+            "name": "Use_Earthquake",
+            "entry": "Use_Earthquake",
+            "doc": "释放地震术"
+        },
+        {
+            "name": "GoDownstairsTrick",
+            "entry": "GoDownstairsTrick",
+            "doc": "使用黑下楼，需要V2ray应用"
         }
     ],
     "option": {

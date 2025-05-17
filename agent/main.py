@@ -6,6 +6,7 @@ from maa.toolkit import Toolkit
 from action import CheckGrid
 from action import TL01_Fighting
 from action import Count
+from action import GoDownstairsTrick
 
 # 获取当前工作目录
 '''

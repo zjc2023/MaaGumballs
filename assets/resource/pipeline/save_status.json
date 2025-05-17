@@ -1,0 +1,48 @@
+{
+    "Save_Status": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils\\SaveStatusButton.png"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "next":"Save_Status_Text"
+    },
+    "Save_Status_Text":{
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils\\SaveStatusText.png"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "next":"Inter_ConfirmButton"
+    },
+    "Inter_ConfirmButton": {
+        "recognition": "OCR",
+        "expected": [
+            "确定",
+            "确认",
+            "重新连接"
+        ],
+        "action": "Click",
+        "next":"ReturnMazeButton"
+    },
+    "ReturnMazeButton":{
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils\\ReturnMazeButton.png"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "interrupt":"Inter_ConfirmButton",
+        "next":"ConfirmEquipmentPack"
+    },
+    "ConfirmEquipmentPack":{
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils\\ConfirmEquipmentPack.png"
+        ],
+        "action": "DoNothing",
+        "threshold": 0.8
+    }
+}
