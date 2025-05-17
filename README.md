@@ -1,24 +1,59 @@
 <!-- markdownlint-disable MD033 MD041 -->
 <p align="center">
-  <img alt="LOGO" src="https://cdn.jsdelivr.net/gh/MaaAssistantArknights/design@main/logo/maa-logo_512x512.png" width="256" height="256" />
+  <img alt="LOGO" src="Icon.png" width="256" height="256" />
 </p>
 
 <div align="center">
 
 # MaaGumballs
 
+基于全新架构的 不思议迷宫 小助手。图像技术 + 模拟控制，解放双手！
+由 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 强力驱动！
+
 </div>
+<p align="center">
+  <img alt="license" src="https://img.shields.io/github/license/KhazixW2/MaaGumballs">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white">
+  <img alt="platform" src="https://img.shields.io/badge/platform-Windows-blueviolet">
+  <img alt="commit" src="https://img.shields.io/github/commit-activity/m/KhazixW2/MaaGumballs">
+</p>
 
-本仓库为 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 所提供的项目模板，开发者可基于此模板直接创建自己的 MaaXXX 项目。
+## 主要功能
 
-> **MaaFramework** 是基于图像识别技术、运用 [MAA](https://github.com/MaaAssistantArknights/MaaAssistantArknights) 开发经验去芜存菁、完全重写的新一代自动化黑盒测试框架。
-> 低代码的同时仍拥有高扩展性，旨在打造一款丰富、领先、且实用的开源库，助力开发者轻松编写出更好的黑盒测试程序，并推广普及。
+- [x]启动
+  - [x]进入游戏大厅
 
-## 即刻开始
+- [X]每日收菜
+  - [x]每日签到
+  - [x]炼金招牌
+  - [x]派遣魔蜥
+  - [x]每日扫荡
+  - [x]天空探索
+  - [x]遗迹探索
+  - [x]荒野探索
+  - [X]马戏团任务
+  - [ ]其他任务
 
-- [📄 快速开始](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/1.1-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B.md)
-- [🎞️ 视频教程](https://www.bilibili.com/video/BV1yr421E7MW)
-- [流水线协议](https://github.com/KhazixW2/MaaGumballs/docs/3.1-任务流水线协议)
+- [ ]商店购物————
+  - [ ]旅游商店——默认购买所有金币商品
+  - [ ]佣兵商店——默认全部购买
+  - [ ]天空商店——默认购买所有遗迹碎片商品
+
+- [ ]战斗————阵容和地图隐藏可能要单独写，或者合并写
+  - [√]自动刷失落降临限时副本
+  - [ ]养狗速刷100层
+  - [ ]王帝夜100层
+  - [ ]白学100层
+
+- [ ]外域探索
+  - [ ]每日星域探索/征收——设置资源星/小行星
+  - [ ]速刷情报
+
+- [ ]奖励
+  - [ ]联盟任务一键完成
+  - [ ]联盟礼包
+  - [ ]邮件奖励
+  - [ ]地图彩蛋
 
 ## 如何使用
 
@@ -43,10 +78,17 @@
   chmod a+x MaaPiCli
   ./MaaPiCli
   ```
-
+  
 ### Linux
 
 ~~用 Linux 的大佬应该不需要我教~~
+
+## 开发者文档
+
+- [📄 快速开始](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/1.1-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B.md)
+- [🎞️ 视频教程](https://www.bilibili.com/video/BV1yr421E7MW)
+- [流水线协议](https://github.com/KhazixW2/MaaGumballs/docs/3.1-任务流水线协议)
+- [集成开发环境文档](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/2.1-%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
 
 ## 图形化界面
 
@@ -67,53 +109,15 @@
 - 因MAA基于720p开发图像识别，1280*720(240DPI)理论上有最强适配性，如1080p遇到问题，可换720p尝试
 - 反馈问题请附上日志文件 `debug/maa.log`以及问题界面的截图，谢谢！
 
+## Join us
+
+- 交流反馈 QQ 群：853222152
+- MaaFramework 开发交流 QQ 群: 595990173
+
 ## 常用工具
 
 1. 调试：[MaaDebugger](https://github.com/MaaXYZ/MaaDebugger) 进行调试json节点.
 2. 截图、取色、取区域: [MFATools](https://github.com/SweetSmellFox/MFATools)
-3. 代码集成环境：[集成开发环境文档](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/2.1-%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
-
-## Todo（先画饼）
-
-- [x]启动
-  - [x]进入游戏大厅
-
-- [ ]每日收菜
-  - [x]每日签到
-  - [x]炼金招牌
-  - [x]派遣魔蜥
-  - [x]每日扫荡
-  - [x]天空探索
-  - [x]遗迹探索
-  - [x]荒野探索
-  - [ ]马戏团任务
-  - [ ]其他任务
-
-- [ ]商店购物————
-  - [ ]旅游商店——默认购买所有金币商品
-  - [ ]佣兵商店——默认全部购买
-  - [ ]天空商店——默认购买所有遗迹碎片商品
-  - [ ]联盟商店——默认不购买
-  - [ ]混沌商店——默认不购买
-
-- [ ]战斗————阵容和地图隐藏可能要单独写，或者合并写
-  - [√]自动刷失落降临限时副本
-  - [ ]养狗速刷100层
-  - [ ]王帝夜100层
-  - [ ]白学100层
-  - [ ]神锻速刷100层
-  - [ ]xx地图隐藏
-
-- [ ]外域探索
-  - [ ]每日星域探索/征收——设置资源星/小行星
-  - [ ]速刷情报
-  - [ ]
-
-- [ ]奖励
-  - [ ]联盟任务一键完成
-  - [ ]联盟礼包
-  - [ ]邮件奖励
-  - [ ]地图彩蛋
 
 ## 鸣谢
 

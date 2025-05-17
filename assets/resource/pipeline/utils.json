@@ -93,12 +93,20 @@
         "timeout": 100
     },
     "Sub_Flip": {
+        "post_delay": 1000,
         "is_sub": true,
         "recognition": "OCR",
         "expected": "下一页",
         "action": "Click"
     },
+    "FlipPage": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "expected": "下一页",
+        "action": "Click"
+    },
     "Sub_ConfirmButton": {
+        "post_delay": 1000,
         "is_sub": true,
         "recognition": "OCR",
         "expected": [
@@ -114,8 +122,8 @@
             "确认"
         ],
         "action": "Click",
-        "post_delay": 200,
-        "timeout": 100
+        "post_delay": 1000,
+        "timeout": 500
     },
     "ClickCenter": {
         "recognition": "OCR",
@@ -132,5 +140,101 @@
         ],
         "post_delay": 200,
         "timeout": 100
+    },
+    "ReturnHall": {
+        "recognition": "DirectHit",
+        "next": [
+            "CheckHall"
+        ],
+        "interrupt": [
+            "BackText"
+        ]
+    },
+    "CheckHall": {
+        "recognition": "OCR",
+        "roi": [
+            201,
+            280,
+            330,
+            163
+        ],
+        "expected": "战术大厅"
+    },
+    "ReturnBigMap": {
+        "recognition": "DirectHit",
+        "next": [
+            "CheckBigMap"
+        ],
+        "interrupt": [
+            "BackText"
+        ]
+    },
+    "CheckBigMap": {
+        "recognition": "OCR",
+        "roi": [
+            479,
+            1148,
+            240,
+            131
+        ],
+        "expected": "商店"
+    },
+    "AlchemyReward": {
+        "recognition": "OCR",
+        "expected": "炼金资源",
+        "pre_delay": 1000,
+        "roi": [
+            223,
+            334,
+            275,
+            155
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "target": [
+            124,
+            802,
+            467,
+            112
+        ]
+    },
+    "PowerLack": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "expected": "体力不足",
+        "roi": [
+            22,
+            414,
+            696,
+            447
+        ],
+        "action": "DoNothing",
+        "next": [
+            "PowerBuy"
+        ]
+    },
+    "PowerBuy": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "expected": "购买",
+        "roi": [
+            22,
+            414,
+            696,
+            447
+        ],
+        "action": "Click"
+    },
+    "drawReward": {
+        "recognition": "OCR",
+        "expected": "领取",
+        "roi": [
+            120,
+            630,
+            478,
+            335
+        ],
+        "action": "Click",
+        "post_delay": 1000
     }
 }

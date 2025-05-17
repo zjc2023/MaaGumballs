@@ -1,25 +1,79 @@
 {
     "EntryEden": {
+        "post_delay": 1000,
+        "threshold": 0.8,
         "recognition": "OCR",
         "expected": [
             "伊甸"
         ],
         "roi": [
-            22,
-            1228,
-            110,
-            46
+            0,
+            1140,
+            240,
+            139
         ],
         "action": "Click",
         "next": [
-            "EntryHall"
+            "EntryHall",
+            "EntryHall2"
+        ]
+    },
+    "EntryHall2": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "doc": "老玩家的战术大厅",
+        "expected": "可监控",
+        "roi": [
+            105,
+            477,
+            129,
+            126
+        ],
+        "action": "Click",
+        "target": true,
+        "target_offset": [
+            0,
+            0,
+            0,
+            -63
+        ],
+        "next": [
+            "DailyTaskSelect"
         ]
     },
     "EntryHall": {
         "recognition": "TemplateMatch",
         "template": "dailyTask/EntryHall.png",
+        "roi": [
+            56,
+            310,
+            649,
+            504
+        ],
         "action": "Click",
-        "post_delay": 500
+        "post_delay": 1000,
+        "next": [
+            "DailyTaskSelect"
+        ]
+    },
+    "DailyTaskSelect": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "DailyTaskSelect",
+        "custom_action_param": {
+            "DailySweep": 1,
+            "WildernessExplore": 1,
+            "SendLizards": 1,
+            "AlchemySignboard": 1,
+            "DailySignIn": 1,
+            "SkyExplore": 1,
+            "RuinsExplore": 1,
+            "CircusTask": 1
+        },
+        "next": [
+            "ReturnBigMap"
+        ],
+        "post_delay": 1000
     },
     "DailySweep": {
         "recognition": "TemplateMatch",
@@ -27,12 +81,13 @@
         "action": "Click",
         "post_delay": 1000,
         "next": [
-            "Sub_DailySweep_Entry",
             "DailySweep_Start"
+        ],
+        "interrupt": [
+            "DailySweep_Entry"
         ]
     },
-    "Sub_DailySweep_Entry": {
-        "is_sub": true,
+    "DailySweep_Entry": {
         "recognition": "OCR",
         "expected": "扫荡计划",
         "roi": [
@@ -61,6 +116,9 @@
         "next": [
             "DailySweep_Fail",
             "DailySweep_Finish"
+        ],
+        "interrupt": [
+            "DailySweep_Confirm"
         ]
     },
     "DailySweep_Finish": {
@@ -69,10 +127,10 @@
             "扫荡完成"
         ],
         "roi": [
-            279,
-            136,
-            155,
-            42
+            167,
+            47,
+            398,
+            232
         ],
         "action": "Click",
         "post_delay": 500,
@@ -89,44 +147,72 @@
             270,
             123
         ],
-        "post_delay": 200,
+        "post_delay": 500,
         "next": [
             "BackButton_Twice"
         ]
+    },
+    "DailySweep_Confirm": {
+        "recognition": "OCR",
+        "expected": "继续扫荡",
+        "roi": [
+            45,
+            302,
+            640,
+            554
+        ],
+        "action": "Click",
+        "post_delay": 1000
     },
     "WildernessExplore": {
         "recognition": "TemplateMatch",
         "template": [
             "dailyTask/WildernessExplore.png"
         ],
+        "roi": [
+            58,
+            185,
+            609,
+            929
+        ],
         "action": "Click",
         "post_delay": 1000,
         "next": [
             "WildernessExploring",
+            "WildernessExplored",
             "WildernessExplore_start"
         ]
     },
     "WildernessExploring": {
         "recognition": "OCR",
         "expected": "荒野探索中",
-        "post_delay": 200,
+        "post_delay": 1000,
         "next": "BackButton"
     },
     "WildernessExplored": {
+        "post_delay": 2000,
         "recognition": "OCR",
         "expected": "探索结束",
-        "post_delay": 200,
+        "roi": [
+            204,
+            227,
+            301,
+            415
+        ],
         "timeout": 2000,
         "action": "Click",
         "target": [
-            360,
-            916,
-            10,
-            10
+            148,
+            874,
+            422,
+            96
         ],
         "next": [
-            "Sub_Flip",
-            "Sub_ConfirmButton"
+            "BackButton"
+        ],
+        "interrupt": [
+            "FlipPage",
+            "ConfirmButton"
         ]
     },
     "WildernessExplore_start": {
@@ -149,11 +235,13 @@
         "action": "Click",
         "post_delay": 1000,
         "next": [
-            "SendLizards_finish",
-            "SendLizards_start"
+            "SendLizards_fail",
+            "SendLizards_start",
+            "SendLizards_finish"
         ]
     },
     "SendLizards_finish": {
+        "post_delay": 1000,
         "recognition": "OCR",
         "expected": "距离下次领取",
         "roi": [
@@ -165,6 +253,7 @@
         "next": "BackButton"
     },
     "SendLizards_start": {
+        "post_delay": 1000,
         "recognition": "OCR",
         "expected": "派遣魔蜥",
         "roi": [
@@ -174,19 +263,40 @@
             44
         ],
         "action": "Click",
-        "next": "BackButton"
+        "next": [
+            "BackButton"
+        ]
+    },
+    "SendLizards_fail": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "roi": [
+            154,
+            860,
+            419,
+            84
+        ],
+        "expected": "购买",
+        "next": [
+            "BackButton"
+        ]
     },
     "AlchemySignboard": {
         "recognition": "TemplateMatch",
-        "template": "dailyTask/AlchemySignboard.png",
+        "template": [
+            "dailyTask/AlchemySignboard.png",
+            "dailyTask/AlchemyIron.png"
+        ],
         "action": "Click",
         "post_delay": 1000,
         "next": [
-            "AlchemySignboard_finish",
-            "AlchemySignboard_Start"
+            "AlchemySignboard_Start",
+            "AlchemySignboard_fail",
+            "AlchemySignboard_finish"
         ]
     },
     "AlchemySignboard_finish": {
+        "post_delay": 1000,
         "recognition": "OCR",
         "expected": "距离下次领取",
         "roi": [
@@ -198,6 +308,7 @@
         "next": "BackButton"
     },
     "AlchemySignboard_Start": {
+        "post_delay": 1000,
         "recognition": "OCR",
         "expected": "领取",
         "roi": [
@@ -208,7 +319,25 @@
         ],
         "action": "Click",
         "next": [
-            "Sub_ConfirmButton",
+            "CheckHall"
+        ],
+        "interrupt": [
+            "BackButton",
+            "ConfirmButton",
+            "ClickCenter"
+        ]
+    },
+    "AlchemySignboard_fail": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "roi": [
+            154,
+            860,
+            419,
+            84
+        ],
+        "expected": "购买",
+        "next": [
             "BackButton"
         ]
     },
@@ -233,8 +362,15 @@
             183,
             60
         ],
-        "post_delay": 200,
-        "next": "BackButton"
+        "post_delay": 1000,
+        "next": [
+            "CheckHall"
+        ],
+        "interrupt": [
+            "BackButton",
+            "ConfirmButton",
+            "ClickCenter"
+        ]
     },
     "DailySignIn_start": {
         "recognition": "OCR",
@@ -248,18 +384,22 @@
             144,
             65
         ],
-        "post_delay": 500,
+        "post_delay": 1000,
         "action": "Click",
         "next": [
-            "Sub_ConfirmButton",
-            "BackButton"
+            "CheckHall"
+        ],
+        "interrupt": [
+            "ConfirmButton",
+            "BackButton",
+            "ClickCenter"
         ]
     },
     "SkyExplore": {
         "recognition": "TemplateMatch",
         "template": "dailyTask/SkyExplore.png",
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 1000,
         "next": [
             "SkyExplore_Start"
         ]
@@ -267,7 +407,7 @@
     "SkyExplore_Start": {
         "recognition": "OCR",
         "expected": "自动探索",
-        "post_delay": 200,
+        "post_delay": 1000,
         "action": "Click",
         "roi": [
             270,
@@ -284,8 +424,21 @@
     "SkyExplore_LackOfEnergy": {
         "recognition": "OCR",
         "expected": "能量不足",
-        "post_delay": 500,
-        "next": "BackButton"
+        "roi": [
+            68,
+            275,
+            613,
+            204
+        ],
+        "post_delay": 1000,
+        "next": [
+            "CheckHall"
+        ],
+        "interrupt": [
+            "BackButton",
+            "ConfirmButton",
+            "ClickCenter"
+        ]
     },
     "SkyExplore_LackOfBox": {
         "recognition": "OCR",
@@ -296,8 +449,15 @@
             533,
             113
         ],
-        "post_delay": 500,
-        "next": "BackButton"
+        "post_delay": 1000,
+        "next": [
+            "CheckHall"
+        ],
+        "interrupt": [
+            "BackButton",
+            "ConfirmButton",
+            "ClickCenter"
+        ]
     },
     "SkyExplore_Finish": {
         "recognition": "OCR",
@@ -308,13 +468,26 @@
             184,
             75
         ],
-        "post_delay": 500,
+        "post_delay": 1000,
         "action": "Click",
-        "next": "BackButton"
+        "next": [
+            "CheckHall"
+        ],
+        "interrupt": [
+            "BackButton",
+            "ConfirmButton",
+            "ClickCenter"
+        ]
     },
     "RuinsExplore": {
         "recognition": "TemplateMatch",
         "template": "dailyTask/RuinsExplore.png",
+        "roi": [
+            47,
+            262,
+            625,
+            846
+        ],
         "action": "Click",
         "post_delay": 1000,
         "next": [
@@ -331,7 +504,7 @@
             58
         ],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 1000,
         "next": [
             "RuinsExplore_Resource"
         ]
@@ -347,7 +520,7 @@
             353,
             255
         ],
-        "post_delay": 500,
+        "post_delay": 1000,
         "action": "Click",
         "next": [
             "RuinsExplore_Nothing",
@@ -366,9 +539,16 @@
             437,
             70
         ],
-        "post_delay": 500,
+        "post_delay": 1000,
         "action": "Click",
-        "next": "BackButton_Twice"
+        "next": [
+            "CheckHall"
+        ],
+        "interrupt": [
+            "BackButton",
+            "ConfirmButton",
+            "ClickCenter"
+        ]
     },
     "Sub_RuinsExplore_Rubbish": {
         "is_sub": true,
@@ -382,7 +562,7 @@
             597,
             248
         ],
-        "post_delay": 500,
+        "post_delay": 1000,
         "action": "Click"
     },
     "RuinsExplore_EntryFight": {
@@ -396,7 +576,7 @@
             597,
             248
         ],
-        "post_delay": 500,
+        "post_delay": 1000,
         "action": "Click",
         "next": "RuinsExplore_Fight"
     },
@@ -411,11 +591,156 @@
             210,
             60
         ],
-        "post_delay": 500,
+        "post_delay": 2000,
         "action": "Click",
         "next": [
-            "Sub_ConfirmButton",
-            "BackButton_Twice"
+            "CheckHall"
+        ],
+        "interrupt": [
+            "BackButton",
+            "ConfirmButton",
+            "ClickCenter"
+        ]
+    },
+    "CircusTask": {
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/CircusTask.png",
+        "roi": [
+            47,
+            262,
+            625,
+            846
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "CircusTask_Start"
+        ]
+    },
+    "CircusTask_Start": {
+        "post_delay": 3000,
+        "recognition": "OCR",
+        "roi": [
+            37,
+            842,
+            197,
+            207
+        ],
+        "expected": [
+            "QUEST0/2",
+            "0/2"
+        ],
+        "action": "Click",
+        "target": [
+            49,
+            648,
+            625,
+            134
+        ],
+        "next": [
+            "CheckCircus"
+        ],
+        "interrupt": [
+            "BackButton",
+            "PowerLack",
+            "ConfirmButton",
+            "ClickCenter"
+        ]
+    },
+    "CircusTask_ObtainReward": {
+        "post_delay": 1000,
+        "recognition": "DirectHit",
+        "roi": [
+            37,
+            842,
+            197,
+            207
+        ],
+        "expected": [
+            "QUEST2/2",
+            "2/2"
+        ],
+        "action": "Custom",
+        "custom_action": "CircusReward"
+    },
+    "CheckCircus": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "roi": [
+            201,
+            280,
+            330,
+            163
+        ],
+        "expected": "马戏团任务",
+        "next": [
+            "CircusTask_ObtainReward"
+        ]
+    },
+    "getCircusReward_01": {
+        "timeout": 1000,
+        "post_delay": 1000,
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/CircusFinishIcon.png",
+        "roi": [
+            470,
+            387,
+            216,
+            416
+        ],
+        "action": "Click",
+        "next": [
+            "ConfirmButton"
+        ]
+    },
+    "getCircusReward_02": {
+        "timeout": 1000,
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "roi": [
+            37,
+            842,
+            197,
+            207
+        ],
+        "expected": [
+            "QUEST2/2",
+            "2/2"
+        ],
+        "action": "Click",
+        "target_offset": [
+            0,
+            0,
+            0,
+            -20
+        ],
+        "next": [
+            "drawReward"
+        ]
+    },
+    "getCircusReward_03": {
+        "timeout": 1000,
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "roi": [
+            37,
+            842,
+            197,
+            207
+        ],
+        "expected": [
+            "QUEST10/10",
+            "10/10"
+        ],
+        "action": "Click",
+        "target_offset": [
+            0,
+            0,
+            0,
+            -20
+        ],
+        "next": [
+            "drawReward"
         ]
     }
 }

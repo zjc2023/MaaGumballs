@@ -443,6 +443,7 @@ enc_temp_folder/*
 deps
 build
 install
+.nicegui
 
 # Tools
 tools/ImageCropper/**/*.png
