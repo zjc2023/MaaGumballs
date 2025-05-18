@@ -10,6 +10,8 @@ from action import GoDownstairsTrick
 from action import DailyTask
 from action import CircusReward
 from action import Reward
+from action import SunlightTrick
+from action import PoolTrick
 
 # 获取当前工作目录
 
