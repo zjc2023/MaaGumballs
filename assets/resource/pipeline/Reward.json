@@ -153,5 +153,35 @@
         ],
         "post_delay": 1000,
         "timeout": 2000
+    },
+    "ObtainFriendReward": {
+        "recognition": "TemplateMatch",
+        "template": "reward/friendReward.png",
+        "roi": [
+            581,
+            585,
+            74,
+            61
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "OneClickCompleteAllReward_Friend"
+        ]
+    },
+    "OneClickCompleteAllReward_Friend": {
+        "recognition": "OCR",
+        "expected": "一键领取",
+        "roi": [
+            5,
+            1104,
+            261,
+            175
+        ],
+        "action": "Click",
+        "next": [
+            "ReturnBigMap"
+        ]
     }
 }

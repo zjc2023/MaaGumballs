@@ -38,6 +38,11 @@
             "doc": "一键完成联盟所有的任务，并领取联盟礼包奖励"
         },
         {
+            "name": "一键领取好友礼物",
+            "entry": "ObtainFriendReward",
+            "doc": "一键完成领取好友礼物,并领取奖励,完成后回到大地图"
+        },
+        {
             "name": "黑永恒",
             "entry": "GoDownstairsTrick",
             "option": [
