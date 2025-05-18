@@ -661,7 +661,10 @@
             "2/2"
         ],
         "action": "Custom",
-        "custom_action": "CircusReward"
+        "custom_action": "CircusReward",
+        "next": [
+            "ReturnHall"
+        ]
     },
     "CheckCircus": {
         "post_delay": 1000,

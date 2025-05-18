@@ -7,7 +7,7 @@
         "post_delay": 500,
         "timeout": 200
     },
-    "StopAppV2":{
+    "StopAppV2": {
         "action": "StopApp",
         "package": "com.v2ray.ang",
         "post_delay": 2000,
@@ -19,9 +19,12 @@
         "post_delay": 2000,
         "next": "DisconnectInternet"
     },
-    "DisconnectInternet":{
+    "DisconnectInternet": {
         "recognition": "TemplateMatch",
-        "template": ["utils/DisconnectInternet.png","utils/ConnectInternet.png"],
+        "template": [
+            "utils/DisconnectInternet.png",
+            "utils/ConnectInternet.png"
+        ],
         "action": "Click",
         "post_delay": 2000,
         "next": "Opengumballs_Mi"
@@ -33,9 +36,8 @@
     "Opengumballs_Mi": {
         "action": "StartApp",
         "package": "com.leiting.gumballs.mi"
-
     },
-    "LogoutGame":{
+    "LogoutGame": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\SettingButton.png"
@@ -43,9 +45,8 @@
         "action": "Click",
         "threshold": 0.8,
         "next": "LogoutGame_Next"
-
     },
-    "LogoutGame_Next":{
+    "LogoutGame_Next": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\AccountInfo.png"
@@ -53,15 +54,14 @@
         "action": "Click",
         "threshold": 0.8,
         "next": "LogoutGame_Next_2"
-
     },
-    "LogoutGame_Next_2":{
+    "LogoutGame_Next_2": {
         "recognition": "TemplateMatch",
         "template": "utils\\LogoutButton.png",
         "action": "Click",
         "threshold": 0.8
     },
-    "ReturnMaze":{
+    "ReturnMaze": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\StartGame.png"
@@ -71,7 +71,7 @@
         "post_delay": 6000,
         "next": "ReturnMaze_Next"
     },
-    "ReturnMaze_Next":{
+    "ReturnMaze_Next": {
         "recognition": "OCR",
         "expected": [
             "确定",
@@ -80,15 +80,13 @@
         "action": "Click",
         "next": "ReturnMaze_Next_2"
     },
-    "ReturnMaze_Next_2":{
+    "ReturnMaze_Next_2": {
         "recognition": "OCR",
-        "expected":"继续冒险",
+        "expected": "继续冒险",
         "action": "Click",
         "threshold": 0.8
     },
-
-
-    "CheckClosedDoor":{
+    "CheckClosedDoor": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\ClosedDoor.png"
@@ -96,7 +94,7 @@
         "action": "DoNothing",
         "threshold": 0.8
     },
-    "OpenEquipmentPackage":{
+    "OpenEquipmentPackage": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\ConfirmEquipmentPack.png"
@@ -111,12 +109,11 @@
         "custom_action": "CheckGridMod",
         "post_delay": 300,
         "timeout": 1000,
-
         "interrupt": [
             "BackButton"
         ]
     },
-    "Use_Earthquake":{
+    "Use_Earthquake": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\skill_pack.png"
@@ -125,46 +122,66 @@
         "threshold": 0.8,
         "post_delay": 500,
         "next": "ClickEarthMagicPage"
-    },    
-    "ClickEarthMagicPage":{
-        "recognition": "OCR",
-        "expected":["魔法"],
-        "action": "Click",
-        "target":[593,504,86,72],
-        "next":"ClickEarthMagic"
     },
-    "ClickEarthMagic":{
+    "ClickEarthMagicPage": {
         "recognition": "OCR",
-        "expected":["地震术"],
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "target": [
+            593,
+            504,
+            86,
+            72
+        ],
+        "next": "ClickEarthMagic"
+    },
+    "ClickEarthMagic": {
+        "recognition": "OCR",
+        "expected": [
+            "地震术"
+        ],
         "action": "Click",
         "threshold": 0.8,
         "next": "CastEarthMagic"
     },
-    "CastEarthMagic":{
+    "CastEarthMagic": {
         "recognition": "OCR",
-        "expected":["地震术"],
+        "expected": [
+            "地震术"
+        ],
         "action": "Click",
         "threshold": 0.8,
-        "target":[593,504,86,72]
+        "target": [
+            593,
+            504,
+            86,
+            72
+        ]
     },
-    "ClickEquipmentChest":{
+    "ClickEquipmentChest": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\EquipmentChest.png"
         ],
         "action": "Click"
-
     },
-    "KillChestMonster":{
+    "KillChestMonster": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\ChestMonsterCorner.png"
         ],
         "action": "Click",
-        "target_offset": [-50, 50, 0, 0],
+        "target_offset": [
+            -50,
+            50,
+            0,
+            0
+        ],
         "threshold": 0.8,
-        "next":"KillChestMonster",
-        "timeout":3000,
+        "next": "KillChestMonster",
+        "timeout": 3000,
         "on_error": "ClickEquipmentChest"
     }
 }

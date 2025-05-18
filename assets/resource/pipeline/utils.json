@@ -12,7 +12,7 @@
             75
         ],
         "action": "Click",
-        "post_delay": 200
+        "post_delay": 500
     },
     "Sub_BackText": {
         "is_sub": true,
@@ -27,7 +27,7 @@
             75
         ],
         "action": "Click",
-        "post_delay": 200,
+        "post_delay": 500,
         "timeout": 100
     },
     "BackButton": {
@@ -42,7 +42,7 @@
             75
         ],
         "action": "Click",
-        "post_delay": 200,
+        "post_delay": 500,
         "timeout": 100
     },
     "BackText": {
@@ -57,7 +57,7 @@
             75
         ],
         "action": "Click",
-        "post_delay": 200,
+        "post_delay": 500,
         "timeout": 100
     },
     "BackButton_Twice": {
@@ -73,7 +73,7 @@
         ],
         "action": "Click",
         "next": "BackButton",
-        "post_delay": 200,
+        "post_delay": 500,
         "timeout": 100
     },
     "BackButton_Third": {
@@ -89,7 +89,7 @@
         ],
         "action": "Click",
         "next": "BackButton_Twice",
-        "post_delay": 200,
+        "post_delay": 500,
         "timeout": 100
     },
     "Sub_Flip": {
@@ -147,6 +147,8 @@
             "CheckHall"
         ],
         "interrupt": [
+            "FlipPage",
+            "ConfirmButton",
             "BackText"
         ]
     },
