@@ -6,6 +6,8 @@
         ],
         "action": "Click",
         "threshold": 0.8,
+        "roi" : [0,0,110,91],
+        "post_delay": 1000,
         "next":"Save_Status_Text"
     },
     "Save_Status_Text":{
@@ -15,6 +17,8 @@
         ],
         "action": "Click",
         "threshold": 0.8,
+        "roi" : [5,1109,714,170],
+        "post_delay": 1000,
         "next":"Inter_ConfirmButton"
     },
     "Inter_ConfirmButton": {
@@ -24,6 +28,8 @@
             "确认",
             "重新连接"
         ],
+        "roi" : [26,554,662,368],
+        "post_delay": 1000,
         "action": "Click",
         "next":"ReturnMazeButton"
     },
@@ -34,6 +40,8 @@
         ],
         "action": "Click",
         "threshold": 0.8,
+        "roi" : [435,144,143,158],
+        "post_delay": 3000,
         "interrupt":"Inter_ConfirmButton",
         "next":"ConfirmEquipmentPack"
     },

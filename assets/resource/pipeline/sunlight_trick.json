@@ -13,7 +13,7 @@
         "roi" : [17,832,168,168],
         "action": "Click",
         "threshold": 0.8,
-        "post_delay": 500,
+        "post_delay": 1000,
         "on_error":["OpenArmorPage2"],
         "timeout": 1000
     },
@@ -22,7 +22,7 @@
         "template": "divineForgeLand\\Armor_2.png",
         "roi" : [352,77,367,119],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 1000,
         "threshold": 0.8,
         "timeout": 1000
     },
@@ -31,6 +31,7 @@
         "recognition": "TemplateMatch",
         "template": "divineForgeLand\\ImprintPage.png",
         "roi":[59,1178,150,66],
+        "post_delay": 1000,
         "action": "Click",
         "threshold": 0.8
     },
@@ -40,7 +41,7 @@
         "template": "divineForgeLand\\SunlightImprint.png",
         "roi": [166,268,395,368],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 1000,
         "threshold": 0.8
     },
     "ClickStarlightImprint":{
@@ -48,7 +49,7 @@
         "template": "divineForgeLand\\StarlightImprint.png",
         "roi": [166,268,395,368],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 1000,
         "threshold": 0.8
     },
 
@@ -57,6 +58,7 @@
     "expected":["%"],
     "action": "DoNothing",
     "roi":[77,727,570,101],
+    "post_delay": 1000,
     "threshold": 0.8
     },
 
@@ -66,6 +68,7 @@
         "roi" : [528,1122,175,157],
         "action": "Click",
         "threshold": 0.8,
+        "post_delay": 1000,
         "next":["ClickWaterMagicPage"]
     },
     "ClickWaterMagicPage":{
@@ -74,6 +77,7 @@
         "expected":["魔法"],
         "action": "Click",
         "target":[597,407,84,54],
+        "post_delay": 1000,
         "next":"ClickWaterMagic"
     },
 
@@ -84,6 +88,7 @@
         "action": "Click",
         "threshold": 0.8,
         "next": "CastWaterMagic",
+        "post_delay": 1000,
         "on_error":["ClickDarkMagicPage"]
     },
     "CastWaterMagic":{
@@ -92,6 +97,7 @@
         "expected":["治疗术", "寒冰护盾"],
         "action": "Click",
         "threshold": 0.8,
+        "post_delay": 1000,
         "target":[68,447,505,133]
     },
     "ClickDarkMagicPage":{
@@ -100,6 +106,7 @@
         "expected":["魔法"],
         "action": "Click",
         "target":[595,828,84,61],
+        "post_delay": 1000,
         "next":"ClickDarkMagic"
     },
     "ClickDarkMagic":{
@@ -108,6 +115,7 @@
         "expected":["死亡波纹", "吸能术"],
         "action": "Click",
         "threshold": 0.8,
+        "post_delay": 1000,
         "next": "CastDarkMagic"
     },
     "CastDarkMagic":{
@@ -116,6 +124,7 @@
         "expected":["死亡波纹", "吸能术"],
         "action": "Click",
         "threshold": 0.8,
+        "post_delay": 1000,
         "target":[595,828,84,61]
     },
 
@@ -128,6 +137,7 @@
         ],
         "action": "DoNothing",
         "threshold": 0.8,
+        "post_delay": 1000,
         "on_error":"PushOne",
         "timeout": 1000
     },
@@ -136,6 +146,7 @@
         "expected":"翻找",
         "roi" : [117,756,495,152],
         "action": "Click",
+        "post_delay": 1000,
         "threshold": 0.8
     }
 }

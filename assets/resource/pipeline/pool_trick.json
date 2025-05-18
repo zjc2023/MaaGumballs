@@ -13,6 +13,7 @@
         "roi" : [504,291,138,36],
         "expected":"\\d+",
         "action": "DoNothing",
+        "post_delay": 1000,
         "timeout": 1000
     },
     "OCRArmorMAG":{
@@ -20,6 +21,7 @@
         "roi" : [514,395,119,33],
         "expected":"\\d+",
         "action": "DoNothing",
+        "post_delay": 1000,
         "timeout": 1000
     },
     "SearchPool":{
@@ -30,6 +32,7 @@
         ],
         "action": "DoNothing",
         "threshold": 0.8,
+        "post_delay": 1000,
         "on_error":"PushOne",
         "timeout": 1000
     },
@@ -38,6 +41,7 @@
         "expected":"浸泡铠甲",
         "roi" : [31,765,658,145],
         "action": "Click",
+        "post_delay": 1000,
         "threshold": 0.8
     }
 }
