@@ -43,7 +43,7 @@
         ],
         "action": "Click",
         "post_delay": 500,
-        "timeout": 100
+        "timeout": 200
     },
     "BackText": {
         "recognition": "OCR",
@@ -58,7 +58,7 @@
         ],
         "action": "Click",
         "post_delay": 500,
-        "timeout": 100
+        "timeout": 200
     },
     "BackButton_Twice": {
         "recognition": "TemplateMatch",

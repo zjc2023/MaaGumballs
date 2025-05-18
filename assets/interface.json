@@ -33,22 +33,17 @@
             "doc": "每日收菜，需要在大地图主界面"
         },
         {
-            "name": "TL01_Start_Count",
-            "entry": "TL01_Start_Count",
-            "option": [
-                "刷取次数"
-            ],
-            "doc": "限时活动，坠落降临。该任务是从大地图到迷宫打怪自动的全过程，如果已经在迷宫里面了请使用TL01_Fighting，需要点开该项，并设置刷取次数，再点击开始任务"
-        },
-        {
-            "name": "TL01_Fighting",
-            "entry": "TL01_Fighting",
-            "doc": "该任务是已经在活动迷宫里时，开启，仅作战一次"
+            "name": "联盟奖励",
+            "entry": "UnionReward_Start",
+            "doc": "一键完成联盟所有的任务，并领取联盟礼包奖励"
         },
         {
             "name": "黑永恒",
             "entry": "GoDownstairsTrick",
-            "doc": "使用黑下楼，需要V2ray应用"
+            "option": [
+                "服务器"
+            ],
+            "doc": "使用黑下楼,需要V2ray应用"
         }
     ],
     "option": {
@@ -149,6 +144,28 @@
                                     "BackButton"
                                 ]
                             }
+                        }
+                    }
+                }
+            ]
+        },
+        "服务器": {
+            "cases": [
+                {
+                    "name": "官服（默认）",
+                    "pipeline_override": {
+                        "Opengumballs_Auto": {
+                            "action": "StartApp",
+                            "package": "com.leiting.gumballs.leiting"
+                        }
+                    }
+                },
+                {
+                    "name": "小米服",
+                    "pipeline_override": {
+                        "Opengumballs_Auto": {
+                            "action": "StartApp",
+                            "package": "com.leiting.gumballs.mi"
                         }
                     }
                 }

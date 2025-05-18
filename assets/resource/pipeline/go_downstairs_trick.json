@@ -11,7 +11,7 @@
         "action": "StopApp",
         "package": "com.v2ray.ang",
         "post_delay": 2000,
-        "next": "Opengumballs_Mi"
+        "next": "Opengumballs_Auto"
     },
     "StartAppV2": {
         "action": "StartApp",
@@ -27,7 +27,11 @@
         ],
         "action": "Click",
         "post_delay": 2000,
-        "next": "Opengumballs_Mi"
+        "next": "Opengumballs_Auto"
+    },
+    "Opengumballs_Auto": {
+        "action": "StartApp",
+        "package": "com.leiting.gumballs.leiting"
     },
     "Opengumballs_Base": {
         "action": "StartApp",

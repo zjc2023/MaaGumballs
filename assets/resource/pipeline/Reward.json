@@ -1,0 +1,157 @@
+{
+    "UnionReward_Start": {
+        "next": [
+            "CheckUnionWindows_Next"
+        ],
+        "interrupt": [
+            "EntryUnion",
+            "ReturnBigMap",
+            "ConfirmButton"
+        ]
+    },
+    "CheckUnionWindows_Next": {
+        "recognition": "OCR",
+        "expected": [
+            "悬赏"
+        ],
+        "roi": [
+            269,
+            1180,
+            196,
+            84
+        ],
+        "post_delay": 1000,
+        "timeout": 2000,
+        "action": "Custom",
+        "custom_action": "UnionReward_Execute",
+        "next": [
+            "ReturnBigMap"
+        ]
+    },
+    "EntryUnion": {
+        "recognition": "OCR",
+        "expected": [
+            "联盟"
+        ],
+        "roi": [
+            360,
+            1131,
+            355,
+            141
+        ],
+        "post_delay": 1000,
+        "timeout": 2000,
+        "action": "Click"
+    },
+    "EntryUnionShop": {
+        "recognition": "OCR",
+        "expected": [
+            "商店"
+        ],
+        "roi": [
+            39,
+            1166,
+            186,
+            85
+        ],
+        "post_delay": 1000,
+        "timeout": 2000,
+        "action": "Click"
+    },
+    "EntryUnionReward": {
+        "recognition": "OCR",
+        "expected": "联盟礼包",
+        "roi": [
+            145,
+            728,
+            440,
+            190
+        ],
+        "post_delay": 1000,
+        "timeout": 2000,
+        "action": "Click",
+        "next": [
+            "CheckUnionRewardWindow"
+        ]
+    },
+    "CheckUnionRewardWindow": {
+        "recognition": "OCR",
+        "expected": "联盟礼包",
+        "roi": [
+            185,
+            113,
+            357,
+            275
+        ],
+        "post_delay": 1000,
+        "timeout": 2000,
+        "action": "Custom",
+        "custom_action": "UnionReward"
+    },
+    "ObtainUnionReward": {
+        "pre_delay": 1000,
+        "post_delay": 1000,
+        "timeout": 2000,
+        "action": "Click",
+        "target": [
+            21,
+            1129,
+            235,
+            137
+        ],
+        "next": [
+            "BackText"
+        ],
+        "interrupt": [
+            "FlipPage",
+            "ConfirmButton"
+        ]
+    },
+    "EntryUnionTask": {
+        "recognition": "OCR",
+        "expected": "联盟任务",
+        "roi": [
+            145,
+            728,
+            440,
+            190
+        ],
+        "post_delay": 1000,
+        "timeout": 2000,
+        "action": "Click",
+        "next": "OneClickCompleteAllTask"
+    },
+    "OneClickCompleteAllTask": {
+        "recognition": "OCR",
+        "expected": "一键完成",
+        "roi": [
+            36,
+            1177,
+            179,
+            75
+        ],
+        "post_delay": 4000,
+        "timeout": 2000,
+        "action": "Click",
+        "next": "CheckUnionWindows",
+        "interrupt": [
+            "FlipPage",
+            "ConfirmButton",
+            "BackText"
+        ]
+    },
+    "CheckUnionWindows": {
+        "recognition": "OCR",
+        "expected": [
+            "悬赏"
+        ],
+        "roi": [
+            269,
+            1180,
+            196,
+            84
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    }
+}
