@@ -48,7 +48,20 @@
             "option": [
                 "服务器"
             ],
-            "doc": "使用黑下楼,需要V2ray应用"
+            "doc": "黑永恒，需要V2ray应用,需要一张地震术，9/19层最好穿上铠甲来保证地震术可以翻开所有地板。下楼之前确保目标装备栏不要装备上除目标准备以外的装备，即在黑永恒时头，手，武器以及披风位置不要装备除永恒套的其他装备。"
+        },
+        {
+            "name": "黑日光",
+            "entry": "SunlightTrick",
+            "option": [
+                "目标物"
+            ],
+            "doc": "黑日光，翻找蓝尸体或者破碎武器，默认只接受日光，要求佩戴骨戒，通过释放治疗术，冰盾，死波和吸能术来推序。"
+        },
+        {
+            "name": "黑水池",
+            "entry": "PoolTrick",
+            "doc": "黑水池，浸泡铠甲期望增加攻击，要求佩戴骨戒，通过释放治疗术，冰盾，死波和吸能术来推序。"
         }
     ],
     "option": {
@@ -171,6 +184,31 @@
                         "Opengumballs_Auto": {
                             "action": "StartApp",
                             "package": "com.leiting.gumballs.mi"
+                        }
+                    }
+                }
+            ]
+        },
+        "目标物": {
+            "default_case": "只接受日光",
+            "cases": [
+                {
+                    "name": "接受星光",
+                    "pipeline_override": {
+                        "SunlightTrick": {
+                            "custom_action_param": {
+                                "accept_sunlight": true
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "只接受日光",
+                    "pipeline_override": {
+                        "SunlightTrick": {
+                            "custom_action_param": {
+                                "accept_sunlight": false
+                            }
                         }
                     }
                 }

@@ -4,7 +4,7 @@
         "action": "Custom",
         "pre_delay": 500,
         "custom_action": "GoDownstairsTrick_Test",
-        "post_delay": 500,
+        "post_delay": 1000,
         "timeout": 200
     },
     "StopAppV2": {
@@ -48,6 +48,8 @@
         ],
         "action": "Click",
         "threshold": 0.8,
+        "post_delay": 1000,
+        "roi" : [588,3,131,121],
         "next": "LogoutGame_Next"
     },
     "LogoutGame_Next": {
@@ -57,12 +59,16 @@
         ],
         "action": "Click",
         "threshold": 0.8,
+        "post_delay": 1000,
+        "roi" : [84,484,135,172],
         "next": "LogoutGame_Next_2"
     },
     "LogoutGame_Next_2": {
         "recognition": "TemplateMatch",
         "template": "utils\\LogoutButton.png",
         "action": "Click",
+        "post_delay": 1000,
+        "roi" : [0,1125,270,154],
         "threshold": 0.8
     },
     "ReturnMaze": {
@@ -72,7 +78,8 @@
         ],
         "action": "Click",
         "threshold": 0.8,
-        "post_delay": 6000,
+        "post_delay": 7000,
+        "roi" : [133,691,428,166],
         "next": "ReturnMaze_Next"
     },
     "ReturnMaze_Next": {
@@ -82,12 +89,16 @@
             "确认"
         ],
         "action": "Click",
+        "post_delay": 1000,
+        "roi" : [24,639,677,293],
         "next": "ReturnMaze_Next_2"
     },
     "ReturnMaze_Next_2": {
         "recognition": "OCR",
         "expected": "继续冒险",
         "action": "Click",
+        "post_delay": 1000,
+        "roi" : [28,649,340,180],
         "threshold": 0.8
     },
     "CheckClosedDoor": {
@@ -104,18 +115,9 @@
             "utils\\ConfirmEquipmentPack.png"
         ],
         "action": "Click",
-        "post_delay": 500,
+        "roi" : [0,1116,187,163],
+        "post_delay": 1000,
         "threshold": 0.8
-    },
-    "CheckGridMod": {
-        "recognition": "DirectHit",
-        "action": "Custom",
-        "custom_action": "CheckGridMod",
-        "post_delay": 300,
-        "timeout": 1000,
-        "interrupt": [
-            "BackButton"
-        ]
     },
     "Use_Earthquake": {
         "recognition": "TemplateMatch",
@@ -124,7 +126,8 @@
         ],
         "action": "Click",
         "threshold": 0.8,
-        "post_delay": 500,
+        "post_delay": 1000,
+        "roi" : [526,1113,193,166],
         "next": "ClickEarthMagicPage"
     },
     "ClickEarthMagicPage": {
@@ -133,12 +136,9 @@
             "魔法"
         ],
         "action": "Click",
-        "target": [
-            593,
-            504,
-            86,
-            72
-        ],
+        "roi" : [201,286,224,89],
+        "target": [593,504,86,72],
+        "post_delay": 1000,
         "next": "ClickEarthMagic"
     },
     "ClickEarthMagic": {
@@ -146,8 +146,10 @@
         "expected": [
             "地震术"
         ],
+        "roi" : [52,468,521,103],
         "action": "Click",
         "threshold": 0.8,
+        "post_delay": 1000,
         "next": "CastEarthMagic"
     },
     "CastEarthMagic": {
@@ -156,19 +158,17 @@
             "地震术"
         ],
         "action": "Click",
+        "roi" : [8,974,711,187],
         "threshold": 0.8,
-        "target": [
-            593,
-            504,
-            86,
-            72
-        ]
+        "post_delay": 1000,
+        "target": [593,504,86,72]
     },
     "ClickEquipmentChest": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\EquipmentChest.png"
         ],
+        "post_delay": 1000,
         "action": "Click"
     },
     "KillChestMonster": {
@@ -184,6 +184,7 @@
             0
         ],
         "threshold": 0.8,
+        "post_delay": 500,
         "next": "KillChestMonster",
         "timeout": 3000,
         "on_error": "ClickEquipmentChest"
