@@ -127,7 +127,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: MaaGumballs-${{ matrix.os }}-${{ matrix.arch }}
+          name: MaaGumballs-${{ matrix.os }}-${{ matrix.arch }}-${{ needs.meta.outputs.tag }}
           path: "install"
 
   release:
