@@ -9,7 +9,7 @@
     },
     "OpenArmorPage":{
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand\\Armor_1.png",
+        "template": "divineForgeLand/Armor_1.png",
         "roi" : [17,832,168,168],
         "action": "Click",
         "threshold": 0.8,
@@ -19,7 +19,7 @@
     },
     "OpenArmorPage2":{
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand\\Armor_2.png",
+        "template": "divineForgeLand/Armor_2.png",
         "roi" : [352,77,367,119],
         "action": "Click",
         "post_delay": 1000,
@@ -29,7 +29,7 @@
 
     "OpenImprintPage":{
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand\\ImprintPage.png",
+        "template": "divineForgeLand/ImprintPage.png",
         "roi":[59,1178,150,66],
         "post_delay": 1000,
         "action": "Click",
@@ -38,7 +38,7 @@
 
     "ClickSunlightImprint":{
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand\\SunlightImprint.png",
+        "template": "divineForgeLand/SunlightImprint.png",
         "roi": [166,268,395,368],
         "action": "Click",
         "post_delay": 1000,
@@ -46,7 +46,7 @@
     },
     "ClickStarlightImprint":{
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand\\StarlightImprint.png",
+        "template": "divineForgeLand/StarlightImprint.png",
         "roi": [166,268,395,368],
         "action": "Click",
         "post_delay": 1000,
@@ -64,7 +64,7 @@
 
     "PushOne":{
         "recognition": "TemplateMatch",
-        "template": "utils\\skill_pack.png",
+        "template": "utils/skill_pack.png",
         "roi" : [528,1122,175,157],
         "action": "Click",
         "threshold": 0.8,
@@ -132,8 +132,8 @@
         "recognition": "TemplateMatch",
         "roi" : [5,182,714,814],
         "template": [
-            "divineForgeLand\\BlueHatBody.png",
-            "divineForgeLand\\BrokenWeapon.png"
+            "divineForgeLand/BlueHatBody.png",
+            "divineForgeLand/BrokenWeapon.png"
         ],
         "action": "DoNothing",
         "threshold": 0.8,

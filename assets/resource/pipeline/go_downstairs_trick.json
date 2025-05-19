@@ -50,7 +50,7 @@
     "LogoutGame": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\SettingButton.png"
+            "utils/SettingButton.png"
         ],
         "action": "Click",
         "threshold": 0.8,
@@ -66,7 +66,7 @@
     "LogoutGame_Next": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\AccountInfo.png"
+            "utils/AccountInfo.png"
         ],
         "action": "Click",
         "threshold": 0.8,
@@ -81,7 +81,7 @@
     },
     "LogoutGame_Next_2": {
         "recognition": "TemplateMatch",
-        "template": "utils\\LogoutButton.png",
+        "template": "utils/LogoutButton.png",
         "action": "Click",
         "post_delay": 1000,
         "roi": [
@@ -95,7 +95,7 @@
     "ReturnMaze": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\StartGame.png"
+            "utils/StartGame.png"
         ],
         "action": "Click",
         "threshold": 0.8,
@@ -140,7 +140,7 @@
     "CheckClosedDoor": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\ClosedDoor.png"
+            "utils/ClosedDoor.png"
         ],
         "action": "DoNothing",
         "threshold": 0.8
@@ -148,7 +148,7 @@
     "OpenEquipmentPackage": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\ConfirmEquipmentPack.png"
+            "utils/ConfirmEquipmentPack.png"
         ],
         "action": "Click",
         "roi": [
@@ -163,7 +163,7 @@
     "Use_Earthquake": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\skill_pack.png"
+            "utils/skill_pack.png"
         ],
         "action": "Click",
         "threshold": 0.8,
@@ -237,7 +237,7 @@
     "ClickEquipmentChest": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\EquipmentChest.png"
+            "utils/EquipmentChest.png"
         ],
         "post_delay": 1000,
         "action": "Click"
@@ -245,7 +245,7 @@
     "KillChestMonster": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\ChestMonsterCorner.png"
+            "utils/ChestMonsterCorner.png"
         ],
         "action": "Click",
         "target_offset": [
