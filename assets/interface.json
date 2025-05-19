@@ -175,6 +175,10 @@
                         "Opengumballs_Auto": {
                             "action": "StartApp",
                             "package": "com.leiting.gumballs.leiting"
+                        },
+                        "ReturnMaze": {
+                            "post_delay": 1000,
+                            "next": "LoginWithPassword"
                         }
                     }
                 },
@@ -184,6 +188,9 @@
                         "Opengumballs_Auto": {
                             "action": "StartApp",
                             "package": "com.leiting.gumballs.mi"
+                        },
+                        "ReturnMaze": {
+                            "next": "ReturnMaze_Next"
                         }
                     }
                 }

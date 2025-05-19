@@ -16,7 +16,9 @@ class GoDownstairsTrick_Test(CustomAction):
                                         "recognition": "TemplateMatch",
                                         "template": [
                                             tartget_equipment_path
-                                        ]
+                                        ],
+                                        "roi" : [30,68,665,590],
+                                        "threshold": 0.7,
                                     }
                                 }
                             )
@@ -45,7 +47,11 @@ class GoDownstairsTrick_Test(CustomAction):
               "before_helmet: ", before_helmet,
               "before_weapon: ", before_weapon)
         
-        for i in range(101):
+        for i in range(2):
+            # if context.tasker.stopping:
+            #     print("检测到停止，退出")
+            #     return CustomAction.RunResult(success=False)
+            
             print("第", i, "次尝试")
             context.run_task("Save_Status")
             context.run_task("StartAppV2")

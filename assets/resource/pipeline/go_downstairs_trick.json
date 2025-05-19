@@ -23,7 +23,7 @@
         "recognition": "TemplateMatch",
         "template": [
             "utils/DisconnectInternet.png",
-            "utils/ConnectInternet.png"
+            "utils/DisconnectInternet_1.png"
         ],
         "roi": [
             484,
@@ -32,7 +32,8 @@
             233
         ],
         "action": "Click",
-        "post_delay": 2000,
+        "post_delay": 200,
+        "doc": "这里要快",
         "next": "Opengumballs_Auto"
     },
     "Opengumballs_Auto": {
@@ -136,6 +137,22 @@
             180
         ],
         "threshold": 0.8
+    },
+    "ReturnMaze_官服": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils/StartGame.png"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "roi": [
+            133,
+            691,
+            428,
+            166
+        ],
+        "next": "LoginWithPassword"
     },
     "CheckClosedDoor": {
         "recognition": "TemplateMatch",

@@ -240,5 +240,117 @@
         ],
         "action": "Click",
         "post_delay": 1000
+    },
+    "LoginWithPassword": {
+        "recognition": "OCR",
+        "expected": [
+            "雷霆账密登录",
+            "登录"
+        ],
+        "roi": [
+            47,
+            818,
+            366,
+            223
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "next": [
+            "LoginWithPassword_ClickDownIcon"
+        ]
+    },
+    "LoginWithPassword_ClickDownIcon": {
+        "recognition": "TemplateMatch",
+        "template": "utils/AcountDownIcon.png",
+        "roi": [
+            470,
+            443,
+            211,
+            218
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "LoginWithPassword_SelectAcount"
+        ]
+    },
+    "LoginWithPassword_SelectAcount": {
+        "recognition": "TemplateMatch",
+        "template": "utils/AcountCloseIcon.png",
+        "post_delay": 1000,
+        "roi": [
+            484,
+            484,
+            209,
+            237
+        ],
+        "action": "Click",
+        "target_offset": [
+            0,
+            0,
+            -200,
+            0
+        ],
+        "next": [
+            "LoginWithPassword_Confirm"
+        ]
+    },
+    "LoginWithPassword_Confirm": {
+        "recognition": "TemplateMatch",
+        "template": "utils/AcountConfirmIcon.png",
+        "roi": [
+            37,
+            720,
+            161,
+            164
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "LoginWithPassword_Login"
+        ]
+    },
+    "LoginWithPassword_Login": {
+        "recognition": "OCR",
+        "expected": "雷霆账号登录",
+        "roi": [
+            74,
+            727,
+            585,
+            270
+        ],
+        "action": "Click",
+        "post_delay": 8000,
+        "next": [
+            "ReturnMaze_continue"
+        ],
+        "interrupt": [
+            "AlchemyReward"
+        ]
+    },
+    "ReturnMaze_continue": {
+        "recognition": "OCR",
+        "expected": "继续冒险",
+        "action": "Click",
+        "post_delay": 1000,
+        "roi": [
+            28,
+            649,
+            340,
+            180
+        ],
+        "threshold": 0.8
+    },
+    "Communicating": {
+        "recognition": "OCR",
+        "expected": "通信中",
+        "roi": [
+            137,
+            501,
+            384,
+            272
+        ],
+        "post_delay": 200
     }
 }
