@@ -60,7 +60,7 @@
 
 ## 如何使用
 
-1. 点击链接下载最新[Release](https://github.com/KhazixW2/MaaGumballs/releases/tag/v0.7)包
+1. 点击链接下载最新[Release](https://github.com/KhazixW2/MaaGumballs/releases)包
 
 2. 解压后双击`MFAAvalonia.exe`即可运行
 
