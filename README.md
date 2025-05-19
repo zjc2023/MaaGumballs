@@ -92,6 +92,8 @@
 - [🎞️ 视频教程](https://www.bilibili.com/video/BV1yr421E7MW)
 - [流水线协议](https://github.com/KhazixW2/MaaGumballs/docs/3.1-任务流水线协议)
 - [集成开发环境文档](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/2.1-%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
+- [🎞️视频教程](https://www.bilibili.com/video/BV1yr421E7MW)
+- [⭐项目模板](https://github.com/MaaXYZ/MaaPracticeBoilerplate), 建议新的开发者参考项目模版的readme文档
 
 ## 图形化界面
 
