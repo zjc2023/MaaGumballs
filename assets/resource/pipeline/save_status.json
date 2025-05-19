@@ -6,20 +6,30 @@
         ],
         "action": "Click",
         "threshold": 0.8,
-        "roi" : [0,0,110,91],
+        "roi": [
+            0,
+            0,
+            110,
+            91
+        ],
         "post_delay": 1000,
-        "next":"Save_Status_Text"
+        "next": "Save_Status_Text"
     },
-    "Save_Status_Text":{
+    "Save_Status_Text": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\SaveStatusText.png"
         ],
         "action": "Click",
         "threshold": 0.8,
-        "roi" : [5,1109,714,170],
+        "roi": [
+            5,
+            1109,
+            714,
+            170
+        ],
         "post_delay": 1000,
-        "next":"Inter_ConfirmButton"
+        "next": "Inter_ConfirmButton"
     },
     "Inter_ConfirmButton": {
         "recognition": "OCR",
@@ -28,24 +38,34 @@
             "确认",
             "重新连接"
         ],
-        "roi" : [26,554,662,368],
+        "roi": [
+            26,
+            554,
+            662,
+            368
+        ],
         "post_delay": 1000,
         "action": "Click",
-        "next":"ReturnMazeButton"
+        "next": "ReturnMazeButton"
     },
-    "ReturnMazeButton":{
+    "ReturnMazeButton": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\ReturnMazeButton.png"
         ],
         "action": "Click",
         "threshold": 0.8,
-        "roi" : [435,144,143,158],
+        "roi": [
+            426,
+            72,
+            282,
+            309
+        ],
         "post_delay": 3000,
-        "interrupt":"Inter_ConfirmButton",
-        "next":"ConfirmEquipmentPack"
+        "interrupt": "Inter_ConfirmButton",
+        "next": "ConfirmEquipmentPack"
     },
-    "ConfirmEquipmentPack":{
+    "ConfirmEquipmentPack": {
         "recognition": "TemplateMatch",
         "template": [
             "utils\\ConfirmEquipmentPack.png"

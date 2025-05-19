@@ -25,6 +25,12 @@
             "utils/DisconnectInternet.png",
             "utils/ConnectInternet.png"
         ],
+        "roi": [
+            484,
+            1046,
+            235,
+            233
+        ],
         "action": "Click",
         "post_delay": 2000,
         "next": "Opengumballs_Auto"
@@ -49,7 +55,12 @@
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 1000,
-        "roi" : [588,3,131,121],
+        "roi": [
+            588,
+            3,
+            131,
+            121
+        ],
         "next": "LogoutGame_Next"
     },
     "LogoutGame_Next": {
@@ -60,7 +71,12 @@
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 1000,
-        "roi" : [84,484,135,172],
+        "roi": [
+            66,
+            344,
+            595,
+            663
+        ],
         "next": "LogoutGame_Next_2"
     },
     "LogoutGame_Next_2": {
@@ -68,7 +84,12 @@
         "template": "utils\\LogoutButton.png",
         "action": "Click",
         "post_delay": 1000,
-        "roi" : [0,1125,270,154],
+        "roi": [
+            0,
+            1125,
+            270,
+            154
+        ],
         "threshold": 0.8
     },
     "ReturnMaze": {
@@ -79,7 +100,12 @@
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 7000,
-        "roi" : [133,691,428,166],
+        "roi": [
+            133,
+            691,
+            428,
+            166
+        ],
         "next": "ReturnMaze_Next"
     },
     "ReturnMaze_Next": {
@@ -90,7 +116,12 @@
         ],
         "action": "Click",
         "post_delay": 1000,
-        "roi" : [24,639,677,293],
+        "roi": [
+            24,
+            639,
+            677,
+            293
+        ],
         "next": "ReturnMaze_Next_2"
     },
     "ReturnMaze_Next_2": {
@@ -98,7 +129,12 @@
         "expected": "继续冒险",
         "action": "Click",
         "post_delay": 1000,
-        "roi" : [28,649,340,180],
+        "roi": [
+            28,
+            649,
+            340,
+            180
+        ],
         "threshold": 0.8
     },
     "CheckClosedDoor": {
@@ -115,7 +151,12 @@
             "utils\\ConfirmEquipmentPack.png"
         ],
         "action": "Click",
-        "roi" : [0,1116,187,163],
+        "roi": [
+            0,
+            1116,
+            187,
+            163
+        ],
         "post_delay": 1000,
         "threshold": 0.8
     },
@@ -127,7 +168,12 @@
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 1000,
-        "roi" : [526,1113,193,166],
+        "roi": [
+            526,
+            1113,
+            193,
+            166
+        ],
         "next": "ClickEarthMagicPage"
     },
     "ClickEarthMagicPage": {
@@ -136,8 +182,18 @@
             "魔法"
         ],
         "action": "Click",
-        "roi" : [201,286,224,89],
-        "target": [593,504,86,72],
+        "roi": [
+            201,
+            286,
+            224,
+            89
+        ],
+        "target": [
+            593,
+            504,
+            86,
+            72
+        ],
         "post_delay": 1000,
         "next": "ClickEarthMagic"
     },
@@ -146,7 +202,12 @@
         "expected": [
             "地震术"
         ],
-        "roi" : [52,468,521,103],
+        "roi": [
+            52,
+            468,
+            521,
+            103
+        ],
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 1000,
@@ -158,10 +219,20 @@
             "地震术"
         ],
         "action": "Click",
-        "roi" : [8,974,711,187],
+        "roi": [
+            8,
+            974,
+            711,
+            187
+        ],
         "threshold": 0.8,
         "post_delay": 1000,
-        "target": [593,504,86,72]
+        "target": [
+            593,
+            504,
+            86,
+            72
+        ]
     },
     "ClickEquipmentChest": {
         "recognition": "TemplateMatch",
