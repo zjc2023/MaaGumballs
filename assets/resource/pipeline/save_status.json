@@ -2,7 +2,7 @@
     "Save_Status": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\SaveStatusButton.png"
+            "utils/SaveStatusButton.png"
         ],
         "action": "Click",
         "threshold": 0.8,
@@ -18,7 +18,7 @@
     "Save_Status_Text": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\SaveStatusText.png"
+            "utils/SaveStatusText.png"
         ],
         "action": "Click",
         "threshold": 0.8,
@@ -51,7 +51,7 @@
     "ReturnMazeButton": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\ReturnMazeButton.png"
+            "utils/ReturnMazeButton.png"
         ],
         "action": "Click",
         "threshold": 0.8,
@@ -68,7 +68,7 @@
     "ConfirmEquipmentPack": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils\\ConfirmEquipmentPack.png"
+            "utils/ConfirmEquipmentPack.png"
         ],
         "action": "DoNothing",
         "threshold": 0.8

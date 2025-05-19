@@ -28,7 +28,7 @@
         "recognition": "TemplateMatch",
         "roi" : [5,182,714,814],
         "template": [
-            "divineForgeLand\\Pool.png"
+            "divineForgeLand/Pool.png"
         ],
         "action": "DoNothing",
         "threshold": 0.8,
