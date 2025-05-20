@@ -107,7 +107,7 @@
             428,
             166
         ],
-        "next": "ReturnMaze_Next"
+        "next": "LoginWithPassword"
     },
     "ReturnMaze_Next": {
         "recognition": "OCR",
