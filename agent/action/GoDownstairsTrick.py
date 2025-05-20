@@ -47,10 +47,10 @@ class GoDownstairsTrick_Test(CustomAction):
               "before_helmet: ", before_helmet,
               "before_weapon: ", before_weapon)
         
-        for i in range(2):
-            # if context.tasker.stopping:
-            #     print("检测到停止，退出")
-            #     return CustomAction.RunResult(success=False)
+        for i in range(30):
+            if context.tasker.stopping:
+                print("检测到停止，退出")
+                return CustomAction.RunResult(success=False)
             
             print("第", i, "次尝试")
             context.run_task("Save_Status")
