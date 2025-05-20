@@ -99,7 +99,7 @@ class GoDownstairsTrick_Test(CustomAction):
                 return CustomAction.RunResult(success=True)
                 
             else:
-                print("黑永恒失败，小SL然后联网进行下一次尝试")
+                print("黑永恒失败, 小SL然后联网进行下一次尝试")
                 context.run_task("LogoutGame")
                 time.sleep(3)
                 context.run_task("StopAppV2")

@@ -333,7 +333,7 @@
         "recognition": "OCR",
         "expected": "继续冒险",
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 7000,
         "roi": [
             28,
             649,

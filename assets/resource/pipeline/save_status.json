@@ -28,7 +28,7 @@
             714,
             170
         ],
-        "post_delay": 1000,
+        "post_delay": 3500,
         "next": "Inter_ConfirmButton"
     },
     "Inter_ConfirmButton": {
@@ -61,7 +61,7 @@
             282,
             309
         ],
-        "post_delay": 3000,
+        "post_delay": 4000,
         "interrupt": "Inter_ConfirmButton",
         "next": "ConfirmEquipmentPack"
     },

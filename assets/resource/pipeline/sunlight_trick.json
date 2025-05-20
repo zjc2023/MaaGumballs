@@ -4,133 +4,244 @@
         "action": "Custom",
         "pre_delay": 500,
         "custom_action": "SunlightTrick_Test",
+        "custom_action_param": {
+            "accept_sunlight": true
+        },
         "post_delay": 500,
         "timeout": 200
     },
-    "OpenArmorPage":{
+    "OpenArmorPage": {
         "recognition": "TemplateMatch",
         "template": "divineForgeLand/Armor_1.png",
-        "roi" : [17,832,168,168],
+        "roi": [
+            17,
+            832,
+            168,
+            168
+        ],
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 1000,
-        "on_error":["OpenArmorPage2"],
+        "on_error": [
+            "OpenArmorPage2"
+        ],
         "timeout": 1000
     },
-    "OpenArmorPage2":{
+    "OpenArmorPage2": {
         "recognition": "TemplateMatch",
         "template": "divineForgeLand/Armor_2.png",
-        "roi" : [352,77,367,119],
+        "roi": [
+            352,
+            77,
+            367,
+            119
+        ],
         "action": "Click",
         "post_delay": 1000,
         "threshold": 0.8,
         "timeout": 1000
     },
-
-    "OpenImprintPage":{
+    "OpenImprintPage": {
         "recognition": "TemplateMatch",
         "template": "divineForgeLand/ImprintPage.png",
-        "roi":[59,1178,150,66],
+        "roi": [
+            59,
+            1178,
+            150,
+            66
+        ],
         "post_delay": 1000,
         "action": "Click",
         "threshold": 0.8
     },
-
-    "ClickSunlightImprint":{
+    "ClickSunlightImprint": {
         "recognition": "TemplateMatch",
         "template": "divineForgeLand/SunlightImprint.png",
-        "roi": [166,268,395,368],
+        "roi": [
+            166,
+            268,
+            395,
+            368
+        ],
         "action": "Click",
         "post_delay": 1000,
         "threshold": 0.8
     },
-    "ClickStarlightImprint":{
+    "ClickStarlightImprint": {
         "recognition": "TemplateMatch",
         "template": "divineForgeLand/StarlightImprint.png",
-        "roi": [166,268,395,368],
+        "roi": [
+            166,
+            268,
+            395,
+            368
+        ],
         "action": "Click",
         "post_delay": 1000,
         "threshold": 0.8
     },
-
-    "findpercent":{
-    "recognition": "OCR",
-    "expected":["%"],
-    "action": "DoNothing",
-    "roi":[77,727,570,101],
-    "post_delay": 1000,
-    "threshold": 0.8
+    "findpercent": {
+        "recognition": "OCR",
+        "expected": [
+            "%"
+        ],
+        "action": "DoNothing",
+        "roi": [
+            77,
+            727,
+            570,
+            101
+        ],
+        "post_delay": 1000,
+        "threshold": 0.8
     },
-
-    "PushOne":{
+    "PushOne": {
         "recognition": "TemplateMatch",
         "template": "utils/skill_pack.png",
-        "roi" : [528,1122,175,157],
+        "roi": [
+            528,
+            1122,
+            175,
+            157
+        ],
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 1000,
-        "next":["ClickWaterMagicPage"]
+        "next": [
+            "ClickWaterMagicPage"
+        ]
     },
-    "ClickWaterMagicPage":{
+    "ClickWaterMagicPage": {
         "recognition": "OCR",
-        "roi" : [196,289,224,84],
-        "expected":["魔法"],
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
         "action": "Click",
-        "target":[597,407,84,54],
+        "target": [
+            597,
+            407,
+            84,
+            54
+        ],
         "post_delay": 1000,
-        "next":"ClickWaterMagic"
+        "next": "ClickWaterMagic"
     },
-
-    "ClickWaterMagic":{
+    "ClickWaterMagic": {
         "recognition": "OCR",
-        "roi" : [68,447,505,133],
-        "expected":["治疗术", "寒冰护盾"],
+        "roi": [
+            68,
+            447,
+            505,
+            133
+        ],
+        "expected": [
+            "治疗术",
+            "寒冰护盾"
+        ],
         "action": "Click",
         "threshold": 0.8,
         "next": "CastWaterMagic",
         "post_delay": 1000,
-        "on_error":["ClickDarkMagicPage"]
+        "on_error": [
+            "ClickDarkMagicPage"
+        ]
     },
-    "CastWaterMagic":{
+    "CastWaterMagic": {
         "recognition": "OCR",
-        "roi" : [182,1071,337,75],
-        "expected":["治疗术", "寒冰护盾"],
+        "roi": [
+            182,
+            1071,
+            337,
+            75
+        ],
+        "expected": [
+            "治疗术",
+            "寒冰护盾"
+        ],
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 1000,
-        "target":[68,447,505,133]
+        "target": [
+            68,
+            447,
+            505,
+            133
+        ]
     },
-    "ClickDarkMagicPage":{
+    "ClickDarkMagicPage": {
         "recognition": "OCR",
-        "roi" : [196,289,224,84],
-        "expected":["魔法"],
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
         "action": "Click",
-        "target":[595,828,84,61],
+        "target": [
+            595,
+            828,
+            84,
+            61
+        ],
         "post_delay": 1000,
-        "next":"ClickDarkMagic"
+        "next": "ClickDarkMagic"
     },
-    "ClickDarkMagic":{
+    "ClickDarkMagic": {
         "recognition": "OCR",
-        "roi" : [59,475,511,96],
-        "expected":["死亡波纹", "吸能术"],
+        "roi": [
+            59,
+            475,
+            511,
+            96
+        ],
+        "expected": [
+            "死亡波纹",
+            "吸能术"
+        ],
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 1000,
         "next": "CastDarkMagic"
     },
-    "CastDarkMagic":{
+    "CastDarkMagic": {
         "recognition": "OCR",
-        "roi" : [182,1071,337,75],
-        "expected":["死亡波纹", "吸能术"],
+        "roi": [
+            182,
+            1071,
+            337,
+            75
+        ],
+        "expected": [
+            "死亡波纹",
+            "吸能术"
+        ],
         "action": "Click",
         "threshold": 0.8,
         "post_delay": 1000,
-        "target":[595,828,84,61]
+        "target": [
+            595,
+            828,
+            84,
+            61
+        ]
     },
-
-    "SearchBody":{
+    "SearchBody": {
         "recognition": "TemplateMatch",
-        "roi" : [5,182,714,814],
+        "roi": [
+            5,
+            182,
+            714,
+            814
+        ],
         "template": [
             "divineForgeLand/BlueHatBody.png",
             "divineForgeLand/BrokenWeapon.png"
@@ -138,13 +249,18 @@
         "action": "DoNothing",
         "threshold": 0.8,
         "post_delay": 1000,
-        "on_error":"PushOne",
+        "on_error": "PushOne",
         "timeout": 1000
     },
-    "SearchBody_Next":{
+    "SearchBody_Next": {
         "recognition": "OCR",
-        "expected":"翻找",
-        "roi" : [117,756,495,152],
+        "expected": "翻找",
+        "roi": [
+            117,
+            756,
+            495,
+            152
+        ],
         "action": "Click",
         "post_delay": 1000,
         "threshold": 0.8
