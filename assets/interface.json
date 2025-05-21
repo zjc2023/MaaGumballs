@@ -29,7 +29,7 @@
         },
         {
             "name": "每日收菜",
-            "entry": "EntryEden",
+            "entry": "DailyTask",
             "option": [
                 "活力不足时，使用钻石购买体力"
             ],

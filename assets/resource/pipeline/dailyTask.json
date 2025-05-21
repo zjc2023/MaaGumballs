@@ -1,4 +1,13 @@
 {
+    "DailyTask": {
+        "next": [
+            "EntryEden"
+        ],
+        "interrupt": [
+            "ReturnBigMap"
+        ],
+        "timeout": 10000
+    },
     "EntryEden": {
         "post_delay": 1000,
         "threshold": 0.8,
@@ -14,9 +23,6 @@
         ],
         "action": "Click",
         "next": [
-            "CheckHall"
-        ],
-        "interrupt": [
             "EntryHall",
             "EntryHall2"
         ]
@@ -606,7 +612,24 @@
         "action": "Click",
         "post_delay": 1000,
         "next": [
+            "CircusTask_Failed",
             "CircusTask_Start"
+        ]
+    },
+    "CircusTask_Failed": {
+        "post_delay": 1000,
+        "recognition": "OCR",
+        "roi": [
+            37,
+            842,
+            197,
+            207
+        ],
+        "expected": [
+            "已领取"
+        ],
+        "next": [
+            "ReturnHall"
         ]
     },
     "CircusTask_Start": {
@@ -650,8 +673,7 @@
         ],
         "expected": [
             "QUEST2/2",
-            "2/2",
-            "已领取"
+            "2/2"
         ],
         "action": "Custom",
         "custom_action": "CircusReward",

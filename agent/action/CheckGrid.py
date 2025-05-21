@@ -3,9 +3,12 @@ from maa.custom_action import CustomAction
 from maa.context import Context
 from maa.define import RecognitionDetail
 import time
+from utils import logger
+
 
 @AgentServer.custom_action("CheckGrid")
 class CheckGrid(CustomAction):
+    # 初始化地板的 ROI 列表
     def calRoiList(self):
         start_x, start_y = 15, 222
         width, height = 138, 126
@@ -22,7 +25,7 @@ class CheckGrid(CustomAction):
         return roi_list
 
     def CheckMonster(self, context: Context, image):
-        #检测是否有怪物
+        #检测是否有怪物并攻击
         checkMonsterDetail = context.run_recognition("GridCheckMonster",
                                 image,
                                 pipeline_override={
@@ -47,13 +50,13 @@ class CheckGrid(CustomAction):
         if checkMonsterDetail:
             for result in checkMonsterDetail.all_results:
                 x, y, w, h = result.box
-                # print(f"Kill the monster {x}, {y}, {w}, {h}") 
+                logger.info(f"检测到第{checkMonsterDetail.all_results.index(result) + 1}个怪物: {x}, {y}, {w}, {h}")
                 context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
-                time.sleep(0.05)
+                time.sleep(0.1)
                 context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
-                time.sleep(0.05)
+                time.sleep(0.1)
                 context.tasker.controller.post_click( x + w // 2, y + h // 2).wait()
-                time.sleep(0.05)
+                time.sleep(0.1)
             return True
         else:
             return False
@@ -63,14 +66,13 @@ class CheckGrid(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
+        FailCheckMonsterCnt = 0
+        checkGridCnt = 0
         cols, rows = 5, 6
-
         roi_list = self.calRoiList()
         roi_matrix = [roi_list[i * cols:(i + 1) * cols] for i in range(rows)]
 
 
-        FailCheckMonsterCnt = 0
-        checkGridCnt = 0
         cnt = 15
         while cnt > 0:
             img = context.tasker.controller.post_screencap().wait().get()
@@ -78,6 +80,7 @@ class CheckGrid(CustomAction):
             checkGridCnt = 0
             for r in range(rows):
                 for c in range(cols):  # 重试次数
+                    # 计算 ROI 区域
                     x, y, w, h = roi_matrix[r][c]
                     roi_image = img[y:y + h, x:x + w]
                     left_bottom_roi = roi_image[h-15:h, 0: 20].copy()  # 提取左下角 20x20 区域
@@ -110,11 +113,11 @@ class CheckGrid(CustomAction):
             # 检测怪物并进行攻击
             if not self.CheckMonster(context, img):
                 FailCheckMonsterCnt += 1
-                # print(f"FailCheckMonsterCnt: {FailCheckMonsterCnt}")
+                logger.info(f"FailCheckMonsterCnt: {FailCheckMonsterCnt}")
             
             # 如果提前清理完该层，那么不需要继续等待，可以提前退出
             if FailCheckMonsterCnt >= 5 and checkGridCnt == 0:
-                # print("FailCheckMonsterCnt 5 次, 提前退出")
+                logger.info("FailCheckMonsterCnt 5 次, 提前退出")
                 return CustomAction.RunResult(success=True)
             
         return CustomAction.RunResult(success=True)

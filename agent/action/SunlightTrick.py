@@ -2,6 +2,8 @@ from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
 from maa.define import RecognitionDetail
+from utils import logger
+
 import time
 import re
 import json
@@ -75,12 +77,17 @@ class SunlightTrick_Test(CustomAction):
         context.run_task("Save_Status")
 
         #先找到尸体
+        checkCount = 10
         searchbodypos = None
         searchDetail = context.run_task("SearchBody")
-        while not searchDetail.nodes:
+        while not (searchDetail.nodes or checkCount <= 0):
+            checkCount -= 1
             searchDetail = context.run_task("SearchBody")
         if searchDetail.nodes:
             searchbodypos = searchDetail.nodes[0].recognition.best_result.box
+        else:
+            logger.warning("没有找到尸体或者兵器")
+            return CustomAction.RunResult(success=False)
         
         #检查是否有火神，如果有可以不用释放技能推序
         firegod = self.checkFiregod(context)        
@@ -91,10 +98,10 @@ class SunlightTrick_Test(CustomAction):
         
         for i in range(31):
             if context.tasker.stopping:
-                print("检测到停止，退出")
+                logger.info("检测到停止任务, 开始退出agent")
                 return CustomAction.RunResult(success=False)
             
-            print("第", i, "次尝试")
+            logger.info(f"黑泉水第{i}次尝试")
             if not firegod:
                 context.run_task("PushOne")
             context.run_task("Save_Status")
@@ -110,19 +117,23 @@ class SunlightTrick_Test(CustomAction):
             
             #检查是否出日光或者星光
             after_sunlightimprintnumber,  after_starlightimprintnumber = self.getImprintNumber(context)
+            condition_met = False
             if starlight_accept_para:
-                if after_sunlightimprintnumber != before_sunlightimprintnumber or after_starlightimprintnumber != before_starlightimprintnumber:
-                #满足条件之后暂离保存
-                    context.run_task("Save_Status")
-                    return CustomAction.RunResult(success=True)
+                if (after_sunlightimprintnumber != before_sunlightimprintnumber or
+                    after_starlightimprintnumber != before_starlightimprintnumber):
+                    condition_met = True
             else:
                 if after_sunlightimprintnumber != before_sunlightimprintnumber:
-                #满足条件之后暂离保存
-                    context.run_task("Save_Status")
-                    return CustomAction.RunResult(success=True)
-            #不满足条件则小退恢复尸体
-            context.run_task("LogoutGame")
-            context.run_task("ReturnMaze")
-            
-            
+                    condition_met = True
+
+            # 这里检查是否满足条件
+            if condition_met: 
+                logger.info("黑日光成功，检测到日光或者星光: ")
+                context.run_task("Save_Status")
+                return CustomAction.RunResult(success=True)
+            else:
+                context.run_task("LogoutGame")
+                context.run_task("ReturnMaze")
+
+        logger.warning("黑日光失败")
         return CustomAction.RunResult(success=False)

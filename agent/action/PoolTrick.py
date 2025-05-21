@@ -2,25 +2,25 @@ from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
 from maa.define import RecognitionDetail
+from utils import logger
 import time
-import re
-import json
+
 
 @AgentServer.custom_action("PoolTrick_Test")
 class PoolTrick_Test(CustomAction):
 
     # 这里检查攻击力数值
     def getArmorATK(self, context: Context)-> int:
-        context.run_task("OpenArmorPage")
         armorATK = 0
+        
+        context.run_task("OpenArmorPage")
         recoDetail = context.run_task("OCRArmorATK")
         if recoDetail.nodes:
             armorATK = recoDetail.nodes[0].recognition.best_result.text
-
-        res = int(armorATK)
-
+            logger.info(f"检测当前攻击力数值: {armorATK}")
+        
         context.run_task("BackButton")
-        return res
+        return int(armorATK)
     
     # 这里检查火神
     def checkFiregod(self, context: Context):
@@ -57,13 +57,19 @@ class PoolTrick_Test(CustomAction):
         context.run_task("Save_Status")
         
         #先找到泉水位置
+        checkCount = 10
         searchpoolpos = None        
         searchDetail = context.run_task("SearchPool")
-        while not searchDetail:
+        while not (searchDetail or checkCount <= 0):
+            checkCount -= 1
             searchDetail = context.run_task("SearchPool")
         if searchDetail:
+            logger.info("找到泉水位置")
             searchpoolpos = searchDetail.nodes[0].recognition.best_result.box
-
+        else:
+            logger.info("没有找到泉水位置")
+            return CustomAction.RunResult(success=False)
+        
         #检查是否有火神，如果有可以不用释放技能推序
         firegod = self.checkFiregod(context)        
 
@@ -73,13 +79,15 @@ class PoolTrick_Test(CustomAction):
         
         # 这里进行小退，恢复尸体
         for i in range(31):
-            print("第", i, "次尝试")
+            if context.tasker.stopping:
+                logger.info("检测到停止任务, 开始退出agent")
+                return CustomAction.RunResult(success=False)
+            logger.info(f"黑泉水第{i}次尝试")
             
             if not firegod:
                 context.run_task("PushOne")
             context.run_task("Save_Status")
 
-            
             #每次暂离之后，执行点击泉水的操作
             click_job = context.tasker.controller.post_click(searchpoolpos[0] + searchpoolpos[2] // 2, searchpoolpos[1] + searchpoolpos[3] // 2)
             click_job.wait()
@@ -91,12 +99,13 @@ class PoolTrick_Test(CustomAction):
             #检查是否泉水加成在攻击
             after_ArmorATK = self.getArmorATK(context)
             if after_ArmorATK != before_ArmorATK:
-                #满足条件之后暂离保存
-                    context.run_task("Save_Status")
-                    return CustomAction.RunResult(success=True)
+                logger.info(f"黑泉水成功，检测到攻击力数值提升: {after_ArmorATK - before_ArmorATK}")
+                context.run_task("Save_Status")
+                return CustomAction.RunResult(success=True)
             
             #不满足条件则小退恢复尸体
             context.run_task("LogoutGame")
             context.run_task("ReturnMaze")
-            
+
+        logger.warning("黑泉水失败")
         return CustomAction.RunResult(success=False)
