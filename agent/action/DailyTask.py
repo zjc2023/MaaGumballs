@@ -13,6 +13,9 @@ class DailyTask(CustomAction):
         print(taskList)
         
         for key in taskList:
+            if context.tasker.stopping:
+                print("任务被停止")
+                return CustomAction.RunResult(success=False)
             if taskList.get(key) == 1:
                 # 生成任务执行逻辑框架
                 print(f"执行任务: {key}")

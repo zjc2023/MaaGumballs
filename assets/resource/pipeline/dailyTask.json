@@ -14,6 +14,9 @@
         ],
         "action": "Click",
         "next": [
+            "CheckHall"
+        ],
+        "interrupt": [
             "EntryHall",
             "EntryHall2"
         ]
@@ -115,10 +118,12 @@
         "post_delay": 1000,
         "next": [
             "DailySweep_Fail",
-            "DailySweep_Finish"
+            "DailySweep_Finish",
+            "DailySweep_Finish_1"
         ],
         "interrupt": [
-            "DailySweep_Confirm"
+            "DailySweep_Confirm",
+            "DailySweep_BuyPower"
         ]
     },
     "DailySweep_Finish": {
@@ -133,9 +138,26 @@
             232
         ],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 1000,
         "next": [
-            "BackButton_Third"
+            "ReturnHall"
+        ]
+    },
+    "DailySweep_Finish_1": {
+        "recognition": "OCR",
+        "expected": [
+            "扫荡计划已完成"
+        ],
+        "roi": [
+            87,
+            268,
+            576,
+            317
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "ReturnHall"
         ]
     },
     "DailySweep_Fail": {
@@ -147,9 +169,9 @@
             270,
             123
         ],
-        "post_delay": 500,
+        "post_delay": 1000,
         "next": [
-            "BackButton_Twice"
+            "ReturnHall"
         ]
     },
     "DailySweep_Confirm": {
@@ -160,6 +182,20 @@
             302,
             640,
             554
+        ],
+        "action": "Click",
+        "post_delay": 1000
+    },
+    "DailySweep_BuyPower": {
+        "recognition": "OCR",
+        "expected": [
+            "取消"
+        ],
+        "roi": [
+            62,
+            412,
+            630,
+            424
         ],
         "action": "Click",
         "post_delay": 1000
@@ -208,11 +244,7 @@
             96
         ],
         "next": [
-            "BackButton"
-        ],
-        "interrupt": [
-            "FlipPage",
-            "ConfirmButton"
+            "ReturnHall"
         ]
     },
     "WildernessExplore_start": {
@@ -264,7 +296,7 @@
         ],
         "action": "Click",
         "next": [
-            "BackButton"
+            "ReturnHall"
         ]
     },
     "SendLizards_fail": {
@@ -278,7 +310,7 @@
         ],
         "expected": "购买",
         "next": [
-            "BackButton"
+            "ReturnHall"
         ]
     },
     "AlchemySignboard": {
@@ -319,12 +351,7 @@
         ],
         "action": "Click",
         "next": [
-            "CheckHall"
-        ],
-        "interrupt": [
-            "BackButton",
-            "ConfirmButton",
-            "ClickCenter"
+            "ReturnHall"
         ]
     },
     "AlchemySignboard_fail": {
@@ -364,12 +391,7 @@
         ],
         "post_delay": 1000,
         "next": [
-            "CheckHall"
-        ],
-        "interrupt": [
-            "BackButton",
-            "ConfirmButton",
-            "ClickCenter"
+            "ReturnHall"
         ]
     },
     "DailySignIn_start": {
@@ -387,12 +409,7 @@
         "post_delay": 1000,
         "action": "Click",
         "next": [
-            "CheckHall"
-        ],
-        "interrupt": [
-            "ConfirmButton",
-            "BackButton",
-            "ClickCenter"
+            "ReturnHall"
         ]
     },
     "SkyExplore": {
@@ -432,12 +449,7 @@
         ],
         "post_delay": 1000,
         "next": [
-            "CheckHall"
-        ],
-        "interrupt": [
-            "BackButton",
-            "ConfirmButton",
-            "ClickCenter"
+            "ReturnHall"
         ]
     },
     "SkyExplore_LackOfBox": {
@@ -451,12 +463,7 @@
         ],
         "post_delay": 1000,
         "next": [
-            "CheckHall"
-        ],
-        "interrupt": [
-            "BackButton",
-            "ConfirmButton",
-            "ClickCenter"
+            "ReturnHall"
         ]
     },
     "SkyExplore_Finish": {
@@ -471,12 +478,7 @@
         "post_delay": 1000,
         "action": "Click",
         "next": [
-            "CheckHall"
-        ],
-        "interrupt": [
-            "BackButton",
-            "ConfirmButton",
-            "ClickCenter"
+            "ReturnHall"
         ]
     },
     "RuinsExplore": {
@@ -542,12 +544,7 @@
         "post_delay": 1000,
         "action": "Click",
         "next": [
-            "CheckHall"
-        ],
-        "interrupt": [
-            "BackButton",
-            "ConfirmButton",
-            "ClickCenter"
+            "ReturnHall"
         ]
     },
     "Sub_RuinsExplore_Rubbish": {
@@ -594,12 +591,7 @@
         "post_delay": 2000,
         "action": "Click",
         "next": [
-            "CheckHall"
-        ],
-        "interrupt": [
-            "BackButton",
-            "ConfirmButton",
-            "ClickCenter"
+            "ReturnHall"
         ]
     },
     "CircusTask": {
@@ -658,7 +650,8 @@
         ],
         "expected": [
             "QUEST2/2",
-            "2/2"
+            "2/2",
+            "已领取"
         ],
         "action": "Custom",
         "custom_action": "CircusReward",

@@ -30,6 +30,9 @@
         {
             "name": "每日收菜",
             "entry": "EntryEden",
+            "option": [
+                "活力不足时，使用钻石购买体力"
+            ],
             "doc": "每日收菜,需要在大地图主界面"
         },
         {
@@ -197,10 +200,10 @@
             ]
         },
         "目标物": {
-            "default_case": "只接受日光",
+            "default_case": "接受日光",
             "cases": [
                 {
-                    "name": "接受星光",
+                    "name": "接受日光和星光",
                     "pipeline_override": {
                         "SunlightTrick": {
                             "custom_action_param": {
@@ -210,12 +213,47 @@
                     }
                 },
                 {
-                    "name": "只接受日光",
+                    "name": "接受日光",
                     "pipeline_override": {
                         "SunlightTrick": {
                             "custom_action_param": {
                                 "accept_sunlight": false
                             }
+                        }
+                    }
+                }
+            ]
+        },
+        "活力不足时，使用钻石购买体力": {
+            "default_case": "否",
+            "cases": [
+                {
+                    "name": "是",
+                    "pipeline_override": {
+                        "EntryEden": {
+                            "custom_action_param": {
+                                "use_diamond": true
+                            }
+                        },
+                        "DailySweep_BuyPower": {
+                            "expected": [
+                                "取消"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "否",
+                    "pipeline_override": {
+                        "EntryEden": {
+                            "custom_action_param": {
+                                "use_diamond": false
+                            }
+                        },
+                        "DailySweep_BuyPower": {
+                            "expected": [
+                                "确定"
+                            ]
                         }
                     }
                 }

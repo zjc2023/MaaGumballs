@@ -1,35 +1,4 @@
 {
-    "Sub_BackButton": {
-        "is_sub": true,
-        "recognition": "TemplateMatch",
-        "template": [
-            "Utils/BackButton.png"
-        ],
-        "roi": [
-            494,
-            1173,
-            184,
-            75
-        ],
-        "action": "Click",
-        "post_delay": 500
-    },
-    "Sub_BackText": {
-        "is_sub": true,
-        "recognition": "OCR",
-        "expected": [
-            "返回"
-        ],
-        "roi": [
-            494,
-            1173,
-            184,
-            75
-        ],
-        "action": "Click",
-        "post_delay": 500,
-        "timeout": 100
-    },
     "BackButton": {
         "recognition": "TemplateMatch",
         "template": [
@@ -92,27 +61,10 @@
         "post_delay": 500,
         "timeout": 100
     },
-    "Sub_Flip": {
-        "post_delay": 1000,
-        "is_sub": true,
-        "recognition": "OCR",
-        "expected": "下一页",
-        "action": "Click"
-    },
     "FlipPage": {
         "post_delay": 1000,
         "recognition": "OCR",
         "expected": "下一页",
-        "action": "Click"
-    },
-    "Sub_ConfirmButton": {
-        "post_delay": 1000,
-        "is_sub": true,
-        "recognition": "OCR",
-        "expected": [
-            "确定",
-            "确认"
-        ],
         "action": "Click"
     },
     "ConfirmButton": {
@@ -126,11 +78,7 @@
         "timeout": 500
     },
     "ClickCenter": {
-        "recognition": "OCR",
-        "expected": [
-            "确定",
-            "确认"
-        ],
+        "recognition": "DirectHit",
         "action": "Click",
         "target": [
             237,
@@ -138,7 +86,7 @@
             242,
             149
         ],
-        "post_delay": 200,
+        "post_delay": 1000,
         "timeout": 100
     },
     "ReturnHall": {
@@ -149,7 +97,8 @@
         "interrupt": [
             "FlipPage",
             "ConfirmButton",
-            "BackText"
+            "BackText",
+            "ClickCenter"
         ]
     },
     "CheckHall": {
@@ -168,8 +117,8 @@
             "CheckBigMap"
         ],
         "interrupt": [
-            "BackText",
             "ConfirmButton",
+            "BackText",
             "FlipPage"
         ]
     },
@@ -240,107 +189,6 @@
         ],
         "action": "Click",
         "post_delay": 1000
-    },
-    "LoginWithPassword": {
-        "recognition": "OCR",
-        "expected": [
-            "雷霆账密登录",
-            "登录"
-        ],
-        "roi": [
-            47,
-            818,
-            366,
-            223
-        ],
-        "action": "Click",
-        "threshold": 0.8,
-        "post_delay": 1000,
-        "next": [
-            "LoginWithPassword_ClickDownIcon"
-        ]
-    },
-    "LoginWithPassword_ClickDownIcon": {
-        "recognition": "TemplateMatch",
-        "template": "utils/AcountDownIcon.png",
-        "roi": [
-            470,
-            443,
-            211,
-            218
-        ],
-        "action": "Click",
-        "post_delay": 1000,
-        "next": [
-            "LoginWithPassword_SelectAcount"
-        ]
-    },
-    "LoginWithPassword_SelectAcount": {
-        "recognition": "TemplateMatch",
-        "template": "utils/AcountCloseIcon.png",
-        "post_delay": 1000,
-        "roi": [
-            484,
-            484,
-            209,
-            237
-        ],
-        "action": "Click",
-        "target_offset": [
-            0,
-            0,
-            -200,
-            0
-        ],
-        "next": [
-            "LoginWithPassword_Confirm"
-        ]
-    },
-    "LoginWithPassword_Confirm": {
-        "recognition": "TemplateMatch",
-        "template": "utils/AcountConfirmIcon.png",
-        "roi": [
-            37,
-            720,
-            161,
-            164
-        ],
-        "action": "Click",
-        "post_delay": 1000,
-        "next": [
-            "LoginWithPassword_Login"
-        ]
-    },
-    "LoginWithPassword_Login": {
-        "recognition": "OCR",
-        "expected": "雷霆账号登录",
-        "roi": [
-            74,
-            727,
-            585,
-            270
-        ],
-        "action": "Click",
-        "post_delay": 8000,
-        "next": [
-            "ReturnMaze_continue"
-        ],
-        "interrupt": [
-            "AlchemyReward"
-        ]
-    },
-    "ReturnMaze_continue": {
-        "recognition": "OCR",
-        "expected": "继续冒险",
-        "action": "Click",
-        "post_delay": 7000,
-        "roi": [
-            28,
-            649,
-            340,
-            180
-        ],
-        "threshold": 0.8
     },
     "Communicating": {
         "recognition": "OCR",
