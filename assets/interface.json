@@ -18,7 +18,7 @@
     "agent": {
         "child_exec": "python",
         "child_args": [
-            "{PROJECT_DIR}/agent/main.py"
+            "../agent/main.py"
         ]
     },
     "task": [
@@ -62,6 +62,11 @@
             "name": "黑水池",
             "entry": "PoolTrick",
             "doc": "黑水池，浸泡铠甲期望增加攻击，要求佩戴骨戒，通过释放治疗术，冰盾，死波和吸能术来推序。"
+        },
+        {
+            "name": "测试",
+            "entry": "GetKeyFromHole",
+            "doc": "测试"
         }
     ],
     "option": {

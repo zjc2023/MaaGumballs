@@ -1,0 +1,36 @@
+{
+    "FindKeyHole":{
+        "recognition": "TemplateMatch",
+        "template": ["utils/KeyHole.png", "utils/KeyHole_2.png"],
+        "action": "Click",
+        "roi":[15,233,690,741],
+        "post_delay": 1000,
+        "on_error": "PushOne"
+    },
+    "GetKeyFromHole": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "pre_delay": 500,
+        "custom_action": "GetKeyFromHole_Test",
+        "post_delay": 1000
+    },
+    "FindLeftString":{
+        "recognition": "TemplateMatch",
+        "template": ["utils/LeftString_2.png"],
+        "action": "DoNothing",
+        "pre_delay": 200,
+        "order_by": "Horizontal",
+        "threshold":0.7,
+        "roi" : [64,576,593,22],
+        "post_delay": 200
+    },
+
+    "ClickConfirmForKey":{
+        "recognition": "TemplateMatch",
+        "template": "utils/ConfirmForKey.png",
+        "action": "Click",
+        "roi": [94,842,523,144],
+        "post_delay": 1000
+    }
+
+}
