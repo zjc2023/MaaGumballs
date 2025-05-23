@@ -228,6 +228,7 @@ def agnet():
     from action import Reward
     from action import SunlightTrick
     from action import PoolTrick
+    from action import Utils
 
     Toolkit.init_option("./")
     if len(sys.argv) > 1:

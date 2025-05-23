@@ -264,5 +264,11 @@
             180
         ],
         "threshold": 0.8
+    },
+    "SaveLoad_little": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "SaveLoad_little",
+        "post_delay": 1000
     }
 }
