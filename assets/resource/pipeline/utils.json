@@ -26,46 +26,15 @@
             75
         ],
         "action": "Click",
-        "post_delay": 500,
-        "timeout": 200
-    },
-    "BackButton_Twice": {
-        "recognition": "TemplateMatch",
-        "template": [
-            "Utils/BackButton.png"
-        ],
-        "roi": [
-            494,
-            1173,
-            184,
-            75
-        ],
-        "action": "Click",
-        "next": "BackButton",
-        "post_delay": 500,
-        "timeout": 100
-    },
-    "BackButton_Third": {
-        "recognition": "TemplateMatch",
-        "template": [
-            "Utils/BackButton.png"
-        ],
-        "roi": [
-            494,
-            1173,
-            184,
-            75
-        ],
-        "action": "Click",
-        "next": "BackButton_Twice",
-        "post_delay": 500,
-        "timeout": 100
+        "post_delay": 1000,
+        "timeout": 500
     },
     "FlipPage": {
-        "post_delay": 1000,
         "recognition": "OCR",
         "expected": "下一页",
-        "action": "Click"
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 500
     },
     "ConfirmButton": {
         "recognition": "OCR",
@@ -86,8 +55,7 @@
             242,
             149
         ],
-        "post_delay": 1000,
-        "timeout": 100
+        "post_delay": 1000
     },
     "ReturnHall": {
         "recognition": "DirectHit",

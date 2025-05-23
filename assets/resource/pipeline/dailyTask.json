@@ -229,7 +229,7 @@
         "recognition": "OCR",
         "expected": "荒野探索中",
         "post_delay": 1000,
-        "next": "BackButton"
+        "next": "BackText"
     },
     "WildernessExplored": {
         "post_delay": 2000,
@@ -265,7 +265,7 @@
         "post_delay": 200,
         "timeout": 2000,
         "action": "Click",
-        "next": "BackButton"
+        "next": "BackText"
     },
     "SendLizards": {
         "recognition": "TemplateMatch",
@@ -288,7 +288,7 @@
             175,
             33
         ],
-        "next": "BackButton"
+        "next": "BackText"
     },
     "SendLizards_start": {
         "post_delay": 1000,
@@ -343,7 +343,7 @@
             175,
             33
         ],
-        "next": "BackButton"
+        "next": "BackText"
     },
     "AlchemySignboard_Start": {
         "post_delay": 1000,
@@ -371,7 +371,7 @@
         ],
         "expected": "购买",
         "next": [
-            "BackButton"
+            "BackText"
         ]
     },
     "DailySignIn": {
@@ -656,7 +656,7 @@
             "CheckCircus"
         ],
         "interrupt": [
-            "BackButton",
+            "BackText",
             "PowerLack",
             "ConfirmButton",
             "ClickCenter"

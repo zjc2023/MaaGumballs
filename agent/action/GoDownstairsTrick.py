@@ -41,7 +41,7 @@ class GoDownstairsTrick_Test(CustomAction):
         before_cloak = self.CheckEternalSuit(context, img, "equipments/5level/永恒披风.png")
         before_helmet = self.CheckEternalSuit(context, img, "equipments/5level/永恒王冠.png")
         before_weapon = self.CheckEternalSuit(context, img, "equipments/5level/永恒之球.png")
-        context.run_task("BackButton")
+        context.run_task("BackText")
         
         print("before_gloves: ", before_gloves,
               "before_cloak: ", before_cloak,
@@ -91,7 +91,7 @@ class GoDownstairsTrick_Test(CustomAction):
             else:
                 after_weapon = before_weapon
             
-            context.run_task("BackButton")
+            context.run_task("BackText")
             
             if temp >= 1:
                 logger.info("黑永恒成功，恢复网络，可以暂离保存")

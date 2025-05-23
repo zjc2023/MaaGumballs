@@ -35,8 +35,8 @@ class SunlightTrick_Test(CustomAction):
 
         res = [int(sunlightimprintnumber[0]), int(starlightimprintnumber[0])]
         # print(res)
-        context.run_task("BackButton")
-        context.run_task("BackButton")
+        context.run_task("BackText")
+        context.run_task("BackText")
         return res
     
     # 这里检查火神

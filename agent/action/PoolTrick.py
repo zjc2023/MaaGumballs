@@ -19,7 +19,7 @@ class PoolTrick_Test(CustomAction):
             armorATK = recoDetail.nodes[0].recognition.best_result.text
             logger.info(f"检测当前攻击力数值: {armorATK}")
         
-        context.run_task("BackButton")
+        context.run_task("BackText")
         return int(armorATK)
     
     # 这里检查火神

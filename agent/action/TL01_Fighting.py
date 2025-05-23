@@ -50,7 +50,7 @@ class TL01_Fighting(CustomAction):
         print("Start BossBattle.")
         context.run_task("TL01_checkBossMons")
         print("Finish And Return")
-        context.run_task("BackButton")
+        context.run_task("BackText")
         print("Click AlchemyReward")
         context.run_task("AlchemyReward")
 
