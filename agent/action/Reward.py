@@ -38,3 +38,16 @@ class UnionReward_Execute(CustomAction):
         context.run_task("EntryUnionTask")
         
         return CustomAction.RunResult(success=True)
+
+@AgentServer.custom_action("CircusReward")
+class CircusReward(CustomAction):
+    def run(
+        self, context: Context, argv: CustomAction.RunArg
+    ) -> CustomAction.RunResult:
+        
+        context.run_task("getCircusReward_01")
+        context.run_task("getCircusReward_01")
+        context.run_task("getCircusReward_02")
+        context.run_task("getCircusReward_03")
+
+        return CustomAction.RunResult(success=True)

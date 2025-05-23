@@ -225,7 +225,6 @@ def agnet():
     from action import Count
     from action import GoDownstairsTrick
     from action import DailyTask
-    from action import CircusReward
     from action import Reward
     from action import SunlightTrick
     from action import PoolTrick
