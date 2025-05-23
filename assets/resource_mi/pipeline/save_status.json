@@ -1,0 +1,5 @@
+{
+    "ReturnMaze": {
+        "next": "ReturnMaze_Next"
+    }
+}

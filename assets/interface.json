@@ -13,6 +13,13 @@
             "path": [
                 "{PROJECT_DIR}/resource"
             ]
+        },
+        {
+            "name": "小米服",
+            "path": [
+                "{PROJECT_DIR}/resource",
+                "{PROJECT_DIR}/resource_mi"
+            ]
         }
     ],
     "agent": {
@@ -65,6 +72,10 @@
             "name": "黑水池",
             "entry": "PoolTrick",
             "doc": "黑水池,浸泡铠甲期望增加攻击,要求佩戴骨戒,通过释放治疗术,冰盾,死波和吸能术来推序。默认循环30轮"
+        },
+        {
+            "name": "返回迷宫",
+            "entry": "ReturnMaze"
         }
     ],
     "option": {

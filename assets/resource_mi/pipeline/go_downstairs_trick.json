@@ -1,0 +1,6 @@
+{
+    "Opengumballs_Auto": {
+        "action": "StartApp",
+        "package": "com.leiting.gumballs.mi"
+    }
+}
