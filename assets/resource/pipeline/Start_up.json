@@ -1,85 +1,63 @@
 {
-    "启动": {
+    "Start_Up": {
         "next": [
-            "检查主界面"
+            "MainWindow_Check"
         ],
         "interrupt": [
-            "检测炼金资源",
-            "检测冈布奥的便签",
-            "游戏界面加载中",
-            "进入游戏",
-            "启动应用"
+            "AlchemyReward",
+            "StickyNote_Check",
+            "GameLoading",
+            "EnterGame",
+            "StartGumballs"
         ]
     },
-    "雷霆游戏log加载": {
-        "post_delay": 5000,
+    "AlchemyReward": {
         "recognition": "OCR",
-        "expected": "雷霆游戏",
-        "roi": [
-            22,
-            297,
-            462,
-            424
-        ]
-    },
-    "检测炼金资源": {
-        "post_delay": 1000,
-        "threshold": 0.8,
-        "recognition": "OCR",
-        "roi": [
-            250,
-            132,
-            223,
-            436
-        ],
         "expected": "炼金资源",
-        "next": [
-            "炼金资源确定"
-        ]
-    },
-    "炼金资源确定": {
-        "post_delay": 1000,
-        "threshold": 0.8,
-        "recognition": "OCR",
         "roi": [
-            149,
-            727,
-            440,
-            295
+            223,
+            334,
+            275,
+            155
         ],
-        "expected": "确定",
-        "action": "Click"
+        "action": "Click",
+        "target": [
+            124,
+            802,
+            467,
+            112
+        ],
+        "post_delay": 1000
     },
-    "检测冈布奥的便签": {
-        "post_delay": 1000,
-        "threshold": 0.8,
+    "StickyNote_Check": {
         "recognition": "OCR",
+        "expected": "冈布奥的便签",
         "roi": [
             231,
             207,
             252,
             377
         ],
-        "expected": "冈布奥的便签",
-        "next": [
-            "暂时离开"
-        ]
-    },
-    "暂时离开": {
         "post_delay": 1000,
         "threshold": 0.8,
+        "next": [
+            "StickyNote_StepOut"
+        ]
+    },
+    "StickyNote_StepOut": {
         "recognition": "OCR",
+        "expected": "暂时离开",
         "roi": [
             377,
             163,
             296,
             878
         ],
-        "expected": "暂时离开",
-        "action": "Click"
+        "threshold": 0.8,
+        "action": "Click",
+        "post_delay": 1000
     },
-    "进入游戏": {
-        "post_delay": 1000,
+    "EnterGame": {
         "recognition": "OCR",
         "expected": "开始游戏",
         "roi": [
@@ -88,10 +66,11 @@
             309,
             442
         ],
-        "action": "Click"
-    },
-    "游戏界面加载中": {
+        "action": "Click",
         "post_delay": 1000,
+        "timeout": 2000
+    },
+    "GameLoading": {
         "recognition": "OCR",
         "expected": [
             "正在装潢迷宫建筑",
@@ -103,9 +82,11 @@
             886,
             522,
             327
-        ]
+        ],
+        "post_delay": 2000,
+        "timeout": 2000
     },
-    "检查主界面": {
+    "MainWindow_Check": {
         "post_delay": 1000,
         "recognition": "OCR",
         "roi": [
@@ -116,11 +97,11 @@
         ],
         "expected": "商店",
         "next": [
-            "二次检测主界面",
-            "启动"
+            "MainWindow_Check_Second",
+            "Start_Up"
         ]
     },
-    "二次检测主界面": {
+    "MainWindow_Check_Second": {
         "recognition": "OCR",
         "roi": [
             479,
@@ -130,16 +111,20 @@
         ],
         "expected": "商店"
     },
-    "启动应用": {
-        "post_delay": 8000,
-        "action": "StartApp",
-        "package": "com.leiting.gumballs.leiting"
-    },
-    "关闭公告": {
+    "CloseNotice": {
         "post_delay": 1000,
         "threshold": 0.8,
         "recognition": "TemplateMatch",
         "template": [],
         "action": "Click"
+    },
+    "StartGumballs": {
+        "post_delay": 8000,
+        "action": "StartApp",
+        "package": "com.leiting.gumballs.leiting"
+    },
+    "StopGumballs": {
+        "action": "StopApp",
+        "package": "com.leiting.gumballs.leiting"
     }
 }

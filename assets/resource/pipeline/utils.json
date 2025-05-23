@@ -132,25 +132,6 @@
         ],
         "expected": "商店"
     },
-    "AlchemyReward": {
-        "recognition": "OCR",
-        "expected": "炼金资源",
-        "pre_delay": 1000,
-        "roi": [
-            223,
-            334,
-            275,
-            155
-        ],
-        "action": "Click",
-        "post_delay": 500,
-        "target": [
-            124,
-            802,
-            467,
-            112
-        ]
-    },
     "PowerLack": {
         "post_delay": 1000,
         "recognition": "OCR",
