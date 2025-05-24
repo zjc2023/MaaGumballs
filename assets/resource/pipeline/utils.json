@@ -86,8 +86,8 @@
         ],
         "interrupt": [
             "ConfirmButton",
-            "BackText",
-            "FlipPage"
+            "FlipPage",
+            "BackText"
         ]
     },
     "CheckBigMap": {
