@@ -13,8 +13,19 @@ class DailyTask(CustomAction):
     ) -> CustomAction.RunResult:
         taskList: dict = json.loads(argv.custom_action_param)
         logger.info(taskList)
-        
-        for key in taskList:
+
+        custom_order = [
+            "DailySignIn",    # 每日签到
+            "WildernessExplore",  # 荒野探索
+            "CircusTask"      # 马戏团任务
+            "DailySweep",     # 每日清扫
+            "SendLizards",    # 派遣蜥蜴
+            "AlchemySignboard",   # 炼金招牌
+            "SkyExplore",     # 天空探索
+            "RuinsExplore",   # 遗迹探索
+        ]
+
+        for key in custom_order:
             if context.tasker.stopping:
                 logger.info("检测到停止任务, 开始退出agent")
                 return CustomAction.RunResult(success=False)

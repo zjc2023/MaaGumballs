@@ -229,6 +229,7 @@ def agnet():
     from action import SunlightTrick
     from action import PoolTrick
     from action import Utils
+    from action import Shopping
 
     Toolkit.init_option("./")
     if len(sys.argv) > 1:

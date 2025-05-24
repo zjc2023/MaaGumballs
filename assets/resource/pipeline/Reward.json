@@ -43,21 +43,6 @@
         "timeout": 2000,
         "action": "Click"
     },
-    "EntryUnionShop": {
-        "recognition": "OCR",
-        "expected": [
-            "商店"
-        ],
-        "roi": [
-            39,
-            1166,
-            186,
-            85
-        ],
-        "post_delay": 1000,
-        "timeout": 2000,
-        "action": "Click"
-    },
     "EntryUnionReward": {
         "recognition": "OCR",
         "expected": "联盟礼包",
@@ -167,12 +152,35 @@
         "post_delay": 1000,
         "timeout": 2000,
         "next": [
-            "OneClickCompleteAllReward_Friend"
+            "OneClickCompleteAllReward_PickUpGifts"
+        ],
+        "interrupt": [
+            "OneClickCompleteAllReward_GiveGifts"
         ]
     },
-    "OneClickCompleteAllReward_Friend": {
+    "OneClickCompleteAllReward_PickUpGifts": {
         "recognition": "OCR",
-        "expected": "一键领取",
+        "expected": [
+            "领取",
+            "一键领取"
+        ],
+        "roi": [
+            5,
+            1104,
+            261,
+            175
+        ],
+        "action": "Click",
+        "next": [
+            "ReturnBigMap"
+        ]
+    },
+    "OneClickCompleteAllReward_GiveGifts": {
+        "recognition": "OCR",
+        "expected": [
+            "一键赠礼",
+            "一键赠"
+        ],
         "roi": [
             5,
             1104,

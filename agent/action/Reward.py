@@ -35,6 +35,11 @@ class UnionReward_Execute(CustomAction):
     ) -> CustomAction.RunResult:
         
         context.run_task("EntryUnionReward")
+
+        img = context.tasker.controller.post_screencap().wait().get()
+        if not context.run_recognition("CheckUnionWindows", img):
+            context.run_task("BackText")
+
         context.run_task("EntryUnionTask")
         
         return CustomAction.RunResult(success=True)

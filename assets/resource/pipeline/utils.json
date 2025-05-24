@@ -120,10 +120,10 @@
         "recognition": "OCR",
         "expected": "购买",
         "roi": [
-            22,
-            414,
-            696,
-            447
+            37,
+            669,
+            651,
+            145
         ],
         "action": "Click"
     },

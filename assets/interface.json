@@ -31,8 +31,8 @@
     "task": [
         {
             "name": "启动游戏",
-            "entry": "启动",
-            "doc": "直接启动游戏"
+            "entry": "Start_Up",
+            "doc": "直接启动游戏, 新版本可以来github下载最新的资源包,[MaaGumballs](https://github.com/KhazixW2/MaaGumballs)"
         },
         {
             "name": "每日收菜",
@@ -46,6 +46,11 @@
             "name": "联盟奖励",
             "entry": "UnionReward_Start",
             "doc": "一键完成联盟所有的任务,并领取联盟礼包奖励"
+        },
+        {
+            "name": "商店自动购物",
+            "entry": "Shop",
+            "doc": "自动购买商店内的物品,只购买旅行商人金币货物,天空商店的遗迹碎片商品,佣兵一键50换5(需要有足够的碎片)"
         },
         {
             "name": "一键领取好友礼物",
@@ -249,7 +254,7 @@
                         },
                         "DailySweep_BuyPower": {
                             "expected": [
-                                "取消"
+                                "开始"
                             ]
                         }
                     }
@@ -264,7 +269,7 @@
                         },
                         "DailySweep_BuyPower": {
                             "expected": [
-                                "确定"
+                                "取消"
                             ]
                         }
                     }
