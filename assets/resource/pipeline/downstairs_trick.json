@@ -46,7 +46,8 @@
             "utils/ClosedDoor.png"
         ],
         "action": "DoNothing",
-        "threshold": 0.8
+        "threshold": 0.8,
+        "timeout": 5000
     },
     "OpenEquipmentPackage": {
         "recognition": "TemplateMatch",
