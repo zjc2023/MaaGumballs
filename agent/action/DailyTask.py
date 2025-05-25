@@ -17,7 +17,7 @@ class DailyTask(CustomAction):
         custom_order = [
             "DailySignIn",    # 每日签到
             "WildernessExplore",  # 荒野探索
-            "CircusTask"      # 马戏团任务
+            "CircusTask",      # 马戏团任务
             "DailySweep",     # 每日清扫
             "SendLizards",    # 派遣蜥蜴
             "AlchemySignboard",   # 炼金招牌
