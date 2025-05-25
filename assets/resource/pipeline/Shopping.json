@@ -155,10 +155,8 @@
         "action": "Click",
         "post_delay": 1000,
         "next": [
+            "Shop_ShoppingRewards",
             "ConfirmButton"
-        ],
-        "interrupt": [
-            "ClickCenter"
         ]
     },
     "Shop_Runestone": {
