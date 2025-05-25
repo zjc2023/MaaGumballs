@@ -101,7 +101,7 @@ class SunlightTrick_Test(CustomAction):
                 logger.info("检测到停止任务, 开始退出agent")
                 return CustomAction.RunResult(success=False)
             
-            logger.info(f"黑泉水第{i}次尝试")
+            logger.info(f"黑日光第{i}次尝试")
             if not firegod:
                 context.run_task("PushOne")
             context.run_task("Save_Status")
