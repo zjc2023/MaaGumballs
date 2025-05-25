@@ -82,6 +82,11 @@
             "name": "小SL",
             "entry": "SaveLoad_little",
             "doc": "小SL, 仅能在迷宫内使用。在没有提前暂离保存游戏的情况下，丢弃当前层的游戏进度并重新回到当前层。"
+        },
+        {
+            "name": "拉绳子(测试中)",
+            "entry": "GetKeyFromHole",
+            "doc": "测试"
         }
     ],
     "option": {

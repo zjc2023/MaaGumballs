@@ -30,11 +30,11 @@
     "OpenArmorPage2": {
         "recognition": "TemplateMatch",
         "template": "divineForgeLand/Armor_2.png",
-        "roi": [
-            352,
-            77,
-            367,
-            119
+        "roi" : [
+            226,
+            73,
+            493,
+            115
         ],
         "action": "Click",
         "post_delay": 1000,

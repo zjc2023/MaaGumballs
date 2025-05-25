@@ -230,6 +230,7 @@ def agnet():
     from action import PoolTrick
     from action import Utils
     from action import Shopping
+    from action import GetKeyFromHole
 
     Toolkit.init_option("./")
     if len(sys.argv) > 1:
