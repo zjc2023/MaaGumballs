@@ -18,7 +18,7 @@
     "agent": {
         "child_exec": "python",
         "child_args": [
-            "../agent/main.py"
+            "{PROJECT_DIR}/agent/main.py"
         ]
     },
     "task": [
@@ -64,7 +64,7 @@
             "doc": "黑水池，浸泡铠甲期望增加攻击，要求佩戴骨戒，通过释放治疗术，冰盾，死波和吸能术来推序。"
         },
         {
-            "name": "测试",
+            "name": "拉绳子(测试中)",
             "entry": "GetKeyFromHole",
             "doc": "测试"
         }
