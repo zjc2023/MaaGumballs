@@ -1,7 +1,7 @@
 {
     "FindKeyHole":{
         "recognition": "TemplateMatch",
-        "template": ["utils/KeyHole.png", "utils/KeyHole_2.png"],
+        "template": ["utils/KeyHole.png", "utils/KeyHole_2.png", "utils/KeyHole_3.png"],
         "action": "Click",
         "roi":[15,233,690,741],
         "post_delay": 1000,
