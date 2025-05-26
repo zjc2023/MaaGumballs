@@ -152,11 +152,10 @@
         "post_delay": 1000,
         "timeout": 2000,
         "next": [
+            "OneClickCompleteAllReward_GiveGifts",
             "OneClickCompleteAllReward_PickUpGifts"
         ],
-        "interrupt": [
-            "OneClickCompleteAllReward_GiveGifts"
-        ]
+        "interrupt": []
     },
     "OneClickCompleteAllReward_PickUpGifts": {
         "recognition": "OCR",
@@ -191,9 +190,9 @@
         ],
         "action": "Click",
         "next": [
-            "ReturnBigMap"
+            "OneClickCompleteAllReward_PickUpGifts"
         ],
-        "post_delay": 3000,
+        "post_delay": 1000,
         "timeout": 2000
     }
 }

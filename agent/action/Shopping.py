@@ -111,7 +111,7 @@ class Shopping(CustomAction):
                         int(box[0] + box[2] / 2) + 65,
                         int(box[1] + box[3] / 2) - 85
                     )
-                    time.sleep(0.5)
+                    time.sleep(2)
 
                     if self.Shop_ShoppingRewards_Check(context):
                         context.run_task("Shop_ShoppingRewards")
