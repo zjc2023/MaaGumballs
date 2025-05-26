@@ -60,6 +60,9 @@
         {
             "name": "黑永恒",
             "entry": "GoDownstairsTrick",
+            "option": [
+                "服务器"
+            ],
             "doc": "黑永恒,需要V2ray应用,需要一张地震术,9/19层最好穿上铠甲来保证地震术可以翻开所有地板。下楼之前确保目标装备栏不要装备上除目标准备以外的装备,即在黑永恒时头,手,武器以及披风位置不要装备除永恒套的其他装备。"
         },
         {
@@ -184,6 +187,35 @@
                                     "BackText"
                                 ]
                             }
+                        }
+                    }
+                }
+            ]
+        },
+        "服务器": {
+            "cases": [
+                {
+                    "name": "官服（默认）",
+                    "pipeline_override": {
+                        "Opengumballs_Auto": {
+                            "action": "StartApp",
+                            "package": "com.leiting.gumballs.leiting"
+                        },
+                        "ReturnMaze": {
+                            "post_delay": 1000,
+                            "next": "LoginWithPassword"
+                        }
+                    }
+                },
+                {
+                    "name": "小米服",
+                    "pipeline_override": {
+                        "Opengumballs_Auto": {
+                            "action": "StartApp",
+                            "package": "com.leiting.gumballs.mi"
+                        },
+                        "ReturnMaze": {
+                            "next": "ReturnMaze_Next"
                         }
                     }
                 }
