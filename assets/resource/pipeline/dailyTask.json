@@ -614,6 +614,7 @@
         "post_delay": 1000,
         "next": [
             "CircusTask_Failed",
+            "CircusTask_ObtainReward",
             "CircusTask_Start"
         ]
     },
@@ -674,8 +675,6 @@
             398,
             232
         ],
-        "action": "Click",
-        "post_delay": 1000,
         "next": [
             "CircusTask_ObtainReward"
         ],
@@ -685,7 +684,7 @@
     },
     "CircusTask_ObtainReward": {
         "post_delay": 1000,
-        "recognition": "DirectHit",
+        "recognition": "OCR",
         "roi": [
             37,
             842,
