@@ -221,7 +221,6 @@ def agnet():
     from maa.agent.agent_server import AgentServer
     from maa.toolkit import Toolkit
     from action import CheckGrid
-    from action import TL01_Fighting
     from action import Count
     from action import GoDownstairsTrick
     from action import DailyTask
@@ -231,6 +230,7 @@ def agnet():
     from action import Utils
     from action import Shopping
     from action import GetKeyFromHole
+    from action.Fight import Fight_Agent
 
     Toolkit.init_option("./")
     if len(sys.argv) > 1:

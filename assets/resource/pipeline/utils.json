@@ -149,5 +149,41 @@
             272
         ],
         "post_delay": 200
+    },
+    "MapSwipeDownToUp": {
+        "recognition": "DirectHit",
+        "action": "Swipe",
+        "begin": [
+            265,
+            190,
+            214,
+            136
+        ],
+        "end": [
+            263,
+            844,
+            217,
+            169
+        ],
+        "duration": 1000,
+        "post_delay": 1000
+    },
+    "MapSwipeUpToDown": {
+        "recognition": "DirectHit",
+        "action": "Swipe",
+        "begin": [
+            263,
+            844,
+            217,
+            169
+        ],
+        "end": [
+            265,
+            190,
+            214,
+            136
+        ],
+        "duration": 1000,
+        "post_delay": 1000
     }
 }

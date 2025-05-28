@@ -1,0 +1,218 @@
+{
+    "JJC": {
+        "next": [
+            "JJC_Start"
+        ],
+        "interrupt": [
+            "MapSwipeDownToUp"
+        ]
+    },
+    "JJC_Start": {
+        "recognition": "TemplateMatch",
+        "template": "monster/JJC/jjc_entry.png",
+        "roi": [
+            461,
+            154,
+            202,
+            884
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 1500,
+        "next": [
+            "JJC_EntryMaze"
+        ],
+        "interrupt": []
+    },
+    "JJC_EntryMaze": {
+        "recognition": "OCR",
+        "expected": "无尽模式",
+        "roi": [
+            50,
+            171,
+            617,
+            781
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "JJC_Select"
+        ]
+    },
+    "JJC_Select": {
+        "action": "Custom",
+        "custom_action": "JJC101_Select",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "JJC_SelectDrug": {
+        "recognition": "TemplateMatch",
+        "template": "monster/JJC/DrugGrid.png",
+        "roi": [
+            88,
+            571,
+            560,
+            402
+        ],
+        "order_by": "Score",
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "JJC_SelectDrug_Next"
+        ]
+    },
+    "JJC_SelectDrug_Next": {
+        "recognition": "TemplateMatch",
+        "template": "monster/JJC/Durg1.png",
+        "roi": [
+            71,
+            155,
+            600,
+            517
+        ],
+        "action": "Click",
+        "order_by": "Score",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "JJC_Select_Confirm"
+        ]
+    },
+    "JJC_SelectArtifact": {
+        "recognition": "TemplateMatch",
+        "template": "monster/JJC/ArtifactGrid.png",
+        "roi": [
+            88,
+            571,
+            560,
+            402
+        ],
+        "order_by": "Score",
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "JJC_SelectArtifact_Next"
+        ]
+    },
+    "JJC_SelectArtifact_Next": {
+        "recognition": "TemplateMatch",
+        "template": "monster/JJC/Harp.png",
+        "roi": [
+            44,
+            138,
+            642,
+            561
+        ],
+        "order_by": "Score",
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "JJC_Select_Confirm"
+        ]
+    },
+    "JJC_Select_Confirm": {
+        "recognition": "OCR",
+        "expected": [
+            "选择"
+        ],
+        "roi": [
+            30,
+            1110,
+            230,
+            169
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "JJC_Select_Gumball_1": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            400,
+            645,
+            85,
+            84
+        ],
+        "next": [
+            "JJC_Select_Gumball_Next"
+        ],
+        "interrupt": [
+            "JJC_SwipeDownToUp"
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "JJC_Select_Gumball_2": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            523,
+            712,
+            80,
+            68
+        ],
+        "next": [
+            "JJC_Select_Gumball_Next"
+        ],
+        "interrupt": [
+            "JJC_SwipeDownToUp"
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "JJC_Select_Gumball_Next": {
+        "recognition": "TemplateMatch",
+        "template": "monster/JJC/夜叉冈布奥.png",
+        "action": "Click",
+        "roi": [
+            77,
+            235,
+            600,
+            464
+        ],
+        "next": [
+            "JJC_Select_Confirm"
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "JJC_SwipeUpToDown": {
+        "action": "Swipe",
+        "begin": [
+            331,
+            293,
+            51,
+            63
+        ],
+        "end": [
+            334,
+            1031,
+            88,
+            119
+        ],
+        "duration": 1000,
+        "post_delay": 1000
+    },
+    "JJC_SwipeDownToUp": {
+        "action": "Swipe",
+        "begin": [
+            331,
+            548,
+            65,
+            96
+        ],
+        "end": [
+            331,
+            293,
+            51,
+            63
+        ],
+        "duration": 1000,
+        "post_delay": 1000
+    }
+}
