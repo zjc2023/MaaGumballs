@@ -1,4 +1,5 @@
 {
+    "EmptyNode": {},
     "BackButton": {
         "recognition": "TemplateMatch",
         "template": [
