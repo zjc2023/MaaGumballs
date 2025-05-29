@@ -1,4 +1,16 @@
 {
+    "StopAppV2": {
+        "action": "StopApp",
+        "package": "com.v2ray.ang",
+        "post_delay": 2000,
+        "next": "Opengumballs_Auto"
+    },
+    "StartAppV2": {
+        "action": "StartApp",
+        "package": "com.v2ray.ang",
+        "post_delay": 1000,
+        "next": "DisconnectInternet"
+    },
     "Save_Status": {
         "recognition": "TemplateMatch",
         "template": [
@@ -80,7 +92,7 @@
             "utils/SettingButton.png"
         ],
         "action": "Click",
-        "threshold": 0.8,
+        "threshold": 0.9,
         "post_delay": 1000,
         "roi": [
             588,
@@ -88,169 +100,48 @@
             131,
             121
         ],
-        "next": "LogoutGame_Next"
+        "next": "LogoutGame_ClickSwitch"
     },
-    "LogoutGame_Next": {
+    "LogoutGame_ClickSwitch": {
         "recognition": "TemplateMatch",
-        "template": [
-            "utils/AccountInfo.png"
-        ],
-        "action": "Click",
-        "threshold": 0.8,
-        "post_delay": 1000,
+        "template": "utils/SwitchServerIcon.png",
         "roi": [
             66,
             344,
             595,
             663
         ],
-        "next": "LogoutGame_Next_2"
-    },
-    "LogoutGame_Next_2": {
-        "recognition": "TemplateMatch",
-        "template": "utils/LogoutButton.png",
+        "threshold": 0.8,
         "action": "Click",
-        "post_delay": 5000,
+        "post_delay": 1000,
+        "next": [
+            "LogoutGame_Confirm"
+        ]
+    },
+    "LogoutGame_Confirm": {
+        "recognition": "OCR",
+        "expected": "确定",
         "roi": [
-            0,
-            1125,
-            270,
-            154
+            28,
+            418,
+            676,
+            432
         ],
-        "threshold": 0.8
+        "action": "Click",
+        "post_delay": 1000
     },
     "ReturnMaze": {
-        "recognition": "TemplateMatch",
-        "template": [
-            "utils/StartGame.png"
-        ],
-        "action": "Click",
-        "threshold": 0.8,
-        "post_delay": 3000,
-        "roi": [
-            133,
-            691,
-            428,
-            166
-        ],
-        "next": "LoginWithPassword"
-    },
-    "ReturnMaze_Next": {
-        "recognition": "OCR",
-        "expected": [
-            "确定",
-            "确认"
-        ],
-        "action": "Click",
-        "post_delay": 1000,
-        "roi": [
-            24,
-            639,
-            677,
-            293
-        ],
-        "next": "ReturnMaze_Next_2"
-    },
-    "ReturnMaze_Next_2": {
-        "recognition": "OCR",
-        "expected": "继续冒险",
-        "action": "Click",
-        "post_delay": 1000,
-        "roi": [
-            28,
-            649,
-            340,
-            180
-        ],
-        "threshold": 0.8
-    },
-    "LoginWithPassword": {
-        "recognition": "OCR",
-        "expected": [
-            "雷霆账密登录",
-            "登录"
-        ],
-        "roi": [
-            28,
-            781,
-            599,
-            221
-        ],
-        "action": "Click",
-        "threshold": 0.8,
-        "post_delay": 1000,
         "next": [
-            "LoginWithPassword_ClickDownIcon"
-        ]
-    },
-    "LoginWithPassword_ClickDownIcon": {
-        "recognition": "TemplateMatch",
-        "template": "utils/AcountDownIcon.png",
-        "roi": [
-            470,
-            443,
-            211,
-            218
-        ],
-        "action": "Click",
-        "post_delay": 1000,
-        "next": [
-            "LoginWithPassword_SelectAcount"
-        ]
-    },
-    "LoginWithPassword_SelectAcount": {
-        "recognition": "TemplateMatch",
-        "template": "utils/AcountCloseIcon.png",
-        "post_delay": 1000,
-        "roi": [
-            484,
-            484,
-            209,
-            237
-        ],
-        "action": "Click",
-        "target_offset": [
-            0,
-            0,
-            -200,
-            0
-        ],
-        "next": [
-            "LoginWithPassword_Confirm"
-        ]
-    },
-    "LoginWithPassword_Confirm": {
-        "recognition": "TemplateMatch",
-        "template": "utils/AcountConfirmIcon.png",
-        "roi": [
-            37,
-            720,
-            161,
-            164
-        ],
-        "action": "Click",
-        "post_delay": 1000,
-        "next": [
-            "LoginWithPassword_Login"
-        ]
-    },
-    "LoginWithPassword_Login": {
-        "recognition": "OCR",
-        "expected": "雷霆账号登录",
-        "roi": [
-            74,
-            727,
-            585,
-            270
-        ],
-        "action": "Click",
-        "post_delay": 8000,
-        "next": [
-            "ReturnMaze_continue"
+            "ReturnMazeButton"
         ],
         "interrupt": [
-            "AlchemyReward"
-        ]
+            "AlchemyReward",
+            "StickyNote_Check",
+            "ServerSwitching",
+            "GameLoading",
+            "LogoutGame"
+        ],
+        "timeout": 20000
     },
     "ReturnMaze_continue": {
         "recognition": "OCR",

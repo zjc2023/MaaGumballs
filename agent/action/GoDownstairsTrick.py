@@ -103,7 +103,6 @@ class GoDownstairsTrick_Test(CustomAction):
             else:
                 logger.info("黑永恒失败, 小SL然后联网进行下一次尝试")
                 context.run_task("LogoutGame")
-                time.sleep(3)
                 context.run_task("StopAppV2")
                 context.run_task("ReturnMaze")
 
