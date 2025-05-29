@@ -65,6 +65,9 @@
         {
             "name": "黑日光",
             "entry": "SunlightTrick",
+            "option": [
+                "接受星光"
+            ],
             "doc": "黑日光,翻找蓝尸体或者破碎武器,默认只接受日光,要求佩戴骨戒,通过释放治疗术,冰盾,死波和吸能术来推序。默认循环30轮。"
         },
         {
@@ -186,11 +189,11 @@
                 }
             ]
         },
-        "目标物": {
-            "default_case": "接受日光",
+        "接受星光": {
+            "default_case": "yes",
             "cases": [
                 {
-                    "name": "接受日光和星光",
+                    "name": "yes",
                     "pipeline_override": {
                         "SunlightTrick": {
                             "custom_action_param": {
@@ -200,7 +203,7 @@
                     }
                 },
                 {
-                    "name": "接受日光",
+                    "name": "no",
                     "pipeline_override": {
                         "SunlightTrick": {
                             "custom_action_param": {
