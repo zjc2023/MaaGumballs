@@ -119,5 +119,147 @@
         "index": 0,
         "action": "DoNothing",
         "next": []
+    },
+    "Fight_TitlePanel_Open": {
+        "recognition": "TemplateMatch",
+        "template": "fight/UniversalUI/MazePackage.png",
+        "roi": [
+            47,
+            1147,
+            136,
+            117
+        ],
+        "action": "Click",
+        "target": true,
+        "target_offset": [
+            250,
+            0,
+            0,
+            0
+        ],
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_TitlePanel_Series": {
+        "recognition": "OCR",
+        "expected": "冒险",
+        "roi": [
+            47,
+            964,
+            612,
+            151
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_TitlePanel_Learnable": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/UniversalUI/GreyStar.png",
+            "fight/UniversalUI/Title_Learnable.png"
+        ],
+        "roi": [
+            52,
+            844,
+            621,
+            166
+        ],
+        "threshold": 0.9,
+        "order_by": "Score",
+        "action": "Click",
+        "next": [
+            "Fight_TitlePanel_TitleCheck_New",
+            "Fight_TitlePanel_TitleLearn"
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_TitlePanel_TitleCheck_New": {
+        "recognition": "OCR",
+        "expected": [
+            "寻宝者",
+            "勘探家",
+            "锻造师",
+            "武器大师",
+            "大铸剑师"
+        ],
+        "roi": [
+            79,
+            252,
+            563,
+            242
+        ],
+        "action": "Click",
+        "target": true,
+        "target_offset": [
+            0,
+            -75,
+            0,
+            0
+        ],
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Fight_TitlePanel_TitleLearn"
+        ]
+    },
+    "Fight_TitlePanel_TitleLearn": {
+        "recognition": "OCR",
+        "expected": [
+            "学习新称号",
+            "升级"
+        ],
+        "roi": [
+            70,
+            813,
+            591,
+            196
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Fight_TitlePanel_TitleLearn_Fail",
+            "Fight_TitlePanel_TitleLearn_Success"
+        ]
+    },
+    "Fight_TitlePanel_TitleLearn_Fail": {
+        "recognition": "OCR",
+        "expected": [
+            "探索点不足"
+        ],
+        "roi": [
+            121,
+            337,
+            489,
+            149
+        ],
+        "action": "StopTask",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_TitlePanel_TitleLearn_Success": {
+        "recognition": "OCR",
+        "expected": [
+            "升级成功"
+        ],
+        "roi": [
+            121,
+            337,
+            489,
+            149
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Fight_TitlePanel_Learnable"
+        ],
+        "interrupt": [
+            "ConfirmButton",
+            "ClickCenter"
+        ]
     }
 }

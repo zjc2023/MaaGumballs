@@ -1,22 +1,17 @@
 from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
-from maa.define import RecognitionDetail
 from loguru import logger
+from numpy import true_divide
+from action import Utils
+
 import time
-import re
+
+from agent import utils
 
 @AgentServer.custom_action("JJC101")
 class JJC101(CustomAction):
     # 从一个字符串里面识仅识别一串数字, 并返回
-    def extract_numbers(self, input_string):
-        # 使用正则表达式匹配所有的数字
-        numbers = re.findall(r'\d+', input_string)
-        # 如果找到数字，返回第一个数字，否则返回 None, 返回类型为 int
-        if numbers:
-            return int(numbers[0])
-        else:
-            return None
 
     # 执行函数
     def run(
@@ -50,9 +45,6 @@ class JJC101(CustomAction):
     
 @AgentServer.custom_action("JJC101_Select")
 class JJC101_Select(CustomAction):
-
-    
-
     # 执行函数
     def run(
         self,
@@ -114,5 +106,65 @@ class JJC101_Select(CustomAction):
                 }
             })
 
+
+        return CustomAction.RunResult(success=True)
+    
+@AgentServer.custom_action("JJC101_Title")
+class JJC101_Title(CustomAction):
+
+    def Fight_CheckLayer(self, context: Context):
+        RunResult = context.run_task("TL01_CheckLayer")
+        if RunResult.nodes:
+            layers = Utils.extract_numbers(RunResult.nodes[0].recognition.best_result.text)
+            logger.info(f"current layer {layers}")
+            return layers
+        else:
+            return 0
+            
+    # 执行函数
+    def run(
+        self,
+        context: Context,
+        argv: CustomAction.RunArg,
+    )-> CustomAction.RunResult:
+
+        layers = self.Fight_CheckLayer(context)
+        if layers > 0:
+            # 打开称号面板
+            recodetail = context.run_task("Fight_TitlePanel_Open")
+            if not recodetail.nodes:
+                logger.warning("打开称号面板失败, 识别错误")
+                return CustomAction.RunResult(success=False)
+            else:
+                logger.info("打开称号面板")
+            
+            # 进入冒险系称号
+            recodetail = context.run_task("Fight_TitlePanel_Series",pipeline_override={
+                "Fight_TitlePanel_Series":{
+                    "expected": "冒险"
+                }
+            })
+
+            if not recodetail.nodes:
+                logger.warning("进入冒险系称号失败, 请检查是否携带冒险系冈布奥")
+                return CustomAction.RunResult(success=False)
+            else:
+                logger.info("进入冒险系称号")
+
+            # 选择称号
+            logger.info("开始学习称号")
+            recodetail = context.run_recognition("Fight_TitlePanel_Learnable", img)
+            if not recodetail:
+                logger.warning("当前冒险系没有可学习的称号")
+                return CustomAction.RunResult(success=False)
+
+
+
+
+
+
+
+
+            
 
         return CustomAction.RunResult(success=True)
