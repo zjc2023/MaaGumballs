@@ -10,8 +10,7 @@
     "DisconnectInternet": {
         "recognition": "TemplateMatch",
         "template": [
-            "utils/DisconnectInternet.png",
-            "utils/DisconnectInternet_1.png"
+            "utils/DisconnectInternet.png"
         ],
         "roi": [
             484,
