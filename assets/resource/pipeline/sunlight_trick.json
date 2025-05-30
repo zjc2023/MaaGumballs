@@ -12,7 +12,7 @@
     },
     "OpenArmorPage": {
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand/Armor_1.png",
+        "template": "fight/divineForgeLand/Armor_1.png",
         "roi": [
             17,
             832,
@@ -29,8 +29,8 @@
     },
     "OpenArmorPage2": {
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand/Armor_2.png",
-        "roi" : [
+        "template": "fight/divineForgeLand/Armor_2.png",
+        "roi": [
             226,
             73,
             493,
@@ -43,7 +43,7 @@
     },
     "OpenImprintPage": {
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand/ImprintPage.png",
+        "template": "fight/divineForgeLand/ImprintPage.png",
         "roi": [
             59,
             1178,
@@ -56,7 +56,7 @@
     },
     "ClickSunlightImprint": {
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand/SunlightImprint.png",
+        "template": "fight/divineForgeLand/SunlightImprint.png",
         "roi": [
             166,
             268,
@@ -69,7 +69,7 @@
     },
     "ClickStarlightImprint": {
         "recognition": "TemplateMatch",
-        "template": "divineForgeLand/StarlightImprint.png",
+        "template": "fight/divineForgeLand/StarlightImprint.png",
         "roi": [
             166,
             268,
@@ -243,8 +243,8 @@
             814
         ],
         "template": [
-            "divineForgeLand/BlueHatBody.png",
-            "divineForgeLand/BrokenWeapon.png"
+            "fight/divineForgeLand/BlueHatBody.png",
+            "fight/divineForgeLand/BrokenWeapon.png"
         ],
         "action": "DoNothing",
         "threshold": 0.8,

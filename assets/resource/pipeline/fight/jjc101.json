@@ -9,7 +9,7 @@
     },
     "JJC_Start": {
         "recognition": "TemplateMatch",
-        "template": "monster/JJC/jjc_entry.png",
+        "template": "fight/JJC/jjc_entry.png",
         "roi": [
             461,
             154,
@@ -48,7 +48,7 @@
     },
     "JJC_SelectDrug": {
         "recognition": "TemplateMatch",
-        "template": "monster/JJC/DrugGrid.png",
+        "template": "fight/JJC/DrugGrid.png",
         "roi": [
             88,
             571,
@@ -65,7 +65,7 @@
     },
     "JJC_SelectDrug_Next": {
         "recognition": "TemplateMatch",
-        "template": "monster/JJC/Durg1.png",
+        "template": "fight/JJC/Durg1.png",
         "roi": [
             71,
             155,
@@ -82,7 +82,7 @@
     },
     "JJC_SelectArtifact": {
         "recognition": "TemplateMatch",
-        "template": "monster/JJC/ArtifactGrid.png",
+        "template": "fight/JJC/ArtifactGrid.png",
         "roi": [
             88,
             571,
@@ -99,7 +99,7 @@
     },
     "JJC_SelectArtifact_Next": {
         "recognition": "TemplateMatch",
-        "template": "monster/JJC/Harp.png",
+        "template": "fight/JJC/Harp.png",
         "roi": [
             44,
             138,
@@ -167,7 +167,7 @@
     },
     "JJC_Select_Gumball_Next": {
         "recognition": "TemplateMatch",
-        "template": "monster/JJC/夜叉冈布奥.png",
+        "template": "fight/JJC/夜叉冈布奥.png",
         "action": "Click",
         "roi": [
             77,

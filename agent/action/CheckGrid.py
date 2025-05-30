@@ -32,8 +32,8 @@ class CheckGrid(CustomAction):
                                     "GridCheckMonster": {
                                         "recognition": "TemplateMatch",
                                         "template": [
-                                            "monster/TL01/m1.png",
-                                            "monster/TL01/m2.png"
+                                            "fight/TL01/m1.png",
+                                            "fight/TL01/m2.png"
                                         ],
                                         "roi": [
                                             21,

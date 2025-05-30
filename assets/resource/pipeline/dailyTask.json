@@ -52,7 +52,7 @@
     },
     "EntryHall": {
         "recognition": "TemplateMatch",
-        "template": "dailyTask/EntryHall.png",
+        "template": "dailyTask/Entryhall.png",
         "roi": [
             56,
             310,

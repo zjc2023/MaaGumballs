@@ -1,7 +1,7 @@
 {
     "TL01_Start": {
         "recognition": "TemplateMatch",
-        "template": "monster/TL01/entry.png",
+        "template": "fight/TL01/entry.png",
         "roi": [
             333,
             273,
@@ -126,7 +126,7 @@
         "timeout": 100,
         "post_delay": 200
     },
-    "TL01_checkMonster": {
+    "TL01_checkfight": {
         "recognition": "TemplateMatch",
         "roi": [
             21,
@@ -135,8 +135,8 @@
             762
         ],
         "template": [
-            "monster/TL01/m1.png",
-            "monster/TL01/m2.png"
+            "fight/TL01/m1.png",
+            "fight/TL01/m2.png"
         ],
         "action": "Click",
         "threshold": 0.7,
@@ -151,7 +151,7 @@
             69
         ],
         "template": [
-            "monster/TL01/m3.png"
+            "fight/TL01/m3.png"
         ],
         "action": "DoNothing",
         "next": [
@@ -164,7 +164,7 @@
     },
     "TL01_checkOpenedDoor": {
         "recognition": "TemplateMatch",
-        "template": "monster/TL01/opened_door1.png",
+        "template": "fight/TL01/opened_door1.png",
         "roi": [
             148,
             625,
@@ -180,7 +180,7 @@
     },
     "TL01_checkClosedDoor": {
         "recognition": "TemplateMatch",
-        "template": "monster/TL01/closed_door1.png",
+        "template": "fight/TL01/closed_door1.png",
         "roi": [
             562,
             871,
@@ -207,7 +207,7 @@
         ],
         "post_delay": 200
     },
-    "TL01_clearMonsterLayer": {
+    "TL01_clearfightLayer": {
         "recognition": "DirectHit",
         "action": "Custom",
         "custom_action": "CheckGrid",

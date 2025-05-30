@@ -70,7 +70,7 @@ class JJC101_Select(CustomAction):
         recodetail = context.run_recognition("JJC_Select_Gumball_Check", img, pipeline_override={
             "JJC_Select_Gumball_Check": {
                 "recognition": "FeatureMatch",
-                "template": "monster/JJC/帝释天冈布奥.png",
+                "template": "fight/JJC/帝释天冈布奥.png",
                 "roi": [
                     400,
                     645,
@@ -86,7 +86,7 @@ class JJC101_Select(CustomAction):
             logger.info("帝释天未检测到，自动选择中")
             context.run_task("JJC_Select_Gumball_1", pipeline_override={
                 "JJC_Select_Gumball_Next":{
-                    "template": "monster/JJC/帝释天冈布奥.png",
+                    "template": "fight/JJC/帝释天冈布奥.png",
                 }
             })
 

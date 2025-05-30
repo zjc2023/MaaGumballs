@@ -42,7 +42,7 @@
             814
         ],
         "template": [
-            "divineForgeLand/Pool.png"
+            "fight/divineForgeLand/Pool.png"
         ],
         "action": "DoNothing",
         "threshold": 0.8,

@@ -58,11 +58,11 @@
             762
         ],
         "template": [
-            "monster/m1.png",
-            "monster/m2.png",
-            "monster/m3.png",
-            "monster/m4.png",
-            "monster/m5.png"
+            "fight/FOA/m1.png",
+            "fight/FOA/m2.png",
+            "fight/FOA/m3.png",
+            "fight/FOA/m4.png",
+            "fight/FOA/m5.png"
         ],
         "action": "Click",
         "threshold": 0.6,

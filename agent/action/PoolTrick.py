@@ -33,9 +33,9 @@ class PoolTrick_Test(CustomAction):
                 "CheckEternalSuit": {
                     "recognition": "TemplateMatch",
                     "template": [
-                        "divineForgeLand/Firegod.png",
-                        "divineForgeLand/RedHatBody.png",
-                        "divineForgeLand/Weapon.png",
+                        "fight/divineForgeLand/Firegod.png",
+                        "fight/divineForgeLand/RedHatBody.png",
+                        "fight/divineForgeLand/Weapon.png",
                     ],
                     "roi": [8, 131, 710, 997],
                     "timeout": 3000,

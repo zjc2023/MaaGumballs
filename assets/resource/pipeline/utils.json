@@ -3,7 +3,7 @@
     "BackButton": {
         "recognition": "TemplateMatch",
         "template": [
-            "Utils/BackButton.png"
+            "utils/BackButton.png"
         ],
         "roi": [
             494,
