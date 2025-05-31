@@ -20,11 +20,13 @@
         "post_delay": 1000,
         "timeout": 1500,
         "next": [
-            "JJC_EntryMaze"
+            "JJC_Select"
         ],
-        "interrupt": []
+        "interrupt": [
+            "JJC_Select_Endless"
+        ]
     },
-    "JJC_EntryMaze": {
+    "JJC_Select_Endless": {
         "recognition": "OCR",
         "expected": "无尽模式",
         "roi": [
@@ -35,17 +37,40 @@
         ],
         "action": "Click",
         "post_delay": 1000,
-        "timeout": 2000,
-        "next": [
-            "JJC_Select"
-        ]
+        "timeout": 2000
     },
     "JJC_Select": {
+        "recognition": "OCR",
+        "expected": "进入迷宫",
+        "roi": [
+            165,
+            871,
+            418,
+            91
+        ],
         "action": "Custom",
         "custom_action": "JJC101_Select",
         "post_delay": 1000,
-        "timeout": 2000
+        "timeout": 2000,
+        "next": [
+            "JJC_EntryMaze"
+        ]
     },
+    "JJC_EntryMaze": {
+        "recognition": "OCR",
+        "expected": "进入迷宫",
+        "roi": [
+            165,
+            871,
+            418,
+            91
+        ],
+        "action": "Click",
+        "next": [
+            "JJC_Fighting"
+        ]
+    },
+    "JJC_Fighting": {},
     "JJC_SelectDrug": {
         "recognition": "TemplateMatch",
         "template": "fight/JJC/DrugGrid.png",
@@ -129,6 +154,37 @@
         "post_delay": 1000,
         "timeout": 2000
     },
+    "JJC_Select_Cancel": {
+        "recognition": "OCR",
+        "expected": [
+            "取消"
+        ],
+        "roi": [
+            30,
+            1110,
+            230,
+            169
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "JJC_Select_Gumball": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/JJC/灵魂链接1.png",
+            "fight/JJC/灵魂链接2.png"
+        ],
+        "roi": [
+            343,
+            550,
+            311,
+            297
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
     "JJC_Select_Gumball_1": {
         "recognition": "DirectHit",
         "action": "Click",
@@ -142,10 +198,11 @@
             "JJC_Select_Gumball_Next"
         ],
         "interrupt": [
+            "JJC_Select_Cancel",
+            "JJC_Select_Gumball",
             "JJC_SwipeDownToUp"
         ],
-        "post_delay": 1000,
-        "timeout": 2000
+        "post_delay": 1000
     },
     "JJC_Select_Gumball_2": {
         "recognition": "DirectHit",
@@ -160,20 +217,21 @@
             "JJC_Select_Gumball_Next"
         ],
         "interrupt": [
+            "JJC_Select_Cancel",
+            "JJC_Select_Gumball",
             "JJC_SwipeDownToUp"
         ],
-        "post_delay": 1000,
-        "timeout": 2000
+        "post_delay": 1000
     },
     "JJC_Select_Gumball_Next": {
         "recognition": "TemplateMatch",
-        "template": "fight/JJC/夜叉冈布奥.png",
+        "template": "fight/JJC/帝释天冈布奥.png",
         "action": "Click",
         "roi": [
-            77,
-            235,
-            600,
-            464
+            35,
+            160,
+            652,
+            880
         ],
         "next": [
             "JJC_Select_Confirm"
@@ -212,7 +270,6 @@
             51,
             63
         ],
-        "duration": 1000,
-        "post_delay": 1000
+        "duration": 800
     }
 }
