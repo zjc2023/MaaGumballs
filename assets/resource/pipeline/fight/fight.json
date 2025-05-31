@@ -119,5 +119,42 @@
         "index": 0,
         "action": "DoNothing",
         "next": []
+    },
+    "Fight_OpenRewardBox": {
+        "recognition": "OCR",
+        "expected": "打开",
+        "roi": [
+            150,
+            785,
+            426,
+            95
+        ],
+        "action": "Click",
+        "timeout": 100,
+        "post_delay": 200
+    },
+    "Fight_CheckLayer": {
+        "recognition": "OCR",
+        "recognition_doc": "DetectNumberWithRegex",
+        "expected": "\\d+",
+        "roi": [
+            91,
+            21,
+            233,
+            54
+        ],
+        "action": "DoNothing",
+        "timeout": 100,
+        "post_delay": 200
+    },
+    "Fight_CheckLayerDoor": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/openedDoor.png",
+            "fight/openedDoor1.png"
+        ],
+        "action": "Click",
+        "threshold": 0.7,
+        "timeout": 100
     }
 }

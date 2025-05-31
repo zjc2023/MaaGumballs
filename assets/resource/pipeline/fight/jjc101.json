@@ -280,5 +280,20 @@
             63
         ],
         "duration": 800
+    },
+    "JJC_Fight_ClearCurrentLayer": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "JJC_Fight_ClearCurrentLayer",
+        "post_delay": 300,
+        "timeout": 1000,
+        "next": [
+            "Fight_CheckLayerDoor"
+        ],
+        "interrupt": [
+            "Fight_OpenRewardBox",
+            "BackText",
+            "Fight_CheckOpenedDoor"
+        ]
     }
 }

@@ -238,7 +238,7 @@ class MaaWorker:
         self.tasker.post_task("TL01_Start").wait()
 
         # 检查当前层数
-        check:TaskDetail = self.tasker.post_task("TL01_CheckLayer").wait().get()
+        check:TaskDetail = self.tasker.post_task("Fight_CheckLayer").wait().get()
         if check.nodes:
             layers = utils.extract_numbers(check.nodes[0].recognition.best_result.text)
             self.send_log(f"当前层数是 {layers}")
@@ -250,7 +250,7 @@ class MaaWorker:
             self.bfs_explore1(roi_matrix)
 
             # 检查是否有奖励
-            self.tasker.post_task("TL01_OpenRewardBox").wait()
+            self.tasker.post_task("Fight_OpenRewardBox").wait()
             self.send_log(f"第{layers}层探索完成")
 
             # 检查是否卡返回界面
@@ -265,7 +265,7 @@ class MaaWorker:
                 time.sleep(3)
 
             # 检查当前层数
-            check:TaskDetail = self.tasker.post_task("TL01_CheckLayer").wait().get()
+            check:TaskDetail = self.tasker.post_task("Fight_CheckLayer").wait().get()
             if check.nodes:    
                 layers = utils.extract_numbers(check.nodes[0].recognition.best_result.text)
                 self.send_log(f"当前层数是 {layers}")

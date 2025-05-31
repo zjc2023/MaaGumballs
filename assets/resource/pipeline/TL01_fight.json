@@ -94,16 +94,6 @@
             "TL01_EntryMaze"
         ]
     },
-    "TL01_CheckLayerDoor": {
-        "recognition": "TemplateMatch",
-        "template": [
-            "fight/openedDoor.png",
-            "fight/openedDoor1.png"
-        ],
-        "action": "Click",
-        "threshold": 0.7,
-        "timeout": 100
-    },
     "TL01_Fighting": {
         "recognition": "DirectHit",
         "action": "Custom",
@@ -111,20 +101,6 @@
         "custom_action": "TL01_Fighting_Test",
         "post_delay": 500,
         "timeout": 200
-    },
-    "TL01_CheckLayer": {
-        "recognition": "OCR",
-        "recognition_doc": "DetectNumberWithRegex",
-        "expected": "\\d+",
-        "roi": [
-            91,
-            21,
-            233,
-            54
-        ],
-        "action": "DoNothing",
-        "timeout": 100,
-        "post_delay": 200
     },
     "TL01_checkfight": {
         "recognition": "TemplateMatch",
@@ -158,11 +134,11 @@
             "TL01_checkClosedDoor"
         ],
         "on_error": [
-            "TL01_checkOpenedDoor"
+            "Fight_CheckOpenedDoor"
         ],
         "timeout": 1500
     },
-    "TL01_checkOpenedDoor": {
+    "Fight_CheckOpenedDoor": {
         "recognition": "TemplateMatch",
         "template": "fight/TL01/opened_door1.png",
         "roi": [
@@ -203,7 +179,7 @@
         ],
         "next": [
             "TL01_checkClosedDoor",
-            "TL01_checkOpenedDoor"
+            "Fight_CheckOpenedDoor"
         ],
         "post_delay": 200
     },
@@ -214,26 +190,13 @@
         "post_delay": 300,
         "timeout": 1000,
         "next": [
-            "TL01_CheckLayerDoor"
+            "Fight_CheckLayerDoor"
         ],
         "interrupt": [
-            "TL01_OpenRewardBox",
+            "Fight_OpenRewardBox",
             "BackText",
-            "TL01_checkOpenedDoor"
+            "Fight_CheckOpenedDoor"
         ]
-    },
-    "TL01_OpenRewardBox": {
-        "recognition": "OCR",
-        "expected": "打开",
-        "roi": [
-            150,
-            785,
-            426,
-            95
-        ],
-        "action": "Click",
-        "timeout": 100,
-        "post_delay": 200
     },
     "TL01_Start_Count": {
         "action": "Custom",
