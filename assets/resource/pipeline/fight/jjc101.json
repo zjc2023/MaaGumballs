@@ -70,7 +70,16 @@
             "JJC_Fighting"
         ]
     },
-    "JJC_Fighting": {},
+    "JJC_Fighting": {
+        "recognition": "TemplateMatch",
+        "template": "fight/UniversalUI/MazePackage.png",
+        "roi": [
+            47,
+            1147,
+            136,
+            117
+        ]
+    },
     "JJC_SelectDrug": {
         "recognition": "TemplateMatch",
         "template": "fight/JJC/DrugGrid.png",
