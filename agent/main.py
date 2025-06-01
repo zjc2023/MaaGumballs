@@ -224,16 +224,16 @@ def agnet():
     from maa.toolkit import Toolkit
     from action import CheckGrid
     from action import Count
-    from action import GoDownstairsTrick
+    from action.divineForgeLand import GoDownstairsTrick
     from action import DailyTask
     from action import Reward
-    from action import SunlightTrick
-    from action import PoolTrick
+    from action.divineForgeLand import SunlightTrick
+    from action.divineForgeLand import PoolTrick
     from action import Utils
     from action import Shopping
     from action import GetKeyFromHole
     from action.Fight import Fight_Agent
-    from action import FindStoveSequence
+    from action.divineForgeLand import FindStoveSequence
 
     Toolkit.init_option("./")
     if len(sys.argv) > 1:
