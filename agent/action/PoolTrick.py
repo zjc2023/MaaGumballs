@@ -61,7 +61,7 @@ class PoolTrick_Test(CustomAction):
         checkCount = 10
         searchpoolpos = None
         searchDetail = context.run_task("SearchPool")
-        while not (searchDetail or checkCount <= 0):
+        while not (searchDetail.nodes or checkCount <= 0):
             checkCount -= 1
             searchDetail = context.run_task("SearchPool")
         if searchDetail:
