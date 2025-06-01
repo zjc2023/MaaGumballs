@@ -1,0 +1,346 @@
+{
+    "Find_Stove_Sequence": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "pre_delay": 500,
+        "custom_action": "Find_Stove_Sequence_Test",
+        "custom_action_param": {
+            "target_sunlight": 18
+        },
+        "post_delay": 1000
+    },
+    "ConfirmPutonArmor": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand/Armor_2.png",
+        "roi": [
+            226,
+            73,
+            493,
+            115
+        ],
+        "action": "DoNothing",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "on_error": "PutonArmor"
+    },
+    "PutonArmor": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand/Armor_1.png",
+        "roi": [
+            17,
+            832,
+            168,
+            168
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "PutonArmor_Next"
+    },
+    "PutonArmor_Next": {
+        "recognition": "OCR",
+        "expected": "穿戴盔甲",
+        "roi": [
+            28,
+            1130,
+            676,
+            149
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "ConfirmPutonArmor"
+    },
+    "OpenEquipmentStovePage": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand/Equipment_Stove.png",
+        "roi": [
+            14,
+            247,
+            691,
+            748
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "OpenEquipmentStovePage_Next"
+    },
+    "OpenEquipmentStovePage_Next": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand/Equipment_Stove.png",
+        "roi": [
+            14,
+            247,
+            691,
+            748
+        ],
+        "target_offset": [
+            200,
+            -25,
+            0,
+            0
+        ],
+        "action": "Click",
+        "pre_delay": 500,
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "GoToTheRightestPage": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand/RightButton.png",
+        "roi": [
+            0,
+            765,
+            720,
+            108
+        ],
+        "action": "Click",
+        "post_delay": 100,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "GoToTheRightestPage"
+    },
+    "GoToTheLeftestPage": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand/LeftButton.png",
+        "roi": [
+            0,
+            765,
+            720,
+            108
+        ],
+        "action": "Click",
+        "post_delay": 100,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "GoToTheLeftestPage"
+    },
+    "GoToNextPage": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand/RightButton.png",
+        "roi": [
+            0,
+            765,
+            720,
+            108
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "GoToPreviousPage": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand/LeftButton.png",
+        "roi": [
+            0,
+            765,
+            720,
+            108
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "Find_Stove_Sequence_Check": {
+        "recognition": "OCR",
+        "recognition_doc": "检测攻击或者血量增加",
+        "expected": [
+            "攻击",
+            "魔力",
+            "生命值",
+            "魔法值"
+        ],
+        "roi": [
+            158,
+            1013,
+            331,
+            203
+        ],
+        "action": "DoNothing",
+        "timeout": 2500
+    },
+    "Click_Select_Equipment": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand\\SelectEquipment.png",
+        "roi": [
+            3,
+            542,
+            716,
+            505
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "Click_Smelt_Equipment": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand\\SmeltEquipment.png",
+        "roi": [
+            122,
+            777,
+            514,
+            168
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "AddLowLevelEquipment": {
+        "recognition": "TemplateMatch",
+        "template": "divineForgeLand\\BackPack.png",
+        "roi": [
+            240,
+            604,
+            252,
+            64
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 500,
+        "timeout": 3000,
+        "target": [
+            91,
+            677,
+            68,
+            73
+        ]
+    },
+    "Find_and_Click_level6_Equipmnet": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "equipments\\6level\\暗系魔法书.png",
+            "equipments\\6level\\骨灰指轮.png",
+            "equipments\\6level\\火系魔法书.png",
+            "equipments\\6level\\法老面具.png",
+            "equipments\\6level\\水系魔法书.png",
+            "equipments\\6level\\气系魔法书.png",
+            "equipments\\6level\\次元靴.png",
+            "equipments\\6level\\格斗大师拳套.png",
+            "equipments\\6level\\暗系魔法书.png",
+            "equipments\\6level\\星月教挂坠.png",
+            "equipments\\6level\\执政官铠甲.png",
+            "equipments\\6level\\大德鲁伊斗篷.png",
+            "equipments\\6level\\圣者的日记.png",
+            "equipments\\6level\\土系魔法书.png",
+            "equipments\\6level\\光系魔法书.png",
+            "equipments\\6level\\伊斯坦丁.png"
+        ],
+        "roi": [
+            0,
+            632,
+            720,
+            400
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 1500
+    },
+    "Find_and_Click_level5_Equipmnet": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "equipments\\5level\\土元素之靴.png",
+            "equipments\\5level\\教皇腰带.png",
+            "equipments\\5level\\时光沙漏.png",
+            "equipments\\5level\\曙光战甲.png",
+            "equipments\\5level\\末日指轮.png",
+            "equipments\\5level\\杀戮护符.png",
+            "equipments\\5level\\永恒之球.png",
+            "equipments\\5level\\永恒披风.png",
+            "equipments\\5level\\永恒王冠.png",
+            "equipments\\5level\\永恒腕轮.png",
+            "equipments\\5level\\神谕之甲.png",
+            "equipments\\5level\\神谕之盔.png",
+            "equipments\\5level\\神谕手套.png",
+            "equipments\\5level\\神谕束带.png",
+            "equipments\\5level\\魔导士之靴.png",
+            "equipments\\5level\\魔导士挂坠.png",
+            "equipments\\5level\\魔导士指轮.png",
+            "equipments\\5level\\魔导士斗篷.png"
+        ],
+        "roi": [
+            0,
+            632,
+            720,
+            400
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 1500
+    },
+    "Find_and_Click_level4_Equipmnet": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "equipments\\4level\\勇气腰带.png",
+            "equipments\\4level\\圣裁官手套.png",
+            "equipments\\4level\\坚韧战靴.png",
+            "equipments\\4level\\巫毒斗篷.png",
+            "equipments\\4level\\忠诚勋章.png",
+            "equipments\\4level\\恶魔之戒.png",
+            "equipments\\4level\\恶魔披肩.png",
+            "equipments\\4level\\恶魔挂坠.png",
+            "equipments\\4level\\恶魔骨靴.png",
+            "equipments\\4level\\正义铠甲.png",
+            "equipments\\4level\\毁灭者石板.png",
+            "equipments\\4level\\泉水项链.png",
+            "equipments\\4level\\泰坦之盔.png",
+            "equipments\\4level\\重力之源.png",
+            "equipments\\4level\\龙鳞护腕.png",
+            "equipments\\4level\\龙鳞甲.png",
+            "equipments\\4level\\龙鳞盔.png",
+            "equipments\\4level\\龙鳞腰带.png"
+        ],
+        "roi": [
+            0,
+            632,
+            720,
+            400
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 1500
+    },
+    "Find_and_Click_level3_Equipmnet": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "equipments\\3level\\信仰之戒.png",
+            "equipments\\3level\\天鹅绒斗篷.png",
+            "equipments\\3level\\暗影头盔.png",
+            "equipments\\3level\\暗影护腕.png",
+            "equipments\\3level\\暗影腰带.png",
+            "equipments\\3level\\暗影铠甲.png",
+            "equipments\\3level\\海妖之眼.png",
+            "equipments\\3level\\火蜥蜴腕轮.png",
+            "equipments\\3level\\猎人长靴.png",
+            "equipments\\3level\\真理之戒.png",
+            "equipments\\3level\\真理之靴.png",
+            "equipments\\3level\\真理披肩.png",
+            "equipments\\3level\\真理挂坠.png",
+            "equipments\\3level\\精密工具组.png",
+            "equipments\\3level\\荆棘之球.png",
+            "equipments\\3level\\蓝宝石胸甲.png",
+            "equipments\\3level\\魔能挂坠.png",
+            "equipments\\3level\\黑巫术腰带.png"
+        ],
+        "roi": [
+            0,
+            632,
+            720,
+            400
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 1500
+    }
+}
