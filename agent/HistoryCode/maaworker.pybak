@@ -258,7 +258,7 @@ class MaaWorker:
             self.send_log("检查返回按钮, 点击返回")
 
             # check 门
-            check:TaskDetail = self.tasker.post_task("CheckDoor").wait().get()
+            check:TaskDetail = self.tasker.post_task("Fight_OpenedDoor").wait().get()
             if check.nodes:
                 self.send_log("check door!!")
                 # 场景切换等待

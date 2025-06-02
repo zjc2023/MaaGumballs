@@ -287,13 +287,73 @@
         "custom_action": "JJC_Fight_ClearCurrentLayer",
         "post_delay": 300,
         "timeout": 1000,
-        "next": [
-            "Fight_CheckLayerDoor"
-        ],
+        "next": [],
         "interrupt": [
             "Fight_OpenRewardBox",
             "BackText",
             "Fight_CheckOpenedDoor"
         ]
+    },
+    "JJC_StoneChest": {
+        "recognition": "TemplateMatch",
+        "template": "fight/JJC/StoneChest.png",
+        "roi": [
+            4,
+            182,
+            705,
+            839
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "JJC_StoneChest_Open"
+        ]
+    },
+    "JJC_StoneChest_Open": {
+        "recognition": "OCR",
+        "expected": [
+            "刻上名字",
+            "离开"
+        ],
+        "roi": [
+            21,
+            217,
+            682,
+            762
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "JJC_Monster_Reco": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "roi": [
+            19,
+            218,
+            282,
+            777
+        ],
+        "lower": [
+            190,
+            35,
+            35
+        ],
+        "upper": [
+            230,
+            65,
+            65
+        ],
+        "count": 10,
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "JJC_GridReco_Test": {
+        "recognition": "Custom",
+        "custom_recognition": "Reco_Door",
+        "action": "DoNothing",
+        "post_delay": 1000
     }
 }

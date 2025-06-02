@@ -25,7 +25,8 @@ except ImportError:
         format="%(asctime)s | %(levelname)s | %(message)s", level=logging.INFO
     )
     logger = logging
-    
+
+
 # 获取当前工作目录
 def read_pip_config() -> dict:
     """
@@ -217,6 +218,7 @@ def update_pip_config(version) -> bool:
         logger.exception("更新pip配置失败")
         return False
 
+
 def agnet():
     from maa.agent.agent_server import AgentServer
     from maa.toolkit import Toolkit
@@ -231,6 +233,7 @@ def agnet():
     from action import Shopping
     from action import GetKeyFromHole
     from action.Fight import Fight_Agent
+    from recognize import GridReco
 
     Toolkit.init_option("./")
     if len(sys.argv) > 1:
