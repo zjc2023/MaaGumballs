@@ -1,0 +1,828 @@
+{
+    "GoDownstairsTrick": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "pre_delay": 500,
+        "custom_action": "GoDownstairsTrick_Test",
+        "post_delay": 1000,
+        "timeout": 200
+    },
+    "DisconnectInternet": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils/DisconnectInternet.png"
+        ],
+        "roi": [
+            484,
+            1046,
+            235,
+            233
+        ],
+        "action": "Click",
+        "post_delay": 200,
+        "doc": "这里要快",
+        "next": "Opengumballs_Auto"
+    },
+    "Opengumballs_Auto": {
+        "action": "StartApp",
+        "package": "com.leiting.gumballs.leiting"
+    },
+    "CheckClosedDoor": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils/ClosedDoor.png"
+        ],
+        "action": "DoNothing",
+        "threshold": 0.8,
+        "timeout": 5000
+    },
+    "OpenEquipmentPackage": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils/ConfirmEquipmentPack.png"
+        ],
+        "action": "Click",
+        "roi": [
+            0,
+            1116,
+            187,
+            163
+        ],
+        "post_delay": 1000,
+        "threshold": 0.8
+    },
+    "Use_Earthquake": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils/skill_pack.png"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "roi": [
+            526,
+            1113,
+            193,
+            166
+        ],
+        "next": "ClickEarthMagicPage"
+    },
+    "ClickEarthMagicPage": {
+        "recognition": "OCR",
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "roi": [
+            201,
+            286,
+            224,
+            89
+        ],
+        "target": [
+            593,
+            504,
+            86,
+            72
+        ],
+        "post_delay": 1000,
+        "next": "ClickEarthMagic"
+    },
+    "ClickEarthMagic": {
+        "recognition": "OCR",
+        "expected": [
+            "地震术"
+        ],
+        "roi": [
+            52,
+            468,
+            521,
+            103
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "next": "CastEarthMagic"
+    },
+    "CastEarthMagic": {
+        "recognition": "OCR",
+        "expected": [
+            "地震术"
+        ],
+        "action": "Click",
+        "roi": [
+            8,
+            974,
+            711,
+            187
+        ],
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "target": [
+            593,
+            504,
+            86,
+            72
+        ]
+    },
+    "ClickEquipmentChest": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils/EquipmentChest.png"
+        ],
+        "post_delay": 1000,
+        "action": "Click"
+    },
+    "KillChestMonster": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils/ChestMonsterCorner.png"
+        ],
+        "action": "Click",
+        "target_offset": [
+            -50,
+            50,
+            0,
+            0
+        ],
+        "threshold": 0.8,
+        "post_delay": 500,
+        "next": "KillChestMonster",
+        "timeout": 3000,
+        "on_error": "ClickEquipmentChest"
+    },
+    "Find_Stove_Sequence": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "pre_delay": 500,
+        "custom_action": "Find_Stove_Sequence_Test",
+        "custom_action_param": {
+            "target_sunlight": 18
+        },
+        "post_delay": 1000
+    },
+    "ConfirmPutonArmor": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/Armor_2.png",
+        "roi": [
+            226,
+            73,
+            493,
+            115
+        ],
+        "action": "DoNothing",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "on_error": "PutonArmor"
+    },
+    "PutonArmor": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/Armor_1.png",
+        "roi": [
+            17,
+            832,
+            168,
+            168
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "PutonArmor_Next"
+    },
+    "PutonArmor_Next": {
+        "recognition": "OCR",
+        "expected": "穿戴盔甲",
+        "roi": [
+            28,
+            1130,
+            676,
+            149
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "ConfirmPutonArmor"
+    },
+    "OpenEquipmentStovePage": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/Equipment_Stove.png",
+        "roi": [
+            14,
+            247,
+            691,
+            748
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "OpenEquipmentStovePage_Next"
+    },
+    "OpenEquipmentStovePage_Next": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/Equipment_Stove.png",
+        "roi": [
+            14,
+            247,
+            691,
+            748
+        ],
+        "target_offset": [
+            200,
+            -25,
+            0,
+            0
+        ],
+        "action": "Click",
+        "pre_delay": 500,
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "GoToTheRightestPage": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/RightButton.png",
+        "roi": [
+            0,
+            765,
+            720,
+            108
+        ],
+        "action": "Click",
+        "post_delay": 100,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "GoToTheRightestPage"
+    },
+    "GoToTheLeftestPage": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/LeftButton.png",
+        "roi": [
+            0,
+            765,
+            720,
+            108
+        ],
+        "action": "Click",
+        "post_delay": 100,
+        "threshold": 0.8,
+        "timeout": 3000,
+        "next": "GoToTheLeftestPage"
+    },
+    "GoToNextPage": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/RightButton.png",
+        "roi": [
+            0,
+            765,
+            720,
+            108
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "GoToPreviousPage": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/LeftButton.png",
+        "roi": [
+            0,
+            765,
+            720,
+            108
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "Find_Stove_Sequence_Check": {
+        "recognition": "OCR",
+        "recognition_doc": "检测攻击或者血量增加",
+        "expected": [
+            "攻击",
+            "魔力",
+            "生命值",
+            "魔法值"
+        ],
+        "roi": [
+            158,
+            1013,
+            331,
+            203
+        ],
+        "action": "DoNothing",
+        "timeout": 2500
+    },
+    "Click_Select_Equipment": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/SelectEquipment.png",
+        "roi": [
+            3,
+            542,
+            716,
+            505
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "Click_Smelt_Equipment": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/SmeltEquipment.png",
+        "roi": [
+            122,
+            777,
+            514,
+            168
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "timeout": 3000
+    },
+    "AddLowLevelEquipment": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/BackPack.png",
+        "roi": [
+            240,
+            604,
+            252,
+            64
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 500,
+        "timeout": 3000,
+        "target": [
+            91,
+            677,
+            68,
+            73
+        ]
+    },
+    "Find_and_Click_level6_Equipmnet": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "equipments/6level/暗系魔法书.png",
+            "equipments/6level/骨灰指轮.png",
+            "equipments/6level/火系魔法书.png",
+            "equipments/6level/法老面具.png",
+            "equipments/6level/水系魔法书.png",
+            "equipments/6level/气系魔法书.png",
+            "equipments/6level/次元靴.png",
+            "equipments/6level/格斗大师拳套.png",
+            "equipments/6level/暗系魔法书.png",
+            "equipments/6level/星月教挂坠.png",
+            "equipments/6level/执政官铠甲.png",
+            "equipments/6level/大德鲁伊斗篷.png",
+            "equipments/6level/圣者的日记.png",
+            "equipments/6level/土系魔法书.png",
+            "equipments/6level/光系魔法书.png",
+            "equipments/6level/伊斯坦丁.png"
+        ],
+        "roi": [
+            0,
+            632,
+            720,
+            400
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 1500
+    },
+    "Find_and_Click_level5_Equipmnet": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "equipments/5level/土元素之靴.png",
+            "equipments/5level/教皇腰带.png",
+            "equipments/5level/时光沙漏.png",
+            "equipments/5level/曙光战甲.png",
+            "equipments/5level/末日指轮.png",
+            "equipments/5level/杀戮护符.png",
+            "equipments/5level/永恒之球.png",
+            "equipments/5level/永恒披风.png",
+            "equipments/5level/永恒王冠.png",
+            "equipments/5level/永恒腕轮.png",
+            "equipments/5level/神谕之甲.png",
+            "equipments/5level/神谕之盔.png",
+            "equipments/5level/神谕手套.png",
+            "equipments/5level/神谕束带.png",
+            "equipments/5level/魔导士之靴.png",
+            "equipments/5level/魔导士挂坠.png",
+            "equipments/5level/魔导士指轮.png",
+            "equipments/5level/魔导士斗篷.png"
+        ],
+        "roi": [
+            0,
+            632,
+            720,
+            400
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 1500
+    },
+    "Find_and_Click_level4_Equipmnet": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "equipments/4level/勇气腰带.png",
+            "equipments/4level/圣裁官手套.png",
+            "equipments/4level/坚韧战靴.png",
+            "equipments/4level/巫毒斗篷.png",
+            "equipments/4level/忠诚勋章.png",
+            "equipments/4level/恶魔之戒.png",
+            "equipments/4level/恶魔披肩.png",
+            "equipments/4level/恶魔挂坠.png",
+            "equipments/4level/恶魔骨靴.png",
+            "equipments/4level/正义铠甲.png",
+            "equipments/4level/毁灭者石板.png",
+            "equipments/4level/泉水项链.png",
+            "equipments/4level/泰坦之盔.png",
+            "equipments/4level/重力之源.png",
+            "equipments/4level/龙鳞护腕.png",
+            "equipments/4level/龙鳞甲.png",
+            "equipments/4level/龙鳞盔.png",
+            "equipments/4level/龙鳞腰带.png"
+        ],
+        "roi": [
+            0,
+            632,
+            720,
+            400
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 1500
+    },
+    "Find_and_Click_level3_Equipmnet": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "equipments/3level/信仰之戒.png",
+            "equipments/3level/天鹅绒斗篷.png",
+            "equipments/3level/暗影头盔.png",
+            "equipments/3level/暗影护腕.png",
+            "equipments/3level/暗影腰带.png",
+            "equipments/3level/暗影铠甲.png",
+            "equipments/3level/海妖之眼.png",
+            "equipments/3level/火蜥蜴腕轮.png",
+            "equipments/3level/猎人长靴.png",
+            "equipments/3level/真理之戒.png",
+            "equipments/3level/真理之靴.png",
+            "equipments/3level/真理披肩.png",
+            "equipments/3level/真理挂坠.png",
+            "equipments/3level/精密工具组.png",
+            "equipments/3level/荆棘之球.png",
+            "equipments/3level/蓝宝石胸甲.png",
+            "equipments/3level/魔能挂坠.png",
+            "equipments/3level/黑巫术腰带.png"
+        ],
+        "roi": [
+            0,
+            632,
+            720,
+            400
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 1500
+    },
+    "PoolTrick": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "pre_delay": 500,
+        "custom_action": "PoolTrick_Test",
+        "post_delay": 500,
+        "timeout": 200
+    },
+    "OCRArmorATK": {
+        "recognition": "OCR",
+        "roi": [
+            504,
+            291,
+            138,
+            36
+        ],
+        "expected": "\\d+",
+        "action": "DoNothing",
+        "post_delay": 1000,
+        "timeout": 1000
+    },
+    "OCRArmorMAG": {
+        "recognition": "OCR",
+        "roi": [
+            514,
+            395,
+            119,
+            33
+        ],
+        "expected": "\\d+",
+        "action": "DoNothing",
+        "post_delay": 1000,
+        "timeout": 1000
+    },
+    "SearchPool": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            5,
+            182,
+            714,
+            814
+        ],
+        "template": [
+            "fight/divineForgeLand/Pool.png"
+        ],
+        "action": "DoNothing",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "on_error": "PushOne",
+        "timeout": 1000
+    },
+    "SearchPool_Next": {
+        "recognition": "OCR",
+        "expected": "浸泡铠甲",
+        "roi": [
+            31,
+            765,
+            658,
+            145
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8
+    },
+    "SunlightTrick": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "pre_delay": 500,
+        "custom_action": "SunlightTrick_Test",
+        "custom_action_param": {
+            "accept_sunlight": true
+        },
+        "post_delay": 500,
+        "timeout": 200
+    },
+    "OpenArmorPage": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/Armor_1.png",
+        "roi": [
+            17,
+            832,
+            168,
+            168
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "on_error": [
+            "OpenArmorPage2"
+        ],
+        "timeout": 1000
+    },
+    "OpenArmorPage2": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/Armor_2.png",
+        "roi": [
+            226,
+            73,
+            493,
+            115
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 1000
+    },
+    "OpenImprintPage": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/ImprintPage.png",
+        "roi": [
+            59,
+            1178,
+            150,
+            66
+        ],
+        "post_delay": 1000,
+        "action": "Click",
+        "threshold": 0.8
+    },
+    "ClickSunlightImprint": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/SunlightImprint.png",
+        "roi": [
+            166,
+            268,
+            395,
+            368
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8
+    },
+    "ClickStarlightImprint": {
+        "recognition": "TemplateMatch",
+        "template": "fight/divineForgeLand/StarlightImprint.png",
+        "roi": [
+            166,
+            268,
+            395,
+            368
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8
+    },
+    "findpercent": {
+        "recognition": "OCR",
+        "expected": [
+            "%"
+        ],
+        "action": "DoNothing",
+        "roi": [
+            77,
+            727,
+            570,
+            101
+        ],
+        "post_delay": 1000,
+        "threshold": 0.8
+    },
+    "PushOne": {
+        "recognition": "TemplateMatch",
+        "template": "utils/skill_pack.png",
+        "roi": [
+            528,
+            1122,
+            175,
+            157
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "next": [
+            "ClickWaterMagicPage"
+        ]
+    },
+    "ClickWaterMagicPage": {
+        "recognition": "OCR",
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "target": [
+            597,
+            407,
+            84,
+            54
+        ],
+        "post_delay": 1000,
+        "next": "ClickWaterMagic"
+    },
+    "ClickWaterMagic": {
+        "recognition": "OCR",
+        "roi": [
+            68,
+            447,
+            505,
+            133
+        ],
+        "expected": [
+            "治疗术",
+            "寒冰护盾"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "next": "CastWaterMagic",
+        "post_delay": 1000,
+        "on_error": [
+            "ClickDarkMagicPage"
+        ]
+    },
+    "CastWaterMagic": {
+        "recognition": "OCR",
+        "roi": [
+            182,
+            1071,
+            337,
+            75
+        ],
+        "expected": [
+            "治疗术",
+            "寒冰护盾"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "target": [
+            68,
+            447,
+            505,
+            133
+        ]
+    },
+    "ClickDarkMagicPage": {
+        "recognition": "OCR",
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "target": [
+            595,
+            828,
+            84,
+            61
+        ],
+        "post_delay": 1000,
+        "next": "ClickDarkMagic"
+    },
+    "ClickDarkMagic": {
+        "recognition": "OCR",
+        "roi": [
+            59,
+            475,
+            511,
+            96
+        ],
+        "expected": [
+            "死亡波纹",
+            "吸能术"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "next": "CastDarkMagic"
+    },
+    "CastDarkMagic": {
+        "recognition": "OCR",
+        "roi": [
+            182,
+            1071,
+            337,
+            75
+        ],
+        "expected": [
+            "死亡波纹",
+            "吸能术"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "target": [
+            595,
+            828,
+            84,
+            61
+        ]
+    },
+    "SearchBody": {
+        "recognition": "TemplateMatch",
+        "roi": [
+            5,
+            182,
+            714,
+            814
+        ],
+        "template": [
+            "fight/divineForgeLand/BlueHatBody.png",
+            "fight/divineForgeLand/BrokenWeapon.png"
+        ],
+        "action": "DoNothing",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "on_error": "PushOne",
+        "timeout": 1000
+    },
+    "SearchBody_Next": {
+        "recognition": "OCR",
+        "expected": "翻找",
+        "roi": [
+            117,
+            756,
+            495,
+            152
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8
+    }
+}

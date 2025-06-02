@@ -84,6 +84,19 @@
             "name": "拉绳子(测试中)",
             "entry": "GetKeyFromHole",
             "doc": "测试"
+        },
+        {
+            "name": "测序",
+            "entry": "Find_Stove_Sequence",
+            "option": [
+                "目标日光数"
+            ],
+            "doc": "测序, 最好穿上铠甲之后使用, 低星装备为装备背包第3页的第一个装备, 确保超过101件的低星装备。如果6星序列中日光数满足要求那么则完整测序, 否则停止。"
+        },
+        {
+            "name": "测试",
+            "entry": "DFL_Fight_ClearCurrentLayer",
+            "doc": "测试"
         }
     ],
     "option": {
@@ -244,6 +257,41 @@
                             "expected": [
                                 "取消"
                             ]
+                        }
+                    }
+                }
+            ]
+        },
+        "目标日光数": {
+            "default_case": "18",
+            "cases": [
+                {
+                    "name": "15",
+                    "pipeline_override": {
+                        "Find_Stove_Sequence": {
+                            "custom_action_param": {
+                                "target_sunlight": 15
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "18",
+                    "pipeline_override": {
+                        "Find_Stove_Sequence": {
+                            "custom_action_param": {
+                                "target_sunlight": 18
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "21",
+                    "pipeline_override": {
+                        "Find_Stove_Sequence": {
+                            "custom_action_param": {
+                                "target_sunlight": 21
+                            }
                         }
                     }
                 }

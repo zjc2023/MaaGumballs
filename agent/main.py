@@ -224,16 +224,15 @@ def agnet():
     from maa.toolkit import Toolkit
     from action import CheckGrid
     from action import Count
-    from action import GoDownstairsTrick
     from action import DailyTask
     from action import Reward
-    from action import SunlightTrick
-    from action import PoolTrick
     from action import Utils
     from action import Shopping
     from action import GetKeyFromHole
     from action.Fight import Fight_Agent
     from recognize import GridReco
+    from action.divineForgeLand import SomeTrick
+    from action.divineForgeLand import ClearLayer
 
     Toolkit.init_option("./")
     if len(sys.argv) > 1:
