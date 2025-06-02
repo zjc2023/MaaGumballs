@@ -37,7 +37,7 @@ class JJC101(CustomAction):
         # 检查当前层数是否小于29层
         while layers < 29:
             # 小怪层开始探索
-            print(f"Start Explore {layers} layer.")
+            logger.info(f"Start Explore {layers} layer.")
             context.run_task("JJC_Fight_ClearCurrentLayer")
             time.sleep(3)
 
@@ -47,7 +47,22 @@ class JJC101(CustomAction):
                 layers = Utils.extract_numbers(
                     RunResult.nodes[0].recognition.best_result.text
                 )
-        print(f"current layer :{layers}")
+
+            # 胜利者石柱
+            context.run_task("JJC_StoneChest")
+
+            # 寻找身体
+            img = context.tasker.controller.post_screencap().wait().get()
+            RunResult = context.run_recognition("JJC_Find_Body", img)
+            if RunResult:
+                logger.info("Find Body")
+                context.run_task("JJC_Find_Body")
+
+            # 角斗场事件
+            if layers % 5 == 0:
+                context.run_task("JJC_Find_Abattoir")
+
+            # 该层探索结束
 
         return CustomAction.RunResult(success=True)
 
@@ -354,7 +369,5 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
             if FailCheckMonsterCnt >= 5 or FailCheckGridCnt >= 3:
                 logger.info("找不到怪物或格子, 提前退出")
                 break
-
-        context.run_task("JJC_StoneChest")
 
         return CustomAction.RunResult(success=True)

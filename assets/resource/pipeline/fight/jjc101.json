@@ -326,29 +326,76 @@
         "post_delay": 1000,
         "timeout": 2000
     },
-    "JJC_Monster_Reco": {
-        "recognition": "ColorMatch",
-        "method": 4,
+    "JJC_Find_Body": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/JJC/斯巴达尸体.png"
+        ],
         "roi": [
-            19,
-            218,
-            282,
-            777
+            7,
+            179,
+            712,
+            821
         ],
-        "lower": [
-            190,
-            35,
-            35
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "JJC_Inter_Confirm"
+        ]
+    },
+    "JJC_Inter_Confirm": {
+        "recognition": "OCR",
+        "expected": [
+            "翻找",
+            "进入",
+            "查看"
         ],
-        "upper": [
-            230,
-            65,
-            65
+        "roi": [
+            88,
+            652,
+            548,
+            332
         ],
-        "count": 10,
         "action": "Click",
         "post_delay": 1000,
         "timeout": 2000
+    },
+    "JJC_Find_Abattoir": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/JJC/Abattoir.png"
+        ],
+        "roi": [
+            7,
+            179,
+            712,
+            821
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "JJC_Inter_Confirm"
+        ]
+    },
+    "JJC_Abattoir_Chest": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/JJC/Chest_01.png"
+        ],
+        "roi": [
+            9,
+            690,
+            159,
+            237
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "JJC_Inter_Confirm"
+        ]
     },
     "JJC_GridReco_Test": {
         "recognition": "Custom",

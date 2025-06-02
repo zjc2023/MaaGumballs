@@ -192,5 +192,228 @@
         "post_delay": 1000,
         "timeout": 2000,
         "next": []
+    },
+    "Fight_SkillPack_Open": {
+        "recognition": "TemplateMatch",
+        "template": "utils/skill_pack.png",
+        "roi": [
+            528,
+            1122,
+            175,
+            157
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_SkillPack_Type": {
+        "recognition": "OCR",
+        "expected": "系别",
+        "roi": [
+            78,
+            885,
+            456,
+            225
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_ClickSpecialMagicPage": {
+        "recognition": "OCR",
+        "roi": [
+            110,
+            906,
+            440,
+            182
+        ],
+        "expected": [
+            "特殊"
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_ClickFireMagicPage": {
+        "recognition": "OCR",
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "target": [
+            593,
+            290,
+            91,
+            78
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_ClickWaterMagicPage": {
+        "recognition": "OCR",
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "target": [
+            595,
+            404,
+            85,
+            70
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_ClickEarthMagicPage": {
+        "recognition": "OCR",
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "target": [
+            595,
+            509,
+            77,
+            64
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_ClickQiMagicPage": {
+        "recognition": "OCR",
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "target": [
+            592,
+            611,
+            95,
+            75
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_ClickLightMagicPage": {
+        "recognition": "OCR",
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "target": [
+            599,
+            715,
+            87,
+            80
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_ClickDarkMagicPage": {
+        "recognition": "OCR",
+        "roi": [
+            196,
+            289,
+            224,
+            84
+        ],
+        "expected": [
+            "魔法"
+        ],
+        "action": "Click",
+        "target": [
+            590,
+            825,
+            95,
+            77
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_Magic_Cast": {
+        "recognition": "OCR",
+        "expected": "祝福术",
+        "roi": [
+            51,
+            305,
+            519,
+            658
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "ClickCenter"
+        ]
+    },
+    "Fight_Magic_Elemental": {
+        "next": [
+            "Fight_Magic_Cast"
+        ],
+        "interrupt": [
+            "Fight_ClickLightMagicPage",
+            "Fight_SkillPack_Type",
+            "Fight_SkillPack_Open"
+        ],
+        "post_delay": 2000,
+        "timeout": 2000
+    },
+    "Fight_Magic_Special_Cast": {
+        "recognition": "OCR",
+        "expected": "天眼",
+        "roi": [
+            51,
+            305,
+            519,
+            658
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "ClickCenter"
+        ]
+    },
+    "Fight_Magic_Special": {
+        "next": [
+            "Fight_Magic_Special_Cast"
+        ],
+        "interrupt": [
+            "Fight_ClickSpecialMagicPage",
+            "Fight_SkillPack_Open"
+        ],
+        "post_delay": 2000,
+        "timeout": 2000
     }
 }
