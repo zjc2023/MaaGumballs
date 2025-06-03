@@ -190,7 +190,7 @@
         "post_delay": 300,
         "timeout": 1000,
         "next": [
-            "Fight_CheckLayerDoor"
+            "Fight_OpenedDoor"
         ],
         "interrupt": [
             "Fight_OpenRewardBox",

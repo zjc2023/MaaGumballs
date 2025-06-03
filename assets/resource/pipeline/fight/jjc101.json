@@ -73,6 +73,8 @@
     "JJC_Fighting": {
         "recognition": "TemplateMatch",
         "template": "fight/UniversalUI/MazePackage.png",
+        "action": "Custom",
+        "custom_action": "JJC101",
         "roi": [
             47,
             1147,

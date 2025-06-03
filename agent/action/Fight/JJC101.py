@@ -6,6 +6,7 @@ from maa.context import Context
 from loguru import logger
 from numpy import true_divide
 from action import Utils
+from action.Fight import FightUtils
 
 import time
 
@@ -35,7 +36,14 @@ class JJC101(CustomAction):
             logger.info(f"current layer {layers}")
 
         # 检查当前层数是否小于29层
-        while layers < 29:
+        while layers < 39:
+            if context.tasker.stopping:
+                logger.info("检测到停止任务, 开始退出agent")
+                return CustomAction.RunResult(success=False)
+            
+            # 检测卡返回，误点击
+            
+            
             # 小怪层开始探索
             logger.info(f"Start Explore {layers} layer.")
             context.run_task("JJC_Fight_ClearCurrentLayer")
@@ -61,8 +69,14 @@ class JJC101(CustomAction):
             # 角斗场事件
             if layers % 5 == 0:
                 context.run_task("JJC_Find_Abattoir")
+                FightUtils.cast_magic("光","祝福术")
+                FightUtils.cast_magic_special("天眼")
+                context.run_task("JJC_Abattoir_Chest")     
+                logger.info("测试门")   
+                return CustomAction.RunResult(success=True)
 
             # 该层探索结束
+            context.run_task("Fight_OpenedDoor")
 
         return CustomAction.RunResult(success=True)
 
@@ -182,6 +196,7 @@ class JJC101_Title(CustomAction):
 
             # 选择称号
             logger.info("开始学习称号")
+            img = context.tasker.controller.post_screencap().wait().get()
             recodetail = context.run_recognition("Fight_TitlePanel_Learnable", img)
             if not recodetail:
                 logger.warning("当前冒险系没有可学习的称号")
