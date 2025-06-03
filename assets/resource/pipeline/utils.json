@@ -1,20 +1,5 @@
 {
     "EmptyNode": {},
-    "BackButton": {
-        "recognition": "TemplateMatch",
-        "template": [
-            "utils/BackButton.png"
-        ],
-        "roi": [
-            494,
-            1173,
-            184,
-            75
-        ],
-        "action": "Click",
-        "post_delay": 500,
-        "timeout": 200
-    },
     "BackText": {
         "recognition": "OCR",
         "expected": [
@@ -39,6 +24,12 @@
     },
     "ConfirmButton": {
         "recognition": "OCR",
+        "roi": [
+            28,
+            418,
+            675,
+            531
+        ],
         "expected": [
             "确定",
             "确认"
@@ -149,7 +140,7 @@
             384,
             272
         ],
-        "post_delay": 200
+        "post_delay": 1000
     },
     "MapSwipeDownToUp": {
         "recognition": "DirectHit",
