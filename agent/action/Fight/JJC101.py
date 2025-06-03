@@ -36,18 +36,11 @@ class JJC101(CustomAction):
             logger.info(f"current layer {layers}")
 
         # 检查当前层数是否小于29层
-        while layers < 39:
+        while layers < 101:
+            # 检查是否停止任务
             if context.tasker.stopping:
                 logger.info("检测到停止任务, 开始退出agent")
                 return CustomAction.RunResult(success=False)
-            
-            # 检测卡返回，误点击
-            
-            
-            # 小怪层开始探索
-            logger.info(f"Start Explore {layers} layer.")
-            context.run_task("JJC_Fight_ClearCurrentLayer")
-            time.sleep(3)
 
             # 检查当前层数
             RunResult = context.run_task("Fight_CheckLayer")
@@ -55,6 +48,69 @@ class JJC101(CustomAction):
                 layers = Utils.extract_numbers(
                     RunResult.nodes[0].recognition.best_result.text
                 )
+
+            # 检查是否到达100层
+            if layers > 100:
+                logger.info("到达101层, 开始退出agent")
+                continue
+
+            # 角斗场事件
+            image = context.tasker.controller.post_screencap().wait().get()
+            if layers % 10 == 5 and context.run_recognition(
+                "JJC_Find_Abattoir",
+                image,
+            ):
+                if layers < 30:
+                    context.run_task("JJC_Find_Abattoir")
+                    FightUtils.cast_magic("光", "祝福术", context)
+                    FightUtils.cast_magic_special("天眼", context)
+                    FightUtils.cast_magic_special("天眼", context)
+                elif layers >= 30:
+                    context.run_task("JJC_Find_Abattoir")
+                    FightUtils.cast_magic("土", "石肤术", context)
+                    FightUtils.cast_magic("土", "石肤术", context)
+
+                context.run_task("JJC_Fight_ClearCurrentLayer")
+                context.run_task("JJC_Abattoir_Chest")
+                context.run_task("Fight_OpenedDoor")
+
+            # Boos层开始探索
+            if layers >= 30 and layers % 10 == 0:
+                # todo
+                if layers <= 70:
+                    FightUtils.cast_magic("土", "石肤术", context)
+                    context.tasker.controller.post_click(640, 360)
+                    time.sleep(0.3)
+                    context.tasker.controller.post_click(640, 360)
+                    time.sleep(0.3)
+                    context.tasker.controller.post_click(640, 360)
+                    time.sleep(0.3)
+                elif layers >= 80 and layers <= 100:
+                    if layers >= 90:
+                        FightUtils.cast_magic("气", "时间停止", context)
+                    FightUtils.cast_magic("气", "瓦解射线", context)
+                    context.run_task("JJC_Fight_ClearCurrentLayer")
+
+                time.sleep(3)
+                context.run_task("Fight_OpenedDoor")
+                time.sleep(3)
+                continue
+
+            # 小怪层探索
+            else:
+                logger.info(f"Start Explore {layers} layer.")
+                context.run_task("JJC_Fight_ClearCurrentLayer")
+            time.sleep(1)
+
+            # 检测卡返回，误点击
+            image = context.tasker.controller.post_screencap().wait().get()
+            if context.run_recognition(
+                "JJC_Inter_Confirm",
+                image,
+            ):
+                logger.info("检测到卡返回, 本层重新探索")
+                context.run_task("JJC_Inter_Confirm")
+                continue
 
             # 胜利者石柱
             context.run_task("JJC_StoneChest")
@@ -66,18 +122,11 @@ class JJC101(CustomAction):
                 logger.info("Find Body")
                 context.run_task("JJC_Find_Body")
 
-            # 角斗场事件
-            if layers % 5 == 0:
-                context.run_task("JJC_Find_Abattoir")
-                FightUtils.cast_magic("光","祝福术")
-                FightUtils.cast_magic_special("天眼")
-                context.run_task("JJC_Abattoir_Chest")     
-                logger.info("测试门")   
-                return CustomAction.RunResult(success=True)
-
             # 该层探索结束
             context.run_task("Fight_OpenedDoor")
 
+        logger.info("到达101层, 成功探索1次竞技场101")
+        context.run_task("Fight_LeaveMaze")
         return CustomAction.RunResult(success=True)
 
 
