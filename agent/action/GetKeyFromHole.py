@@ -116,7 +116,9 @@ class GetKeyFromHole_Test(CustomAction):
             
         context.run_task("ClickConfirmForKey")
         time.sleep(3)
-        if context.run_task("CheckClosedDoor"):
+
+        img = context.tasker.controller.post_screencap().wait().get()
+        if context.run_recognition("CheckClosedDoor",img):
             return CustomAction.RunResult(success=False)
         else:
             return CustomAction.RunResult(success=True)
