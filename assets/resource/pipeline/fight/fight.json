@@ -1,10 +1,4 @@
 {
-    "MonsterLayerStart": {
-        "action": "DoNothing",
-        "next": [
-            "DetectWhiteTile"
-        ]
-    },
     "Fight_OpenedDoor": {
         "recognition": "TemplateMatch",
         "template": [
@@ -19,8 +13,11 @@
         ],
         "action": "Click",
         "threshold": 0.7,
-        "post_delay": 2000,
-        "timeout": 100
+        "next": [
+            "Fight_DownStaris_Loading"
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
     },
     "Fight_ClosedDoor": {
         "recognition": "TemplateMatch",
@@ -35,8 +32,20 @@
         ],
         "action": "Click",
         "threshold": 0.7,
-        "post_delay": 2000,
-        "timeout": 100
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Fight_DownStaris_Loading": {
+        "recognition": "OCR",
+        "expected": [
+            "加载中"
+        ],
+        "post_delay": 1000,
+        "timeout": 1000,
+        "next": [
+            "Fight_DownStaris_Loading",
+            "Fight_ClosedDoor"
+        ]
     },
     "Fight_DownStaris": {
         "recognition": "DirectHit",
@@ -51,109 +60,49 @@
             "Fight_CheckOpenedDoor"
         ]
     },
-    "DetectWhiteTile": {
-        "recognition": "ColorMatch",
-        "roi": [
-            524,
-            847,
-            101,
-            150
+    "Fight_LeaveMaze": {
+        "next": [
+            "AlchemyReward"
         ],
-        "method": 4,
-        "lower": [
-            130,
-            135,
-            143
-        ],
-        "upper": [
-            170,
-            175,
-            183
-        ],
-        "action": "Click",
-        "target_offset": [
-            0,
-            0,
-            65,
-            -65
-        ],
-        "count": 50,
-        "pre_delay": 80,
-        "post_delay": 120,
-        "inverse": false,
-        "timeout": 50,
-        "next": []
+        "interrupt": [
+            "Communicating",
+            "BackText",
+            "ConfirmButton",
+            "Fight_LeaveMaze_StopButton",
+            "Fight_LeaveMaze_Leave"
+        ]
     },
-    "checkMonster": {
+    "Fight_LeaveMaze_Leave": {
         "recognition": "TemplateMatch",
-        "roi": [
-            21,
-            217,
-            682,
-            762
-        ],
         "template": [
-            "fight/FOA/m1.png",
-            "fight/FOA/m2.png",
-            "fight/FOA/m3.png",
-            "fight/FOA/m4.png",
-            "fight/FOA/m5.png"
+            "fight/leaveDoor.png"
+        ],
+        "roi": [
+            4,
+            5,
+            122,
+            84
         ],
         "action": "Click",
-        "threshold": 0.6,
-        "timeout": 50
+        "threshold": 0.7,
+        "post_delay": 1000,
+        "timeout": 2000
     },
-    "OCR_HP": {
+    "Fight_LeaveMaze_StopButton": {
         "recognition": "OCR",
-        "roi": "TL01_checkMonster",
-        "roi_offset": [
-            5,
-            5,
-            25,
-            25
+        "expected": [
+            "结束",
+            "结束探险"
         ],
-        "expected": "\\d+",
-        "threshold": 0.3,
-        "order_by": "Length",
-        "index": 0,
-        "action": "DoNothing",
-        "next": [
-            "OCR_ATK"
-        ]
-    },
-    "OCR_ATK": {
-        "recognition": "OCR",
-        "roi": "DetectCell",
-        "roi_offset": [
-            5,
-            65,
-            25,
-            25
+        "roi": [
+            15,
+            1121,
+            240,
+            158
         ],
-        "expected": "\\d+",
-        "threshold": 0.3,
-        "order_by": "Length",
-        "index": 0,
-        "action": "DoNothing",
-        "next": [
-            "OCR_DEF"
-        ]
-    },
-    "OCR_DEF": {
-        "recognition": "OCR",
-        "roi": "DetectCell",
-        "roi_offset": [
-            65,
-            65,
-            25,
-            25
-        ],
-        "expected": "\\d+",
-        "threshold": 0.8,
-        "order_by": "Length",
-        "index": 0,
-        "action": "DoNothing",
-        "next": []
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
     },
     "Fight_OpenRewardBox": {
         "recognition": "OCR",
