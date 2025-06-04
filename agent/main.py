@@ -222,17 +222,9 @@ def update_pip_config(version) -> bool:
 def agnet():
     from maa.agent.agent_server import AgentServer
     from maa.toolkit import Toolkit
-    from action import CheckGrid
-    from action import Count
-    from action import DailyTask
-    from action import Reward
-    from action import Utils
-    from action import Shopping
-    from action import GetKeyFromHole
-    from action.Fight import Fight_Agent
-    from recognize import GridReco
-    from action.divineForgeLand import SomeTrick
-    from action.divineForgeLand import ClearLayer
+
+    # 声明所有Agent
+    import  agent_allfile
 
     Toolkit.init_option("./")
     if len(sys.argv) > 1:

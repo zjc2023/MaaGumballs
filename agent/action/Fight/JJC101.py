@@ -91,9 +91,7 @@ class JJC101(CustomAction):
                     FightUtils.cast_magic("气", "瓦解射线", context)
                     context.run_task("JJC_Fight_ClearCurrentLayer")
 
-                time.sleep(3)
                 context.run_task("Fight_OpenedDoor")
-                time.sleep(3)
                 continue
 
             # 小怪层探索

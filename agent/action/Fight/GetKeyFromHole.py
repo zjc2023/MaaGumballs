@@ -1,10 +1,7 @@
 from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
-from maa.define import RecognitionDetail
 import time
-import re
-import numpy as np
 import cv2
 
 @AgentServer.custom_action("GetKeyFromHole_Test")

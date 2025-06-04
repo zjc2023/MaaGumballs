@@ -100,7 +100,6 @@ class Shopping(CustomAction):
                     ).wait()
                     time.sleep(1)
                     context.run_task("ConfirmButton")
-                    time.sleep(1)
                     if self.Shop_ShoppingRewards_Check(context):
                         context.run_task("Shop_ShoppingRewards")
 
