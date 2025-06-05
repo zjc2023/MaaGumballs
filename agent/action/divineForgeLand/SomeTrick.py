@@ -3,10 +3,32 @@ from maa.custom_action import CustomAction
 from maa.context import Context
 from maa.define import RecognitionDetail
 from utils import logger
+from action.Fight import FightUtils
 
 import time
 import re
 import json
+
+
+@AgentServer.custom_action("SaveLoad_little")
+class SaveLoad_little(CustomAction):
+    def run(
+        self, context: Context, argv: CustomAction.RunArg
+    ) -> CustomAction.RunResult:
+        img = context.tasker.controller.post_screencap().wait().get()
+        reco_inMaze = context.run_recognition("ConfirmEquipmentPack", img)
+        if reco_inMaze:
+            # 登出游戏
+            logger.info("登出游戏")
+            context.run_task("LogoutGame")
+
+            # 返回迷宫
+            logger.info("返回迷宫")
+            context.run_task("ReturnMaze")
+        else:
+            logger.warning("不在迷宫中，无需保存")
+
+        return CustomAction.RunResult(success=True)
 
 
 @AgentServer.custom_action("GoDownstairsTrick_Test")
@@ -51,7 +73,7 @@ class GoDownstairsTrick_Test(CustomAction):
         )
         context.run_task("BackText")
 
-        for i in range(30):
+        for i in range(101):
             if context.tasker.stopping:
                 logger.info("检测到停止任务, 开始退出agent")
                 return CustomAction.RunResult(success=False)
@@ -59,9 +81,8 @@ class GoDownstairsTrick_Test(CustomAction):
             logger.info(f"黑永恒第{i}次尝试")
             context.run_task("Save_Status")
             context.run_task("StartAppV2")
-            context.run_task("CheckDoor")
-            context.run_task("CheckClosedDoor")
-            context.run_task("Use_Earthquake")
+            context.run_task("Fight_OpenedDoor")
+            FightUtils.cast_magic("土", "地震术", context)
             context.run_task("KillChestMonster")
 
             logger.info("黑永恒 检查是否黑到目标装备")

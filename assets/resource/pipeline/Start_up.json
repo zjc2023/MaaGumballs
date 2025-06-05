@@ -151,6 +151,7 @@
         "package": "com.leiting.gumballs.leiting"
     },
     "StopGumballs": {
+        "post_delay": 1000,
         "action": "StopApp",
         "package": "com.leiting.gumballs.leiting"
     }
