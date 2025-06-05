@@ -15,10 +15,10 @@
         "recognition": "OCR",
         "expected": "炼金资源",
         "roi": [
-            223,
-            334,
-            275,
-            377
+            212,
+            126,
+            287,
+            918
         ],
         "action": "DoNothing",
         "next": [
