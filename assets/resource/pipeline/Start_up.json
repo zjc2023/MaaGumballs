@@ -18,14 +18,11 @@
             223,
             334,
             275,
-            155
+            377
         ],
-        "action": "Click",
-        "target": [
-            124,
-            802,
-            467,
-            112
+        "action": "DoNothing",
+        "next": [
+            "ConfirmButton"
         ],
         "post_delay": 1000,
         "timeout": 2000
