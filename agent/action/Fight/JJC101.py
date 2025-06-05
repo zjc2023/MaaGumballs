@@ -211,13 +211,7 @@ class JJC101_Title(CustomAction):
         else:
             return 0
 
-    # 执行函数
-    def run(
-        self,
-        context: Context,
-        argv: CustomAction.RunArg,
-    ) -> CustomAction.RunResult:
-
+    def test(self, context: Context):
         layers = self.Fight_CheckLayer(context)
         if layers > 0:
             # 打开称号面板
@@ -247,6 +241,21 @@ class JJC101_Title(CustomAction):
             if not recodetail:
                 logger.warning("当前冒险系没有可学习的称号")
                 return CustomAction.RunResult(success=False)
+
+            return CustomAction.RunResult(success=True)
+
+    # 执行函数
+    def run(
+        self,
+        context: Context,
+        argv: CustomAction.RunArg,
+    ) -> CustomAction.RunResult:
+
+        FightUtils.title_learn("战斗", 1, "见习战士", 1, context)
+        FightUtils.title_learn("战斗", 2, "战士", 1, context)
+        FightUtils.title_learn("战斗", 3, "魔战士", 1, context)
+        FightUtils.title_learn("战斗", 4, "炎龙武士", 1, context)
+        FightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
 
         return CustomAction.RunResult(success=True)
 
