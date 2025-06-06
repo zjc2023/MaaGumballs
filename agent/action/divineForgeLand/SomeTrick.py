@@ -479,7 +479,7 @@ class Find_Stove_Sequence_Test(CustomAction):
             equipment_level_to_action_name[equipment_level]
         )
         if not find_equipment_detail.nodes:
-            context.run_task("GoToTheRightestPage")
+            context.run_task("Bag_ToRightestPage")
 
         # 当前页找不到就往右往左找
         while not find_equipment_detail.nodes:
@@ -488,7 +488,7 @@ class Find_Stove_Sequence_Test(CustomAction):
                 equipment_level_to_action_name[equipment_level]
             )
             if not find_equipment_detail.nodes:
-                previous_page_button_detail = context.run_task("GoToPreviousPage")
+                previous_page_button_detail = context.run_task("Bag_ToPrevPage")
                 # 如果找不到装备又没有上一页按钮则说明需要SL
                 if not previous_page_button_detail.nodes:
                     return find_equipment_detail
@@ -496,9 +496,9 @@ class Find_Stove_Sequence_Test(CustomAction):
         return find_equipment_detail
 
     def add_low_level_equipment(self, context: Context, num: int, page: int = 2):
-        context.run_task("GoToTheLeftestPage")
+        context.run_task("Bag_ToLeftestPage")
         for _ in range(page):
-            context.run_task("GoToNextPage")
+            context.run_task("Bag_ToNextPage")
         for _ in range(num):
 
             context.run_task("AddLowLevelEquipment")
