@@ -1,6 +1,5 @@
-from venv import logger
 from maa.context import Context
-
+from loguru import logger
 
 MagicType: dict = {
     "火": "Fight_ClickFireMagicPage",
