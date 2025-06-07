@@ -463,6 +463,8 @@ class JJC_BagTest(CustomAction):
                 FightUtils.findEquipment(2, "礼仪戒指", True, context)
             if not FightUtils.checkEquipment("披风", 3, "天鹅绒斗篷", context):
                 FightUtils.findEquipment(3, "天鹅绒斗篷", True, context)
+            if not FightUtils.checkEquipment("宝物", 7, "冒险家竖琴", context):
+                FightUtils.findEquipment(7, "冒险家竖琴", True, context)
             time.sleep(1)
             context.run_task("BackText")
         else:
