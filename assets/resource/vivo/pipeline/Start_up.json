@@ -1,0 +1,11 @@
+{
+    "StartGumballs": {
+        "post_delay": 8000,
+        "action": "StartApp",
+        "package": "com.leiting.gumballs.vivo"
+    },
+    "StopGumballs": {
+        "action": "StopApp",
+        "package": "com.leiting.gumballs.vivo"
+    }
+}

@@ -1,0 +1,82 @@
+{
+    "LogoutGame": {
+        "next": [
+            "LogoutGame_Next"
+        ]
+    },
+    "LogoutGame_Next": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils/AccountInfo.png"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 1000,
+        "roi": [
+            66,
+            344,
+            595,
+            663
+        ],
+        "next": "LogoutGame_Next_2"
+    },
+    "LogoutGame_Next_2": {
+        "recognition": "TemplateMatch",
+        "template": "utils/LogoutButton.png",
+        "action": "Click",
+        "post_delay": 5000,
+        "roi": [
+            0,
+            1125,
+            270,
+            154
+        ],
+        "threshold": 0.8
+    },
+    "ReturnMaze": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "utils/StartGame.png"
+        ],
+        "action": "Click",
+        "threshold": 0.8,
+        "post_delay": 3000,
+        "roi": [
+            133,
+            691,
+            428,
+            166
+        ],
+        "next": "ReturnMaze_Next"
+    },
+    "ReturnMaze_Next": {
+        "recognition": "OCR",
+        "expected": [
+            "确定",
+            "确认"
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "roi": [
+            24,
+            639,
+            677,
+            293
+        ],
+        "next": "ReturnMaze_Next_2"
+    },
+    "ReturnMaze_Next_2": {
+        "recognition": "OCR",
+        "expected": "继续冒险",
+        "action": "Click",
+        "post_delay": 7000,
+        "roi": [
+            28,
+            649,
+            340,
+            180
+        ],
+        "threshold": 0.8
+    }
+}

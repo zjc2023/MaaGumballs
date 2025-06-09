@@ -11,16 +11,58 @@
     ],
     "resource": [
         {
-            "name": "官服(默认)",
+            "name": "官服",
             "path": [
                 "{PROJECT_DIR}/resource/base"
             ]
         },
         {
-            "name": "小米服",
+            "name": "xiaomi",
             "path": [
                 "{PROJECT_DIR}/resource/base",
                 "{PROJECT_DIR}/resource/mi"
+            ]
+        },
+        {
+            "name": "huawei",
+            "path": [
+                "{PROJECT_DIR}/resource/base",
+                "{PROJECT_DIR}/resource/huawei"
+            ]
+        },
+        {
+            "name": "oppo",
+            "path": [
+                "{PROJECT_DIR}/resource/base",
+                "{PROJECT_DIR}/resource/oppo"
+            ]
+        },
+        {
+            "name": "vivo",
+            "path": [
+                "{PROJECT_DIR}/resource/base",
+                "{PROJECT_DIR}/resource/vivo"
+            ]
+        },
+        {
+            "name": "4399",
+            "path": [
+                "{PROJECT_DIR}/resource/base",
+                "{PROJECT_DIR}/resource/4399"
+            ]
+        },
+        {
+            "name": "bilibili",
+            "path": [
+                "{PROJECT_DIR}/resource/base",
+                "{PROJECT_DIR}/resource/bilibili"
+            ]
+        },
+        {
+            "name": "港台服",
+            "path": [
+                "{PROJECT_DIR}/resource/base",
+                "{PROJECT_DIR}/resource/hk_tw"
             ]
         }
     ],
