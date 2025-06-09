@@ -3,8 +3,8 @@ from maa.custom_action import CustomAction
 from maa.context import Context
 from loguru import logger
 
-from action import utils
-from action.Fight import fightUtils
+from action import u_utils as utils
+from action.Fight import f_fightUtils as fightUtils
 
 import time
 
