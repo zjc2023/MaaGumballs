@@ -3,7 +3,7 @@ from maa.custom_action import CustomAction
 from maa.context import Context
 from maa.define import RecognitionDetail
 from utils import logger
-from action.Fight import FightUtils
+from action.Fight import fightUtils
 
 import time
 import re
@@ -82,7 +82,7 @@ class GoDownstairsTrick_Test(CustomAction):
             context.run_task("Save_Status")
             context.run_task("StartAppV2")
             context.run_task("Fight_OpenedDoor")
-            FightUtils.cast_magic("土", "地震术", context)
+            fightUtils.cast_magic("土", "地震术", context)
             context.run_task("KillChestMonster")
 
             logger.info("黑永恒 检查是否黑到目标装备")

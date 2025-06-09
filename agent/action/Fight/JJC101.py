@@ -3,13 +3,13 @@ from maa.custom_action import CustomAction
 from maa.context import Context
 from loguru import logger
 
-from action import Utils
-from action.Fight import FightUtils
+from action import utils
+from action.Fight import fightUtils
 
 import time
 
 cols, rows = 5, 6
-roi_list = Utils.calRoiList()
+roi_list = utils.calRoiList()
 roi_matrix = [roi_list[i * cols : (i + 1) * cols] for i in range(rows)]
 visited = [[0] * cols for _ in range(rows)]
 
@@ -29,7 +29,7 @@ class JJC101(CustomAction):
         layers = 1
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
-            layers = Utils.extract_numbers(
+            layers = utils.extract_numbers(
                 RunResult.nodes[0].recognition.best_result.text
             )
             logger.info(f"current layer {layers}")
@@ -44,7 +44,7 @@ class JJC101(CustomAction):
             # 检查当前层数
             RunResult = context.run_task("Fight_CheckLayer")
             if RunResult.nodes:
-                layers = Utils.extract_numbers(
+                layers = utils.extract_numbers(
                     RunResult.nodes[0].recognition.best_result.text
                 )
 
@@ -61,12 +61,12 @@ class JJC101(CustomAction):
             ):
                 context.run_task("JJC_Find_Abattoir")
                 if layers < 30:
-                    FightUtils.cast_magic("光", "祝福术", context)
-                    FightUtils.cast_magic_special("天眼", context)
-                    FightUtils.cast_magic_special("天眼", context)
-                    FightUtils.cast_magic_special("天眼", context)
+                    fightUtils.cast_magic("光", "祝福术", context)
+                    fightUtils.cast_magic_special("天眼", context)
+                    fightUtils.cast_magic_special("天眼", context)
+                    fightUtils.cast_magic_special("天眼", context)
                 elif layers <= 50:
-                    FightUtils.cast_magic("光", "祝福术", context)
+                    fightUtils.cast_magic("光", "祝福术", context)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
                     time.sleep(0.3)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
@@ -76,7 +76,7 @@ class JJC101(CustomAction):
                 else:
                     time.sleep(3)
                     context.run_task("Bag_Open")
-                    FightUtils.findItem("异域的灯芯", True, context, 360, 810)
+                    fightUtils.findItem("异域的灯芯", True, context, 360, 810)
                 context.run_task("JJC_Abattoir_Chest")
                 context.run_task("Fight_OpenedDoor")
 
@@ -84,7 +84,7 @@ class JJC101(CustomAction):
             if layers >= 30 and layers % 10 == 0:
                 # todo
                 if layers <= 50:
-                    FightUtils.cast_magic("光", "祝福术", context)
+                    fightUtils.cast_magic("光", "祝福术", context)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
                     time.sleep(0.3)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
@@ -92,7 +92,7 @@ class JJC101(CustomAction):
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
                     time.sleep(0.3)
                 elif layers <= 70:
-                    FightUtils.cast_magic("水", "冰锥术", context)
+                    fightUtils.cast_magic("水", "冰锥术", context)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
                     time.sleep(0.3)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
@@ -101,8 +101,8 @@ class JJC101(CustomAction):
                     time.sleep(0.3)
                 elif layers >= 80 and layers <= 100:
                     if layers >= 90:
-                        FightUtils.cast_magic("气", "时间停止", context)
-                    FightUtils.cast_magic("气", "瓦解射线", context)
+                        fightUtils.cast_magic("气", "时间停止", context)
+                    fightUtils.cast_magic("气", "瓦解射线", context)
                     context.run_task("JJC_Fight_ClearCurrentLayer")
 
                 context.run_task("Fight_OpenedDoor")
@@ -230,7 +230,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
             logger.info("识别到 Fight_ClosedDoor")
             for r in range(rows):
                 for c in range(cols):
-                    if Utils.is_roi_in_or_mostly_in(recoDetail.box, roi_matrix[r][c]):
+                    if utils.is_roi_in_or_mostly_in(recoDetail.box, roi_matrix[r][c]):
                         logger.info(f"识别到 ClosedDoor 位于 {r+1},{c+1}")
                         return r, c
         return 0, 0
@@ -403,7 +403,7 @@ class JJC101_Title(CustomAction):
     def Fight_CheckLayer(self, context: Context):
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
-            layers = Utils.extract_numbers(
+            layers = utils.extract_numbers(
                 RunResult.nodes[0].recognition.best_result.text
             )
             logger.info(f"current layer {layers}")
@@ -418,14 +418,14 @@ class JJC101_Title(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
 
-        FightUtils.title_learn("战斗", 1, "见习战士", 1, context)
-        FightUtils.title_learn("战斗", 2, "战士", 1, context)
-        FightUtils.title_learn("战斗", 3, "魔战士", 1, context)
-        FightUtils.title_learn("战斗", 4, "炎龙武士", 1, context)
-        FightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
+        fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
+        fightUtils.title_learn("战斗", 2, "战士", 1, context)
+        fightUtils.title_learn("战斗", 3, "魔战士", 1, context)
+        fightUtils.title_learn("战斗", 4, "炎龙武士", 1, context)
+        fightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
 
-        FightUtils.title_learn_branch("战斗", 5, "生命强化", 3, context)
-        FightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
+        fightUtils.title_learn_branch("战斗", 5, "生命强化", 3, context)
+        fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
 
         return CustomAction.RunResult(success=True)
 
@@ -443,14 +443,14 @@ class JJC_BagTest(CustomAction):
         # 打开背包
         OpenDetail = context.run_task("Bag_Open")
         if OpenDetail.nodes:
-            if not FightUtils.checkEquipment("腰带", 1, "贵族丝带", context):
-                FightUtils.findEquipment(1, "贵族丝带", True, context)
-            if not FightUtils.checkEquipment("戒指", 2, "礼仪戒指", context):
-                FightUtils.findEquipment(2, "礼仪戒指", True, context)
-            if not FightUtils.checkEquipment("披风", 3, "天鹅绒斗篷", context):
-                FightUtils.findEquipment(3, "天鹅绒斗篷", True, context)
-            if not FightUtils.checkEquipment("宝物", 7, "冒险家竖琴", context):
-                FightUtils.findEquipment(7, "冒险家竖琴", True, context)
+            if not fightUtils.checkEquipment("腰带", 1, "贵族丝带", context):
+                fightUtils.findEquipment(1, "贵族丝带", True, context)
+            if not fightUtils.checkEquipment("戒指", 2, "礼仪戒指", context):
+                fightUtils.findEquipment(2, "礼仪戒指", True, context)
+            if not fightUtils.checkEquipment("披风", 3, "天鹅绒斗篷", context):
+                fightUtils.findEquipment(3, "天鹅绒斗篷", True, context)
+            if not fightUtils.checkEquipment("宝物", 7, "冒险家竖琴", context):
+                fightUtils.findEquipment(7, "冒险家竖琴", True, context)
             time.sleep(1)
             context.run_task("BackText")
         else:
@@ -472,19 +472,19 @@ class JJC_ItemTest(CustomAction):
         # 打开背包
         OpenDetail = context.run_task("Bag_Open")
         if OpenDetail.nodes:
-            FightUtils.findItem("狼人药剂", True, context)
+            fightUtils.findItem("狼人药剂", True, context)
             context.run_task("Bag_Open")
-            FightUtils.findItem("狼人药剂", True, context)
+            fightUtils.findItem("狼人药剂", True, context)
             context.run_task("Bag_Open")
-            FightUtils.findItem("狼人药剂", True, context)
+            fightUtils.findItem("狼人药剂", True, context)
             for i in range(1, 75):
                 context.run_task("JJC_OpenForceOfNature")
-            FightUtils.cast_magic("气", "静电场", context)
-            FightUtils.cast_magic("土", "地震术", context)
-            FightUtils.cast_magic_special("天眼", context)
+            fightUtils.cast_magic("气", "静电场", context)
+            fightUtils.cast_magic("土", "地震术", context)
+            fightUtils.cast_magic_special("天眼", context)
 
             OpenDetail = context.run_task("Bag_Open")
-            FightUtils.findItem("东方剪纸", True, context)
+            fightUtils.findItem("东方剪纸", True, context)
 
             time.sleep(1)
         else:
