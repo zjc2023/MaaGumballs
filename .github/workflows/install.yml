@@ -83,7 +83,7 @@ jobs:
         env:
           TARGET_OS: ${{ matrix.os }}
         run: |
-          python ./install.py ${{ needs.meta.outputs.tag }}
+          python ./tools/install.py ${{ needs.meta.outputs.tag }}
 
       - name: Set up MFAAvalonia naming
         id: mfa_naming
