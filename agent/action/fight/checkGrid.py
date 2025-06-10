@@ -4,7 +4,7 @@ from maa.context import Context
 from maa.define import RecognitionDetail
 import time
 from utils import logger
-from action import u_utils as utils
+from action import utils
 
 
 @AgentServer.custom_action("CheckGrid")
