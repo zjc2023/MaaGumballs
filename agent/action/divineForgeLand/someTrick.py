@@ -3,7 +3,7 @@ from maa.custom_action import CustomAction
 from maa.context import Context
 from maa.define import RecognitionDetail
 from utils import logger
-from action.Fight import fightUtils
+from action.fight import fightUtils
 
 import time
 import re
