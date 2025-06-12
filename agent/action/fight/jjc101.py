@@ -53,6 +53,7 @@ class JJC101(CustomAction):
                 logger.info("到达101层, 开始退出agent")
                 continue
 
+            logger.info(f"Start Explore {layers} layer.")
             # 角斗场事件
             image = context.tasker.controller.post_screencap().wait().get()
             if layers % 10 == 5 and context.run_recognition(
@@ -84,21 +85,20 @@ class JJC101(CustomAction):
             if layers >= 30 and layers % 10 == 0:
                 # todo
                 if layers <= 50:
-                    fightUtils.cast_magic("光", "祝福术", context)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
+                    time.sleep(0.1)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
+                    time.sleep(0.1)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
+                    time.sleep(0.1)
                 elif layers <= 70:
                     fightUtils.cast_magic("水", "冰锥术", context)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
+                    time.sleep(0.1)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
+                    time.sleep(0.1)
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
+                    time.sleep(0.1)
                 elif layers >= 80 and layers <= 100:
                     if layers >= 90:
                         fightUtils.cast_magic("气", "时间停止", context)
@@ -110,11 +110,13 @@ class JJC101(CustomAction):
 
             # 小怪层探索
             else:
-                logger.info(f"Start Explore {layers} layer.")
-                context.run_task("JJC_Fight_ClearCurrentLayer")
+                if layers >= 80 and fightUtils.cast_magic("土", "地震术", context):
+                    pass
+                else:
+                    context.run_task("JJC_Fight_ClearCurrentLayer")
             time.sleep(1)
 
-            # 检测卡返回，误点击
+            # 检测卡剧情
             image = context.tasker.controller.post_screencap().wait().get()
             if context.run_recognition(
                 "JJC_Inter_Confirm",
@@ -122,6 +124,13 @@ class JJC101(CustomAction):
             ):
                 logger.info("检测到卡返回, 本层重新探索")
                 context.run_task("JJC_Inter_Confirm")
+                continue
+
+            # 检测卡返回
+            image = context.tasker.controller.post_screencap().wait().get()
+            if context.run_recognition("BackText", image):
+                logger.info("检测到卡返回, 本层重新探索")
+                context.run_task("BackText")
                 continue
 
             # 胜利者石柱
@@ -484,7 +493,7 @@ class JJC_ItemTest(CustomAction):
             fightUtils.findItem("狼人药剂", True, context)
             context.run_task("Bag_Open")
             fightUtils.findItem("狼人药剂", True, context)
-            for i in range(1, 75):
+            for i in range(1, 76):
                 context.run_task("JJC_OpenForceOfNature")
             fightUtils.cast_magic("气", "静电场", context)
             fightUtils.cast_magic("土", "地震术", context)
