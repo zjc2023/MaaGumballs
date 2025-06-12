@@ -184,6 +184,8 @@ def title_learn_branch(
                 "TitlePanel_Series": {"expected": titleType},
             },
         )
+        context.run_task("BackText")
+        context.run_task("BackText")
 
 
 def checkEquipment(

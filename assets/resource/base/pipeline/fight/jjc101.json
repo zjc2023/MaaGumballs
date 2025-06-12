@@ -380,7 +380,8 @@
     "JJC_Find_Abattoir": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight/JJC/Abattoir.png"
+            "fight/JJC/Abattoir.png",
+            "fight/JJC/Abattoir_1.png"
         ],
         "roi": [
             7,
@@ -413,9 +414,49 @@
             "JJC_Inter_Confirm"
         ]
     },
+    "JJC_OpenForceOfNature": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/JJC/自然之子技能.png"
+        ],
+        "roi": [
+            446,
+            78,
+            273,
+            101
+        ],
+        "action": "Click",
+        "post_delay": 200,
+        "next": [
+            "JJC_OpenForceOfNature_Switch"
+        ]
+    },
+    "JJC_OpenForceOfNature_Switch": {
+        "recognition": "OCR",
+        "expected": [
+            "开启自然之力",
+            "开启自然守护"
+        ],
+        "roi": [
+            87,
+            652,
+            554,
+            287
+        ],
+        "action": "Click",
+        "post_delay": 200,
+        "timeout": 2000,
+        "next": [
+            "ClickCenter_200ms"
+        ]
+    },
     "JJC_Title_Test": {
         "action": "Custom",
         "custom_action": "JJC101_Title",
         "post_delay": 1000
+    },
+    "JJC_CallDog_Test": {
+        "action": "Custom",
+        "custom_action": "JJC_CallDog"
     }
 }

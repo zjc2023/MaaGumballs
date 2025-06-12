@@ -44,6 +44,9 @@
         "next": [
             "TitlePanel_Learnable_Next",
             "TitlePanel_Learnable_Fnish"
+        ],
+        "interrupt": [
+            "ConfirmButton"
         ]
     },
     "TitlePanel_Learnable_Fnish": {
@@ -65,7 +68,8 @@
         "recognition": "TemplateMatch",
         "template": [
             "fight/UniversalUI/GreyStar.png",
-            "fight/UniversalUI/Title_Learnable.png"
+            "fight/UniversalUI/Title_Learnable.png",
+            "fight\\UniversalUI\\GreyMoon.png"
         ],
         "roi": [
             199,
@@ -115,13 +119,14 @@
         "recognition": "OCR",
         "expected": [
             "学习新称号",
-            "升级"
+            "升级",
+            "强化"
         ],
         "roi": [
-            70,
-            813,
-            591,
-            196
+            26,
+            673,
+            680,
+            421
         ],
         "action": "Click",
         "post_delay": 1000,
@@ -150,7 +155,8 @@
         "recognition": "OCR",
         "expected": [
             "升至",
-            "升"
+            "升",
+            "提升"
         ],
         "roi": [
             121,
@@ -174,5 +180,10 @@
         "action": "Click",
         "post_delay": 1000,
         "timeout": 2000
+    },
+    "TitlePanel_Test": {
+        "action": "Custom",
+        "custom_action": "JJC101_Title",
+        "post_delay": 1000
     }
 }
