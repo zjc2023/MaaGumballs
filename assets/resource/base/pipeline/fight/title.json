@@ -1,9 +1,11 @@
 {
     "TitlePanel_Learnable": {
         "next": [
-            "TitlePanel_Series"
+            "TitlePanel_CurrentPanel"
         ],
         "interrupt": [
+            "ConfirmButton",
+            "TitlePanel_Series",
             "TitlePanel_Open",
             "BackText"
         ]
@@ -29,6 +31,22 @@
         "post_delay": 1000,
         "timeout": 2000
     },
+    "TitlePanel_CurrentPanel": {
+        "recognition": "OCR",
+        "expected": "冒险系",
+        "roi": [
+            68,
+            770,
+            297,
+            81
+        ],
+        "next": [
+            "TitlePanel_Learnable_Next",
+            "TitlePanel_Learnable_Fnish"
+        ],
+        "post_delay": 500,
+        "timeout": 2000
+    },
     "TitlePanel_Series": {
         "recognition": "OCR",
         "expected": "冒险",
@@ -39,15 +57,8 @@
             151
         ],
         "action": "Click",
-        "post_delay": 1000,
-        "timeout": 2000,
-        "next": [
-            "TitlePanel_Learnable_Next",
-            "TitlePanel_Learnable_Fnish"
-        ],
-        "interrupt": [
-            "ConfirmButton"
-        ]
+        "post_delay": 500,
+        "timeout": 2000
     },
     "TitlePanel_Learnable_Fnish": {
         "recognition": "TemplateMatch",
@@ -61,7 +72,7 @@
             "fight/UniversalUI/star_3.png"
         ],
         "action": "DoNothing",
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "TitlePanel_Learnable_Next": {
@@ -87,7 +98,7 @@
         "interrupt": [
             "ConfirmButton"
         ],
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "TitlePanel_TitleCheck_New": {
@@ -109,7 +120,7 @@
             0,
             0
         ],
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000,
         "next": [
             "TitlePanel_TitleLearn"
@@ -148,7 +159,7 @@
             489,
             149
         ],
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "TitlePanel_TitleLearn_Success": {
@@ -165,7 +176,7 @@
             149
         ],
         "action": "DoNothing",
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "TitlePanel_TitleLearn_GetNewTitle": {
@@ -178,12 +189,12 @@
             766
         ],
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "TitlePanel_Test": {
         "action": "Custom",
         "custom_action": "JJC101_Title",
-        "post_delay": 1000
+        "post_delay": 500
     }
 }

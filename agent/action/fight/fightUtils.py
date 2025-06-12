@@ -141,8 +141,13 @@ def title_learn(
                 "TitlePanel_Learnable_Fnish": {
                     "roi": titileRect[titleLevel],
                 },
-                "TitlePanel_TitleCheck_New": {"expected": titleName},
+                "TitlePanel_TitleCheck_New": {
+                    "expected": titleName,
+                    "roi": [79, 252, 563, 242],
+                    "target_offset": [0, -75, 0, 0],
+                },
                 "TitlePanel_Series": {"expected": titleType},
+                "TitlePanel_CurrentPanel": {"expected": titleType},
             },
         )
 

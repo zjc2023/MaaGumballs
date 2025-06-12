@@ -418,15 +418,22 @@ class JJC101_Title(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
 
+        # 战士系称号
         fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
-        fightUtils.title_learn("战斗", 2, "战士", 1, context)
+        fightUtils.title_learn("战斗", 2, "战士", 3, context)
         fightUtils.title_learn("战斗", 3, "魔战士", 1, context)
-        fightUtils.title_learn("战斗", 4, "炎龙武士", 1, context)
+        fightUtils.title_learn("战斗", 4, "炎龙武士", 3, context)
         fightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
 
         fightUtils.title_learn_branch("战斗", 5, "生命强化", 3, context)
         fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
 
+        # 魔法系称号
+        fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
+        fightUtils.title_learn("魔法", 2, "白袍法师", 1, context)
+        fightUtils.title_learn("魔法", 3, "祭司", 1, context)
+        fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
+        fightUtils.title_learn("魔法", 5, "传奇法师", 1, context)
         return CustomAction.RunResult(success=True)
 
 
@@ -490,4 +497,25 @@ class JJC_ItemTest(CustomAction):
         else:
             logger.info("背包打开失败")
 
+        return CustomAction.RunResult(success=True)
+
+
+@AgentServer.custom_action("JJC_CallDog")
+class JJC_CallDog(CustomAction):
+
+    # 执行函数
+    def run(
+        self,
+        context: Context,
+        argv: CustomAction.RunArg,
+    ) -> CustomAction.RunResult:
+
+        # 检查贵族套是否装备，先装备
+        context.run_action("JJC_BagTest")
+
+        # 检查称号并点称号
+        context.run_action("JJC_Title_Test")
+
+        # 叫狼人
+        context.run_action("Bag_Items_test")
         return CustomAction.RunResult(success=True)
