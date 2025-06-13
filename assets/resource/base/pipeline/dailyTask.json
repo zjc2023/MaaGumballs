@@ -347,7 +347,6 @@
         "next": "BackText"
     },
     "AlchemySignboard_Start": {
-        "post_delay": 1000,
         "recognition": "OCR",
         "expected": "领取",
         "roi": [
@@ -357,7 +356,9 @@
             44
         ],
         "action": "Click",
+        "post_delay": 1000,
         "next": [
+            "Shop_ShoppingRewards",
             "ReturnHall"
         ]
     },
