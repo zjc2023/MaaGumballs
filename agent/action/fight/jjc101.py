@@ -344,11 +344,11 @@ class JJC101_Select(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
-        logger.info("选择药剂中")
-        context.run_task("JJC_SelectDrug")
+        # logger.info("选择药剂中")
+        # context.run_task("JJC_SelectDrug")
 
-        logger.info("选择神器中")
-        context.run_task("JJC_SelectArtifact")
+        # logger.info("选择神器中")
+        # context.run_task("JJC_SelectArtifact")
 
         # 选择帝释天
         img = context.tasker.controller.post_screencap().wait().get()
@@ -378,30 +378,30 @@ class JJC101_Select(CustomAction):
             )
 
         # 选择夜叉
-        img = context.tasker.controller.post_screencap().wait().get()
-        recodetail = context.run_recognition(
-            "JJC_Select_Gumball_Check",
-            img,
-            pipeline_override={
-                "JJC_Select_Gumball_Check": {
-                    "recognition": "TemplateMatch",
-                    "template": ["fight/JJC/夜叉冈布奥_小.png"],
-                    "roi": [348, 604, 294, 231],
-                },
-            },
-        )
-        if recodetail:
-            logger.info("夜叉已检测到")
-        else:
-            logger.info("夜叉未检测到, 自动选择中")
-            context.run_task(
-                "JJC_Select_Gumball_2",
-                pipeline_override={
-                    "JJC_Select_Gumball_Next": {
-                        "template": "fight/JJC/夜叉冈布奥.png",
-                    }
-                },
-            )
+        # img = context.tasker.controller.post_screencap().wait().get()
+        # recodetail = context.run_recognition(
+        #     "JJC_Select_Gumball_Check",
+        #     img,
+        #     pipeline_override={
+        #         "JJC_Select_Gumball_Check": {
+        #             "recognition": "TemplateMatch",
+        #             "template": ["fight/JJC/夜叉冈布奥_小.png"],
+        #             "roi": [348, 604, 294, 231],
+        #         },
+        #     },
+        # )
+        # if recodetail:
+        #     logger.info("夜叉已检测到")
+        # else:
+        #     logger.info("夜叉未检测到, 自动选择中")
+        #     context.run_task(
+        #         "JJC_Select_Gumball_2",
+        #         pipeline_override={
+        #             "JJC_Select_Gumball_Next": {
+        #                 "template": "fight/JJC/夜叉冈布奥.png",
+        #             }
+        #         },
+        #     )
 
         return CustomAction.RunResult(success=True)
 

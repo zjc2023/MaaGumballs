@@ -101,7 +101,7 @@
     },
     "JJC_SelectDrug_Next": {
         "recognition": "TemplateMatch",
-        "template": "fight/JJC/Durg1.png",
+        "template": "items\\狼人药剂.png",
         "roi": [
             71,
             155,

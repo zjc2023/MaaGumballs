@@ -1,0 +1,172 @@
+{
+    "Select_ReturnEntry": {
+        "next": [
+            "Select_MainWindow"
+        ],
+        "interrupt": [
+            "BackText"
+        ]
+    },
+    "Select_MainWindow": {
+        "recognition": "OCR",
+        "expected": "无尽模式",
+        "action": "DoNothing",
+        "post_delay": 500,
+        "timeout": 2000
+    },
+    "Select_Gumball_1": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            400,
+            645,
+            85,
+            84
+        ],
+        "post_delay": 500,
+        "next": [
+            "Select_SearchButton"
+        ]
+    },
+    "Select_Gumball_2": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            536,
+            715,
+            56,
+            56
+        ],
+        "post_delay": 500,
+        "next": [
+            "Select_SearchButton"
+        ]
+    },
+    "Select_SearchButton": {
+        "recognition": "TemplateMatch",
+        "template": "fight\\UniversalUI\\searchButton.png",
+        "action": "Click",
+        "roi": [
+            536,
+            116,
+            150,
+            140
+        ],
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Seleect_InputBox_Click"
+        ]
+    },
+    "Seleect_InputBox_Click": {
+        "recognition": "OCR",
+        "expected": [
+            "输入"
+        ],
+        "roi": [
+            98,
+            265,
+            419,
+            158
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Seleect_InputBox_Text"
+        ]
+    },
+    "Seleect_InputBox_Text": {
+        "recognition": "DirectHit",
+        "action": "Text",
+        "input_text": "贵族",
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Seleect_InputBox_Search"
+        ]
+    },
+    "Seleect_InputBox_Search": {
+        "recognition": "OCR",
+        "expected": [
+            "搜索"
+        ],
+        "roi": [
+            223,
+            155,
+            259,
+            165
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Seleect_InputBox_Success",
+            "Seleect_InputBox_Fail"
+        ]
+    },
+    "Seleect_InputBox_Success": {
+        "recognition": "TemplateMatch",
+        "template": "fight\\UniversalUI\\GumballStar.png",
+        "roi": [
+            74,
+            640,
+            332,
+            221
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Seleect_InputBox_Deselect",
+            "Seleect_InputBox_Select"
+        ]
+    },
+    "Seleect_InputBox_Fail": {
+        "recognition": "OCR",
+        "expected": [
+            "未能找到"
+        ],
+        "roi": [
+            140,
+            670,
+            423,
+            320
+        ],
+        "action": "StopTask",
+        "post_delay": 500,
+        "timeout": 2000
+    },
+    "Seleect_InputBox_Select": {
+        "recognition": "OCR",
+        "expected": [
+            "选择"
+        ],
+        "roi": [
+            120,
+            704,
+            523,
+            218
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000
+    },
+    "Seleect_InputBox_Deselect": {
+        "recognition": "OCR",
+        "expected": [
+            "取消"
+        ],
+        "roi": [
+            120,
+            704,
+            523,
+            218
+        ],
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Select_ReturnEntry"
+        ]
+    }
+}
