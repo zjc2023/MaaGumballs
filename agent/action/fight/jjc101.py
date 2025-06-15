@@ -12,11 +12,60 @@ cols, rows = 5, 6
 roi_list = utils.calRoiList()
 roi_matrix = [roi_list[i * cols : (i + 1) * cols] for i in range(rows)]
 visited = [[0] * cols for _ in range(rows)]
+boss_x, boss_y = 360, 800
 
 
 @AgentServer.custom_action("JJC101")
 class JJC101(CustomAction):
-    # 从一个字符串里面识仅识别一串数字, 并返回
+
+    # 处理角斗场事件
+    def handle_abattoir_event(self, context: Context, layers: int):
+        image = context.tasker.controller.post_screencap().wait().get()
+        if layers % 10 == 5 and context.run_recognition(
+            "JJC_Find_Abattoir",
+            image,
+        ):
+            context.run_task("JJC_Find_Abattoir")
+            if layers < 30:
+                fightUtils.cast_magic("光", "祝福术", context)
+                for _ in range(3):
+                    fightUtils.cast_magic_special("天眼", context)
+            elif layers <= 50:
+                fightUtils.cast_magic("光", "祝福术", context)
+                for _ in range(3):
+                    context.tasker.controller.post_click(boss_x, boss_y).wait()
+                    time.sleep(0.3)
+            else:
+                time.sleep(3)
+                context.run_task("Bag_Open")
+                fightUtils.findItem("异域的灯芯", True, context, 360, 810)
+                context.run_task("JJC_Abattoir_Chest")
+                context.run_task("Fight_OpenedDoor")
+
+    # 处理boos层事件
+    def handle_boos_event(self, context: Context, layers: int):
+        if layers <= 50:
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+            time.sleep(0.1)
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+            time.sleep(0.1)
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+            time.sleep(0.1)
+        elif layers <= 70:
+            fightUtils.cast_magic("水", "冰锥术", context)
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+            time.sleep(0.1)
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+            time.sleep(0.1)
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+            time.sleep(0.1)
+        elif layers >= 80 and layers <= 100:
+            if layers >= 90:
+                fightUtils.cast_magic("气", "时间停止", context)
+            fightUtils.cast_magic("气", "瓦解射线", context)
+            context.run_task("JJC_Fight_ClearCurrentLayer")
+
+        context.run_task("Fight_OpenedDoor")
 
     # 执行函数
     def run(
@@ -25,7 +74,6 @@ class JJC101(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
         # 检查当前层数
-        boss_x, boss_y = 360, 800
         layers = 1
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
@@ -55,58 +103,11 @@ class JJC101(CustomAction):
 
             logger.info(f"Start Explore {layers} layer.")
             # 角斗场事件
-            image = context.tasker.controller.post_screencap().wait().get()
-            if layers % 10 == 5 and context.run_recognition(
-                "JJC_Find_Abattoir",
-                image,
-            ):
-                context.run_task("JJC_Find_Abattoir")
-                if layers < 30:
-                    fightUtils.cast_magic("光", "祝福术", context)
-                    fightUtils.cast_magic_special("天眼", context)
-                    fightUtils.cast_magic_special("天眼", context)
-                    fightUtils.cast_magic_special("天眼", context)
-                elif layers <= 50:
-                    fightUtils.cast_magic("光", "祝福术", context)
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
-                else:
-                    time.sleep(3)
-                    context.run_task("Bag_Open")
-                    fightUtils.findItem("异域的灯芯", True, context, 360, 810)
-                context.run_task("JJC_Abattoir_Chest")
-                context.run_task("Fight_OpenedDoor")
+            self.handle_abattoir_event(context, layers)
 
             # Boos层开始探索
             if layers >= 30 and layers % 10 == 0:
-                # todo
-                if layers <= 50:
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.1)
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.1)
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.1)
-                elif layers <= 70:
-                    fightUtils.cast_magic("水", "冰锥术", context)
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.1)
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.1)
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.1)
-                elif layers >= 80 and layers <= 100:
-                    if layers >= 90:
-                        fightUtils.cast_magic("气", "时间停止", context)
-                    fightUtils.cast_magic("气", "瓦解射线", context)
-                    context.run_task("JJC_Fight_ClearCurrentLayer")
-
-                context.run_task("Fight_OpenedDoor")
-                continue
+                self.handle_boos_event(context, layers)
 
             # 小怪层探索
             else:
