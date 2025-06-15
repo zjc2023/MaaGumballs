@@ -79,7 +79,7 @@
     "Seleect_InputBox_Text": {
         "recognition": "DirectHit",
         "action": "Text",
-        "input_text": "贵族",
+        "input_text": "自然之子",
         "post_delay": 500,
         "timeout": 2000,
         "next": [
@@ -168,5 +168,122 @@
         "next": [
             "Select_ReturnEntry"
         ]
+    },
+    "Select_Drug": {
+        "recognition": "TemplateMatch",
+        "template": "fight/UniversalUI/DrugGrid.png",
+        "roi": [
+            88,
+            571,
+            560,
+            402
+        ],
+        "order_by": "Score",
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Select_Drug_Next"
+        ]
+    },
+    "Select_Drug_Next": {
+        "recognition": "TemplateMatch",
+        "template": "items/狼人药剂.png",
+        "roi": [
+            71,
+            155,
+            600,
+            517
+        ],
+        "action": "Click",
+        "order_by": "Score",
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Select_Confirm"
+        ]
+    },
+    "Select_Artifact": {
+        "recognition": "TemplateMatch",
+        "template": "fight/UniversalUI/ArtifactGrid.png",
+        "roi": [
+            88,
+            571,
+            560,
+            402
+        ],
+        "order_by": "Score",
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Select_Artifact_Next"
+        ]
+    },
+    "Select_Artifact_Next": {
+        "recognition": "TemplateMatch",
+        "template": "equipments/7level/冒险家竖琴.png",
+        "roi": [
+            44,
+            138,
+            642,
+            561
+        ],
+        "order_by": "Score",
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Select_Confirm"
+        ]
+    },
+    "Select_Confirm": {
+        "recognition": "OCR",
+        "expected": [
+            "选择"
+        ],
+        "roi": [
+            30,
+            1110,
+            230,
+            169
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000
+    },
+    "JJC_SwipeUpToDown": {
+        "action": "Swipe",
+        "begin": [
+            331,
+            293,
+            51,
+            63
+        ],
+        "end": [
+            334,
+            1031,
+            88,
+            119
+        ],
+        "duration": 1000,
+        "post_delay": 500
+    },
+    "JJC_SwipeDownToUp": {
+        "action": "Swipe",
+        "begin": [
+            331,
+            548,
+            65,
+            96
+        ],
+        "end": [
+            331,
+            293,
+            51,
+            63
+        ],
+        "duration": 800,
+        "post_delay": 500
     }
 }

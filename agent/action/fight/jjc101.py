@@ -345,7 +345,7 @@ class JJC101_Select(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
         # logger.info("选择药剂中")
-        # context.run_task("JJC_SelectDrug")
+        # context.run_task("Select_Drug")
 
         # logger.info("选择神器中")
         # context.run_task("JJC_SelectArtifact")
