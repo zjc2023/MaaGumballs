@@ -9,8 +9,14 @@
     },
     "Select_MainWindow": {
         "recognition": "OCR",
+        "roi": [
+            50,
+            171,
+            617,
+            781
+        ],
         "expected": "无尽模式",
-        "action": "DoNothing",
+        "action": "Click",
         "post_delay": 500,
         "timeout": 2000
     },

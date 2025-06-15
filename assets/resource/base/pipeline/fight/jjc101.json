@@ -23,21 +23,8 @@
             "JJC_Select"
         ],
         "interrupt": [
-            "JJC_Select_Endless"
+            "Select_MainWindow"
         ]
-    },
-    "JJC_Select_Endless": {
-        "recognition": "OCR",
-        "expected": "无尽模式",
-        "roi": [
-            50,
-            171,
-            617,
-            781
-        ],
-        "action": "Click",
-        "post_delay": 1000,
-        "timeout": 2000
     },
     "JJC_Select": {
         "recognition": "OCR",

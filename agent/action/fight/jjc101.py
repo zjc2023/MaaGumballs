@@ -25,7 +25,7 @@ class JJC101(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
         # 检查当前层数
-        boss_x, boss_y = 360, 750
+        boss_x, boss_y = 360, 800
         layers = 1
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
@@ -345,63 +345,22 @@ class JJC101_Select(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
         # logger.info("选择药剂中")
-        # context.run_task("Select_Drug")
+        context.run_task("Select_Drug")
 
         # logger.info("选择神器中")
-        # context.run_task("JJC_SelectArtifact")
+        context.run_task("Select_Artifact")
 
-        # 选择帝释天
-        img = context.tasker.controller.post_screencap().wait().get()
-        recodetail = context.run_recognition(
-            "JJC_Select_Gumball_Check",
-            img,
-            pipeline_override={
-                "JJC_Select_Gumball_Check": {
-                    "recognition": "TemplateMatch",
-                    "template": ["fight/JJC/帝释天冈布奥_小.png"],
-                    "roi": [348, 604, 294, 231],
-                },
-            },
+        # logger.info("选择自然之子中")
+        context.run_task(
+            "Select_Gumball_1",
+            pipeline_override={"Seleect_InputBox_Text": {"input_text": "自然之子"}},
         )
 
-        if recodetail:
-            logger.info("帝释天已检测到")
-        else:
-            logger.info("帝释天未检测到，自动选择中")
-            context.run_task(
-                "JJC_Select_Gumball_1",
-                pipeline_override={
-                    "JJC_Select_Gumball_Next": {
-                        "template": "fight/JJC/帝释天冈布奥.png",
-                    }
-                },
-            )
-
-        # 选择夜叉
-        # img = context.tasker.controller.post_screencap().wait().get()
-        # recodetail = context.run_recognition(
-        #     "JJC_Select_Gumball_Check",
-        #     img,
-        #     pipeline_override={
-        #         "JJC_Select_Gumball_Check": {
-        #             "recognition": "TemplateMatch",
-        #             "template": ["fight/JJC/夜叉冈布奥_小.png"],
-        #             "roi": [348, 604, 294, 231],
-        #         },
-        #     },
-        # )
-        # if recodetail:
-        #     logger.info("夜叉已检测到")
-        # else:
-        #     logger.info("夜叉未检测到, 自动选择中")
-        #     context.run_task(
-        #         "JJC_Select_Gumball_2",
-        #         pipeline_override={
-        #             "JJC_Select_Gumball_Next": {
-        #                 "template": "fight/JJC/夜叉冈布奥.png",
-        #             }
-        #         },
-        #     )
+        # logger.info("选择贵族")
+        context.run_task(
+            "Select_Gumball_2",
+            pipeline_override={"Seleect_InputBox_Text": {"input_text": "贵族"}},
+        )
 
         return CustomAction.RunResult(success=True)
 
