@@ -5,6 +5,7 @@ from utils import logger
 
 import json
 
+
 @AgentServer.custom_action("Count")
 class Count(CustomAction):
     def run(
@@ -23,15 +24,13 @@ class Count(CustomAction):
                     },
                 }
             )
-            print(f"execute {argv.get('count')}  {argv.get("run_node"}")
-            context.run_task(argv.get("run_node"))
+            context.run_task("CountTask_RunNode")
         else:
             context.override_pipeline(
                 {
                     argv.get("self"): {
                         "custom_action_param": {
                             "self": argv.get("self"),
-                            "run_node": "TL01_Start",
                             "count": 0,
                             "target_count": argv.get("target_count"),
                             "next_node": argv.get("next_node"),
@@ -45,12 +44,12 @@ class Count(CustomAction):
         return CustomAction.RunResult(success=True)
 
 
-@AgentServer.custom_action("CountTask") 
+@AgentServer.custom_action("CountTask")
 class CountTask(CustomAction):
     def run(
         self, context: Context, argv: CustomAction.RunArg
     ) -> CustomAction.RunResult:
-        '''
+        """
                 自定义动作：
         custom_action_param:
             {
@@ -61,9 +60,9 @@ class CountTask(CustomAction):
         count: 当前次数
         target_count: 目标次数
         next_node: 达到目标次数后执行的节点
-        
+
         "CountTask_RunNode"节点：通过interface.json中的override来控制run_task使用的节点内容
-        '''
+        """
         argv: dict = json.loads(argv.custom_action_param)
         logger.info(argv)
         if not argv:
