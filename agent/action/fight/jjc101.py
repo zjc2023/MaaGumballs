@@ -26,25 +26,28 @@ class JJC101(CustomAction):
             image,
         ):
             context.run_task("JJC_Find_Abattoir")
-            if layers < 30:
+            if layers < 26:
                 fightUtils.cast_magic("光", "祝福术", context)
                 for _ in range(3):
                     fightUtils.cast_magic_special("天眼", context)
-            elif layers <= 50:
-                fightUtils.cast_magic("光", "祝福术", context)
-                for _ in range(3):
+            elif layers <= 65:
+                for _ in range(5):
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
                     time.sleep(0.3)
             else:
+                # 打开背包
                 time.sleep(3)
                 context.run_task("Bag_Open")
                 fightUtils.findItem("异域的灯芯", True, context, 360, 810)
-                context.run_task("JJC_Abattoir_Chest")
-                context.run_task("Fight_OpenedDoor")
+
+            time.sleep(1)
+            context.run_task("ClickCenter")
+            context.run_task("JJC_Abattoir_Chest")
+            context.run_task("Fight_OpenedDoor")
 
     # 处理boos层事件
     def handle_boos_event(self, context: Context, layers: int):
-        if layers <= 50:
+        if layers <= 60:
             context.tasker.controller.post_click(boss_x, boss_y).wait()
             time.sleep(0.1)
             context.tasker.controller.post_click(boss_x, boss_y).wait()
@@ -73,8 +76,11 @@ class JJC101(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
-        # 检查当前层数
+        # init param
         layers = 1
+        isHaveSpartanHat = False
+
+        # 检查当前层数
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
             layers = utils.extract_numbers(
@@ -100,18 +106,43 @@ class JJC101(CustomAction):
             if layers > 100:
                 logger.info("到达101层, 开始退出agent")
                 continue
-
             logger.info(f"Start Explore {layers} layer.")
+
+            # 自动叫狗事件
+            if layers == 29:
+                context.run_task("JJC_CallDog_Test")
+
+            # 打开自然之力攻击
+            if layers == 55:
+                context.run_task("JJC_OpenForceOfNature")
+
+            # 65自动点称号
+            if layers == 65:
+                # 冒险系称号
+                fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
+                fightUtils.title_learn("冒险", 2, "探险家", 1, context)
+                fightUtils.title_learn("冒险", 3, "暗行者", 1, context)
+                fightUtils.title_learn("冒险", 4, "魔盗", 1, context)
+                fightUtils.title_learn("冒险", 5, "异界游侠", 1, context)
+
+                fightUtils.title_learn_branch("冒险", 5, "生命强化", 3, context)
+                fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
+                fightUtils.title_learn_branch("冒险", 5, "魔力强化", 3, context)
+
+                fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
+                fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
+
             # 角斗场事件
             self.handle_abattoir_event(context, layers)
 
             # Boos层开始探索
             if layers >= 30 and layers % 10 == 0:
                 self.handle_boos_event(context, layers)
+                continue
 
             # 小怪层探索
             else:
-                if layers >= 80 and fightUtils.cast_magic("土", "地震术", context):
+                if layers >= 85 and fightUtils.cast_magic("土", "地震术", context):
                     pass
                 else:
                     context.run_task("JJC_Fight_ClearCurrentLayer")
@@ -139,11 +170,12 @@ class JJC101(CustomAction):
                 context.run_task("JJC_StoneChest")
 
             # 寻找身体
-            img = context.tasker.controller.post_screencap().wait().get()
-            RunResult = context.run_recognition("JJC_Find_Body", img)
-            if RunResult:
-                logger.info("找到斯巴达实体啦")
-                context.run_task("JJC_Find_Body")
+            if not isHaveSpartanHat:
+                img = context.tasker.controller.post_screencap().wait().get()
+                if context.run_recognition("JJC_Find_Body", img):
+                    logger.info("找到斯巴达实体啦")
+                    context.run_task("JJC_Find_Body")
+                    isHaveSpartanHat = True
 
             # 该层探索结束
             context.run_task("Fight_OpenedDoor")
@@ -403,6 +435,9 @@ class JJC101_Title(CustomAction):
         fightUtils.title_learn("魔法", 3, "祭司", 1, context)
         fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
         fightUtils.title_learn("魔法", 5, "传奇法师", 1, context)
+
+        # fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
+        # fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
         return CustomAction.RunResult(success=True)
 
 
@@ -453,14 +488,32 @@ class JJC_ItemTest(CustomAction):
             fightUtils.findItem("狼人药剂", True, context)
             context.run_task("Bag_Open")
             fightUtils.findItem("狼人药剂", True, context)
+
+            # 拖回合
             for i in range(1, 76):
                 context.run_task("JJC_OpenForceOfNature")
             fightUtils.cast_magic("气", "静电场", context)
-            fightUtils.cast_magic("土", "地震术", context)
-            fightUtils.cast_magic_special("天眼", context)
 
+            if fightUtils.cast_magic("火", "毁灭之刃", context):
+                pass
+            elif fightUtils.cast_magic("土", "地震术", context):
+                fightUtils.cast_magic_special("天眼", context)
+            else:
+                return CustomAction.RunResult(success=False)
+
+            # 召唤狗子
             OpenDetail = context.run_task("Bag_Open")
             fightUtils.findItem("东方剪纸", True, context)
+
+            # 关闭自然之力
+            logger.info("关闭自然之力")
+            tmp_ctx = context.clone()
+            tmp_ctx.run_task(
+                "JJC_OpenForceOfNature",
+                pipeline_override={
+                    "JJC_OpenForceOfNature_Switch": {"expected": "关闭"}
+                },
+            )
 
             time.sleep(1)
         else:
