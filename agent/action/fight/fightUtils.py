@@ -187,6 +187,7 @@ def title_learn_branch(
                     "target_offset": [0, 0, 0, 0],
                 },
                 "TitlePanel_Series": {"expected": titleType},
+                "TitlePanel_CurrentPanel": {"expected": titleType},
             },
         )
         context.run_task("BackText")
@@ -280,11 +281,12 @@ def findItem(
     global EquipmentType
     equipment_path = f"items/{equipmentName}.png"
 
-    # 初始化背包
-    context.run_task("Bag_ToLeftestPage")
-
     # 开始寻找
     while True:
+        # 初始化背包
+        context.run_task("Bag_ToLeftestPage")
+
+        # 检测目标物品
         image = context.tasker.controller.post_screencap().wait().get()
         ItemRecoDetail = context.run_recognition(
             "Bag_FindItem",
