@@ -66,9 +66,9 @@
         ],
         "interrupt": [
             "Communicating",
-            "BackText",
             "ConfirmButton",
             "Fight_LeaveMaze_StopButton",
+            "BackText",
             "Fight_LeaveMaze_Leave"
         ]
     },
