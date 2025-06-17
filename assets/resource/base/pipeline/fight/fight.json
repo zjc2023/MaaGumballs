@@ -123,10 +123,10 @@
         "recognition_doc": "DetectNumberWithRegex",
         "expected": "\\d+",
         "roi": [
-            91,
-            21,
-            233,
-            54
+            11,
+            14,
+            287,
+            63
         ],
         "action": "DoNothing",
         "timeout": 100,

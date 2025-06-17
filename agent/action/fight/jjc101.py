@@ -18,6 +18,118 @@ boss_x, boss_y = 360, 800
 @AgentServer.custom_action("JJC101")
 class JJC101(CustomAction):
 
+    def Check_DefaultEquipment(self, context: Context, layers: int):
+        """
+        检查默认装备
+        1. 检查第1层和第27层的装备
+        """
+        if layers == 1 or layers == 27:
+            OpenDetail = context.run_task("Bag_Open")
+            if OpenDetail.nodes:
+                if not fightUtils.checkEquipment("腰带", 1, "贵族丝带", context):
+                    fightUtils.findEquipment(1, "贵族丝带", True, context)
+                if not fightUtils.checkEquipment("戒指", 2, "礼仪戒指", context):
+                    fightUtils.findEquipment(2, "礼仪戒指", True, context)
+                if not fightUtils.checkEquipment("披风", 3, "天鹅绒斗篷", context):
+                    fightUtils.findEquipment(3, "天鹅绒斗篷", True, context)
+                if not fightUtils.checkEquipment("宝物", 7, "冒险家竖琴", context):
+                    fightUtils.findEquipment(7, "冒险家竖琴", True, context)
+                time.sleep(1)
+                context.run_task("BackText")
+            else:
+                logger.info("背包打开失败")
+                return False
+            return True
+        elif layers >= 30 and layers % 10 == 1:  # 装备土系魔法书
+            OpenDetail = context.run_task("Bag_Open")
+            if OpenDetail.nodes:
+                if not fightUtils.checkEquipment("宝物", 6, "土系魔法书", context):
+                    fightUtils.findEquipment("宝物", 6, "土系魔法书", context)
+                context.run_task("BackText")
+
+    def Check_DefaultTitle(self, context: Context, layers: int):
+        """
+        检查默认称号
+        1. 检查1、29和65层的称号
+        """
+        if layers == 1:
+            fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
+            context.run_task("BackText")
+        elif layers == 29:
+            fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
+            fightUtils.title_learn("战斗", 2, "战士", 3, context)
+            fightUtils.title_learn("战斗", 3, "魔战士", 1, context)
+            fightUtils.title_learn("战斗", 4, "炎龙武士", 3, context)
+            fightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
+
+            context.run_task("BackText")
+            fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
+            fightUtils.title_learn("魔法", 2, "白袍法师", 1, context)
+            fightUtils.title_learn("魔法", 3, "祭司", 1, context)
+            fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
+            fightUtils.title_learn("魔法", 5, "传奇法师", 1, context)
+
+            context.run_task("BackText")
+            fightUtils.title_learn_branch("战斗", 5, "生命强化", 3, context)
+            fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
+
+        elif layers == 65:
+            fightUtils.title_learn("冒险", 2, "探险家", 1, context)
+            fightUtils.title_learn("冒险", 3, "暗行者", 1, context)
+            fightUtils.title_learn("冒险", 4, "魔盗", 1, context)
+            fightUtils.title_learn("冒险", 5, "异界游侠", 1, context)
+
+            context.run_task("BackText")
+            fightUtils.title_learn_branch("冒险", 5, "生命强化", 3, context)
+            fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
+            fightUtils.title_learn_branch("冒险", 5, "魔力强化", 3, context)
+
+            fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
+            fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
+
+    def handle_callDog_event(self, context: Context, layers: int):
+        # 打开背包
+        OpenDetail = context.run_task("Bag_Open")
+        if OpenDetail.nodes:
+            fightUtils.findItem("狼人药剂", True, context)
+            context.run_task("Bag_Open")
+            fightUtils.findItem("狼人药剂", True, context)
+            context.run_task("Bag_Open")
+            fightUtils.findItem("狼人药剂", True, context)
+
+            # 拖回合
+            for i in range(1, 76):
+                context.run_task("JJC_OpenForceOfNature")
+            fightUtils.cast_magic("气", "静电场", context)
+
+            if fightUtils.cast_magic("火", "毁灭之刃", context):
+                pass
+            elif fightUtils.cast_magic("土", "地震术", context):
+                fightUtils.cast_magic_special("天眼", context)
+            else:
+                return False
+
+            # 召唤狗子
+            OpenDetail = context.run_task("Bag_Open")
+            fightUtils.findItem("东方剪纸", True, context)
+
+            # 关闭自然之力
+            logger.info("关闭自然之力")
+            tmp_ctx = context.clone()
+            tmp_ctx.run_task(
+                "JJC_OpenForceOfNature",
+                pipeline_override={
+                    "JJC_OpenForceOfNature_Switch": {"expected": "关闭"}
+                },
+            )
+
+            time.sleep(1)
+        else:
+            logger.info("背包打开失败")
+            return False
+
+        return True
+
     # 处理角斗场事件
     def handle_abattoir_event(self, context: Context, layers: int):
         image = context.tasker.controller.post_screencap().wait().get()
@@ -69,33 +181,19 @@ class JJC101(CustomAction):
             context.run_task("JJC_Fight_ClearCurrentLayer")
 
         context.run_task("Fight_OpenedDoor")
-    
+
     def handle_layers_event(self, context: Context, layers: int):
-        if layers == 1:
-            fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
+        self.Check_DefaultEquipment(context, layers)
+        self.Check_DefaultTitle(context, layers)
+
         # 自动叫狗事件
         if layers == 29:
-            context.run_task("JJC_CallDog_Test")
+            self.handle_callDog_event(context, layers)
 
         # 打开自然之力攻击
-        if layers == 55:
+        if layers >= 50 and (layers % 10 == 1 or layers % 10 == 0):
             context.run_task("JJC_OpenForceOfNature")
 
-        if layers == 65:
-            # 冒险系称号
-            fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
-            fightUtils.title_learn("冒险", 2, "探险家", 1, context)
-            fightUtils.title_learn("冒险", 3, "暗行者", 1, context)
-            fightUtils.title_learn("冒险", 4, "魔盗", 1, context)
-            fightUtils.title_learn("冒险", 5, "异界游侠", 1, context)
-
-            fightUtils.title_learn_branch("冒险", 5, "生命强化", 3, context)
-            fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
-            fightUtils.title_learn_branch("冒险", 5, "魔力强化", 3, context)
-
-            fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
-            fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
-        
         # *5层的角斗场事件
         self.handle_abattoir_event(context, layers)
 
@@ -115,7 +213,13 @@ class JJC101(CustomAction):
             layers = utils.extract_numbers(
                 RunResult.nodes[0].recognition.best_result.text
             )
-            logger.info(f"current layer {layers}")
+
+        # 进入地图初始化
+        if context.run_task("Bag_Open"):
+            if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
+                fightUtils.findEquipment(7, "斯巴达的头盔", True, context)
+                context.run_task("BackText")
+            isHaveSpartanHat = True
 
         # 检查当前层数是否小于29层
         while layers < 101:
@@ -132,9 +236,9 @@ class JJC101(CustomAction):
                 )
 
             # 检查是否到达100层
-            if layers > 100:
-                logger.info("到达101层, 开始退出agent")
-                continue
+            if layers == 96:
+                logger.info(f"current layers {layers}, 开始退出agent")
+                break
             logger.info(f"Start Explore {layers} layer.")
 
             # 检测是否触发层数事件
@@ -142,6 +246,8 @@ class JJC101(CustomAction):
 
             # Boos层开始探索
             if layers >= 30 and layers % 10 == 0:
+                # boss召唤动作
+                time.sleep(4)
                 self.handle_boos_event(context, layers)
                 continue
 
@@ -174,18 +280,18 @@ class JJC101(CustomAction):
             if layers <= 30:
                 context.run_task("JJC_StoneChest")
 
-            # 寻找身体
+            # 寻找斯巴达头盔
             if not isHaveSpartanHat:
                 img = context.tasker.controller.post_screencap().wait().get()
                 if context.run_recognition("JJC_Find_Body", img):
-                    logger.info("找到斯巴达实体啦")
                     context.run_task("JJC_Find_Body")
                     isHaveSpartanHat = True
+                logger.info("已有斯巴达头盔，或找到斯巴达头盔了！！")
 
             # 该层探索结束
             context.run_task("Fight_OpenedDoor")
 
-        logger.info("到达101层, 成功探索1次竞技场101")
+        logger.info(f"竞技场探索结束，当前到达{layers}层")
         context.run_task("Fight_LeaveMaze")
         return CustomAction.RunResult(success=True)
 
@@ -374,8 +480,8 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
         return CustomAction.RunResult(success=True)
 
 
-@AgentServer.custom_action("JJC101_Select")
-class JJC101_Select(CustomAction):
+@AgentServer.custom_action("Fight_Select")
+class Fight_Select(CustomAction):
     # 执行函数
     def run(
         self,
@@ -403,19 +509,8 @@ class JJC101_Select(CustomAction):
         return CustomAction.RunResult(success=True)
 
 
-@AgentServer.custom_action("JJC101_Title")
-class JJC101_Title(CustomAction):
-
-    def Fight_CheckLayer(self, context: Context):
-        RunResult = context.run_task("Fight_CheckLayer")
-        if RunResult.nodes:
-            layers = utils.extract_numbers(
-                RunResult.nodes[0].recognition.best_result.text
-            )
-            logger.info(f"current layer {layers}")
-            return layers
-        else:
-            return 0
+@AgentServer.custom_action("Fight_TestAction")
+class Fight_TestAction(CustomAction):
 
     # 执行函数
     def run(
@@ -424,125 +519,4 @@ class JJC101_Title(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
 
-        # 战士系称号
-        fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
-        fightUtils.title_learn("战斗", 2, "战士", 3, context)
-        fightUtils.title_learn("战斗", 3, "魔战士", 1, context)
-        fightUtils.title_learn("战斗", 4, "炎龙武士", 3, context)
-        fightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
-
-        fightUtils.title_learn_branch("战斗", 5, "生命强化", 3, context)
-        fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
-
-        # 魔法系称号
-        fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
-        fightUtils.title_learn("魔法", 2, "白袍法师", 1, context)
-        fightUtils.title_learn("魔法", 3, "祭司", 1, context)
-        fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
-        fightUtils.title_learn("魔法", 5, "传奇法师", 1, context)
-
-        # fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
-        # fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
-        return CustomAction.RunResult(success=True)
-
-
-@AgentServer.custom_action("JJC_BagTest")
-class JJC_BagTest(CustomAction):
-
-    # 执行函数
-    def run(
-        self,
-        context: Context,
-        argv: CustomAction.RunArg,
-    ) -> CustomAction.RunResult:
-
-        # 打开背包
-        OpenDetail = context.run_task("Bag_Open")
-        if OpenDetail.nodes:
-            if not fightUtils.checkEquipment("腰带", 1, "贵族丝带", context):
-                fightUtils.findEquipment(1, "贵族丝带", True, context)
-            if not fightUtils.checkEquipment("戒指", 2, "礼仪戒指", context):
-                fightUtils.findEquipment(2, "礼仪戒指", True, context)
-            if not fightUtils.checkEquipment("披风", 3, "天鹅绒斗篷", context):
-                fightUtils.findEquipment(3, "天鹅绒斗篷", True, context)
-            if not fightUtils.checkEquipment("宝物", 7, "冒险家竖琴", context):
-                fightUtils.findEquipment(7, "冒险家竖琴", True, context)
-            time.sleep(1)
-            context.run_task("BackText")
-        else:
-            logger.info("背包打开失败")
-
-        return CustomAction.RunResult(success=True)
-
-
-@AgentServer.custom_action("JJC_ItemTest")
-class JJC_ItemTest(CustomAction):
-
-    # 执行函数
-    def run(
-        self,
-        context: Context,
-        argv: CustomAction.RunArg,
-    ) -> CustomAction.RunResult:
-
-        # 打开背包
-        OpenDetail = context.run_task("Bag_Open")
-        if OpenDetail.nodes:
-            fightUtils.findItem("狼人药剂", True, context)
-            context.run_task("Bag_Open")
-            fightUtils.findItem("狼人药剂", True, context)
-            context.run_task("Bag_Open")
-            fightUtils.findItem("狼人药剂", True, context)
-
-            # 拖回合
-            for i in range(1, 76):
-                context.run_task("JJC_OpenForceOfNature")
-            fightUtils.cast_magic("气", "静电场", context)
-
-            if fightUtils.cast_magic("火", "毁灭之刃", context):
-                pass
-            elif fightUtils.cast_magic("土", "地震术", context):
-                fightUtils.cast_magic_special("天眼", context)
-            else:
-                return CustomAction.RunResult(success=False)
-
-            # 召唤狗子
-            OpenDetail = context.run_task("Bag_Open")
-            fightUtils.findItem("东方剪纸", True, context)
-
-            # 关闭自然之力
-            logger.info("关闭自然之力")
-            tmp_ctx = context.clone()
-            tmp_ctx.run_task(
-                "JJC_OpenForceOfNature",
-                pipeline_override={
-                    "JJC_OpenForceOfNature_Switch": {"expected": "关闭"}
-                },
-            )
-
-            time.sleep(1)
-        else:
-            logger.info("背包打开失败")
-
-        return CustomAction.RunResult(success=True)
-
-
-@AgentServer.custom_action("JJC_CallDog")
-class JJC_CallDog(CustomAction):
-
-    # 执行函数
-    def run(
-        self,
-        context: Context,
-        argv: CustomAction.RunArg,
-    ) -> CustomAction.RunResult:
-
-        # 检查贵族套是否装备，先装备
-        context.run_action("JJC_BagTest")
-
-        # 检查称号并点称号
-        context.run_action("JJC_Title_Test")
-
-        # 叫狼人
-        context.run_action("Bag_Items_test")
         return CustomAction.RunResult(success=True)

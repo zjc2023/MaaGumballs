@@ -81,14 +81,6 @@
         "threshold": 0.8,
         "timeout": 3000
     },
-    "JJC_BagTest": {
-        "action": "Custom",
-        "custom_action": "JJC_BagTest"
-    },
-    "Bag_Items_test": {
-        "action": "Custom",
-        "custom_action": "JJC_ItemTest"
-    },
     "Bag_CheckItem": {
         "recognition": "TemplateMatch",
         "template": "equipments/1level/贵族丝带.png",

@@ -36,7 +36,7 @@
             91
         ],
         "action": "Custom",
-        "custom_action": "JJC101_Select",
+        "custom_action": "Fight_Select",
         "post_delay": 1000,
         "timeout": 2000,
         "next": [
@@ -236,14 +236,5 @@
         "next": [
             "ClickCenter_200ms"
         ]
-    },
-    "JJC_Title_Test": {
-        "action": "Custom",
-        "custom_action": "JJC101_Title",
-        "post_delay": 1000
-    },
-    "JJC_CallDog_Test": {
-        "action": "Custom",
-        "custom_action": "JJC_CallDog"
     }
 }

@@ -191,10 +191,5 @@
         "action": "Click",
         "post_delay": 500,
         "timeout": 2000
-    },
-    "TitlePanel_Test": {
-        "action": "Custom",
-        "custom_action": "JJC101_Title",
-        "post_delay": 500
     }
 }
