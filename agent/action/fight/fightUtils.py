@@ -280,7 +280,9 @@ def findEquipment(
     equipment_path = f"equipments/{equipmentLevel}level/{equipmentName}.png"
 
     # 初始化背包
-    context.run_task("Bag_ToLeftestPage")
+    image = context.tasker.controller.post_screencap().wait().get()
+    if context.run_recognition("Bag_ToLeftestPage", image):
+        context.run_task("Bag_ToLeftestPage")
 
     # 开始寻找背包
     while True:
@@ -330,7 +332,9 @@ def findItem(
     # 开始寻找
     while True:
         # 初始化背包
-        context.run_task("Bag_ToLeftestPage")
+        image = context.tasker.controller.post_screencap().wait().get()
+        if context.run_recognition("Bag_ToLeftestPage", image):
+            context.run_task("Bag_ToLeftestPage")
 
         # 检测目标物品
         image = context.tasker.controller.post_screencap().wait().get()
@@ -421,7 +425,7 @@ def dragonwish(targetWish: Literal["工资", "神锻", "测试"], context: Conte
 
     # 等待5秒，确保界面加载完毕，可以考虑移除
     time.sleep(5)
-    Itemdetail = context.run_task("Fight_FindItem")
+    Itemdetail = context.run_task("Fight_FindDragon")
 
     if Itemdetail.nodes:
         # 集齐七个龙珠并进入到许愿界面
@@ -535,3 +539,48 @@ def dragonwish(targetWish: Literal["工资", "神锻", "测试"], context: Conte
             # 没有出现目标，不进行后续处理
             pass
     return min_index_wish
+
+
+def Auto_CallDog(context: Context):
+    # 打开背包
+    OpenDetail = context.run_task("Bag_Open")
+    if OpenDetail.nodes:
+        findItem("狼人药剂", True, context)
+        context.run_task("Bag_Open")
+        findItem("狼人药剂", True, context)
+        context.run_task("Bag_Open")
+        findItem("狼人药剂", True, context)
+
+        # 拖回合
+        for i in range(1, 76):
+            context.run_task("JJC_OpenForceOfNature")
+        cast_magic("气", "静电场", context)
+
+        if cast_magic("火", "毁灭之刃", context):
+            pass
+        elif cast_magic("土", "地震术", context):
+            cast_magic("气", "静电场", context)
+            cast_magic_special("天眼", context)
+
+        image = context.tasker.controller.post_screencap().wait().get()
+        if not context.run_recognition("Fight_CheckStatus", image):
+            # sl恢复现场, 叫狗失败
+            context.run_task("LogoutGame")
+            context.run_task("ReturnMaze")
+            logger.error(f"召唤狗子失败,可能是没触发毁灭,请到下一层叫狗")
+            return False
+
+        # 召唤狗子
+        OpenDetail = context.run_task("Bag_Open")
+        findItem("东方剪纸", True, context)
+
+        # 关闭自然之力
+        logger.info("关闭自然之力")
+        tmp_ctx = context.clone()
+        tmp_ctx.run_task(
+            "JJC_OpenForceOfNature",
+            pipeline_override={"JJC_OpenForceOfNature_Switch": {"expected": "关闭"}},
+        )
+        time.sleep(1)
+        logger.info("狗子召唤成功！！！")
+    return True

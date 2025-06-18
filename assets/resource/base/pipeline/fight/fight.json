@@ -380,6 +380,25 @@
         "timeout": 1000,
         "duration": 4000
     },
+    "Fight_CheckStatus": {
+        "recognition": "TemplateMatch",
+        "template": "fight\\UniversalUI\\毁灭之刃状态.png",
+        "doc": "默认检测毁灭之刃",
+        "roi": [
+            1,
+            89,
+            315,
+            108
+        ],
+        "action": "DoNothing",
+        "post_delay": 200,
+        "timeout": 2000
+    },
+    "Fight_CallDog_Func": {
+        "action": "Custom",
+        "custom_action": "Fight_CallDog",
+        "post_delay": 1000
+    },
     "test_reco_color": {
         "recognition": "ColorMatch",
         "method": 4,
@@ -449,7 +468,7 @@
         "post_delay": 1000,
         "timeout": 3000
     },
-    "Fight_FindItem": {
+    "Fight_FindDragon": {
         "recognition": "TemplateMatch",
         "template": "items/神龙的愿望.png",
         "roi": [

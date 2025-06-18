@@ -60,8 +60,10 @@ class JJC101(CustomAction):
             else:
                 logger.info("背包打开失败")
                 return False
+        else:
+            return True
 
-        logger.info(f"current layers{layers},装备检查完成")
+        logger.info(f"current layers {layers},装备检查完成")
         return True
 
     def Check_DefaultTitle(self, context: Context, layers: int):
@@ -73,7 +75,7 @@ class JJC101(CustomAction):
             fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
             fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
             context.run_task("BackText")
-        elif layers == 29:
+        elif layers == 27:
             fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
             fightUtils.title_learn("战斗", 2, "战士", 3, context)
             fightUtils.title_learn("战斗", 3, "魔战士", 1, context)
@@ -104,52 +106,6 @@ class JJC101(CustomAction):
 
             fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
-
-    def handle_callDog_event(self, context: Context, layers: int):
-        # 打开背包
-        OpenDetail = context.run_task("Bag_Open")
-        if OpenDetail.nodes:
-            fightUtils.findItem("狼人药剂", True, context)
-            context.run_task("Bag_Open")
-            fightUtils.findItem("狼人药剂", True, context)
-            context.run_task("Bag_Open")
-            fightUtils.findItem("狼人药剂", True, context)
-
-            # 拖回合
-            for i in range(1, 76):
-                context.run_task("JJC_OpenForceOfNature")
-            fightUtils.cast_magic("气", "静电场", context)
-
-            if fightUtils.cast_magic("火", "毁灭之刃", context):
-                pass
-            elif fightUtils.cast_magic("土", "地震术", context):
-                fightUtils.cast_magic_special("天眼", context)
-            elif fightUtils.cast_magic("光", "祝福术", context):
-                pass
-            else:
-                logger.error("召唤狼人失败")
-                return False
-
-            # 召唤狗子
-            OpenDetail = context.run_task("Bag_Open")
-            fightUtils.findItem("东方剪纸", True, context)
-
-            # 关闭自然之力
-            logger.info("关闭自然之力")
-            tmp_ctx = context.clone()
-            tmp_ctx.run_task(
-                "JJC_OpenForceOfNature",
-                pipeline_override={
-                    "JJC_OpenForceOfNature_Switch": {"expected": "关闭"}
-                },
-            )
-
-            time.sleep(1)
-        else:
-            logger.info("背包打开失败")
-            return False
-
-        return True
 
     # 处理角斗场事件
     def handle_abattoir_event(self, context: Context, layers: int):
@@ -209,10 +165,6 @@ class JJC101(CustomAction):
         self.Check_DefaultEquipment(context, layers)
         self.Check_DefaultTitle(context, layers)
 
-        # 自动叫狗事件
-        if layers == 29:
-            self.handle_callDog_event(context, layers)
-
         # 打开自然之力攻击
         if layers >= 50 and layers % 10 == 1:
             context.run_task("JJC_OpenForceOfNature")
@@ -267,6 +219,12 @@ class JJC101(CustomAction):
             # 检测是否触发层数事件
             self.handle_layers_event(context, layers)
 
+            # 自动叫狗事件
+            if layers == 27:
+                context.run_task("Save_Status")
+                if not fightUtils.Auto_CallDog(context):
+                    return CustomAction.RunResult(success=False)
+
             # Boos层开始探索
             if layers >= 30 and layers % 10 == 0:
                 # boss召唤动作
@@ -305,6 +263,14 @@ class JJC101(CustomAction):
             if context.run_recognition("BackText", image):
                 logger.info("检测到卡返回, 本层重新探索")
                 context.run_task("BackText")
+                continue
+
+            # 检测神龙
+            image = context.tasker.controller.post_screencap().wait().get()
+            if context.run_recognition("Fight_FindDragon", image):
+                logger.info("是神龙,俺们有救了！！！")
+                fightUtils.dragonwish("工资", context)
+                logger.info("神龙带肥家lo~")
                 continue
 
             # 胜利者石柱
@@ -540,6 +506,19 @@ class Fight_Select(CustomAction):
         )
 
         return CustomAction.RunResult(success=True)
+
+
+@AgentServer.custom_action("Fight_CallDog")
+class Fight_CallDog(CustomAction):
+    # 执行函数
+    def run(
+        self,
+        context: Context,
+        argv: CustomAction.RunArg,
+    ) -> CustomAction.RunResult:
+        if fightUtils.Auto_CallDog(context):
+            return CustomAction.RunResult(success=True)
+        return CustomAction.RunResult(success=False)
 
 
 @AgentServer.custom_action("Fight_TestAction")
