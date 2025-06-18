@@ -22,7 +22,7 @@ class JJC101(CustomAction):
         检查默认装备
         1. 检查第1层和第27层的装备
         """
-        if layers == 1 or layers == 27:
+        if layers == 1 or layers == 27 or layers == 64:
             OpenDetail = context.run_task("Bag_Open")
             if OpenDetail.nodes:
                 if not fightUtils.checkEquipment("腰带", 1, "贵族丝带", context):
@@ -38,7 +38,6 @@ class JJC101(CustomAction):
             else:
                 logger.info("背包打开失败")
                 return False
-            return True
         elif layers >= 30 and layers % 10 == 1:  # 装备土系魔法书
             OpenDetail = context.run_task("Bag_Open")
             if OpenDetail.nodes:
@@ -58,11 +57,16 @@ class JJC101(CustomAction):
                     fightUtils.findEquipment(6, "星月教项链", True, context)
                     
                 context.run_task("BackText")
-
+            else:
+                logger.info("背包打开失败")
+                return False
+        
+        logger.info(f"current layers{layers},装备检查完成")
+        return True
     def Check_DefaultTitle(self, context: Context, layers: int):
         """
         检查默认称号
-        1. 检查1、29和65层的称号
+        1. 检查1、29和64层的称号
         """
         if layers == 1:
             fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
