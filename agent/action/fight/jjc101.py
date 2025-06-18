@@ -136,8 +136,6 @@ class JJC101(CustomAction):
 
     # 处理boos层事件
     def handle_boos_event(self, context: Context, layers: int):
-        if layers >= 50 and layers % 10 == 0:
-            context.run_task("JJC_OpenForceOfNature")
         if layers <= 60:
             context.tasker.controller.post_click(boss_x, boss_y).wait()
             time.sleep(0.1)
@@ -167,6 +165,9 @@ class JJC101(CustomAction):
 
         # 打开自然之力攻击
         if layers >= 50 and layers % 10 == 1:
+            context.run_task("JJC_OpenForceOfNature")
+
+        if layers >= 50 and layers % 10 == 9:
             context.run_task("JJC_OpenForceOfNature")
 
         # *5层的角斗场事件
