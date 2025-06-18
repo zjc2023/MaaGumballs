@@ -126,10 +126,10 @@
             11,
             14,
             287,
-            63
+            150
         ],
         "action": "DoNothing",
-        "timeout": 100,
+        "timeout": 2000,
         "post_delay": 200
     },
     "Fight_EquipmentStore": {
