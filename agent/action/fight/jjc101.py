@@ -43,19 +43,19 @@ class JJC101(CustomAction):
             OpenDetail = context.run_task("Bag_Open")
             if OpenDetail.nodes:
                 if not fightUtils.checkEquipment("宝物", 6, "土系魔法书", context):
-                    fightUtils.findEquipment("宝物", 6, "土系魔法书", True, context)
+                    fightUtils.findEquipment(6, "土系魔法书", True, context)
                 
                 if not fightUtils.checkEquipment("鞋子", 6, "次元鞋", context):
-                    fightUtils.findEquipment("鞋子", 6, "次元鞋", True, context)
+                    fightUtils.findEquipment(6, "次元鞋", True, context)
                 
                 if not fightUtils.checkEquipment("盔甲", 6, "执政官铠甲", context):
-                    fightUtils.findEquipment("盔甲", 6, "执政官铠甲", True, context)
+                    fightUtils.findEquipment(6, "执政官铠甲", True, context)
                     
                 if not fightUtils.checkEquipment("头盔", 7, "斯巴达头盔", context):
-                    fightUtils.findEquipment("头盔", 7, "斯巴达头盔", True, context)
+                    fightUtils.findEquipment(7, "斯巴达头盔", True, context)
                     
                 if not fightUtils.checkEquipment("项链", 6, "星月教项链", context):
-                    fightUtils.findEquipment("项链", 6, "星月教项链", True, context)
+                    fightUtils.findEquipment(6, "星月教项链", True, context)
                     
                 context.run_task("BackText")
 
@@ -65,8 +65,8 @@ class JJC101(CustomAction):
         1. 检查1、29和65层的称号
         """
         if layers == 1:
-            fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
             fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
+            fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
             context.run_task("BackText")
         elif layers == 29:
             fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
