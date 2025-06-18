@@ -142,7 +142,7 @@
                     },
                     "doc": {
                         "title": "任务文档",
-                        "type": "string"
+                        "$ref": "#/definitions/tasklist"
                     },
                     "pipeline_override": {
                         "title": "任务参数",
@@ -250,5 +250,20 @@
         "controller",
         "resource",
         "task"
-    ]
+    ],
+    "definitions": {
+        "tasklist": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    }
 }
