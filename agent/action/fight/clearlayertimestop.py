@@ -1,15 +1,14 @@
 from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
-from loguru import logger
+from utils import logger 
 
-from action import utils
 from action.fight import fightUtils
 
 import time
 
 cols, rows = 5, 6
-roi_list = utils.calRoiList()
+roi_list = fightUtils.calRoiList()
 roi_matrix = [roi_list[i * cols : (i + 1) * cols] for i in range(rows)]
 visited = [[0] * cols for _ in range(rows)]
 
@@ -66,7 +65,7 @@ class Fight_ClearCurrentLayerTimeStop(CustomAction):
             logger.info("识别到 Fight_ClosedDoor")
             for r in range(rows):
                 for c in range(cols):
-                    if utils.is_roi_in_or_mostly_in(recoDetail.box, roi_matrix[r][c]):
+                    if fightUtils.is_roi_in_or_mostly_in(recoDetail.box, roi_matrix[r][c]):
                         logger.info(f"识别到 ClosedDoor 位于 {r+1},{c+1}")
                         return r, c
         return 0, 0

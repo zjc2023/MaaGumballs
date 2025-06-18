@@ -2,21 +2,12 @@ from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
 from maa.define import RecognitionDetail
+from action.fight import fightUtils
 import time
-import re
 
 
 @AgentServer.custom_action("TL01_Fighting_Test")
 class TL01_Fighting(CustomAction):
-    # 从一个字符串里面识仅识别一串数字, 并返回
-    def extract_numbers(self, input_string):
-        # 使用正则表达式匹配所有的数字
-        numbers = re.findall(r"\d+", input_string)
-        # 如果找到数字，返回第一个数字，否则返回 None, 返回类型为 int
-        if numbers:
-            return int(numbers[0])
-        else:
-            return None
 
     # 执行函数
     def run(
@@ -28,7 +19,7 @@ class TL01_Fighting(CustomAction):
         layers = 1
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
-            layers = self.extract_numbers(
+            layers = fightUtils.extract_numbers(
                 RunResult.nodes[0].recognition.best_result.text
             )
             # print(f"current layer {layers}")
@@ -43,7 +34,7 @@ class TL01_Fighting(CustomAction):
             # 检查当前层数
             RunResult = context.run_task("Fight_CheckLayer")
             if RunResult.nodes:
-                layers = self.extract_numbers(
+                layers = fightUtils.extract_numbers(
                     RunResult.nodes[0].recognition.best_result.text
                 )
                 # print(f"current layer :{layers}")

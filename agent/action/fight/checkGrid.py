@@ -4,7 +4,7 @@ from maa.context import Context
 from maa.define import RecognitionDetail
 import time
 from utils import logger
-from action import utils
+from action.fight import fightUtils
 
 
 @AgentServer.custom_action("CheckGrid")
@@ -49,7 +49,7 @@ class CheckGrid(CustomAction):
         FailCheckMonsterCnt = 0
         checkGridCnt = 0
         cols, rows = 5, 6
-        roi_list = utils.calRoiList()
+        roi_list = fightUtils.calRoiList()
         roi_matrix = [roi_list[i * cols : (i + 1) * cols] for i in range(rows)]
 
         cnt = 15

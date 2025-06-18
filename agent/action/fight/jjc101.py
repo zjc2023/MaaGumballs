@@ -1,15 +1,14 @@
 from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
-from loguru import logger
+from utils import logger
 
-from action import utils
 from action.fight import fightUtils
 
 import time
 
 cols, rows = 5, 6
-roi_list = utils.calRoiList()
+roi_list = fightUtils.calRoiList()
 roi_matrix = [roi_list[i * cols : (i + 1) * cols] for i in range(rows)]
 visited = [[0] * cols for _ in range(rows)]
 boss_x, boss_y = 360, 800
@@ -44,7 +43,20 @@ class JJC101(CustomAction):
             OpenDetail = context.run_task("Bag_Open")
             if OpenDetail.nodes:
                 if not fightUtils.checkEquipment("宝物", 6, "土系魔法书", context):
-                    fightUtils.findEquipment("宝物", 6, "土系魔法书", context)
+                    fightUtils.findEquipment("宝物", 6, "土系魔法书", True, context)
+                
+                if not fightUtils.checkEquipment("鞋子", 6, "次元鞋", context):
+                    fightUtils.findEquipment("鞋子", 6, "次元鞋", True, context)
+                
+                if not fightUtils.checkEquipment("盔甲", 6, "执政官铠甲", context):
+                    fightUtils.findEquipment("盔甲", 6, "执政官铠甲", True, context)
+                    
+                if not fightUtils.checkEquipment("头盔", 7, "斯巴达头盔", context):
+                    fightUtils.findEquipment("头盔", 7, "斯巴达头盔", True, context)
+                    
+                if not fightUtils.checkEquipment("项链", 6, "星月教项链", context):
+                    fightUtils.findEquipment("项链", 6, "星月教项链", True, context)
+                    
                 context.run_task("BackText")
 
     def Check_DefaultTitle(self, context: Context, layers: int):
@@ -54,6 +66,7 @@ class JJC101(CustomAction):
         """
         if layers == 1:
             fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
+            fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
             context.run_task("BackText")
         elif layers == 29:
             fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
@@ -106,7 +119,10 @@ class JJC101(CustomAction):
                 pass
             elif fightUtils.cast_magic("土", "地震术", context):
                 fightUtils.cast_magic_special("天眼", context)
-            else:
+            elif fightUtils.cast_magic("光", "祝福术", context):
+                pass
+            else :
+                logger.error("召唤狼人失败")
                 return False
 
             # 召唤狗子
@@ -212,7 +228,7 @@ class JJC101(CustomAction):
         # 检查当前层数
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
-            layers = utils.extract_numbers(
+            layers = fightUtils.extract_numbers(
                 RunResult.nodes[0].recognition.best_result.text
             )
 
@@ -233,7 +249,7 @@ class JJC101(CustomAction):
             # 检查当前层数
             RunResult = context.run_task("Fight_CheckLayer")
             if RunResult.nodes:
-                layers = utils.extract_numbers(
+                layers = fightUtils.extract_numbers(
                     RunResult.nodes[0].recognition.best_result.text
                 )
 
@@ -393,7 +409,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
             logger.info("识别到 Fight_ClosedDoor")
             for r in range(rows):
                 for c in range(cols):
-                    if utils.is_roi_in_or_mostly_in(recoDetail.box, roi_matrix[r][c]):
+                    if fightUtils.is_roi_in_or_mostly_in(recoDetail.box, roi_matrix[r][c]):
                         logger.info(f"识别到 ClosedDoor 位于 {r+1},{c+1}")
                         return r, c
         return 0, 0
