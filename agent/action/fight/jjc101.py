@@ -44,17 +44,17 @@ class JJC101(CustomAction):
                 if not fightUtils.checkEquipment("宝物", 6, "土系魔法书", context):
                     fightUtils.findEquipment(6, "土系魔法书", True, context)
 
-                if not fightUtils.checkEquipment("鞋子", 6, "次元鞋", context):
-                    fightUtils.findEquipment(6, "次元鞋", True, context)
+                if not fightUtils.checkEquipment("鞋子", 6, "次元靴", context):
+                    fightUtils.findEquipment(6, "次元靴", True, context)
 
                 if not fightUtils.checkEquipment("盔甲", 6, "执政官铠甲", context):
                     fightUtils.findEquipment(6, "执政官铠甲", True, context)
 
-                if not fightUtils.checkEquipment("头盔", 7, "斯巴达头盔", context):
-                    fightUtils.findEquipment(7, "斯巴达头盔", True, context)
+                if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
+                    fightUtils.findEquipment(7, "斯巴达的头盔", True, context)
 
-                if not fightUtils.checkEquipment("项链", 6, "星月教项链", context):
-                    fightUtils.findEquipment(6, "星月教项链", True, context)
+                if not fightUtils.checkEquipment("项链", 6, "星月教挂坠", context):
+                    fightUtils.findEquipment(6, "星月教挂坠", True, context)
 
                 context.run_task("BackText")
             else:
