@@ -399,5 +399,32 @@
             65,
             65
         ]
+    },
+    "Fight_Perfect": {
+        "recognition": "OCR",
+        "expected": [
+            "完",
+            "完美"
+        ],
+        "roi": [
+            170,
+            309,
+            388,
+            191
+        ],
+        "action": "DoNothing",
+        "post_delay": 500,
+        "next": "Fight_Perfect",
+        "timeout": 2000
+    },
+    "Fight_BossEntry": {
+        "recognition": "OCR",
+        "expected": [
+            "Boss"
+        ],
+        "action": "DoNothing",
+        "post_delay": 500,
+        "next": "Fight_BossEntry",
+        "timeout": 2000
     }
 }

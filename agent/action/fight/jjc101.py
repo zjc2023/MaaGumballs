@@ -73,7 +73,7 @@ class JJC101(CustomAction):
             fightUtils.title_learn_branch("战斗", 5, "生命强化", 3, context)
             fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
 
-        elif layers == 65:
+        elif layers == 64:
             fightUtils.title_learn("冒险", 2, "探险家", 1, context)
             fightUtils.title_learn("冒险", 3, "暗行者", 1, context)
             fightUtils.title_learn("冒险", 4, "魔盗", 1, context)
@@ -159,6 +159,8 @@ class JJC101(CustomAction):
 
     # 处理boos层事件
     def handle_boos_event(self, context: Context, layers: int):
+        if layers >= 50 and layers % 10 == 0:
+            context.run_task("JJC_OpenForceOfNature")
         if layers <= 60:
             context.tasker.controller.post_click(boss_x, boss_y).wait()
             time.sleep(0.1)
@@ -191,7 +193,7 @@ class JJC101(CustomAction):
             self.handle_callDog_event(context, layers)
 
         # 打开自然之力攻击
-        if layers >= 50 and (layers % 10 == 1 or layers % 10 == 0):
+        if layers >= 50 and layers % 10 == 1:
             context.run_task("JJC_OpenForceOfNature")
 
         # *5层的角斗场事件
@@ -253,11 +255,19 @@ class JJC101(CustomAction):
 
             # 小怪层探索
             else:
-                if layers >= 85 and fightUtils.cast_magic("土", "地震术", context):
+                if layers >= 90 and fightUtils.cast_magic("土", "地震术", context):
                     pass
                 else:
                     context.run_task("JJC_Fight_ClearCurrentLayer")
             time.sleep(1)
+
+            # 检测胜利
+            image = context.tasker.controller.post_screencap().wait().get()
+            if context.run_recognition(
+                "Fight_Perfect",
+                image,
+            ):
+                time.sleep(2)
 
             # 检测卡剧情
             image = context.tasker.controller.post_screencap().wait().get()
