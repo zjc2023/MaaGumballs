@@ -157,7 +157,7 @@
         ],
         "action": "Click",
         "threshold": 0.8,
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_SkillPack_Type": {
@@ -170,7 +170,7 @@
             225
         ],
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_ClickSpecialMagicPage": {
@@ -185,7 +185,7 @@
             "特殊"
         ],
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_ClickFireMagicPage": {
@@ -197,7 +197,7 @@
             84
         ],
         "expected": [
-            "魔法"
+            "系魔法"
         ],
         "action": "Click",
         "target": [
@@ -206,7 +206,7 @@
             91,
             78
         ],
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_ClickWaterMagicPage": {
@@ -218,7 +218,7 @@
             84
         ],
         "expected": [
-            "魔法"
+            "系魔法"
         ],
         "action": "Click",
         "target": [
@@ -227,7 +227,7 @@
             85,
             70
         ],
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_ClickEarthMagicPage": {
@@ -239,7 +239,7 @@
             84
         ],
         "expected": [
-            "魔法"
+            "系魔法"
         ],
         "action": "Click",
         "target": [
@@ -248,7 +248,7 @@
             77,
             64
         ],
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_ClickQiMagicPage": {
@@ -260,7 +260,7 @@
             84
         ],
         "expected": [
-            "魔法"
+            "系魔法"
         ],
         "action": "Click",
         "target": [
@@ -269,7 +269,7 @@
             95,
             75
         ],
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_ClickLightMagicPage": {
@@ -281,7 +281,7 @@
             84
         ],
         "expected": [
-            "魔法"
+            "系魔法"
         ],
         "action": "Click",
         "target": [
@@ -290,7 +290,7 @@
             87,
             80
         ],
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_ClickDarkMagicPage": {
@@ -302,7 +302,7 @@
             84
         ],
         "expected": [
-            "魔法"
+            "系魔法"
         ],
         "action": "Click",
         "target": [
@@ -311,7 +311,7 @@
             95,
             77
         ],
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_Magic_Cast": {
@@ -324,7 +324,7 @@
             658
         ],
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000,
         "next": [
             "ClickCenter"
@@ -338,7 +338,7 @@
             "Fight_SkillPack_Type",
             "Fight_SkillPack_Open"
         ],
-        "post_delay": 2000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_Magic_Special_Cast": {
@@ -351,7 +351,7 @@
             658
         ],
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 500,
         "timeout": 2000,
         "next": [
             "ClickCenter"
@@ -364,7 +364,7 @@
         "interrupt": [
             "Fight_SkillPack_Open"
         ],
-        "post_delay": 2000,
+        "post_delay": 500,
         "timeout": 2000
     },
     "Fight_LongPress": {
