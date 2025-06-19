@@ -130,7 +130,8 @@
     "JJC_Find_Body": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight/JJC/斯巴达尸体.png"
+            "fight/JJC/斯巴达尸体1.png",
+            "fight/JJC/斯巴达尸体2.png"
         ],
         "roi": [
             7,
