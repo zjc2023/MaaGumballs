@@ -137,7 +137,8 @@ class JJC101(CustomAction):
 
     # 处理boos层事件
     def handle_boos_event(self, context: Context, layers: int):
-        if layers <= 60:
+        if layers <= 70:
+            fightUtils.cast_magic("光", "祝福术", context)
             for _ in range(5):
                 context.tasker.controller.post_click(boss_x, boss_y).wait()
                 time.sleep(0.1)
@@ -148,15 +149,19 @@ class JJC101(CustomAction):
                 context.tasker.controller.post_click(boss_x, boss_y).wait()
                 time.sleep(0.1)
 
-        elif layers == 90:
+        elif layers <= 90:
             fightUtils.cast_magic("火", "失明术", context)
-            fightUtils.cast_magic("火", "流星雨", context)
-            fightUtils.cast_magic("水", "冰锥术", context)
-            fightUtils.cast_magic("火", "流星雨", context)
-            fightUtils.cast_magic("火", "流星雨", context)
+            fightUtils.cast_magic("气", "静电场", context)
+            if not fightUtils.cast_magic("水", "冰锥术", context):
+                if not fightUtils.cast_magic("暗", "变形术", context):
+                    fightUtils.cast_magic("土", "石肤术", context)
+            fightUtils.cast_magic("水", "寒冰护盾", context)
+            fightUtils.cast_magic("水", "寒冰护盾", context)
             fightUtils.cast_magic("土", "石肤术", context)
+            fightUtils.cast_magic("光", "神恩术", context)
             for _ in range(3):
-                fightUtils.cast_magic("光", "神恩术", context)
+                context.tasker.controller.post_click(boss_x, boss_y).wait()
+            time.sleep(3)
 
         elif layers == 100:
             fightUtils.cast_magic("气", "时间停止", context)
@@ -174,10 +179,10 @@ class JJC101(CustomAction):
         self.Check_DefaultTitle(context, layers)
 
         # 打开自然之力攻击
-        if layers >= 50 and layers % 10 == 1:
+        if layers >= 69 and layers <= 90 and layers % 10 == 1:
             context.run_task("JJC_OpenForceOfNature")
 
-        if layers >= 50 and layers % 10 == 9:
+        if layers >= 69 and layers <= 90 and layers % 10 == 9:
             context.run_task("JJC_OpenForceOfNature")
 
         # *5层的角斗场事件
@@ -202,6 +207,7 @@ class JJC101(CustomAction):
             )
 
         # 进入地图初始化
+        logger.info(f"当前层数: {layers}, 进入地图初始化")
         context.run_task("Bag_Open")
         if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
             if fightUtils.findEquipment(7, "斯巴达的头盔", True, context):
