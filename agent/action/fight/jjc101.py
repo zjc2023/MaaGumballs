@@ -129,9 +129,11 @@ class JJC101(CustomAction):
                 time.sleep(3)
                 context.run_task("Bag_Open")
                 fightUtils.findItem("异域的灯芯", True, context, 360, 810)
+                context.run_task("Bag_Open")
+                fightUtils.findItem("异域的灯芯", True, context, 360, 810)
 
             time.sleep(1)
-            context.run_task("ClickCenter")
+            context.run_task("Fight_Victory")
             context.run_task("JJC_Abattoir_Chest")
             context.run_task("Fight_OpenedDoor")
 
@@ -267,7 +269,7 @@ class JJC101(CustomAction):
                     context.run_task("JJC_Fight_ClearCurrentLayer")
             time.sleep(1)
 
-            # 检测胜利
+            # 检测完美击败
             image = context.tasker.controller.post_screencap().wait().get()
             if context.run_recognition(
                 "Fight_Perfect",

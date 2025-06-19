@@ -468,6 +468,21 @@
         "next": "Fight_Perfect",
         "timeout": 2000
     },
+    "Fight_Victory": {
+        "recognition": "OCR",
+        "expected": [
+            "胜利"
+        ],
+        "roi": [
+            170,
+            309,
+            388,
+            191
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000
+    },
     "Fight_BossEntry": {
         "recognition": "OCR",
         "expected": [
