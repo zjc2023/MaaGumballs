@@ -96,6 +96,8 @@ class JJC101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
         elif layers == 64:
+
+            fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
             fightUtils.title_learn("冒险", 2, "探险家", 1, context)
             fightUtils.title_learn("冒险", 3, "暗行者", 1, context)
             fightUtils.title_learn("冒险", 4, "魔盗", 1, context)
@@ -262,6 +264,7 @@ class JJC101(CustomAction):
                 time.sleep(6)
                 self.handle_boos_event(context, layers)
                 # 检测神龙
+                time.sleep(1)
                 img = context.tasker.controller.post_screencap().wait().get()
                 if context.run_recognition("Fight_FindDragon", img):
                     logger.info("是神龙,俺,俺们有救了！！！")
