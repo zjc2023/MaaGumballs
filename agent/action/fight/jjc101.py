@@ -78,7 +78,7 @@ class JJC101(CustomAction):
         elif layers == 27:
             fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
             fightUtils.title_learn("战斗", 2, "战士", 3, context)
-            fightUtils.title_learn("战斗", 3, "魔战士", 1, context)
+            fightUtils.title_learn("战斗", 3, "剑舞者", 1, context)
             fightUtils.title_learn("战斗", 4, "炎龙武士", 3, context)
             fightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
 

@@ -217,7 +217,7 @@ def title_learn_branch(
     ]
 
     for i in range(0, expectedLevel):
-        logger.info(f"学习第{i+1}级{titleName}")
+        logger.info(f"学习{titleType}系 {i+1}级{titleName}")
         context.run_task(
             "TitlePanel_Learnable",
             pipeline_override={
