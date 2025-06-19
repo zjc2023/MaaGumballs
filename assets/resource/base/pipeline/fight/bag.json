@@ -27,10 +27,10 @@
         "recognition": "TemplateMatch",
         "template": "fight/divineForgeLand/RightButton.png",
         "roi": [
-            0,
-            765,
-            720,
-            108
+            588,
+            766,
+            124,
+            115
         ],
         "action": "Click",
         "post_delay": 100,
@@ -42,10 +42,10 @@
         "recognition": "TemplateMatch",
         "template": "fight/divineForgeLand/LeftButton.png",
         "roi": [
-            0,
-            765,
-            720,
-            108
+            5,
+            727,
+            165,
+            181
         ],
         "action": "Click",
         "post_delay": 100,

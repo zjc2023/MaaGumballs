@@ -202,15 +202,16 @@ class JJC101(CustomAction):
             )
 
         # 进入地图初始化
-        if context.run_task("Bag_Open"):
-            if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
-                if fightUtils.findEquipment(7, "斯巴达的头盔", True, context):
-                    isHaveSpartanHat = True
+        context.run_task("Bag_Open")
+        if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
+            if fightUtils.findEquipment(7, "斯巴达的头盔", True, context):
+                isHaveSpartanHat = True
 
-            if not fightUtils.findItem("东方剪纸", False, context):
-                logger.info("未找到东方剪纸, 已经叫过狗了")
-                isHaveDog = True
-            context.run_task("BackText")
+        if not fightUtils.findItem("东方剪纸", False, context):
+            logger.info("未找到东方剪纸, 已经叫过狗了")
+            isHaveDog = True
+
+        context.run_task("Fight_ReturnMainWindow")
 
         # 检查当前层数是否小于29层
         while layers < 101:
