@@ -518,17 +518,17 @@
     "Fight_FindDragon": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight\\UniversalUI\\DragonWish.png",
-            "fight\\UniversalUI\\DragonWish_1.png"
+            "fight\\UniversalUI\\DragonWish3.png",
+            "fight\\UniversalUI\\DragonWish2.png"
         ],
         "roi": [
-            5,
-            122,
-            707,
-            947
+            158,
+            112,
+            415,
+            623
         ],
-        "action": "Click",
-        "post_delay": 1000,
+        "action": "DoNothing",
+        "post_delay": 500,
         "threshold": 0.8,
         "timeout": 2000
     },

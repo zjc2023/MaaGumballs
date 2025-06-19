@@ -1,6 +1,5 @@
 from maa.context import Context
 from utils import logger
-from typing import Literal
 
 import re
 import time
@@ -376,7 +375,11 @@ def findItem(
     return True
 
 
-def dragonwish(targetWish: Literal["工资", "神锻", "测试"], context: Context):
+def dragonwish(targetWish: str, context: Context):
+    wishlist = []
+    min_index = 999
+    min_index_wish = ""
+    min_index_wish_pos = None
     if targetWish == "工资":
         wishlist = [
             "我要获得钻石",
@@ -423,16 +426,12 @@ def dragonwish(targetWish: Literal["工资", "神锻", "测试"], context: Conte
         logger.error("请输入[工资, 神锻, 测试]中的一个")
     # 神龙许愿list = ["我要获得钻石", "我要神奇的果实", "我想获得巨龙之力", "我要学习龙语魔法", "我要变得更强","我要最凶残的装备", "我要变得富有", "我要大量的矿石", "我要你的收藏品", "我要您的碎片", "我要更多的伙伴"]
 
-    # 等待5秒，确保界面加载完毕，可以考虑移除
+    # # 等待5秒，确保界面加载完毕，可以考虑移除
     time.sleep(5)
     Itemdetail = context.run_task("Fight_FindDragon")
-
     if Itemdetail.nodes:
         # 集齐七个龙珠并进入到许愿界面
         textdetail = context.run_task("Fight_FindText")
-        min_index = 999
-        min_index_wish = None
-        min_index_wish_pos = None
         if textdetail.nodes:
             for result in textdetail.nodes[0].recognition.filterd_results:
                 if result.text.endswith("！"):

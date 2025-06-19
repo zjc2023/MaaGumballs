@@ -294,14 +294,6 @@ class JJC101(CustomAction):
                 context.run_task("BackText")
                 continue
 
-            # 检测神龙
-            image = context.tasker.controller.post_screencap().wait().get()
-            if context.run_recognition("Fight_FindDragon", image):
-                logger.info("是神龙,俺们有救了！！！")
-                fightUtils.dragonwish("工资", context)
-                logger.info("神龙带肥家lo~")
-                continue
-
             # 胜利者石柱
             if layers <= 30:
                 context.run_task("JJC_StoneChest")
@@ -446,7 +438,15 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
                 logger.info("JJC_Fight_ClearCurrentLayer 被停止")
                 return CustomAction.RunResult(success=False)
 
+            # 检测神龙
             img = context.tasker.controller.post_screencap().wait().get()
+            if context.run_recognition("Fight_FindDragon", img):
+                logger.info("是神龙,俺,俺们有救了！！！")
+                fightUtils.dragonwish("工资", context)
+                logger.info("神龙带肥家lo~")
+                continue
+
+            # 检测地板
             cnt -= 1
             checkGridCnt = 0
             for r in range(rows):
@@ -560,7 +560,6 @@ class Fight_CallDog(CustomAction):
 
 @AgentServer.custom_action("Fight_TestAction")
 class Fight_TestAction(CustomAction):
-
     # 执行函数
     def run(
         self,
