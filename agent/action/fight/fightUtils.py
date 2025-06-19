@@ -447,6 +447,7 @@ def dragonwish(targetWish: str, context: Context):
                     min_index_wish_pos[0] + min_index_wish_pos[2] // 2,
                     min_index_wish_pos[1] + min_index_wish_pos[3] // 2,
                 )
+                time.sleep(1)
                 context.tasker.controller.post_click(center_x, center_y).wait()
                 time.sleep(2)
 

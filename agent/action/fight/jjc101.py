@@ -259,8 +259,15 @@ class JJC101(CustomAction):
             # Boos层开始探索
             if layers >= 30 and layers % 10 == 0:
                 # boss召唤动作
-                time.sleep(4)
+                time.sleep(6)
                 self.handle_boos_event(context, layers)
+                # 检测神龙
+                img = context.tasker.controller.post_screencap().wait().get()
+                if context.run_recognition("Fight_FindDragon", img):
+                    logger.info("是神龙,俺,俺们有救了！！！")
+                    fightUtils.dragonwish("工资", context)
+                    logger.info("神龙带肥家lo~")
+
                 continue
 
             # 小怪层探索
