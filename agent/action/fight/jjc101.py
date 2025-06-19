@@ -138,26 +138,34 @@ class JJC101(CustomAction):
     # 处理boos层事件
     def handle_boos_event(self, context: Context, layers: int):
         if layers <= 60:
-            context.tasker.controller.post_click(boss_x, boss_y).wait()
-            time.sleep(0.1)
-            context.tasker.controller.post_click(boss_x, boss_y).wait()
-            time.sleep(0.1)
-            context.tasker.controller.post_click(boss_x, boss_y).wait()
-            time.sleep(0.1)
-        elif layers <= 70:
+            for _ in range(5):
+                context.tasker.controller.post_click(boss_x, boss_y).wait()
+                time.sleep(0.1)
+        elif layers <= 80:
             fightUtils.cast_magic("水", "冰锥术", context)
-            context.tasker.controller.post_click(boss_x, boss_y).wait()
-            time.sleep(0.1)
-            context.tasker.controller.post_click(boss_x, boss_y).wait()
-            time.sleep(0.1)
-            context.tasker.controller.post_click(boss_x, boss_y).wait()
-            time.sleep(0.1)
-        elif layers >= 80 and layers <= 100:
-            if layers >= 90:
-                fightUtils.cast_magic("气", "时间停止", context)
-            fightUtils.cast_magic("气", "瓦解射线", context)
-            context.run_task("JJC_Fight_ClearCurrentLayer")
+            for _ in range(5):
+                context.tasker.controller.post_click(boss_x, boss_y).wait()
+                time.sleep(0.1)
 
+        elif layers == 90:
+            fightUtils.cast_magic("火", "失明术", context)
+            fightUtils.cast_magic("火", "流星雨", context)
+            fightUtils.cast_magic("水", "冰锥术", context)
+            fightUtils.cast_magic("火", "流星雨", context)
+            fightUtils.cast_magic("火", "流星雨", context)
+            fightUtils.cast_magic("土", "石肤术", context)
+            for _ in range(3):
+                fightUtils.cast_magic("光", "神恩术", context)
+
+        elif layers == 100:
+            fightUtils.cast_magic("气", "时间停止", context)
+            fightUtils.cast_magic("气", "瓦解射线", context)
+            for _ in range(7):
+                context.tasker.controller.post_click(boss_x, boss_y).wait()
+                time.sleep(0.1)
+
+        # 捡东西
+        time.sleep(2)
         context.run_task("Fight_OpenedDoor")
 
     def handle_layers_event(self, context: Context, layers: int):
