@@ -93,6 +93,7 @@ class JJC101(CustomAction):
             fightUtils.title_learn_branch("战斗", 5, "生命强化", 3, context)
             fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
 
+            context.run_task("Save_Status")
         elif layers == 64:
             fightUtils.title_learn("冒险", 2, "探险家", 1, context)
             fightUtils.title_learn("冒险", 3, "暗行者", 1, context)
@@ -182,6 +183,7 @@ class JJC101(CustomAction):
         # init param
         layers = 1
         isHaveSpartanHat = False
+        isHaveDog = False
 
         # 检查当前层数
         RunResult = context.run_task("Fight_CheckLayer")
@@ -221,10 +223,14 @@ class JJC101(CustomAction):
             self.handle_layers_event(context, layers)
 
             # 自动叫狗事件
-            if layers == 27:
-                context.run_task("Save_Status")
-                if not fightUtils.Auto_CallDog(context):
+            if layers >= 27 and layers <= 29 and isHaveDog != True:
+                if fightUtils.Auto_CallDog(context):
+                    isHaveDog = True
+                elif layers == 29:
+                    logger.error("29层未触发毁灭, 自动叫狗失败, 太黑了吧, 用户来接管吧")
                     return CustomAction.RunResult(success=False)
+                else:
+                    logger.error(f"召唤狗子失败,可能是没触发毁灭,请到下一层叫狗")
 
             # Boos层开始探索
             if layers >= 30 and layers % 10 == 0:

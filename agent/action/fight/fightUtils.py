@@ -567,7 +567,6 @@ def Auto_CallDog(context: Context):
             # sl恢复现场, 叫狗失败
             context.run_task("LogoutGame")
             context.run_task("ReturnMaze")
-            logger.error(f"召唤狗子失败,可能是没触发毁灭,请到下一层叫狗")
             return False
 
         # 召唤狗子
