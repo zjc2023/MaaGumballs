@@ -40,7 +40,7 @@ def install_resource():
         install_path / "resource",
         dirs_exist_ok=True,
     )
-    
+
     shutil.copy2(
         working_dir / "assets" / "interface.json",
         install_path,
@@ -68,6 +68,7 @@ def install_chores():
         ignore=shutil.ignore_patterns("*.yaml"),
     )
 
+
 def install_agent():
     shutil.copytree(
         working_dir / "agent",
@@ -85,6 +86,7 @@ def install_agent():
 
     with open(install_path / "interface.json", "w", encoding="utf-8") as f:
         json.dump(interface, f, ensure_ascii=False, indent=4)
+
 
 if __name__ == "__main__":
     install_deps()
