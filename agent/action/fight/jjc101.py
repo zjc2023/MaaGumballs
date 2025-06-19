@@ -324,44 +324,6 @@ class JJC101(CustomAction):
 
 @AgentServer.custom_action("JJC_Fight_ClearCurrentLayer")
 class JJC_Fight_ClearCurrentLayer(CustomAction):
-    def CheckMonster(self, context: Context):
-        # 检测是否有怪物并攻击
-        image = context.tasker.controller.post_screencap().wait().get()
-        checkMonsterDetail = context.run_recognition(
-            "GridCheckMonster",
-            image,
-            pipeline_override={
-                "GridCheckMonster": {
-                    "recognition": "TemplateMatch",
-                    "template": [
-                        "fight/JJC/m1.png",
-                        "fight/JJC/m2.png",
-                        "fight/JJC/m3.png",
-                        "fight/JJC/m4.png",
-                        "fight/JJC/m5.png",
-                    ],
-                    "roi": [21, 217, 682, 762],
-                    "threshold": 0.7,
-                }
-            },
-        )
-
-        # 对检测到的每个怪物进行攻击
-        if checkMonsterDetail:
-            for result in checkMonsterDetail.all_results:
-                x, y, w, h = result.box
-                logger.info(
-                    f"检测到第{checkMonsterDetail.all_results.index(result) + 1}个怪物: {x}, {y}, {w}, {h}"
-                )
-                context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                time.sleep(0.1)
-                context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                time.sleep(0.1)
-                context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                time.sleep(0.1)
-            return True
-        else:
-            return False
 
     def CheckMonsterCnt(self, context: Context):
         global visited
