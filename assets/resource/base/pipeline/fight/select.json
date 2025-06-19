@@ -50,7 +50,7 @@
     },
     "Select_SearchButton": {
         "recognition": "TemplateMatch",
-        "template": "fight\\UniversalUI\\searchButton.png",
+        "template": "fight/UniversalUI/searchButton.png",
         "action": "Click",
         "roi": [
             536,
@@ -113,7 +113,7 @@
     },
     "Seleect_InputBox_Success": {
         "recognition": "TemplateMatch",
-        "template": "fight\\UniversalUI\\GumballStar.png",
+        "template": "fight/UniversalUI/GumballStar.png",
         "roi": [
             74,
             640,

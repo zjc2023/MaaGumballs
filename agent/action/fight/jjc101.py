@@ -34,7 +34,7 @@ class JJC101(CustomAction):
                 if not fightUtils.checkEquipment("宝物", 7, "冒险家竖琴", context):
                     fightUtils.findEquipment(7, "冒险家竖琴", True, context)
                 time.sleep(1)
-                context.run_task("BackText")
+                context.run_task("Fight_ReturnMainWindow")
             else:
                 logger.info("背包打开失败")
                 return False
@@ -56,7 +56,7 @@ class JJC101(CustomAction):
                 if not fightUtils.checkEquipment("项链", 6, "星月教挂坠", context):
                     fightUtils.findEquipment(6, "星月教挂坠", True, context)
 
-                context.run_task("BackText")
+                context.run_task("Fight_ReturnMainWindow")
             else:
                 logger.info("背包打开失败")
                 return False
@@ -74,7 +74,7 @@ class JJC101(CustomAction):
         if layers == 1:
             fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
             fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
-            context.run_task("BackText")
+            context.run_task("Fight_ReturnMainWindow")
         elif layers == 27:
             fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
             fightUtils.title_learn("战斗", 2, "战士", 3, context)
@@ -82,17 +82,18 @@ class JJC101(CustomAction):
             fightUtils.title_learn("战斗", 4, "炎龙武士", 3, context)
             fightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
 
-            context.run_task("BackText")
+            context.run_task("Fight_ReturnMainWindow")
             fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
             fightUtils.title_learn("魔法", 2, "白袍法师", 1, context)
             fightUtils.title_learn("魔法", 3, "祭司", 1, context)
             fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
             fightUtils.title_learn("魔法", 5, "传奇法师", 1, context)
 
-            context.run_task("BackText")
+            context.run_task("Fight_ReturnMainWindow")
             fightUtils.title_learn_branch("战斗", 5, "生命强化", 3, context)
             fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
 
+            context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
         elif layers == 64:
             fightUtils.title_learn("冒险", 2, "探险家", 1, context)
@@ -100,13 +101,15 @@ class JJC101(CustomAction):
             fightUtils.title_learn("冒险", 4, "魔盗", 1, context)
             fightUtils.title_learn("冒险", 5, "异界游侠", 1, context)
 
-            context.run_task("BackText")
+            context.run_task("Fight_ReturnMainWindow")
             fightUtils.title_learn_branch("冒险", 5, "生命强化", 3, context)
             fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
             fightUtils.title_learn_branch("冒险", 5, "魔力强化", 3, context)
 
             fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
+
+            context.run_task("Fight_ReturnMainWindow")
 
     # 处理角斗场事件
     def handle_abattoir_event(self, context: Context, layers: int):
@@ -115,6 +118,7 @@ class JJC101(CustomAction):
             "JJC_Find_Abattoir",
             image,
         ):
+            logger.info(f"current layers {layers} 开始进入角斗场战斗！！！")
             context.run_task("JJC_Find_Abattoir")
             if layers < 26:
                 fightUtils.cast_magic("光", "祝福术", context)
@@ -251,8 +255,6 @@ class JJC101(CustomAction):
                 elif layers == 29:
                     logger.error("29层未触发毁灭, 自动叫狗失败, 太黑了吧, 用户来接管吧")
                     return CustomAction.RunResult(success=False)
-                else:
-                    logger.error(f"召唤狗子失败,可能是没触发毁灭,请到下一层叫狗")
 
             # Boos层开始探索
             if layers >= 30 and layers % 10 == 0:
@@ -283,7 +285,7 @@ class JJC101(CustomAction):
                 "JJC_Inter_Confirm",
                 image,
             ):
-                logger.info("检测到卡返回, 本层重新探索")
+                logger.info("检测到卡剧情, 本层重新探索")
                 context.run_task("JJC_Inter_Confirm")
                 continue
 
@@ -291,7 +293,7 @@ class JJC101(CustomAction):
             image = context.tasker.controller.post_screencap().wait().get()
             if context.run_recognition("BackText", image):
                 logger.info("检测到卡返回, 本层重新探索")
-                context.run_task("BackText")
+                context.run_task("Fight_ReturnMainWindow")
                 continue
 
             # 胜利者石柱

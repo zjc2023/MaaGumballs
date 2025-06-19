@@ -564,6 +564,7 @@ def Auto_CallDog(context: Context):
         image = context.tasker.controller.post_screencap().wait().get()
         if not context.run_recognition("Fight_CheckStatus", image):
             # sl恢复现场, 叫狗失败
+            logger.error(f"召唤狗子失败,可能是没触发毁灭,请到下一层叫狗.现在先保存状态")
             context.run_task("LogoutGame")
             context.run_task("ReturnMaze")
             return False

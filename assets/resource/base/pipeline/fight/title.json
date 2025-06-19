@@ -80,7 +80,7 @@
         "template": [
             "fight/UniversalUI/GreyStar.png",
             "fight/UniversalUI/Title_Learnable.png",
-            "fight\\UniversalUI\\GreyMoon.png"
+            "fight/UniversalUI/GreyMoon.png"
         ],
         "roi": [
             199,

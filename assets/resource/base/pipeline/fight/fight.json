@@ -142,12 +142,12 @@
     },
     "Fight_MainWindow": {
         "recognition": "TemplateMatch",
-        "template": "fight\\UniversalUI\\ChatButton.png",
+        "template": "fight/UniversalUI/skill_pack.png",
         "roi": [
-            21,
-            913,
-            164,
-            268
+            503,
+            1100,
+            204,
+            172
         ]
     },
     "Fight_EquipmentStore": {
@@ -414,7 +414,7 @@
     },
     "Fight_CheckStatus": {
         "recognition": "TemplateMatch",
-        "template": "fight\\UniversalUI\\毁灭之刃状态.png",
+        "template": "fight/UniversalUI/毁灭之刃状态.png",
         "doc": "默认检测毁灭之刃",
         "roi": [
             1,
@@ -518,8 +518,8 @@
     "Fight_FindDragon": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight\\UniversalUI\\DragonWish3.png",
-            "fight\\UniversalUI\\DragonWish2.png"
+            "fight/UniversalUI/DragonWish3.png",
+            "fight/UniversalUI/DragonWish2.png"
         ],
         "roi": [
             158,
