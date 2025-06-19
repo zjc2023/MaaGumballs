@@ -39,18 +39,18 @@
 
 ## 使用说明
 
-- [新手上路](../docs/zh_cn/manual/新手上路.md)(**使用前必看**)
-- [功能介绍](../docs/zh_cn/manual/功能介绍.md)
-- [MaaPiCli使用说明](../docs/zh_cn/manual/MaaPiCli.md)
-- [连接设置](../docs/zh_cn/manual/连接设置.md)
-- [常见问题](../docs/zh_cn/manual/常见问题.md)
-- [Mirror酱使用说明](../docs/zh_cn/manual/Mirror酱.md)
+- [新手上路](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/新手上路.md)(**使用前必看**)
+- [功能介绍](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/功能介绍.md)
+- [MaaPiCli使用说明](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/MaaPiCli.md)
+- [连接设置](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/连接设置.md)
+- [常见问题](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/常见问题.md)
+- [Mirror酱使用说明](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/Mirror酱.md)
 
 ## 开发者文档
 
-- [📄 快速开始](../docs/zh_cn/develop/1.1-快速开始.md)
-- [📄 集成开发环境文档](../docs/zh_cn/develop/2.1-集成文档.md)
-- [📄 流水线协议](../docs/zh_cn/develop/3.1-任务流水线协议.md)
+- [📄 快速开始](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/1.1-快速开始.md)
+- [📄 集成开发环境文档](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/2.1-集成文档.md)
+- [📄 流水线协议](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/3.1-任务流水线协议.md)
 - [🎞️ 视频教程](https://www.bilibili.com/video/BV1yr421E7MW)
 - [⭐项目模板](https://github.com/MaaXYZ/MaaPracticeBoilerplate), 建议新的开发者参考项目模版的readme文档
 
