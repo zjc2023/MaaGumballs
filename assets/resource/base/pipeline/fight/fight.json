@@ -6,10 +6,10 @@
             "fight/openedDoor1.png"
         ],
         "roi": [
-            21,
-            217,
-            682,
-            762
+            5,
+            122,
+            707,
+            947
         ],
         "action": "Click",
         "threshold": 0.7,
@@ -30,10 +30,10 @@
             "fight/closedDoor_time_stop.png"
         ],
         "roi": [
-            21,
-            217,
-            682,
-            762
+            5,
+            122,
+            707,
+            947
         ],
         "action": "DoNothing",
         "threshold": 0.7,
@@ -45,7 +45,7 @@
         "expected": [
             "加载中"
         ],
-        "post_delay": 500,
+        "post_delay": 750,
         "timeout": 1000
     },
     "Fight_DownStaris": {
@@ -136,10 +136,10 @@
         "recognition": "TemplateMatch",
         "template": "fight/JJC/宝物商店.png",
         "roi": [
-            4,
-            182,
-            705,
-            839
+            5,
+            122,
+            707,
+            947
         ],
         "action": "Click",
         "post_delay": 1000,
@@ -470,14 +470,33 @@
     },
     "Fight_FindDragon": {
         "recognition": "TemplateMatch",
-        "template": "items/神龙的愿望.png",
-        "roi": [
-            21,
-            217,
-            682,
-            762
+        "template": [
+            "fight\\UniversalUI\\DragonWish.png",
+            "fight\\UniversalUI\\DragonWish_1.png"
         ],
-        "action": "DoNothing",
+        "roi": [
+            5,
+            122,
+            707,
+            947
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "threshold": 0.8,
+        "timeout": 2000
+    },
+    "Fight_FindDragon1": {
+        "recognition": "OCR",
+        "expected": [
+            "神龙冈布奥"
+        ],
+        "roi": [
+            5,
+            122,
+            707,
+            947
+        ],
+        "action": "Click",
         "post_delay": 1000,
         "threshold": 0.8,
         "timeout": 2000

@@ -204,9 +204,13 @@ class JJC101(CustomAction):
         # 进入地图初始化
         if context.run_task("Bag_Open"):
             if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
-                fightUtils.findEquipment(7, "斯巴达的头盔", True, context)
-                context.run_task("BackText")
-            isHaveSpartanHat = True
+                if fightUtils.findEquipment(7, "斯巴达的头盔", True, context):
+                    isHaveSpartanHat = True
+
+            if not fightUtils.findItem("东方剪纸", False, context):
+                logger.info("未找到东方剪纸, 已经叫过狗了")
+                isHaveDog = True
+            context.run_task("BackText")
 
         # 检查当前层数是否小于29层
         while layers < 101:
@@ -294,15 +298,23 @@ class JJC101(CustomAction):
                 context.run_task("JJC_StoneChest")
 
             # 寻找斯巴达头盔
-            if not isHaveSpartanHat:
+            if isHaveSpartanHat != True:
                 img = context.tasker.controller.post_screencap().wait().get()
                 if context.run_recognition("JJC_Find_Body", img):
                     context.run_task("JJC_Find_Body")
                     isHaveSpartanHat = True
-                logger.info("已有斯巴达头盔，或找到斯巴达头盔了！！")
+                    logger.info("已有斯巴达头盔，或找到斯巴达头盔了！！")
 
             # 该层探索结束
-            context.run_task("Fight_OpenedDoor")
+            recoDetail = context.run_task("Fight_OpenedDoor")
+            if recoDetail.nodes:
+                pass
+            else:
+                img = context.tasker.controller.post_screencap().wait().get()
+                if context.run_recognition("FindKeyHole", img):
+                    logger.warning("检查到钥匙孔，请自行检查")
+                    time.sleep(60)
+                    return CustomAction.RunResult(success=False)
 
         logger.info(f"竞技场探索结束，当前到达{layers}层")
         context.run_task("Fight_LeaveMaze")
