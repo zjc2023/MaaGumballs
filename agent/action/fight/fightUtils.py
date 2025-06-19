@@ -31,11 +31,11 @@ EquipmentType: dict = {
 }
 
 
-# 从字符串中识别并返回第一个数字
+# 从字符串中识别并返回有“层”这个文字的前缀数字
 def extract_numbers(input_string):
-    numbers = re.findall(r"\d+", input_string)
-    if numbers:
-        return int(numbers[0])
+    match = re.search(r"(\d+)层", input_string)
+    if match:
+        return int(match.group(1))
     else:
         return None
 

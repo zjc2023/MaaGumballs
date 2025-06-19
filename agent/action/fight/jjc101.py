@@ -141,6 +141,7 @@ class JJC101(CustomAction):
             for _ in range(5):
                 context.tasker.controller.post_click(boss_x, boss_y).wait()
                 time.sleep(0.1)
+
         elif layers <= 80:
             fightUtils.cast_magic("水", "冰锥术", context)
             for _ in range(5):
