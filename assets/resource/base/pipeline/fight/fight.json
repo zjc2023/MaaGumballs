@@ -132,9 +132,41 @@
         "timeout": 2000,
         "post_delay": 200
     },
+    "Fight_ReturnMainWindow": {
+        "next": [
+            "Fight_MainWindow"
+        ],
+        "interrupt": [
+            "BackText"
+        ]
+    },
+    "Fight_MainWindow": {
+        "recognition": "TemplateMatch",
+        "template": "fight\\UniversalUI\\ChatButton.png",
+        "roi": [
+            21,
+            913,
+            164,
+            268
+        ]
+    },
     "Fight_EquipmentStore": {
         "recognition": "TemplateMatch",
-        "template": "fight/JJC/宝物商店.png",
+        "template": "fight/UniversalUI/宝物商店.png",
+        "roi": [
+            5,
+            122,
+            707,
+            947
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": []
+    },
+    "Fight_SkillStore": {
+        "recognition": "TemplateMatch",
+        "template": "fight/UniversalUI/技能商店.png",
         "roi": [
             5,
             122,

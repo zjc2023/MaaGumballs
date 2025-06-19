@@ -37,7 +37,7 @@ def extract_numbers(input_string):
     if match:
         return int(match.group(1))
     else:
-        return None
+        return 0
 
 
 # 初始化地板的 ROI 列表
