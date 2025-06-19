@@ -426,30 +426,33 @@
         "post_delay": 200,
         "timeout": 2000
     },
+    "Fight_OpenStatusPanel": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            350,
+            1200,
+            30,
+            30
+        ]
+    },
+    "Fight_CheckHealth": {
+        "recognition": "OCR",
+        "expected": "(\\d+)/(\\d+)$",
+        "roi": [
+            343,
+            620,
+            303,
+            54
+        ],
+        "action": "DoNothing",
+        "post_delay": 200,
+        "timeout": 2000
+    },
     "Fight_CallDog_Func": {
         "action": "Custom",
         "custom_action": "Fight_CallDog",
         "post_delay": 1000
-    },
-    "test_reco_color": {
-        "recognition": "ColorMatch",
-        "method": 4,
-        "roi": [
-            152,
-            602,
-            61,
-            47
-        ],
-        "lower": [
-            190,
-            35,
-            35
-        ],
-        "upper": [
-            230,
-            65,
-            65
-        ]
     },
     "Fight_Perfect": {
         "recognition": "OCR",
@@ -529,22 +532,6 @@
         ],
         "action": "DoNothing",
         "post_delay": 500,
-        "threshold": 0.8,
-        "timeout": 2000
-    },
-    "Fight_FindDragon1": {
-        "recognition": "OCR",
-        "expected": [
-            "神龙冈布奥"
-        ],
-        "roi": [
-            5,
-            122,
-            707,
-            947
-        ],
-        "action": "Click",
-        "post_delay": 1000,
         "threshold": 0.8,
         "timeout": 2000
     },

@@ -122,11 +122,11 @@ class JJC101(CustomAction):
         ):
             logger.info(f"current layers {layers} 开始进入角斗场战斗！！！")
             context.run_task("JJC_Find_Abattoir")
-            if layers < 26:
+            if layers <= 25:
                 fightUtils.cast_magic("光", "祝福术", context)
                 for _ in range(3):
                     fightUtils.cast_magic_special("天眼", context)
-            elif layers <= 65:
+            elif layers <= 55:
                 for _ in range(5):
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
                     time.sleep(0.3)
@@ -192,6 +192,9 @@ class JJC101(CustomAction):
 
         if layers >= 69 and layers <= 90 and layers % 10 == 9:
             context.run_task("JJC_OpenForceOfNature")
+
+        # 检测血量，是否需要补充
+        # if
 
         # *5层的角斗场事件
         self.handle_abattoir_event(context, layers)
@@ -540,7 +543,7 @@ class Fight_TestAction(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
-
+        fightUtils.checkGumballsStatus(context)
         return CustomAction.RunResult(success=True)
 
 

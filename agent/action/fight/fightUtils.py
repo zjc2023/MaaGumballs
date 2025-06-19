@@ -375,6 +375,15 @@ def findItem(
     return True
 
 
+def checkGumballsStatus(context: Context):
+    context.run_task("Fight_OpenStatusPanel")
+    image = context.tasker.controller.post_screencap().wait().get()
+    context.run_recognition(
+        "Fight_CheckHealth",
+        image,
+    )
+
+
 def dragonwish(targetWish: str, context: Context):
     wishlist = []
     min_index = 999
