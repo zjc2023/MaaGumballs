@@ -1,7 +1,8 @@
 {
     "JJC": {
         "next": [
-            "JJC_Start"
+            "JJC_Start",
+            "JJC_Fighting"
         ],
         "interrupt": [
             "MapSwipeDownToUp"
