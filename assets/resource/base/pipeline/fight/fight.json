@@ -436,18 +436,22 @@
             30
         ]
     },
-    "Fight_CheckHealth": {
+    "Fight_CheckStatusText": {
         "recognition": "OCR",
-        "expected": "(\\d+)/(\\d+)$",
+        "expected": "生命值",
         "roi": [
-            343,
-            620,
-            303,
-            54
+            60,
+            550,
+            614,
+            230
         ],
-        "action": "DoNothing",
+        "order_by": "Vertical",
         "post_delay": 200,
         "timeout": 2000
+    },
+    "Fight_TestAction": {
+        "action": "Custom",
+        "custom_action": "Fight_TestAction"
     },
     "Fight_CallDog_Func": {
         "action": "Custom",

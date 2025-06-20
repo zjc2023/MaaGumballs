@@ -375,13 +375,65 @@ def findItem(
     return True
 
 
-def checkGumballsStatus(context: Context):
+def checkGumballsStatusV2(context: Context):
+    """检查当前战斗中的Gumball角色状态信息
+
+    Args:
+        context (Context): 任务上下文对象，提供控制器和任务执行能力
+
+    Returns:
+        dict: 包含角色状态的字典，格式为{属性名: 属性值}
+
+    Example:
+        {
+            "攻击": "58",
+            "生命值": "915/915",
+            "魔法值": "225/225"
+        }
+    """
+
+    # 打开状态面包
     context.run_task("Fight_OpenStatusPanel")
+
+    # 检查状态
     image = context.tasker.controller.post_screencap().wait().get()
-    context.run_recognition(
-        "Fight_CheckHealth",
-        image,
-    )
+    reco_detail = context.run_recognition("Fight_CheckStatusText", image)
+
+    status_dict = {}
+    nodes = reco_detail.all_results
+
+    for i in range(0, len(nodes) - 1, 2):
+        key = nodes[i].text.strip()
+        value = nodes[i + 1].text.strip()
+
+        if key in ["生命值", "魔法值"]:
+            # 修改2：增加异常处理
+            try:
+                current, max = value.split("/", 1)
+                current = float(current.strip())
+                max_val = float(max.strip())
+
+                if max_val > 0:
+                    percentage = round((current / max_val) * 100, 2)
+                    status_dict[f"{key}百分比"] = percentage  # 改为直接存储数值
+
+                status_dict[f"当前{key}"] = int(current)
+                status_dict[f"最大{key}"] = int(max_val)
+            except ValueError:
+                logger.error(f"无效的{key}格式: {value}")
+                continue
+
+        elif key in ["攻击", "魔力"]:
+            status_dict[f"{key}"] = int(value)
+
+        else:
+            status_dict[key] = value
+
+    # 输出状态字典
+    logger.info(status_dict)
+
+    context.run_task("Fight_ReturnMainWindow")
+    return status_dict
 
 
 def dragonwish(targetWish: str, context: Context):
