@@ -345,10 +345,6 @@ class JJC101(CustomAction):
                 context.run_task("Fight_ReturnMainWindow")
                 continue
 
-            # 胜利者石柱
-            if self.layers <= 30:
-                context.run_task("JJC_StoneChest")
-
             # 寻找斯巴达头盔
             if self.isHaveSpartanHat != True:
                 img = context.tasker.controller.post_screencap().wait().get()
