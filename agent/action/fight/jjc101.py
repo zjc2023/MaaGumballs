@@ -428,6 +428,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
         # 初始化
+        isCheckDragon = False
         FailCheckMonsterCnt = 0
         FailCheckGridCnt = 0
         checkGridCnt = 0
@@ -436,6 +437,14 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
         visited = [[0] * cols for _ in range(rows)]
         visited[DoorX][DoorY] = 999
 
+        if context.run_recognition(
+            "Fight_CheckDragonBall",
+            context.tasker.controller.post_screencap().wait().get(),
+        ):
+            isCheckDragon = True
+        else:
+            isCheckDragon = False
+
         # 开始清理当前层
         cnt = 15
         while cnt > 0:
@@ -443,9 +452,11 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
                 logger.info("JJC_Fight_ClearCurrentLayer 被停止")
                 return CustomAction.RunResult(success=False)
 
-            # 检测神龙
+            # 截图
             img = context.tasker.controller.post_screencap().wait().get()
-            if context.run_recognition("Fight_FindDragon", img):
+
+            # 检测神龙
+            if isCheckDragon and context.run_recognition("Fight_FindDragon", img):
                 logger.info("是神龙,俺,俺们有救了！！！")
                 fightUtils.dragonwish("工资", context)
                 logger.info("神龙带肥家lo~")
@@ -483,8 +494,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
                             }
                         },
                     )
-                    right_context = context.clone()
-                    right_reco_detail = right_context.run_recognition(
+                    right_reco_detail = context.run_recognition(
                         "GridCheckTemplate",
                         right_bottom_roi,
                         pipeline_override={
@@ -505,6 +515,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
                         visited[r][c] += 1
                         checkGridCnt += 1
                         time.sleep(0.05)
+
             # 检测怪物并进行攻击
             if not self.CheckMonsterCnt(context):
                 FailCheckMonsterCnt += 1
