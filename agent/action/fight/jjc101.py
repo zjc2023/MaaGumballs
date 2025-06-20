@@ -78,7 +78,7 @@ class JJC101(CustomAction):
             else:
                 logger.info("背包打开失败")
                 return False
-        elif self.layers == 94:
+        elif self.layers == 94 or self.layers == 95:
             if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
                 fightUtils.findEquipment(7, "斯巴达的头盔", True, context)
 
@@ -109,6 +109,7 @@ class JJC101(CustomAction):
             fightUtils.title_learn("魔法", 5, "传奇法师", 1, context)
 
             context.run_task("Fight_ReturnMainWindow")
+            fightUtils.title_learn_branch("魔法", 5, "生命强化", 1, context)
             fightUtils.title_learn_branch("战斗", 5, "生命强化", 3, context)
             fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
 
@@ -578,7 +579,11 @@ class Fight_TestAction(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
-        fightUtils.checkGumballsStatusV2(context)
+        # fightUtils.checkGumballsStatusV2(context)
+        context.run_task("Bag_Open")
+        if not fightUtils.findItem("东方剪纸", False, context):
+            logger.info("未找到东方剪纸, 已经叫过狗了")
+            self.isHaveDog = True
         return CustomAction.RunResult(success=True)
 
 
