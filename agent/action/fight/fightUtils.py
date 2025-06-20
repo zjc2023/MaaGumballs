@@ -241,6 +241,10 @@ def title_learn_branch(
                 "TitlePanel_CurrentPanel": {"expected": titleType},
             },
         )
+        time.sleep(1)
+        image = context.tasker.controller.post_screencap().wait().get()
+        if context.run_recognition("ConfirmButton", image):
+            context.run_task("ConfirmButton")
         context.run_task("BackText")
         context.run_task("BackText")
 
@@ -369,7 +373,8 @@ def findItem(
                 context.tasker.controller.post_click(center_x, center_y).wait()
                 time.sleep(1)
 
-                if context.run_recognition("Bag_LoadItem"):
+                image = context.tasker.controller.post_screencap().wait().get()
+                if context.run_recognition("Bag_LoadItem", image):
                     context.run_task("Bag_LoadItem")
                 # 使用所有
                 else:
