@@ -402,20 +402,16 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
                 if left_reco_detail:
                     visited[r][c] += 1
                     # logger.info(f"检测({r + 1},{c + 1})有怪物: {x}, {y}, {w}, {h}")
-                    context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                    time.sleep(0.1)
-                    context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                    time.sleep(0.1)
-                    context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
-                    time.sleep(0.1)
+                    for _ in range(3):
+                        context.tasker.controller.post_click(
+                            x + w // 2, y + h // 2
+                        ).wait()
+                        time.sleep(0.1)
         return True
 
     def CheckClosedDoor(self, context: Context):
-        # matrix init
         image = context.tasker.controller.post_screencap().wait().get()
-        recoDetail = context.run_recognition("Fight_ClosedDoor", image)
-        if recoDetail:
-            logger.info("识别到 Fight_ClosedDoor")
+        if recoDetail := context.run_recognition("Fight_ClosedDoor", image):
             for r in range(rows):
                 for c in range(cols):
                     if fightUtils.is_roi_in_or_mostly_in(
