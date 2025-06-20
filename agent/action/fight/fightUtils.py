@@ -74,12 +74,13 @@ def is_roi_in_or_mostly_in(roi1, roi2):
     return False
 
 
-def cast_magic(Type: str, MagicName: str, context: Context):
+def cast_magic(Type: str, MagicName: str, context: Context, Target_pos: tuple = None):
     """施放指定类型的魔法
 
     Args:
         Type: 魔法的类型，如 '火', '土', '气' 等
         MagicName: 具体的魔法名称，如 '祝福术', '石肤术' 等
+        Target_pos: 目标位置，如 (x, y)
         context: 游戏上下文对象，包含当前状态信息
 
     Returns:
@@ -110,11 +111,15 @@ def cast_magic(Type: str, MagicName: str, context: Context):
         image,
         pipeline_override={"Fight_Magic_Cast": {"expected": MagicName}},
     ):
-        context.run_task(
-            "Fight_Magic_Cast",
-            pipeline_override={"Fight_Magic_Cast": {"expected": MagicName}},
-        )
-        logger.info(f"施放魔法:{MagicName}")
+        if not Target_pos:
+            context.run_task(
+                "Fight_Magic_Cast",
+                pipeline_override={"Fight_Magic_Cast": {"expected": MagicName}},
+            )
+            logger.info(f"施放魔法:{MagicName}")
+        else:
+            context.tasker.controller.post_click(Target_pos[0], Target_pos[1]).wait()
+            logger.info(f"施放魔法:{MagicName}在{Target_pos[0], Target_pos[1]}")
     else:
         logger.info(f"没有找到对应的魔法:{MagicName}")
         context.run_task("BackText")
@@ -490,7 +495,7 @@ def dragonwish(targetWish: str, context: Context):
             "我想学习龙语魔法",
             "我要最凶残的装备",
             "我要你的收藏品",
-            "我要您的碎片",
+            "我需要您的碎片",
             "我要大量的矿石",
             "我要更多的伙伴",
             "我要变得更强",
@@ -506,7 +511,7 @@ def dragonwish(targetWish: str, context: Context):
             "我要最凶残的装备",
             "我要你的收藏品",
             "我要变得富有",
-            "我要您的碎片",
+            "我需要您的碎片",
             "我要更多的伙伴",
             "我要大量的矿石",
         ]
@@ -515,7 +520,7 @@ def dragonwish(targetWish: str, context: Context):
             "我要变得更强",
             "我要变得富有",
             "我要最凶残的装备",
-            "我要您的碎片",
+            "我需要您的碎片",
             "我要更多的伙伴",
             "我要神奇的果实",
             "我要你的收藏品",
@@ -580,25 +585,48 @@ def dragonwish(targetWish: str, context: Context):
                 "我想学习龙语魔法",
                 "我想获得巨龙之力",
                 "我要最凶残的装备",
-                "我要您的碎片",
+                "我需要您的碎片",
             ]:
                 pass
 
             elif min_index_wish in ["我要更多的伙伴", "我要变得富有"]:
                 # 等待地图加载
                 time.sleep(10)
+                # 关闭自动拾取
+
+                context.run_task(
+                    "Fight_LongPress",
+                    pipeline_override={
+                        "Fight_LongPress": {
+                            "target": [170, 897, 89, 54],
+                            "duration": 5000,
+                        }
+                    },
+                )
                 for _ in range(3):
-                    cast_magic("暗", "死亡波纹", context)
+                    cast_magic_detail = cast_magic("暗", "死亡波纹", context)
+                    if not cast_magic_detail:
+                        logger.info("没有死波，尝试使用地刺")
+                        cast_magic_detail = cast_magic(
+                            "土", "地刺术", context, (350, 400)
+                        )
+                # cast_magic_special("天眼", context)
+                logger.info("没有死波没有地刺,试试天眼吧！")
+
                 # 拾取全部
                 context.run_task(
                     "Fight_LongPress",
                     pipeline_override={
                         "Fight_LongPress": {
-                            "target": [286, 465, 140, 129],
+                            "target": [170, 897, 89, 54],
+                            "duration": 5000,
                         }
                     },
                 )
-                context.run_task("Fight_FindMidlevelExit")
+                task_detail = context.run_task("Fight_OpenedDoor")
+                # 如果没有看到常规的出口，那么出口一定在右下角
+                if not task_detail.nodes:
+                    context.tasker.controller.post_click(646, 939).wait()
 
             elif min_index_wish in ["我要获得钻石"]:
                 # 等待地图加载
@@ -610,7 +638,10 @@ def dragonwish(targetWish: str, context: Context):
                     context.tasker.controller.post_click(214, 681).wait()
                     context.tasker.controller.post_click(493, 684).wait()
 
-                context.run_task("Fight_FindMidlevelExit")
+                task_detail = context.run_task("Fight_OpenedDoor")
+                if not task_detail.nodes:
+                    context.tasker.controller.post_click(646, 939)
+
             elif min_index_wish in ["我要大量的矿石"]:
                 # 等待地图加载
                 time.sleep(10)
@@ -630,7 +661,10 @@ def dragonwish(targetWish: str, context: Context):
                             }
                         },
                     )
-                context.run_task("Fight_FindMidlevelExit")
+                task_detail = context.run_task("Fight_OpenedDoor")
+                if not task_detail.nodes:
+                    context.tasker.controller.post_click(646, 939)
+
             elif min_index_wish in ["我要变得更强", "我要神奇的果实"]:
                 # TODO: 调用boss层
 
