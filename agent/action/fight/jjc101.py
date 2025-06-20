@@ -523,7 +523,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
 
             # 如果提前清理完该层，那么不需要继续等待，可以提前退出
             if FailCheckMonsterCnt >= 5 or FailCheckGridCnt >= 3:
-                logger.info("找不到怪物或格子, 提前退出")
+                logger.info("找不到怪物或格子, 检测下一层的门")
                 break
 
         return CustomAction.RunResult(success=True)
