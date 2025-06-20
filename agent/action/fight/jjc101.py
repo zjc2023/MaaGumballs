@@ -141,7 +141,7 @@ class JJC101(CustomAction):
             fightUtils.title_learn("魔法", 3, "祭司", 3, context)
             fightUtils.title_learn("魔法", 4, "气系大师", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "生命强化", 3, context)
-            fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
+            fightUtils.title_learn_branch("战斗", 5, "魔力强化", 3, context)
 
             context.run_task("Fight_ReturnMainWindow")
         return True
@@ -233,10 +233,9 @@ class JJC101(CustomAction):
                 context.tasker.controller.post_click(boss_x, boss_y).wait()
             time.sleep(3)
 
-        elif self.layers == 100:
+        elif self.layers <= 100:
             fightUtils.cast_magic("气", "时间停止", context)
             fightUtils.cast_magic("气", "静电场", context)
-            fightUtils.cast_magic("气", "瓦解射线", context)
             fightUtils.cast_magic("火", "毁灭之刃", context)
             fightUtils.cast_magic("暗", "变形术", context)
             for _ in range(6):
@@ -406,7 +405,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
 
                 if left_reco_detail:
                     visited[r][c] += 1
-                    logger.info(f"检测({r + 1},{c + 1})有怪物: {x}, {y}, {w}, {h}")
+                    # logger.info(f"检测({r + 1},{c + 1})有怪物: {x}, {y}, {w}, {h}")
                     context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
                     time.sleep(0.1)
                     context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
