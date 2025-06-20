@@ -445,7 +445,6 @@
             614,
             230
         ],
-        "order_by": "Vertical",
         "post_delay": 200,
         "timeout": 2000
     },
