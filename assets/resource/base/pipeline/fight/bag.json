@@ -4,7 +4,7 @@
             "Bag_OpenClick"
         ],
         "interrupt": [
-            "BackText"
+            "Fight_ReturnMainWindow"
         ],
         "timeout": 2000
     },
