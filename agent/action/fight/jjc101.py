@@ -1,3 +1,4 @@
+from cv2.dnn import Layer
 from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
@@ -64,17 +65,11 @@ class JJC101(CustomAction):
             else:
                 logger.info("背包打开失败")
                 return False
-        elif self.layers >= 50 and self.layers % 10 == 1:  # 装备土系魔法书
+        elif self.layers >= 30 and self.layers % 10 == 1:  # 装备土系魔法书
             OpenDetail = context.run_task("Bag_Open")
             if OpenDetail.nodes:
                 if not fightUtils.checkEquipment("宝物", 6, "土系魔法书", context):
                     fightUtils.findEquipment(6, "土系魔法书", True, context)
-
-                if not fightUtils.checkEquipment("盔甲", 6, "执政官铠甲", context):
-                    fightUtils.findEquipment(6, "执政官铠甲", True, context)
-
-                if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
-                    fightUtils.findEquipment(7, "斯巴达的头盔", True, context)
 
                 if not fightUtils.checkEquipment("项链", 6, "星月教挂坠", context):
                     fightUtils.findEquipment(6, "星月教挂坠", True, context)
@@ -83,8 +78,9 @@ class JJC101(CustomAction):
             else:
                 logger.info("背包打开失败")
                 return False
-        else:
-            return True
+        elif self.layers == 94:
+            if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
+                fightUtils.findEquipment(7, "斯巴达的头盔", True, context)
 
         logger.info(f"current layers {self.layers},装备检查完成")
         return True

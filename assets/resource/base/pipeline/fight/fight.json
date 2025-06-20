@@ -512,6 +512,7 @@
             157
         ],
         "action": "DoNothing",
+        "threshold": 0.9,
         "post_delay": 200,
         "timeout": 2000
     },
