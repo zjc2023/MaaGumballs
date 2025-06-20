@@ -64,14 +64,11 @@ class JJC101(CustomAction):
             else:
                 logger.info("背包打开失败")
                 return False
-        elif self.layers >= 30 and self.layers % 10 == 1:  # 装备土系魔法书
+        elif self.layers >= 50 and self.layers % 10 == 1:  # 装备土系魔法书
             OpenDetail = context.run_task("Bag_Open")
             if OpenDetail.nodes:
                 if not fightUtils.checkEquipment("宝物", 6, "土系魔法书", context):
                     fightUtils.findEquipment(6, "土系魔法书", True, context)
-
-                if not fightUtils.checkEquipment("鞋子", 6, "次元靴", context):
-                    fightUtils.findEquipment(6, "次元靴", True, context)
 
                 if not fightUtils.checkEquipment("盔甲", 6, "执政官铠甲", context):
                     fightUtils.findEquipment(6, "执政官铠甲", True, context)
@@ -95,11 +92,11 @@ class JJC101(CustomAction):
     def Check_DefaultTitle(self, context: Context):
         """
         检查默认称号
-        1. 检查1、29和64层的称号
+        1. 检查1、29、64和89层的称号
         """
         if self.layers == 1:
-            fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
-            fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
+            fightUtils.title_learn("魔法", 1, "魔法学徒", 4, context)
+            fightUtils.title_learn("冒险", 1, "寻宝者", 4, context)
             context.run_task("Fight_ReturnMainWindow")
         elif self.layers == 27:
             fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
@@ -122,7 +119,7 @@ class JJC101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
         elif self.layers == 64:
-            fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
+            fightUtils.title_learn("冒险", 1, "寻宝者", 4, context)
             fightUtils.title_learn("冒险", 2, "探险家", 1, context)
             fightUtils.title_learn("冒险", 3, "暗行者", 1, context)
             fightUtils.title_learn("冒险", 4, "魔盗", 1, context)
@@ -136,7 +133,17 @@ class JJC101(CustomAction):
             fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
             context.run_task("Fight_ReturnMainWindow")
+        elif self.layers == 89:
+            fightUtils.title_learn("战斗", 1, "见习战士", 3, context)
+            fightUtils.title_learn("战斗", 3, "剑舞者", 3, context)
+            fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
+            fightUtils.title_learn("魔法", 2, "白袍法师", 3, context)
+            fightUtils.title_learn("魔法", 3, "祭司", 3, context)
+            fightUtils.title_learn("魔法", 4, "气系大师", 3, context)
+            fightUtils.title_learn_branch("魔法", 5, "生命强化", 3, context)
+            fightUtils.title_learn_branch("战斗", 5, "攻击强化", 3, context)
 
+            context.run_task("Fight_ReturnMainWindow")
         return True
 
     def Check_DefaultStatus(self, context: Context):
@@ -228,8 +235,11 @@ class JJC101(CustomAction):
 
         elif self.layers == 100:
             fightUtils.cast_magic("气", "时间停止", context)
+            fightUtils.cast_magic("气", "静电场", context)
             fightUtils.cast_magic("气", "瓦解射线", context)
-            for _ in range(7):
+            fightUtils.cast_magic("火", "毁灭之刃", context)
+            fightUtils.cast_magic("暗", "变形术", context)
+            for _ in range(6):
                 context.tasker.controller.post_click(boss_x, boss_y).wait()
                 time.sleep(0.1)
 

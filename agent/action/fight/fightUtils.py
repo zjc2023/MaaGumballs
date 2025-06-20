@@ -604,12 +604,10 @@ def dragonwish(targetWish: str, context: Context):
                     },
                 )
                 for _ in range(3):
-                    cast_magic_detail = cast_magic("暗", "死亡波纹", context)
-                    if not cast_magic_detail:
-                        logger.info("没有死波，尝试使用地刺")
-                        cast_magic_detail = cast_magic(
-                            "土", "地刺术", context, (350, 400)
-                        )
+                    if not cast_magic("暗", "死亡波纹", context):
+                        if not cast_magic("土", "地刺术", context, (350, 400)):
+                            cast_magic("火", "流星雨", context, (350, 400))
+
                 # cast_magic_special("天眼", context)
                 logger.info("没有死波没有地刺,试试天眼吧！")
 
