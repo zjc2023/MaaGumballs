@@ -539,6 +539,22 @@
         "threshold": 0.8,
         "timeout": 2000
     },
+    "Fight_FindDragon_Next": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/UniversalUI/DragonWish2.png"
+        ],
+        "roi": [
+            164,
+            116,
+            377,
+            342
+        ],
+        "action": "DoNothing",
+        "post_delay": 500,
+        "threshold": 0.8,
+        "timeout": 10000
+    },
     "Fight_FindText": {
         "recognition": "OCR",
         "expected": "(我想|我要).*",

@@ -489,7 +489,7 @@ def dragonwish(targetWish: str, context: Context):
 
     # # 等待5秒，确保界面加载完毕，可以考虑移除
     time.sleep(5)
-    Itemdetail = context.run_task("Fight_FindDragon")
+    Itemdetail = context.run_task("Fight_FindDragon_Next")
     if Itemdetail.nodes:
         # 集齐七个龙珠并进入到许愿界面
         textdetail = context.run_task("Fight_FindText")
