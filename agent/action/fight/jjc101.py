@@ -346,13 +346,20 @@ class JJC101(CustomAction):
                 context.run_task("Fight_ReturnMainWindow")
                 continue
 
+            # 胜利者石柱
+            if self.layers <= 26:
+                context.run_task("JJC_StoneChest")
+
             # 寻找斯巴达头盔
             if self.isHaveSpartanHat != True:
-                img = context.tasker.controller.post_screencap().wait().get()
-                if context.run_recognition("JJC_Find_Body", img):
-                    context.run_task("JJC_Find_Body")
-                    self.isHaveSpartanHat = True
-                    logger.info("已有斯巴达头盔，或找到斯巴达头盔了！！")
+                # 检测三次斯巴达的头盔，检查到了就提前结束检查
+                for _ in range(3):
+                    img = context.tasker.controller.post_screencap().wait().get()
+                    if context.run_recognition("JJC_Find_Body", img):
+                        context.run_task("JJC_Find_Body")
+                        self.isHaveSpartanHat = True
+                        logger.info("已有斯巴达头盔，或找到斯巴达头盔了！！")
+                        break
 
             # 该层探索结束
             recoDetail = context.run_task("Fight_OpenedDoor")
