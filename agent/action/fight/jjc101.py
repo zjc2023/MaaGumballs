@@ -392,14 +392,15 @@ class JJC101(CustomAction):
             if not recoDetail.nodes and context.run_recognition(
                 "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
             ):
-                logger.warning("检查到钥匙孔，请冒险者大人检查！！")
+                logger.warning("检查到神秘的洞穴捏，请冒险者大人检查！！")
                 while not context.run_recognition(
                     "Fight_OpenedDoor",
                     context.tasker.controller.post_screencap().wait().get(),
                 ):
                     time.sleep(3)
 
-                logger.info("冒险者大人已找到钥匙孔捏，继续探索")
+                logger.info("冒险者大人已找到钥匙捏，继续探索")
+                time.sleep(2)
                 context.run_task("Fight_OpenedDoor")
 
         logger.info(f"竞技场探索结束，当前到达{self.layers}层")
