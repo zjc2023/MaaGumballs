@@ -684,22 +684,22 @@ def dragonwish(targetWish: str, context: Context):
             elif min_index_wish in ["我要大量的矿石"]:
                 # 等待地图加载
                 time.sleep(10)
-                for _ in range(2):
-                    for _ in range(12):
-                        time.sleep(0.1)
-                        context.tasker.controller.post_click(365, 535).wait()
-                        context.tasker.controller.post_click(219, 813).wait()
-                        context.tasker.controller.post_click(505, 805).wait()
+                for _ in range(13):
+                    time.sleep(0.5)
+                    context.tasker.controller.post_click(365, 535).wait()
+                    context.tasker.controller.post_click(219, 813).wait()
+                    context.tasker.controller.post_click(505, 805).wait()
                     time.sleep(1)
                     # 拾取全部
-                    context.run_task(
-                        "Fight_LongPress",
-                        pipeline_override={
-                            "Fight_LongPress": {
-                                "target": [33, 595, 103, 108],
-                            }
-                        },
-                    )
+                    if targetWish != "工资":
+                        context.run_task(
+                            "Fight_LongPress",
+                            pipeline_override={
+                                "Fight_LongPress": {
+                                    "target": [33, 595, 103, 108],
+                                }
+                            },
+                        )
                 task_detail = context.run_task("Fight_OpenedDoor")
                 if not task_detail.nodes:
                     context.tasker.controller.post_click(646, 939)
