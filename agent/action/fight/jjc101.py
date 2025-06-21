@@ -188,16 +188,36 @@ class JJC101(CustomAction):
                 for _ in range(3):
                     fightUtils.cast_magic_special("天眼", context)
             elif self.layers <= 55:
-                for _ in range(5):
+                fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y))
+                for _ in range(3):
                     context.tasker.controller.post_click(boss_x, boss_y).wait()
                     time.sleep(0.3)
+                for _ in range(3):
+                    if fightUtils.cast_magic("光", "祝福术", context):
+                        pass
+                    elif fightUtils.cast_magic("水", "治疗术", context):
+                        pass
+                    elif fightUtils.cast_magic("土", "石肤术", context):
+                        pass
+            elif self.layers <= 75:
+                context.run_task("Bag_Open")
+                fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
+                context.run_task("Bag_Open")
+                fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
+                for _ in range(3):
+                    if fightUtils.cast_magic("光", "祝福术", context):
+                        pass
+                    elif fightUtils.cast_magic("水", "治疗术", context):
+                        pass
+                    elif fightUtils.cast_magic("土", "石肤术", context):
+                        pass
             else:
                 # 打开背包
                 time.sleep(3)
                 context.run_task("Bag_Open")
-                fightUtils.findItem("异域的灯芯", True, context, 360, 810)
+                fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
                 context.run_task("Bag_Open")
-                fightUtils.findItem("异域的灯芯", True, context, 360, 810)
+                fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
 
             time.sleep(1)
             context.run_task("Fight_Victory")
