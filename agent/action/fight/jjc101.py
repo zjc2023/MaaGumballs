@@ -98,7 +98,7 @@ class JJC101(CustomAction):
             fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
             fightUtils.title_learn("战斗", 2, "战士", 3, context)
             fightUtils.title_learn("战斗", 3, "剑舞者", 1, context)
-            fightUtils.title_learn("战斗", 4, "炎龙武士", 3, context)
+            fightUtils.title_learn("战斗", 4, "炎龙武士", 1, context)
             fightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
 
             context.run_task("Fight_ReturnMainWindow")
@@ -132,14 +132,10 @@ class JJC101(CustomAction):
             fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
             context.run_task("Fight_ReturnMainWindow")
         elif self.layers == 89:
-            fightUtils.title_learn("战斗", 1, "见习战士", 3, context)
-            fightUtils.title_learn("战斗", 3, "剑舞者", 3, context)
             fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
             fightUtils.title_learn("魔法", 2, "白袍法师", 3, context)
-            fightUtils.title_learn("魔法", 3, "祭司", 3, context)
             fightUtils.title_learn("魔法", 4, "气系大师", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "生命强化", 3, context)
-            fightUtils.title_learn_branch("战斗", 5, "魔力强化", 3, context)
 
             context.run_task("Fight_ReturnMainWindow")
         return True
