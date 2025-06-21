@@ -115,6 +115,7 @@ class JJC101(CustomAction):
 
             context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
+            context.run_task("Fight_ReturnMainWindow")
         elif self.layers == 64:
             fightUtils.title_learn("冒险", 1, "寻宝者", 4, context)
             fightUtils.title_learn("冒险", 2, "探险家", 1, context)

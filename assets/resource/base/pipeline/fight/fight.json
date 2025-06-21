@@ -138,7 +138,8 @@
             "Fight_MainWindow"
         ],
         "interrupt": [
-            "BackText"
+            "BackText",
+            "GameLoading"
         ]
     },
     "Fight_MainWindow": {
