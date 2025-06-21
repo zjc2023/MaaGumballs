@@ -436,7 +436,9 @@
             1200,
             30,
             30
-        ]
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
     },
     "Fight_CheckStatusText": {
         "recognition": "OCR",

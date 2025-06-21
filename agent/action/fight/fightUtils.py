@@ -494,17 +494,28 @@ def checkGumballsStatusV2(context: Context):
             "魔法值": "225/225"
         }
     """
+    status = {
+        "攻击": "50",
+        "魔力": "50",
+        "闪避": "10%",
+        "当前生命值": "100",
+        "最大生命值": "100",
+        "当前魔法值": "100",
+        "最大魔法值": "100",
+        "降低敌人攻击": "8",
+    }
 
     # 打开状态面包
+    context.run_task("Fight_ReturnMainWindow")
     context.run_task("Fight_OpenStatusPanel")
 
     # 检查状态
     image = context.tasker.controller.post_screencap().wait().get()
-    reco_detail = context.run_recognition("Fight_CheckStatusText", image)
-
-    # 给node进行排序优先从左到右，从上到下进行排序。
-    nodes = reco_detail.all_results
-    status = pair_by_distance(nodes, max_distance=200)
+    if reco_detail := context.run_recognition("Fight_CheckStatusText", image):
+        nodes = reco_detail.all_results
+        status = pair_by_distance(nodes, max_distance=200)
+    else:
+        logger.warning("状态识别失败，保持默认值")
 
     # 输出状态字典
     logger.info(status)
