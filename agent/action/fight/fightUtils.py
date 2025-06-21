@@ -559,8 +559,9 @@ def dragonwish(targetWish: str, context: Context):
         ]
     elif targetWish == "测试":
         wishlist = [
-            "我要变得更强",
             "我要变得富有",
+            "我要大量的矿石",
+            "我要变得更强",
             "我要最凶残的装备",
             "我需要您的碎片",
             "我要更多的伙伴",
@@ -568,7 +569,6 @@ def dragonwish(targetWish: str, context: Context):
             "我要你的收藏品",
             "我要获得钻石",
             "我想学习龙语魔法",
-            "我要大量的矿石",
             "我想获得巨龙之力",
         ]
     else:
@@ -634,34 +634,17 @@ def dragonwish(targetWish: str, context: Context):
             elif min_index_wish in ["我要更多的伙伴", "我要变得富有"]:
                 # 等待地图加载
                 time.sleep(10)
-                # # 关闭自动拾取
-                # if targetWish != "工资":
-                #     context.run_task(
-                #         "Fight_LongPress",
-                #         pipeline_override={
-                #             "Fight_LongPress": {"target": [170, 897, 89, 54]}
-                #         },
-                #     )
+
                 for _ in range(3):
                     if not cast_magic("暗", "死亡波纹", context):
                         if not cast_magic("土", "地刺术", context, (350, 400)):
                             cast_magic("火", "流星雨", context, (350, 400))
+                            logger.info("没有死波没有地刺,流星雨不会也没有吧！")
 
-                # cast_magic_special("天眼", context)
-                logger.info("没有死波没有地刺,试试天眼吧！")
-
-                # # 拾取全部
-                if targetWish != "工资":
-                    context.run_task(
-                        "Fight_LongPress",
-                        pipeline_override={
-                            "Fight_LongPress": {"target": [170, 897, 89, 54]}
-                        },
-                    )
-                task_detail = context.run_task("Fight_OpenedDoor")
-                # 如果没有看到常规的出口，那么出口一定在右下角
-                if not task_detail.nodes:
-                    context.tasker.controller.post_click(646, 939).wait()
+                # 除变强以外的夹层的出口一定在右下角
+                # 等待拾取结束
+                time.sleep(5)
+                context.tasker.controller.post_click(646, 939).wait()
 
             elif min_index_wish in ["我要获得钻石"]:
                 # 等待地图加载
@@ -673,9 +656,10 @@ def dragonwish(targetWish: str, context: Context):
                     context.tasker.controller.post_click(214, 681).wait()
                     context.tasker.controller.post_click(493, 684).wait()
 
-                task_detail = context.run_task("Fight_OpenedDoor")
-                if not task_detail.nodes:
-                    context.tasker.controller.post_click(646, 939)
+                # 除变强以外的夹层的出口一定在右下角
+                # 等待拾取结束
+                time.sleep(5)
+                context.tasker.controller.post_click(646, 939).wait()
 
             elif min_index_wish in ["我要大量的矿石"]:
                 # 等待地图加载
@@ -686,17 +670,11 @@ def dragonwish(targetWish: str, context: Context):
                     context.tasker.controller.post_click(219, 813).wait()
                     context.tasker.controller.post_click(505, 805).wait()
                     time.sleep(1)
-                    # 拾取全部
-                    if targetWish != "工资":
-                        context.run_task(
-                            "Fight_LongPress",
-                            pipeline_override={
-                                "Fight_LongPress": {"target": [33, 595, 103, 108]}
-                            },
-                        )
-                task_detail = context.run_task("Fight_OpenedDoor")
-                if not task_detail.nodes:
-                    context.tasker.controller.post_click(646, 939)
+
+                # 除变强以外的夹层的出口一定在右下角
+                # 等待拾取结束
+                time.sleep(5)
+                context.tasker.controller.post_click(646, 939).wait()
 
             elif min_index_wish in ["我要变得更强", "我要神奇的果实"]:
                 # TODO: 调用boss层
