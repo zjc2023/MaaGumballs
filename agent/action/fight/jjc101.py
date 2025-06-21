@@ -389,14 +389,18 @@ class JJC101(CustomAction):
 
             # 该层探索结束
             recoDetail = context.run_task("Fight_OpenedDoor")
-            if recoDetail.nodes:
-                pass
-            else:
-                img = context.tasker.controller.post_screencap().wait().get()
-                if context.run_recognition("FindKeyHole", img):
-                    logger.warning("检查到钥匙孔，请自行检查")
-                    time.sleep(60)
-                    return CustomAction.RunResult(success=False)
+            if not recoDetail.nodes and context.run_recognition(
+                "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
+            ):
+                logger.warning("检查到钥匙孔，请冒险者大人检查！！")
+                while not context.run_recognition(
+                    "Fight_OpenedDoor",
+                    context.tasker.controller.post_screencap().wait().get(),
+                ):
+                    time.sleep(3)
+
+                logger.info("冒险者大人已找到钥匙孔捏，继续探索")
+                context.run_task("Fight_OpenedDoor")
 
         logger.info(f"竞技场探索结束，当前到达{self.layers}层")
         context.run_task("Fight_LeaveMaze")
