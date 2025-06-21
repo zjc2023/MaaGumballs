@@ -416,7 +416,7 @@
     },
     "Fight_CheckStatus": {
         "recognition": "TemplateMatch",
-        "template": "fight/UniversalUI/毁灭之刃状态.png",
+        "template": "fight/buff/毁灭之刃.png",
         "doc": "默认检测毁灭之刃",
         "roi": [
             1,

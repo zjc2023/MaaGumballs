@@ -167,7 +167,10 @@ class JJC101(CustomAction):
                 logger.info("当前生命值大于70%，不使用治疗")
 
         # 保命
-        if self.layers == 89:
+        if (
+            self.layers == 89
+            and fightUtils.checkBuffStatus("神圣重生", context) != True
+        ):
             fightUtils.cast_magic("光", "神圣重生", context)
 
         return True

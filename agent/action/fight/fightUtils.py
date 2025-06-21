@@ -459,6 +459,25 @@ def pair_by_distance(detections, max_distance=200):
     return status
 
 
+def checkBuffStatus(buffName: str, context: Context):
+    BuffPath = f"fight/buff/{buffName}.png"
+    context.run_task("Fight_ReturnMainWindow")
+    image = context.tasker.controller.post_screencap().wait().get()
+    if context.run_recognition(
+        "Fight_CheckStatus",
+        image,
+        pipeline_override={
+            "Fight_CheckStatus": {
+                "template": BuffPath,
+            }
+        },
+    ):
+        logger.info(f"已发现: {buffName}")
+        return True
+    logger.info(f"未发现: {buffName}")
+    return False
+
+
 def checkGumballsStatusV2(context: Context):
     """检查当前战斗中的Gumball角色状态信息
 
@@ -708,8 +727,7 @@ def Auto_CallDog(context: Context):
             cast_magic("气", "静电场", context)
             cast_magic_special("天眼", context)
 
-        image = context.tasker.controller.post_screencap().wait().get()
-        if not context.run_recognition("Fight_CheckStatus", image):
+        if not checkBuffStatus("毁灭之刃", context):
             # sl恢复现场, 叫狗失败
             logger.error(f"召唤狗子失败,可能是没触发毁灭,请到下一层叫狗.现在先保存状态")
             context.run_task("LogoutGame")
