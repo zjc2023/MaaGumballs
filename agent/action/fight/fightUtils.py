@@ -635,15 +635,13 @@ def dragonwish(targetWish: str, context: Context):
                 # 等待地图加载
                 time.sleep(10)
                 # # 关闭自动拾取
-                # context.run_task(
-                #     "Fight_LongPress",
-                #     pipeline_override={
-                #         "Fight_LongPress": {
-                #             "target": [170, 897, 89, 54],
-                #             "duration": 5000,
-                #         }
-                #     },
-                # )
+                # if targetWish != "工资":
+                #     context.run_task(
+                #         "Fight_LongPress",
+                #         pipeline_override={
+                #             "Fight_LongPress": {"target": [170, 897, 89, 54]}
+                #         },
+                #     )
                 for _ in range(3):
                     if not cast_magic("暗", "死亡波纹", context):
                         if not cast_magic("土", "地刺术", context, (350, 400)):
@@ -653,15 +651,13 @@ def dragonwish(targetWish: str, context: Context):
                 logger.info("没有死波没有地刺,试试天眼吧！")
 
                 # # 拾取全部
-                # context.run_task(
-                #     "Fight_LongPress",
-                #     pipeline_override={
-                #         "Fight_LongPress": {
-                #             "target": [170, 897, 89, 54],
-                #             "duration": 5000,
-                #         }
-                #     },
-                # )
+                if targetWish != "工资":
+                    context.run_task(
+                        "Fight_LongPress",
+                        pipeline_override={
+                            "Fight_LongPress": {"target": [170, 897, 89, 54]}
+                        },
+                    )
                 task_detail = context.run_task("Fight_OpenedDoor")
                 # 如果没有看到常规的出口，那么出口一定在右下角
                 if not task_detail.nodes:
@@ -695,9 +691,7 @@ def dragonwish(targetWish: str, context: Context):
                         context.run_task(
                             "Fight_LongPress",
                             pipeline_override={
-                                "Fight_LongPress": {
-                                    "target": [33, 595, 103, 108],
-                                }
+                                "Fight_LongPress": {"target": [33, 595, 103, 108]}
                             },
                         )
                 task_detail = context.run_task("Fight_OpenedDoor")
