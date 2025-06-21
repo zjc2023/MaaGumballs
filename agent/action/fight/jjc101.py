@@ -225,6 +225,28 @@ class JJC101(CustomAction):
             context.run_task("Fight_OpenedDoor")
         return True
 
+    def handle_boos_80_event(self, context: Context):
+        fightUtils.cast_magic("火", "失明术", context)
+        fightUtils.cast_magic("气", "静电场", context)
+        if not fightUtils.cast_magic("水", "冰锥术", context):
+            if not fightUtils.cast_magic("暗", "变形术", context):
+                fightUtils.cast_magic("土", "石肤术", context)
+        fightUtils.cast_magic("水", "寒冰护盾", context)
+        fightUtils.cast_magic("水", "寒冰护盾", context)
+        fightUtils.cast_magic("土", "石肤术", context)
+        fightUtils.cast_magic("光", "神恩术", context)
+        for _ in range(3):
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+        time.sleep(3)
+
+    def handle_boos_100_event(self, context: Context):
+        fightUtils.cast_magic("气", "静电场", context)
+        fightUtils.cast_magic("火", "毁灭之刃", context)
+        fightUtils.cast_magic("暗", "变形术", context)
+        for _ in range(6):
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+            time.sleep(0.1)
+
     def handle_boos_event(self, context: Context):
         if self.layers <= 60:
             fightUtils.cast_magic("光", "祝福术", context)
@@ -241,28 +263,13 @@ class JJC101(CustomAction):
             fightUtils.cast_magic("水", "治疗术", context)
 
         elif self.layers <= 80:
-            fightUtils.cast_magic("火", "失明术", context)
-            fightUtils.cast_magic("气", "静电场", context)
-            if not fightUtils.cast_magic("水", "冰锥术", context):
-                if not fightUtils.cast_magic("暗", "变形术", context):
-                    fightUtils.cast_magic("土", "石肤术", context)
-            fightUtils.cast_magic("水", "寒冰护盾", context)
-            fightUtils.cast_magic("水", "寒冰护盾", context)
-            fightUtils.cast_magic("土", "石肤术", context)
-            fightUtils.cast_magic("光", "神恩术", context)
-            for _ in range(3):
-                context.tasker.controller.post_click(boss_x, boss_y).wait()
-            time.sleep(3)
+            self.handle_boos_80_event(context)
 
         elif self.layers <= 100:
-            fightUtils.cast_magic("气", "时间停止", context)
-            fightUtils.cast_magic("气", "静电场", context)
-            fightUtils.cast_magic("火", "毁灭之刃", context)
-            fightUtils.cast_magic("暗", "变形术", context)
-            for _ in range(6):
-                context.tasker.controller.post_click(boss_x, boss_y).wait()
-                time.sleep(0.1)
-
+            if fightUtils.cast_magic("气", "时间停止", context):
+                self.handle_boos_100_event(context)
+            else:
+                self.handle_boos_80_event(context)
         # 捡东西
         time.sleep(2)
         context.run_task("Fight_OpenedDoor")
