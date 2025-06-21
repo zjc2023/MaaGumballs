@@ -335,7 +335,11 @@ class JJC101(CustomAction):
 
             # 小怪层探索
             else:
-                if self.layers >= 90 and fightUtils.cast_magic("土", "地震术", context):
+                if (
+                    self.layers >= 85
+                    and self.layers % 2 == 0
+                    and fightUtils.cast_magic("土", "地震术", context)
+                ):
                     pass
                 else:
                     context.run_task("JJC_Fight_ClearCurrentLayer")
