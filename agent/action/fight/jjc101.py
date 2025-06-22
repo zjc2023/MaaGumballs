@@ -358,12 +358,16 @@ class JJC101(CustomAction):
             time.sleep(1)
 
             # 检测完美击败
-            image = context.tasker.controller.post_screencap().wait().get()
             if context.run_recognition(
-                "Fight_Perfect",
-                image,
+                "Fight_Perfect", context.tasker.controller.post_screencap().wait().get()
             ):
-                time.sleep(2)
+                logger.info(f"第{self.layers} 完美击败")
+                while context.run_recognition(
+                    "Fight_Perfect",
+                    context.tasker.controller.post_screencap().wait().get(),
+                ):
+                    pass
+                pass
 
             # 检测卡剧情
             image = context.tasker.controller.post_screencap().wait().get()
