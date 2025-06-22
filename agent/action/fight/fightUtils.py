@@ -631,7 +631,7 @@ def dragonwish(targetWish: str, context: Context):
             ]:
                 pass
 
-            elif min_index_wish in ["我要更多的伙伴", "我要变得富有"]:
+            elif min_index_wish in ["我要变得富有"]:
                 # 等待地图加载
                 time.sleep(10)
 
@@ -639,13 +639,22 @@ def dragonwish(targetWish: str, context: Context):
                     if not cast_magic("暗", "死亡波纹", context):
                         if not cast_magic("土", "地刺术", context, (350, 400)):
                             cast_magic("火", "流星雨", context, (350, 400))
-                            logger.info("没有死波没有地刺,流星雨不会也没有吧！")
+                            if targetWish == "工资":
+                                logger.info("那只能使用天眼了")
+                                cast_magic_special("天眼", context)
+
+                            else:
+                                logger.info("没有死波没有地刺,流星雨不会也没有吧！")
 
                 # 除变强以外的夹层的出口一定在右下角
-                # 等待拾取结束
                 time.sleep(5)
                 context.tasker.controller.post_click(646, 939).wait()
-
+                # 等待拾取结束
+            elif min_index_wish in ["我要更多的伙伴"]:
+                time.sleep(5)
+                context.tasker.controller.post_click(646, 939).wait()
+                pass
+                # todo 清理当前层的逻辑
             elif min_index_wish in ["我要获得钻石"]:
                 # 等待地图加载
                 time.sleep(10)
