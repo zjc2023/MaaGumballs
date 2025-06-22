@@ -91,6 +91,8 @@ class JJC101(CustomAction):
                 fightUtils.findEquipment(7, "斯巴达的头盔", True, context)
             logger.info(f"current layers {self.layers},装备检查完成")
 
+            context.run_task("Fight_ReturnMainWindow")
+
         return True
 
     def Check_DefaultTitle(self, context: Context):
@@ -156,19 +158,39 @@ class JJC101(CustomAction):
 
     def Check_DefaultStatus(self, context: Context):
         # boos战前和战后操作
-        if (
-            self.layers >= 51
-            and self.layers <= 90
-            and (self.layers % 10 == 9 or self.layers % 10 == 1)
-        ):
-            context.run_task("JJC_OpenForceOfNature")
-            StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
-            if (
-                float(StatusDetail["当前生命值"]) / float(StatusDetail["最大生命值"])
-                <= 0.7
-            ):
-                logger.info("当前生命值小于70%，使用治疗")
+        if not (self.layers >= 61 and self.layers <= 101):
+            return
+        if self.layers % 10 == 9 or self.layers % 10 == 1:
+            if self.layers % 10 == 9:
+                context.run_task(
+                    "JJC_OpenForceOfNature",
+                    pipeline_override={
+                        "JJC_OpenForceOfNature_Switch": {
+                            "expected": ["开启自然守护"],
+                        }
+                    },
+                )
+            elif self.layers % 10 == 1:
+                context.run_task(
+                    "JJC_OpenForceOfNature",
+                    pipeline_override={
+                        "JJC_OpenForceOfNature_Switch": {
+                            "expected": ["开启自然之力"],
+                        }
+                    },
+                )
 
+            StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
+            HPStatus = float(StatusDetail["当前生命值"]) / float(
+                StatusDetail["最大生命值"]
+            )
+            if HPStatus <= 0.8:
+                logger.info("当前生命值小于80%，使用治疗")
+                for _ in range(2):
+                    if not fightUtils.cast_magic("光", "神恩术", context):
+                        fightUtils.cast_magic("水", "治疗术", context)
+            elif HPStatus <= 0.6:
+                logger.info("当前生命值小于60%，使用治疗")
                 fightUtils.cast_magic("气", "静电术", context)
                 for _ in range(5):
                     if not fightUtils.cast_magic("光", "神恩术", context):

@@ -95,7 +95,8 @@
             152
         ],
         "template": [
-            "fight/UniversalUI/star_3.png"
+            "fight/UniversalUI/star_3.png",
+            "fight/UniversalUI/Moon_3.png"
         ],
         "action": "DoNothing",
         "post_delay": 200,
