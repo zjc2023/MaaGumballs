@@ -6,6 +6,7 @@
         "interrupt": [
             "Fight_ReturnMainWindow"
         ],
+        "post_delay": 500,
         "timeout": 2000
     },
     "Bag_OpenClick": {

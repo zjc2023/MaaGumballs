@@ -184,7 +184,7 @@ class JJC101(CustomAction):
 
     def handle_abattoir_event(self, context: Context):
         image = context.tasker.controller.post_screencap().wait().get()
-        if self.layers % 10 == 5 and context.run_recognition(
+        if (self.layers % 10 == 5 or self.layers % 10 == 4) and context.run_recognition(
             "JJC_Find_Abattoir",
             image,
         ):
@@ -192,41 +192,42 @@ class JJC101(CustomAction):
             context.run_task("JJC_Find_Abattoir")
             if self.layers <= 25:
                 fightUtils.cast_magic("光", "祝福术", context)
-                for _ in range(3):
-                    fightUtils.cast_magic_special("天眼", context)
+                while not context.run_recognition(
+                    "Fight_Victory",
+                    context.tasker.controller.post_screencap().wait().get(),
+                ):
+                    if not fightUtils.cast_magic_special("天眼", context):
+                        if not fightUtils.cast_magic("光", "祝福术", context):
+                            fightUtils.cast_magic("土", "石肤术", context)
             elif self.layers <= 55:
                 fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y))
-                for _ in range(3):
-                    context.tasker.controller.post_click(boss_x, boss_y).wait()
-                    time.sleep(0.3)
-                for _ in range(3):
-                    if fightUtils.cast_magic("光", "祝福术", context):
-                        pass
-                    elif fightUtils.cast_magic("水", "治疗术", context):
-                        pass
-                    elif fightUtils.cast_magic("土", "石肤术", context):
-                        pass
-            elif self.layers <= 75:
-                context.run_task("Bag_Open")
-                fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
-                context.run_task("Bag_Open")
-                fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
-                for _ in range(3):
-                    if fightUtils.cast_magic("光", "祝福术", context):
-                        pass
-                    elif fightUtils.cast_magic("水", "治疗术", context):
-                        pass
-                    elif fightUtils.cast_magic("土", "石肤术", context):
-                        pass
-            else:
-                # 打开背包
-                time.sleep(3)
-                context.run_task("Bag_Open")
-                fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
-                context.run_task("Bag_Open")
-                fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
+                while not context.run_recognition(
+                    "Fight_Victory",
+                    context.tasker.controller.post_screencap().wait().get(),
+                ):
+                    if not fightUtils.cast_magic("暗", "诅咒术", context):
+                        if not fightUtils.cast_magic("光", "祝福术", context):
+                            fightUtils.cast_magic("土", "石肤术", context)
 
-            time.sleep(1)
+            elif self.layers <= 75:
+                while not context.run_recognition(
+                    "Fight_Victory",
+                    context.tasker.controller.post_screencap().wait().get(),
+                ):
+                    context.run_task("Bag_Open")
+                    fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
+                for _ in range(3):
+                    if not fightUtils.cast_magic("光", "祝福术", context):
+                        if not fightUtils.cast_magic("水", "治疗术", context):
+                            fightUtils.cast_magic("土", "石肤术", context)
+            else:
+                while not context.run_recognition(
+                    "Fight_Victory",
+                    context.tasker.controller.post_screencap().wait().get(),
+                ):
+                    context.run_task("Bag_Open")
+                    fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
+
             context.run_task("Fight_Victory")
             context.run_task("JJC_Abattoir_Chest")
             context.run_task("Fight_OpenedDoor")
@@ -317,6 +318,7 @@ class JJC101(CustomAction):
                 return CustomAction.RunResult(success=False)
 
             # 检查当前层数
+            context.run_task("Fight_ReturnMainWindow")
             RunResult = context.run_task("Fight_CheckLayer")
             if RunResult.nodes:
                 self.layers = fightUtils.extract_numbers(
@@ -391,7 +393,8 @@ class JJC101(CustomAction):
             # 寻找斯巴达头盔
             if self.isHaveSpartanHat != True:
                 # 检测三次斯巴达的头盔，检查到了就提前结束检查
-                for _ in range(3):
+                time.sleep(1)
+                for _ in range(5):
                     img = context.tasker.controller.post_screencap().wait().get()
                     if context.run_recognition("JJC_Find_Body", img):
                         context.run_task("JJC_Find_Body")

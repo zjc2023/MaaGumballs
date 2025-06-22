@@ -481,6 +481,8 @@
     "Fight_Victory": {
         "recognition": "OCR",
         "expected": [
+            "战",
+            "战斗",
             "胜利"
         ],
         "roi": [
@@ -490,7 +492,7 @@
             191
         ],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 1000,
         "timeout": 2000
     },
     "Fight_BossEntry": {
