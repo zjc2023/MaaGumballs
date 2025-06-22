@@ -1,13 +1,14 @@
 {
     "TitlePanel_Learnable": {
         "next": [
-            "TitlePanel_CurrentPanel"
+            "TitlePanel_CurrentPanel",
+            "TitlePanel_TitleLearn"
         ],
         "interrupt": [
-            "ConfirmButton",
+            "ConfirmButton_500ms",
             "TitlePanel_Series",
             "TitlePanel_Open",
-            "BackText"
+            "BackText_500ms"
         ]
     },
     "TitlePanel_Open": {
@@ -22,13 +23,34 @@
         "action": "Click",
         "target": true,
         "target_offset": [
-            250,
-            0,
+            325,
+            75,
             0,
             0
         ],
         "threshold": 0.8,
-        "post_delay": 1000,
+        "post_delay": 1200,
+        "timeout": 2000
+    },
+    "TitlePanel_ReturnPanel": {
+        "next": [
+            "TitlePanel_Panel"
+        ],
+        "interrupt": [
+            "ConfirmButton_500ms",
+            "BackText_500ms"
+        ]
+    },
+    "TitlePanel_Panel": {
+        "recognition": "OCR",
+        "expected": "系称号",
+        "roi": [
+            68,
+            770,
+            297,
+            81
+        ],
+        "post_delay": 400,
         "timeout": 2000
     },
     "TitlePanel_CurrentPanel": {
@@ -44,6 +66,10 @@
             "TitlePanel_Learnable_Next",
             "TitlePanel_Learnable_Fnish"
         ],
+        "interrupt": [
+            "TitlePanel_ReturnPanel"
+        ],
+        "pre_delay": 300,
         "post_delay": 500,
         "timeout": 2000
     },
@@ -72,7 +98,7 @@
             "fight/UniversalUI/star_3.png"
         ],
         "action": "DoNothing",
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "TitlePanel_Learnable_Next": {
@@ -93,12 +119,10 @@
         "action": "Click",
         "next": [
             "TitlePanel_TitleCheck_New",
-            "TitlePanel_TitleLearn"
+            "TitlePanel_TitleLearn",
+            "TitlePanel_CurrentPanel"
         ],
-        "interrupt": [
-            "ConfirmButton"
-        ],
-        "post_delay": 500,
+        "post_delay": 300,
         "timeout": 2000
     },
     "TitlePanel_TitleCheck_New": {
@@ -120,7 +144,7 @@
             0,
             0
         ],
-        "post_delay": 500,
+        "post_delay": 300,
         "timeout": 2000,
         "next": [
             "TitlePanel_TitleLearn"
@@ -134,13 +158,13 @@
             "强化"
         ],
         "roi": [
-            26,
-            673,
-            680,
-            421
+            290,
+            745,
+            138,
+            287
         ],
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 700,
         "timeout": 2000,
         "next": [
             "TitlePanel_TitleLearn_Fail",
@@ -159,7 +183,7 @@
             489,
             149
         ],
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "TitlePanel_TitleLearn_Success": {
@@ -176,7 +200,7 @@
             149
         ],
         "action": "DoNothing",
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "TitlePanel_TitleLearn_GetNewTitle": {
@@ -189,7 +213,7 @@
             766
         ],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 300,
         "timeout": 2000
     }
 }

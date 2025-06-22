@@ -198,9 +198,13 @@ def title_learn(
                     "target_offset": [0, -75, 0, 0],
                 },
                 "TitlePanel_Series": {"expected": titleType},
+                "TitlePanel_Panel": {"expected": titleType},
                 "TitlePanel_CurrentPanel": {"expected": titleType},
             },
         )
+
+    context.run_task("TitlePanel_ReturnPanel")
+    return True
 
 
 def title_learn_branch(
@@ -238,15 +242,17 @@ def title_learn_branch(
                     "target_offset": [0, 0, 0, 0],
                 },
                 "TitlePanel_Series": {"expected": titleType},
+                "TitlePanel_Panel": {"expected": titleType},
                 "TitlePanel_CurrentPanel": {"expected": titleType},
             },
         )
-        time.sleep(1)
+        time.sleep(0.3)
         image = context.tasker.controller.post_screencap().wait().get()
-        if context.run_recognition("ConfirmButton", image):
-            context.run_task("ConfirmButton")
-        context.run_task("BackText")
-        context.run_task("BackText")
+        if context.run_recognition("ConfirmButton_500ms", image):
+            context.run_task("ConfirmButton_500ms")
+
+    context.run_task("TitlePanel_ReturnPanel")
+    return True
 
 
 def checkEquipment(

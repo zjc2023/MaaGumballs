@@ -99,13 +99,13 @@ class JJC101(CustomAction):
         1. 检查1、29、64和89层的称号
         """
         if (self.layers == 1 or self.layers == 2) and self.isTitle_L1 == False:
-            self.isTitle_L1 = True
-            fightUtils.title_learn("魔法", 1, "魔法学徒", 4, context)
-            fightUtils.title_learn("冒险", 1, "寻宝者", 4, context)
-            fightUtils.title_learn("冒险", 2, "探险家", 4, context)
+            fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
+            fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
+            fightUtils.title_learn("冒险", 2, "探险家", 2, context)
             context.run_task("Fight_ReturnMainWindow")
+            self.isTitle_L1 = True
         elif (self.layers == 27 or self.layers == 28) and self.isTitle_L27 == False:
-            self.isTitle_L27 = True
+
             fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
             fightUtils.title_learn("战斗", 2, "战士", 3, context)
             fightUtils.title_learn("战斗", 3, "剑舞者", 1, context)
@@ -113,6 +113,7 @@ class JJC101(CustomAction):
             fightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
 
             context.run_task("Fight_ReturnMainWindow")
+            fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
             fightUtils.title_learn("魔法", 2, "白袍法师", 1, context)
             fightUtils.title_learn("魔法", 3, "祭司", 1, context)
             fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
@@ -126,8 +127,9 @@ class JJC101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
             context.run_task("Fight_ReturnMainWindow")
+            self.isTitle_L27 = True
         elif (self.layers == 63 or self.layers == 64) and self.isTitle_L63 == False:
-            self.isTitle_L63 = True
+
             fightUtils.title_learn("冒险", 1, "寻宝者", 4, context)
             fightUtils.title_learn("冒险", 2, "探险家", 1, context)
             fightUtils.title_learn("冒险", 3, "暗行者", 1, context)
@@ -141,6 +143,7 @@ class JJC101(CustomAction):
 
             fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
+            self.isTitle_L63 = True
             context.run_task("Fight_ReturnMainWindow")
         elif self.layers == 89:
             fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
@@ -630,10 +633,12 @@ class Fight_TestAction(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
         # fightUtils.checkGumballsStatusV2(context)
-        context.run_task("Bag_Open")
-        if not fightUtils.findItem("东方剪纸", False, context):
-            logger.info("未找到东方剪纸, 已经叫过狗了")
-            self.isHaveDog = True
+        # fightUtils.title_learn_branch("魔法", 5, "魔力强化", 1, context)
+        # fightUtils.title_learn_branch("魔法", 5, "生命强化", 2, context)
+
+        fightUtils.title_learn("魔法", 2, "白袍法师", 3, context)
+        fightUtils.title_learn("魔法", 3, "祭司", 3, context)
+        fightUtils.title_learn("魔法", 4, "气系大师", 3, context)
         return CustomAction.RunResult(success=True)
 
 
