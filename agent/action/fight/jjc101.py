@@ -192,21 +192,14 @@ class JJC101(CustomAction):
             context.run_task("JJC_Find_Abattoir")
             if self.layers <= 25:
                 fightUtils.cast_magic("光", "祝福术", context)
-                while not context.run_recognition(
-                    "Fight_Victory",
-                    context.tasker.controller.post_screencap().wait().get(),
-                ):
-                    if not fightUtils.cast_magic_special("天眼", context):
-                        if not fightUtils.cast_magic("光", "祝福术", context):
-                            fightUtils.cast_magic("土", "石肤术", context)
+                for _ in range(3):
+                    fightUtils.cast_magic_special("天眼", context)
+
             elif self.layers <= 55:
                 fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y))
-                while not context.run_recognition(
-                    "Fight_Victory",
-                    context.tasker.controller.post_screencap().wait().get(),
-                ):
-                    if not fightUtils.cast_magic("暗", "诅咒术", context):
-                        if not fightUtils.cast_magic("光", "祝福术", context):
+                for _ in range(3):
+                    if not fightUtils.cast_magic("光", "祝福术", context):
+                        if not fightUtils.cast_magic("水", "治疗术", context):
                             fightUtils.cast_magic("土", "石肤术", context)
 
             elif self.layers <= 75:
