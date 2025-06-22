@@ -20,10 +20,14 @@ class JJC101(CustomAction):
         super().__init__()
         self.isHaveSpartanHat = False
         self.isHaveDog = False
-        self.layers = 1  # 原layers变量
+        self.isTitle_L1 = False
+        self.isTitle_L27 = False
+        self.isTitle_L63 = False
+        self.layers = 1
 
     def initialize(self, context: Context):
         # 检查当前层数
+        context.run_task("Fight_ReturnMainWindow")
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
             self.layers = fightUtils.extract_numbers(
@@ -48,7 +52,7 @@ class JJC101(CustomAction):
         检查默认装备
         1. 检查第1层和第27层的装备
         """
-        if self.layers == 1 or self.layers == 27 or self.layers == 64:
+        if self.layers == 1 or self.layers == 26 or self.layers == 63:
             OpenDetail = context.run_task("Bag_Open")
             if OpenDetail.nodes:
                 if not fightUtils.checkEquipment("腰带", 1, "贵族丝带", context):
@@ -61,6 +65,7 @@ class JJC101(CustomAction):
                     fightUtils.findEquipment(7, "冒险家竖琴", True, context)
                 time.sleep(1)
                 context.run_task("Fight_ReturnMainWindow")
+                logger.info(f"current layers {self.layers},装备检查完成")
             else:
                 logger.info("背包打开失败")
                 return False
@@ -74,14 +79,18 @@ class JJC101(CustomAction):
                     fightUtils.findEquipment(6, "星月教挂坠", True, context)
 
                 context.run_task("Fight_ReturnMainWindow")
+                logger.info(f"current layers {self.layers},装备检查完成")
             else:
                 logger.info("背包打开失败")
                 return False
+
         elif self.layers == 94 or self.layers == 95:
+            context.run_task("Fight_ReturnMainWindow")
+            OpenDetail = context.run_task("Bag_Open")
             if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
                 fightUtils.findEquipment(7, "斯巴达的头盔", True, context)
+            logger.info(f"current layers {self.layers},装备检查完成")
 
-        logger.info(f"current layers {self.layers},装备检查完成")
         return True
 
     def Check_DefaultTitle(self, context: Context):
@@ -89,11 +98,14 @@ class JJC101(CustomAction):
         检查默认称号
         1. 检查1、29、64和89层的称号
         """
-        if self.layers == 1:
+        if (self.layers == 1 or self.layers == 2) and self.isTitle_L1 == False:
+            self.isTitle_L1 = True
             fightUtils.title_learn("魔法", 1, "魔法学徒", 4, context)
             fightUtils.title_learn("冒险", 1, "寻宝者", 4, context)
+            fightUtils.title_learn("冒险", 2, "探险家", 4, context)
             context.run_task("Fight_ReturnMainWindow")
-        elif self.layers == 27:
+        elif (self.layers == 27 or self.layers == 28) and self.isTitle_L27 == False:
+            self.isTitle_L27 = True
             fightUtils.title_learn("战斗", 1, "见习战士", 1, context)
             fightUtils.title_learn("战斗", 2, "战士", 3, context)
             fightUtils.title_learn("战斗", 3, "剑舞者", 1, context)
@@ -101,7 +113,6 @@ class JJC101(CustomAction):
             fightUtils.title_learn("战斗", 5, "毁灭公爵", 1, context)
 
             context.run_task("Fight_ReturnMainWindow")
-            fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
             fightUtils.title_learn("魔法", 2, "白袍法师", 1, context)
             fightUtils.title_learn("魔法", 3, "祭司", 1, context)
             fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
@@ -115,7 +126,8 @@ class JJC101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
             context.run_task("Fight_ReturnMainWindow")
-        elif self.layers == 64:
+        elif (self.layers == 63 or self.layers == 64) and self.isTitle_L63 == False:
+            self.isTitle_L63 = True
             fightUtils.title_learn("冒险", 1, "寻宝者", 4, context)
             fightUtils.title_learn("冒险", 2, "探险家", 1, context)
             fightUtils.title_learn("冒险", 3, "暗行者", 1, context)
