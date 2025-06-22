@@ -1,5 +1,8 @@
 {
     "EmptyNode": {},
+    "StopCureentTask": {
+        "action": "StopTask"
+    },
     "BackText": {
         "recognition": "OCR",
         "expected": [

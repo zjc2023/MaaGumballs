@@ -94,15 +94,7 @@ def cast_magic(Type: str, MagicName: str, context: Context, Target_pos: tuple = 
     # run
     context.run_task(
         "Fight_Magic_Elemental",
-        pipeline_override={
-            "Fight_Magic_Elemental": {
-                "next": [MagicType[Type]],
-                "interrupt": [
-                    "Fight_SkillPack_Type",
-                    "Fight_SkillPack_Open",
-                ],
-            },
-        },
+        pipeline_override={"Fight_Magic_Elemental": {"next": [MagicType[Type]]}},
     )
 
     image = context.tasker.controller.post_screencap().wait().get()
