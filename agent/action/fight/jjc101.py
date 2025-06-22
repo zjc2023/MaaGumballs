@@ -166,19 +166,21 @@ class JJC101(CustomAction):
                     "JJC_OpenForceOfNature",
                     pipeline_override={
                         "JJC_OpenForceOfNature_Switch": {
-                            "expected": ["开启自然守护"],
+                            "expected": ["开启自然之力"],
                         }
                     },
                 )
+                logger.info("开启自然之力")
             elif self.layers % 10 == 1:
                 context.run_task(
                     "JJC_OpenForceOfNature",
                     pipeline_override={
                         "JJC_OpenForceOfNature_Switch": {
-                            "expected": ["开启自然之力"],
+                            "expected": ["开启自然守护"],
                         }
                     },
                 )
+                logger.info("开启自然守护")
 
             StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
             HPStatus = float(StatusDetail["当前生命值"]) / float(
