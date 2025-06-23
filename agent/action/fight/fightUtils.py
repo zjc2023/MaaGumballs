@@ -690,7 +690,6 @@ def dragonwish(targetWish: str, context: Context):
                     context.tasker.controller.post_click(365, 535).wait()
                     context.tasker.controller.post_click(219, 813).wait()
                     context.tasker.controller.post_click(505, 805).wait()
-                    time.sleep(1)
 
                 # 除变强以外的夹层的出口一定在右下角
                 # 等待拾取结束

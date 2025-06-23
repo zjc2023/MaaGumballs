@@ -22,7 +22,7 @@
             "ConfirmButton"
         ],
         "post_delay": 500,
-        "timeout": 2000
+        "timeout": 3000
     },
     "Fight_ClosedDoor": {
         "recognition": "TemplateMatch",
