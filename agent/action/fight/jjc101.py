@@ -222,10 +222,19 @@ class JJC101(CustomAction):
                 for _ in range(3):
                     fightUtils.cast_magic_special("天眼", context)
 
-            elif self.layers <= 55:
-                fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y))
+            elif self.layers <= 45:
+                if not fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y)):
+                    fightUtils.cast_magic("暗", "诅咒术", context, (boss_x, boss_y))
                 for _ in range(3):
                     if not fightUtils.cast_magic("光", "祝福术", context):
+                        if not fightUtils.cast_magic("水", "治疗术", context):
+                            fightUtils.cast_magic("土", "石肤术", context)
+
+            elif self.layers <= 55:
+                if not fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y)):
+                    fightUtils.cast_magic("暗", "诅咒术", context, (boss_x, boss_y))
+                for _ in range(3):
+                    if not fightUtils.cast_magic("水", "寒冰护盾", context):
                         if not fightUtils.cast_magic("水", "治疗术", context):
                             fightUtils.cast_magic("土", "石肤术", context)
 
@@ -270,10 +279,10 @@ class JJC101(CustomAction):
     def handle_boos_100_event(self, context: Context):
         fightUtils.cast_magic("气", "静电场", context)
         fightUtils.cast_magic("火", "毁灭之刃", context)
-        fightUtils.cast_magic("暗", "变形术", context)
+        fightUtils.cast_magic("气", "瓦解术", context)
         for _ in range(6):
             context.tasker.controller.post_click(boss_x, boss_y).wait()
-            time.sleep(0.1)
+            time.sleep(0.3)
 
     def handle_boos_event(self, context: Context):
         if self.layers <= 60:

@@ -93,8 +93,7 @@
     "Fight_LeaveMaze_StopButton": {
         "recognition": "OCR",
         "expected": [
-            "结束",
-            "结束探险"
+            "结束"
         ],
         "roi": [
             15,
@@ -130,15 +129,15 @@
             150
         ],
         "action": "DoNothing",
-        "timeout": 2000,
-        "post_delay": 200
+        "post_delay": 200,
+        "timeout": 2000
     },
     "Fight_ReturnMainWindow": {
         "next": [
             "Fight_MainWindow"
         ],
         "interrupt": [
-            "BackText",
+            "BackText_500ms",
             "GameLoading"
         ]
     },
@@ -191,7 +190,7 @@
         ],
         "action": "Click",
         "threshold": 0.8,
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "Fight_SkillPack_Type": {
@@ -204,7 +203,7 @@
             225
         ],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "Fight_ClickSpecialMagicPage": {
@@ -219,7 +218,7 @@
             "特殊"
         ],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "Fight_ClickFireMagicPage": {
@@ -240,7 +239,7 @@
             91,
             78
         ],
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "Fight_ClickWaterMagicPage": {
@@ -261,7 +260,7 @@
             85,
             70
         ],
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "Fight_ClickEarthMagicPage": {
@@ -282,7 +281,7 @@
             77,
             64
         ],
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "Fight_ClickQiMagicPage": {
@@ -303,7 +302,7 @@
             95,
             75
         ],
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "Fight_ClickLightMagicPage": {
@@ -324,7 +323,7 @@
             87,
             80
         ],
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "Fight_ClickDarkMagicPage": {
@@ -345,7 +344,7 @@
             95,
             77
         ],
-        "post_delay": 500,
+        "post_delay": 200,
         "timeout": 2000
     },
     "Fight_Magic_Cast": {
@@ -358,11 +357,21 @@
             658
         ],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 100,
         "timeout": 2000,
         "next": [
-            "ClickCenter"
+            "Fight_ClickMagic"
         ]
+    },
+    "Fight_ClickMagic": {
+        "action": "Click",
+        "target": [
+            237,
+            602,
+            100,
+            100
+        ],
+        "post_delay": 200
     },
     "Fight_Magic_Elemental": {
         "next": [
@@ -373,7 +382,7 @@
             "Fight_DragonWish",
             "Fight_SkillPack_Open"
         ],
-        "post_delay": 500,
+        "post_delay": 100,
         "timeout": 2000
     },
     "Fight_Magic_Special_Cast": {
@@ -386,10 +395,10 @@
             658
         ],
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 100,
         "timeout": 2000,
         "next": [
-            "ClickCenter"
+            "Fight_ClickMagic"
         ]
     },
     "Fight_Magic_Special": {
@@ -400,7 +409,7 @@
             "Fight_DragonWish",
             "Fight_SkillPack_Open"
         ],
-        "post_delay": 500,
+        "post_delay": 100,
         "timeout": 2000
     },
     "Fight_LongPress": {
@@ -495,15 +504,28 @@
         "post_delay": 1000,
         "timeout": 2000
     },
-    "Fight_BossEntry": {
-        "recognition": "OCR",
-        "expected": [
-            "Boss"
+    "Fight_CheckBossStatus": {
+        "doc": "仅仅用作识别boss血量,不做runtask执行",
+        "recognition": "ColorMatch",
+        "roi": [
+            141,
+            440,
+            85,
+            70
         ],
+        "lower": [
+            237,
+            79,
+            79
+        ],
+        "upper": [
+            255,
+            99,
+            99
+        ],
+        "count": 15,
         "action": "DoNothing",
-        "post_delay": 500,
-        "next": "Fight_BossEntry",
-        "timeout": 2000
+        "timeout": 1000
     },
     "Fight_CheckDragonBall": {
         "recognition": "TemplateMatch",

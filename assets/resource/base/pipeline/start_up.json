@@ -85,9 +85,7 @@
     "GameLoading": {
         "recognition": "OCR",
         "expected": [
-            "正在装潢迷宫建筑",
             "正在装潢",
-            "建筑",
             "加载中"
         ],
         "roi": [
@@ -96,7 +94,7 @@
             522,
             327
         ],
-        "post_delay": 2000,
+        "post_delay": 200,
         "timeout": 2000
     },
     "ServerSwitching": {

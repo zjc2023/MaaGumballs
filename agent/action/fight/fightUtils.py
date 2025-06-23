@@ -74,13 +74,13 @@ def is_roi_in_or_mostly_in(roi1, roi2):
     return False
 
 
-def cast_magic(Type: str, MagicName: str, context: Context, Target_pos: tuple = None):
+def cast_magic(Type: str, MagicName: str, context: Context, TargetPos: tuple = (0, 0)):
     """施放指定类型的魔法
 
     Args:
         Type: 魔法的类型，如 '火', '土', '气' 等
         MagicName: 具体的魔法名称，如 '祝福术', '石肤术' 等
-        Target_pos: 目标位置，如 (x, y)
+        TargetPos: 目标位置，如 (x, y)
         context: 游戏上下文对象，包含当前状态信息
 
     Returns:
@@ -103,21 +103,29 @@ def cast_magic(Type: str, MagicName: str, context: Context, Target_pos: tuple = 
         image,
         pipeline_override={"Fight_Magic_Cast": {"expected": MagicName}},
     ):
-        if not Target_pos:
-            context.run_task(
-                "Fight_Magic_Cast",
-                pipeline_override={"Fight_Magic_Cast": {"expected": MagicName}},
-            )
-            logger.info(f"施放魔法:{MagicName}")
-        else:
+        # 自身释放的魔法
+        if TargetPos == (0, 0):
             context.run_task(
                 "Fight_Magic_Cast",
                 pipeline_override={
-                    "Fight_Magic_Cast": {"expected": MagicName, "next": []}
+                    "Fight_Magic_Cast": {
+                        "expected": MagicName,
+                        "next": "Fight_ClickMagic",
+                    }
                 },
             )
-            context.tasker.controller.post_click(Target_pos[0], Target_pos[1]).wait()
-            logger.info(f"施放魔法:{MagicName}在{Target_pos[0], Target_pos[1]}")
+            logger.info(f"施放魔法:{MagicName}")
+        # 指定位置释放的魔法
+        else:
+            rect_x, rect_y = TargetPos[0] - 50, TargetPos[1] - 50
+            context.run_task(
+                "Fight_Magic_Cast",
+                pipeline_override={
+                    "Fight_Magic_Cast": {"expected": MagicName},
+                    "Fight_ClickMagic": {"target": [rect_x, rect_y, 100, 100]},
+                },
+            )
+            logger.info(f"施放魔法:{MagicName}在{TargetPos}")
     else:
         logger.info(f"没有找到对应的魔法:{MagicName}")
         context.run_task("BackText")
