@@ -37,9 +37,14 @@ class JJC101(CustomAction):
         # 进入地图初始化
         logger.info(f"当前层数: {self.layers}, 进入地图初始化")
         context.run_task("Bag_Open")
-        if not fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context):
-            if fightUtils.findEquipment(7, "斯巴达的头盔", True, context):
-                self.isHaveSpartanHat = True
+        # 检查是否已装备斯巴达的头盔
+        has_helmet = fightUtils.checkEquipment("头盔", 7, "斯巴达的头盔", context)
+        if not has_helmet:
+            # 若未装备，则尝试寻找该头盔
+            found_helmet = fightUtils.findEquipment(7, "斯巴达的头盔", True, context)
+            self.isHaveSpartanHat = found_helmet
+        else:
+            self.isHaveSpartanHat = True
 
         if not fightUtils.findItem("东方剪纸", False, context):
             logger.info("未找到东方剪纸, 已经叫过狗了")
@@ -389,6 +394,7 @@ class JJC101(CustomAction):
                 else:
                     context.run_task("JJC_Fight_ClearCurrentLayer")
 
+            # logger.info(f"头盔状态: {self.isHaveSpartanHat}")
             # 检测完美击败
             if not self.isHaveSpartanHat and context.run_recognition(
                 "Fight_Perfect", context.tasker.controller.post_screencap().wait().get()
