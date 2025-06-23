@@ -377,7 +377,6 @@ class JJC101(CustomAction):
                     logger.info("神龙带肥家lo~")
 
                 continue
-
             # 小怪层探索
             else:
                 if (
@@ -388,10 +387,9 @@ class JJC101(CustomAction):
                     pass
                 else:
                     context.run_task("JJC_Fight_ClearCurrentLayer")
-            time.sleep(1)
 
             # 检测完美击败
-            if context.run_recognition(
+            if not self.isHaveSpartanHat and context.run_recognition(
                 "Fight_Perfect", context.tasker.controller.post_screencap().wait().get()
             ):
                 logger.info(f"第{self.layers} 完美击败")
@@ -400,7 +398,6 @@ class JJC101(CustomAction):
                     context.tasker.controller.post_screencap().wait().get(),
                 ):
                     pass
-                pass
 
             # 检测卡剧情
             image = context.tasker.controller.post_screencap().wait().get()
@@ -424,7 +421,7 @@ class JJC101(CustomAction):
                 context.run_task("JJC_StoneChest")
 
             # 寻找斯巴达头盔
-            if self.isHaveSpartanHat != True:
+            if not self.isHaveSpartanHat:
                 # 检测三次斯巴达的头盔，检查到了就提前结束检查
                 time.sleep(1)
                 for _ in range(5):
