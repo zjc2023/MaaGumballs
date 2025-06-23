@@ -154,7 +154,6 @@
         "expected": [
             "翻找",
             "查看",
-            "进入",
             "离开",
             "刻上名字"
         ],
@@ -184,8 +183,23 @@
         "post_delay": 1000,
         "timeout": 2000,
         "next": [
-            "JJC_Inter_Confirm"
+            "JJC_Abattoir_Entry"
         ]
+    },
+    "JJC_Abattoir_Entry": {
+        "recognition": "OCR",
+        "expected": [
+            "进入"
+        ],
+        "roi": [
+            88,
+            652,
+            548,
+            332
+        ],
+        "action": "Click",
+        "post_delay": 3000,
+        "timeout": 2000
     },
     "JJC_Abattoir_Chest": {
         "recognition": "TemplateMatch",
