@@ -46,13 +46,20 @@
 - [常见问题](./docs/zh_cn/manual/常见问题.md)
 - [Mirror酱使用说明](./docs/zh_cn/manual/Mirror酱.md)
 
-## 开发者文档
+## 开发相关
 
-- [📄 快速开始](./docs/zh_cn/1.1-快速开始.md)
-- [📄 流水线协议](./docs/zh_cn/3.1-任务流水线协议.md)
-- [📄 集成开发环境文档](https://github.com/MaaXYZ/MaaFramework/blob/main/docs/zh_cn/2.1-%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
+- [开发前须知](./docs/zh_cn/develop/开发前须知.md)
+- [项目结构](./docs/zh_cn/develop/项目结构.md)
+- [interface.json编写](./docs/zh_cn/develop/interface.json编写.md)
+- [Pipeline编写](./docs/zh_cn/develop/Pipeline编写.md)
+- [Custom编写](./docs/zh_cn/develop/Custom编写.md)
+- [项目重构](./docs/zh_cn/develop/项目重构.md)
+- [外服适配](./docs/zh_cn/develop/外服适配.md)
+- [文档编写](./docs/zh_cn/develop/文档编写.md)
 - [🎞️ 视频教程](https://www.bilibili.com/video/BV1yr421E7MW)
 - [⭐项目模板](https://github.com/MaaXYZ/MaaPracticeBoilerplate), 建议新的开发者参考项目模版的readme文档
+
+更多文档请前往 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 主仓库查看
 
 ## 免责声明
 
