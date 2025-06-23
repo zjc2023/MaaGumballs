@@ -30,7 +30,7 @@ class JJC101(CustomAction):
         context.run_task("Fight_ReturnMainWindow")
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
-            self.layers = fightUtils.extract_numbers(
+            self.layers = fightUtils.extract_num_layer(
                 RunResult.nodes[0].recognition.best_result.text
             )
 
@@ -157,54 +157,55 @@ class JJC101(CustomAction):
         return True
 
     def Check_DefaultStatus(self, context: Context):
-        # boos战前和战后操作
-        if not (self.layers >= 61 and self.layers <= 101):
-            return
-        if self.layers % 10 == 9 or self.layers % 10 == 1:
-            if self.layers % 10 == 9:
-                context.run_task(
-                    "JJC_OpenForceOfNature",
-                    pipeline_override={
-                        "JJC_OpenForceOfNature_Switch": {
-                            "expected": ["开启自然之力"],
-                        }
-                    },
-                )
-                logger.info("开启自然之力")
-            elif self.layers % 10 == 1:
-                context.run_task(
-                    "JJC_OpenForceOfNature",
-                    pipeline_override={
-                        "JJC_OpenForceOfNature_Switch": {
-                            "expected": ["开启自然守护"],
-                        }
-                    },
-                )
-                logger.info("开启自然守护")
 
+        # 检查冈布奥状态
+        tempNum = self.layers % 10
+        if (self.layers >= 55 and (tempNum == 1 or tempNum == 5 or tempNum == 9)) or (
+            self.layers >= 90 and tempNum == 4
+        ):
             StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
-            HPStatus = float(StatusDetail["当前生命值"]) / float(
-                StatusDetail["最大生命值"]
-            )
-            if HPStatus <= 0.8:
-                logger.info("当前生命值小于80%，使用治疗")
-                for _ in range(2):
+            CurrentHP = float(StatusDetail["当前生命值"])
+            MaxHp = float(StatusDetail["最大生命值"])
+            HPStatus = CurrentHP / MaxHp
+
+            if HPStatus < 0.8:
+                while HPStatus < 0.8:
                     if not fightUtils.cast_magic("光", "神恩术", context):
-                        fightUtils.cast_magic("水", "治疗术", context)
-            elif HPStatus <= 0.6:
-                logger.info("当前生命值小于60%，使用治疗")
-                fightUtils.cast_magic("气", "静电术", context)
-                for _ in range(5):
-                    if not fightUtils.cast_magic("光", "神恩术", context):
-                        fightUtils.cast_magic("水", "治疗术", context)
+                        if not fightUtils.cast_magic("水", "治疗术", context):
+                            if not fightUtils.cast_magic("水", "治愈术", context):
+                                logger.info("没有任何治疗方法了= =")
+                                break
+                    image = context.tasker.controller.post_screencap().wait().get()
+                    if HPDetail := context.run_recognition("Fight_GetHP", image):
+                        CurrentHP = fightUtils.extract_num(HPDetail.best_result.text)
+                    HPStatus = CurrentHP / MaxHp
+                    logger.info(f"current hp is {CurrentHP}, HPStatus is {HPStatus}")
             else:
-                logger.info("当前生命值大于70%，不使用治疗")
+                logger.info("当前生命值大于80%，不使用治疗")
+
+        if self.layers >= 61 and tempNum == 9:
+            context.run_task(
+                "JJC_OpenForceOfNature",
+                pipeline_override={
+                    "JJC_OpenForceOfNature_Switch": {
+                        "expected": ["开启自然之力"],
+                    }
+                },
+            )
+            logger.info("开启自然之力")
+        elif self.layers >= 61 and tempNum == 1:
+            context.run_task(
+                "JJC_OpenForceOfNature",
+                pipeline_override={
+                    "JJC_OpenForceOfNature_Switch": {
+                        "expected": ["开启自然守护"],
+                    }
+                },
+            )
+            logger.info("开启自然守护")
 
         # 保命
-        if (
-            self.layers == 89
-            and fightUtils.checkBuffStatus("神圣重生", context) != True
-        ):
+        if self.layers == 89 and not fightUtils.checkBuffStatus("神圣重生", context):
             fightUtils.cast_magic("光", "神圣重生", context)
 
         return True
@@ -350,7 +351,7 @@ class JJC101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
             RunResult = context.run_task("Fight_CheckLayer")
             if RunResult.nodes:
-                self.layers = fightUtils.extract_numbers(
+                self.layers = fightUtils.extract_num_layer(
                     RunResult.nodes[0].recognition.best_result.text
                 )
 

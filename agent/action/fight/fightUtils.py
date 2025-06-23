@@ -34,8 +34,17 @@ EquipmentType: dict = {
 }
 
 
+# 从字符串中识别并返回数字
+def extract_num(input_string):
+    match = re.search(r"(\d+)", input_string)
+    if match:
+        return int(match.group(1))
+    else:
+        return 0
+
+
 # 从字符串中识别并返回有“层”这个文字的前缀数字
-def extract_numbers(input_string):
+def extract_num_layer(input_string):
     match = re.search(r"(\d+)层", input_string)
     if match:
         return int(match.group(1))

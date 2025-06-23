@@ -463,6 +463,54 @@
         "post_delay": 200,
         "timeout": 2000
     },
+    "Fight_GetHP": {
+        "recognition": "OCR",
+        "expected": "\\d+",
+        "roi": [
+            175,
+            1194,
+            151,
+            78
+        ],
+        "action": "DoNothing",
+        "timeout": 1000
+    },
+    "Fight_GetMP": {
+        "recognition": "OCR",
+        "expected": "\\d+",
+        "roi": [
+            394,
+            1201,
+            157,
+            70
+        ],
+        "action": "DoNothing",
+        "timeout": 1000
+    },
+    "Fight_GetAD": {
+        "recognition": "OCR",
+        "expected": "\\d+",
+        "roi": [
+            172,
+            1111,
+            188,
+            72
+        ],
+        "action": "DoNothing",
+        "timeout": 1000
+    },
+    "Fight_GetAP": {
+        "recognition": "OCR",
+        "expected": "\\d+",
+        "roi": [
+            377,
+            1127,
+            178,
+            60
+        ],
+        "action": "DoNothing",
+        "timeout": 1000
+    },
     "Fight_TestAction": {
         "action": "Custom",
         "custom_action": "Fight_TestAction"

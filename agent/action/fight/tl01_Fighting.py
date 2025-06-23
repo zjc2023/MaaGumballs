@@ -19,7 +19,7 @@ class TL01_Fighting(CustomAction):
         layers = 1
         RunResult = context.run_task("Fight_CheckLayer")
         if RunResult.nodes:
-            layers = fightUtils.extract_numbers(
+            layers = fightUtils.extract_num_layer(
                 RunResult.nodes[0].recognition.best_result.text
             )
             # print(f"current layer {layers}")
@@ -34,7 +34,7 @@ class TL01_Fighting(CustomAction):
             # 检查当前层数
             RunResult = context.run_task("Fight_CheckLayer")
             if RunResult.nodes:
-                layers = fightUtils.extract_numbers(
+                layers = fightUtils.extract_num_layer(
                     RunResult.nodes[0].recognition.best_result.text
                 )
                 # print(f"current layer :{layers}")
