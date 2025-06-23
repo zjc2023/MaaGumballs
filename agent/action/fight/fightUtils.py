@@ -4,6 +4,9 @@ from utils import logger
 import math
 import re
 import time
+import cv2
+import numpy as np
+
 
 # 神龙许愿ROI [77,465,570,553]
 # 神龙许愿list = ["我要获得钻石", "我要神奇的果实", "我要更多的伙伴", "我要获得巨龙之力", "我要学习龙语魔法", "我要变得更强", "我要变得富有", "我要最凶残的装备", "我要更多的伙伴", "我要大量的矿石", "我要你的收藏品", "我要您的碎片"]
@@ -750,3 +753,55 @@ def Auto_CallDog(context: Context):
         time.sleep(1)
         logger.info("狗子召唤成功！！！")
     return True
+
+
+def rgb_pixel_count(
+    image,
+    lower,
+    upper,
+    count,
+    context: Context,
+    method="opencv",
+) -> int:
+    """
+    RGB颜色空间像素计数
+    :param image: BGR格式图像（需转换）
+    :param roi: 检测区域 [x,y,w,h]
+    :param lower: RGB下限 [R,G,B] (0-255)
+    :param upper: RGB上限 [R,G,B]
+    :return: 匹配像素数量
+    """
+
+    # RGB转BGR
+    lower = [lower[2], lower[1], lower[0]]
+    upper = [upper[2], upper[1], upper[0]]
+
+    if method == "opencv":
+        # 创建三维掩膜
+        lower_bound = np.array(lower, dtype=np.uint8)
+        upper_bound = np.array(upper, dtype=np.uint8)
+        mask = cv2.inRange(image, lower_bound, upper_bound)
+
+        # 统计有效像素数量
+        valid_pixel_count = cv2.countNonZero(mask)
+        return valid_pixel_count if valid_pixel_count > count else 0
+
+    elif recoDetail := context.run_recognition(
+        "GridCheckTemplate",
+        image,
+        pipeline_override={
+            "GridCheckTemplate": {
+                "recognition": "ColorMatch",
+                "method": 4,
+                "lower": lower,
+                "upper": upper,
+                "count": count,
+            }
+        },
+    ):
+        if recoDetail:
+            valid_pixel_count = recoDetail.best_result.count
+            return valid_pixel_count if valid_pixel_count > count else 0
+        return 0
+    else:
+        return 0
