@@ -483,8 +483,6 @@
     "Fight_Victory": {
         "recognition": "OCR",
         "expected": [
-            "战",
-            "战斗",
             "胜利"
         ],
         "roi": [
