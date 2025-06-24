@@ -48,9 +48,14 @@
 
 ## 开发者文档
 
-- [📄 快速开始](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/1.1-快速开始.md)
-- [📄 集成开发环境文档](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/2.1-集成文档.md)
-- [📄 流水线协议](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/3.1-任务流水线协议.md)
+- [开发前须知](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/开发前须知.md)
+- [项目结构](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/项目结构.md)
+- [interface.json编写](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/interface.json编写.md)
+- [Pipeline编写](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/Pipeline编写.md)
+- [Custom编写](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/Custom编写.md)
+- [项目重构](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/项目重构.md)
+- [外服适配](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/外服适配.md)
+- [文档编写](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/develop/文档编写.md)
 - [🎞️ 视频教程](https://www.bilibili.com/video/BV1yr421E7MW)
 - [⭐项目模板](https://github.com/MaaXYZ/MaaPracticeBoilerplate), 建议新的开发者参考项目模版的readme文档
 
@@ -87,3 +92,10 @@ UI 由 [MFAAvalonia](https://github.com/SweetSmellFox/MFAAvalonia)
 ## Join us
 
 - MaaGB 交流群 QQ 群：853222152
+
+## 赞助
+
+<!-- markdownlint-disable MD045 -->
+<a href="https://afdian.com/a/shanshanzi">
+  <img width="200" src="https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.png">
+</a>
