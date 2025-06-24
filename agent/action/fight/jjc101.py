@@ -224,8 +224,8 @@ class JJC101(CustomAction):
             elif self.layers <= 45:
                 if not fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y)):
                     fightUtils.cast_magic("暗", "诅咒术", context, (boss_x, boss_y))
-                    for _ in range(4):
-                        context.run_task("JJC_OpenForceOfNature")
+                for _ in range(4):
+                    context.run_task("JJC_OpenForceOfNature")
             elif self.layers <= 55:
                 if not fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y)):
                     fightUtils.cast_magic("暗", "诅咒术", context, (boss_x, boss_y))
@@ -506,7 +506,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
             isCheckDragon = False
 
         # 开始清理当前层
-        cnt = 15
+        cnt = 18
         while cnt > 0:
             if context.tasker.stopping:
                 logger.info("JJC_Fight_ClearCurrentLayer 被停止")
