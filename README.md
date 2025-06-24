@@ -94,3 +94,10 @@ UI 由 [MFAAvalonia](https://github.com/SweetSmellFox/MFAAvalonia)
 ## Join us
 
 - MaaGB 交流群 QQ 群：853222152
+
+## 赞助
+
+<!-- markdownlint-disable MD045 -->
+<a href="https://afdian.com/a/shanshanzi">
+  <img width="200" src="https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.png">
+</a>
