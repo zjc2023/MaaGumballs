@@ -26,6 +26,8 @@ class JJC101(CustomAction):
         self.layers = 1
 
     def initialize(self, context: Context):
+        self.__init__()
+        logger.info("JJC101初始化完成")
         # 检查当前层数
         context.run_task("Fight_ReturnMainWindow")
         RunResult = context.run_task("Fight_CheckLayer")
