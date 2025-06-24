@@ -180,6 +180,7 @@ class JJC101(CustomAction):
                             if not fightUtils.cast_magic("水", "治愈术", context):
                                 logger.info("没有任何治疗方法了= =")
                                 break
+                    time.sleep(0.4)
                     image = context.tasker.controller.post_screencap().wait().get()
                     if HPDetail := context.run_recognition("Fight_GetHP", image):
                         CurrentHP = fightUtils.extract_num(HPDetail.best_result.text)
