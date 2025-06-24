@@ -224,20 +224,27 @@ class JJC101(CustomAction):
             elif self.layers <= 45:
                 if not fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y)):
                     fightUtils.cast_magic("暗", "诅咒术", context, (boss_x, boss_y))
-                for _ in range(4):
-                    context.run_task("JJC_OpenForceOfNature")
+                for _ in range(3):
+                    if not fightUtils.cast_magic("光", "祝福术", context):
+                        if not fightUtils.cast_magic("水", "治疗术", context):
+                            fightUtils.cast_magic("土", "石肤术", context)
+
             elif self.layers <= 55:
                 if not fightUtils.cast_magic("火", "失明术", context, (boss_x, boss_y)):
                     fightUtils.cast_magic("暗", "诅咒术", context, (boss_x, boss_y))
-                for _ in range(4):
-                    context.run_task("JJC_OpenForceOfNature")
+                for _ in range(3):
+                    if not fightUtils.cast_magic("水", "寒冰护盾", context):
+                        if not fightUtils.cast_magic("水", "治疗术", context):
+                            fightUtils.cast_magic("土", "石肤术", context)
 
             elif self.layers <= 75:
                 for _ in range(2):
                     context.run_task("Bag_Open")
                     fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
-                for _ in range(4):
-                    context.run_task("JJC_OpenForceOfNature")
+                for _ in range(3):
+                    if not fightUtils.cast_magic("水", "寒冰护盾", context):
+                        if not fightUtils.cast_magic("水", "治疗术", context):
+                            fightUtils.cast_magic("土", "石肤术", context)
             else:
                 for _ in range(2):
                     context.run_task("Bag_Open")
