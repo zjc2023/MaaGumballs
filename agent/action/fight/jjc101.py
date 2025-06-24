@@ -388,7 +388,7 @@ class JJC101(CustomAction):
             else:
                 if (
                     self.layers >= 85
-                    and self.layers % 2 == 0
+                    and self.layers % 2 == 1
                     and fightUtils.cast_magic("土", "地震术", context)
                 ):
                     pass
@@ -453,7 +453,6 @@ class JJC101(CustomAction):
                     time.sleep(3)
 
                 logger.info("冒险者大人已找到钥匙捏，继续探索")
-                time.sleep(2)
                 context.run_task("Fight_OpenedDoor")
 
         logger.info(f"竞技场探索结束，当前到达{self.layers}层")
@@ -488,6 +487,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
                             x + w // 2, y + h // 2
                         ).wait()
                         time.sleep(0.1)
+                    time.sleep(0.1)
         return True
 
     def CheckClosedDoor(self, context: Context):
@@ -576,7 +576,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
                         ).wait()
                         visited[r][c] += 1
                         checkGridCnt += 1
-                        time.sleep(0.05)
+                        time.sleep(0.1)
 
             # 检测怪物并进行攻击
             if not self.CheckMonsterCnt(context):
