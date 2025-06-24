@@ -108,6 +108,7 @@ class JJC101(CustomAction):
         if (self.layers == 1 or self.layers == 2) and self.isTitle_L1 == False:
             fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
             fightUtils.title_learn("冒险", 2, "探险家", 3, context)
+            fightUtils.title_learn("魔法", 1, "魔法学徒", 1, context)
             context.run_task("Fight_ReturnMainWindow")
             self.isTitle_L1 = True
         elif (self.layers == 27 or self.layers == 28) and self.isTitle_L27 == False:
@@ -145,7 +146,6 @@ class JJC101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
             fightUtils.title_learn_branch("冒险", 5, "生命强化", 3, context)
             fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
-            fightUtils.title_learn_branch("冒险", 5, "魔力强化", 3, context)
 
             fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
