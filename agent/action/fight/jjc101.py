@@ -180,16 +180,16 @@ class JJC101(CustomAction):
                             if not fightUtils.cast_magic("水", "治愈术", context):
                                 logger.info("没有任何治疗方法了= =")
                                 break
-                    time.sleep(0.4)
-                    image = context.tasker.controller.post_screencap().wait().get()
-                    if HPDetail := context.run_recognition("Fight_GetHP", image):
-                        CurrentHP = fightUtils.extract_num(HPDetail.best_result.text)
+                    context.run_task("Fight_ReturnMainWindow")
+                    StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
+                    CurrentHP = float(StatusDetail["当前生命值"])
+                    MaxHp = float(StatusDetail["最大生命值"])
                     HPStatus = CurrentHP / MaxHp
                     logger.info(f"current hp is {CurrentHP}, HPStatus is {HPStatus}")
             else:
                 logger.info("当前生命值大于80%，不使用治疗")
 
-        if self.layers >= 61 and tempNum == 9:
+        if tempNum == 9 and self.layers >= 61 and self.layers <= 90:
             context.run_task(
                 "JJC_OpenForceOfNature",
                 pipeline_override={
@@ -199,7 +199,7 @@ class JJC101(CustomAction):
                 },
             )
             logger.info("开启自然之力")
-        elif self.layers >= 61 and tempNum == 1:
+        elif tempNum == 1 and self.layers >= 61 and self.layers <= 90:
             context.run_task(
                 "JJC_OpenForceOfNature",
                 pipeline_override={
