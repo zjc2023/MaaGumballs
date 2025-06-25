@@ -1,12 +1,29 @@
 {
     "Bag_Open": {
         "next": [
-            "Bag_OpenClick"
+            "Bag_BagPanel"
         ],
         "interrupt": [
+            "Bag_OpenClick",
             "Fight_ReturnMainWindow"
         ],
+        "post_delay": 200,
+        "timeout": 2000
+    },
+    "Bag_BagPanel": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/UniversalUI/BagText.png"
+        ],
+        "roi": [
+            220,
+            581,
+            268,
+            103
+        ],
+        "action": "Click",
         "post_delay": 500,
+        "threshold": 0.8,
         "timeout": 2000
     },
     "Bag_OpenClick": {
@@ -21,7 +38,7 @@
             117
         ],
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 300,
         "timeout": 2000
     },
     "Bag_ToRightestPage": {
