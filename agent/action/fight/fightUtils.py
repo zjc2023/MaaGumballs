@@ -626,12 +626,15 @@ def dragonwish(targetWish: str, context: Context):
         while status:
             image = context.tasker.controller.post_screencap().wait().get()
             TextRecoDetail = context.run_recognition(
-                "Fight_FindText",
+                "TextReco",
                 image,
                 pipeline_override={
-                    "Fight_FindText": {
-                        "expected": "神龙冈布奥",
-                    }
+                    "TextReco": {
+                        "recognition": "OCR",
+                        "expected": "神龙",
+                        "roi": [21, 217, 682, 762],
+                        "action": "DoNothing",
+                    },
                 },
             )
             status = TextRecoDetail

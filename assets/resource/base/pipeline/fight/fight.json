@@ -36,7 +36,7 @@
             707,
             947
         ],
-        "action": "DoNothing",
+        "action": "Click",
         "threshold": 0.7,
         "post_delay": 500,
         "timeout": 2000
