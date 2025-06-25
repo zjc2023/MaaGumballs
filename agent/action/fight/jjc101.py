@@ -654,3 +654,38 @@ class JJC_DragonWishTest(CustomAction):
         fightUtils.dragonwish("工资", context)
 
         return CustomAction.RunResult(success=True)
+
+
+@AgentServer.custom_action("JJC_CalEarning")
+class JJC_CalEarning(CustomAction):
+    # 执行函数
+    def run(
+        self,
+        context: Context,
+        argv: CustomAction.RunArg,
+    ) -> CustomAction.RunResult:
+        time.sleep(3)
+        for _ in range(5):
+            context.tasker.controller.post_click(640, 360)
+            time.sleep(0.2)
+            context.tasker.controller.post_click(640, 360)
+        image = context.tasker.controller.post_screencap().wait().get()
+        if recoDetail := context.run_recognition(
+            "CallEarning_Reco",
+            image,
+            pipeline_override={
+                "CallEarning_Reco": {
+                    "recognition": "OCR",
+                    "expected": ["获得"],
+                    "roi": [78, 940, 471, 116],
+                },
+            },
+        ):
+            EarningDetail = fightUtils.pair_by_distance(recoDetail.all_results, 400)
+            logger.info(EarningDetail)
+
+        context.run_task("ReturnBigMap")
+        time.sleep(3)
+        context.run_task("Start_Up")
+
+        return CustomAction.RunResult(success=True)

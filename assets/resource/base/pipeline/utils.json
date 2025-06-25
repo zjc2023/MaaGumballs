@@ -135,6 +135,7 @@
             "CheckBigMap"
         ],
         "interrupt": [
+            "Communicating",
             "ConfirmButton",
             "FlipPage",
             "BackText"

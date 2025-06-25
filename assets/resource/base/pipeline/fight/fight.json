@@ -64,7 +64,7 @@
     },
     "Fight_LeaveMaze": {
         "next": [
-            "AlchemyReward"
+            "Fight_CalEarning"
         ],
         "interrupt": [
             "Communicating",
@@ -73,6 +73,20 @@
             "BackText",
             "Fight_LeaveMaze_Leave"
         ]
+    },
+    "Fight_CalEarning": {
+        "recognition": "OCR",
+        "expected": [
+            "迷宫结算"
+        ],
+        "roi": [
+            175,
+            19,
+            370,
+            225
+        ],
+        "action": "Custom",
+        "custom_action": "JJC_CalEarning"
     },
     "Fight_LeaveMaze_Leave": {
         "recognition": "TemplateMatch",
