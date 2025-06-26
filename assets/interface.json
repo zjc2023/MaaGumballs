@@ -64,6 +64,13 @@
                 "{PROJECT_DIR}/resource/base",
                 "{PROJECT_DIR}/resource/hk_tw"
             ]
+        },        
+        {
+            "name": "测试服",
+            "path": [
+                "{PROJECT_DIR}/resource/base",
+                "{PROJECT_DIR}/resource/test"
+            ]
         }
     ],
     "agent": {
