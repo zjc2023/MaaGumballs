@@ -434,6 +434,8 @@ class JJC101(CustomAction):
                 "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
             ):
                 logger.warning("检查到神秘的洞穴捏，请冒险者大人检查！！")
+                fightUtils.send_alert("洞穴警告", "发现神秘洞穴，请及时处理！")
+
                 while not context.run_recognition(
                     "Fight_OpenedDoor",
                     context.tasker.controller.post_screencap().wait().get(),

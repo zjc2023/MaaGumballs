@@ -57,6 +57,9 @@
         "action": "Click",
         "next": [
             "JJC_Fighting"
+        ],
+        "interrupt": [
+            "GameLoading"
         ]
     },
     "JJC_Fighting": {

@@ -1,5 +1,6 @@
 from maa.context import Context
 from utils import logger
+from plyer import notification
 
 import math
 import re
@@ -32,6 +33,15 @@ EquipmentType: dict = {
     "鞋子": [536, 491, 122, 123],
     "宝物": [411, 477, 131, 141],
 }
+
+
+def send_alert(title, message):
+    try:
+        notification.notify(
+            title=title, message=message, app_name="MaaGumballs", timeout=10
+        )
+    except Exception as e:
+        logger.error(f"通知发送失败：{str(e)}")
 
 
 # 从字符串中识别并返回数字
