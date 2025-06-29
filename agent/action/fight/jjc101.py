@@ -638,9 +638,9 @@ class Fight_TestAction(CustomAction):
         # fightUtils.title_learn_branch("魔法", 5, "魔力强化", 1, context)
         # fightUtils.title_learn_branch("魔法", 5, "生命强化", 2, context)
 
-        fightUtils.title_learn("魔法", 2, "白袍法师", 3, context)
-        fightUtils.title_learn("魔法", 3, "祭司", 3, context)
-        fightUtils.title_learn("魔法", 4, "气系大师", 3, context)
+        # fightUtils.title_learn("魔法", 2, "白袍法师", 3, context)
+        # fightUtils.title_learn("魔法", 3, "祭司", 3, context)
+        # fightUtils.title_learn("魔法", 4, "气系大师", 3, context)
 
         # fightUtils.disassembleEquipment(
         #     6,

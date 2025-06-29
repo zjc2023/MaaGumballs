@@ -914,3 +914,11 @@ def PushOne(context: Context):
                     logger.info("没有治疗术、寒冰护盾、吸能术，死亡波纹, 无法推序！")
                     return False
     return True
+
+
+def autoOpenPicup(context: Context):
+    # 测试中
+    context.tasker.controller.post_touch_down(68, 661)
+    time.sleep(5)
+    context.run_task("Fight_OpenedDoor")
+    context.tasker.controller.post_touch_up()
