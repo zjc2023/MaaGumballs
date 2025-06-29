@@ -285,6 +285,17 @@ class JJC101(CustomAction):
             context.tasker.controller.post_click(boss_x, boss_y).wait()
             time.sleep(0.3)
 
+    def handle_boos_100Dragon_event(self, context: Context):
+        fightUtils.cast_magic("火", "失明术", context)
+        for _ in range(2):
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+        fightUtils.cast_magic("特殊", "龙威", context)
+        for _ in range(2):
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+        fightUtils.cast_magic("火", "失明术", context)
+        for _ in range(2):
+            context.tasker.controller.post_click(boss_x, boss_y).wait()
+
     def handle_boos_event(self, context: Context):
         if self.layers == 30:
             fightUtils.cast_magic("光", "祝福术", context)
