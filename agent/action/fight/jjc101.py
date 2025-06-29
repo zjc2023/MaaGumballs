@@ -689,9 +689,9 @@ class JJC_CalEarning(CustomAction):
     ) -> CustomAction.RunResult:
         time.sleep(3)
         for _ in range(5):
-            context.tasker.controller.post_click(640, 360)
+            context.tasker.controller.post_click(360, 640)
             time.sleep(0.2)
-            context.tasker.controller.post_click(640, 360)
+            context.tasker.controller.post_click(360, 640)
         image = context.tasker.controller.post_screencap().wait().get()
         if recoDetail := context.run_recognition(
             "CallEarning_Reco",
