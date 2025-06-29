@@ -257,8 +257,9 @@ class JJC101(CustomAction):
                 for _ in range(2):
                     context.run_task("Bag_Open")
                     fightUtils.findItem("异域的灯芯", True, context, boss_x, boss_y)
-
-            context.run_task("Fight_Victory")
+            image = context.tasker.controller.post_screencap().wait().get()
+            if context.run_recognition("Fight_Victory", image):
+                context.run_task("Fight_Victory")
             context.run_task("JJC_Abattoir_Chest")
             context.run_task("Fight_OpenedDoor")
         return True

@@ -8,7 +8,7 @@
             "ConfirmButton_500ms",
             "TitlePanel_Series",
             "TitlePanel_Open",
-            "BackText_500ms"
+            "BackText_700ms"
         ]
     },
     "TitlePanel_Open": {
@@ -38,8 +38,9 @@
         ],
         "interrupt": [
             "ConfirmButton_500ms",
-            "BackText_500ms"
-        ]
+            "BackText_700ms"
+        ],
+        "timeout": 2000
     },
     "TitlePanel_Panel": {
         "recognition": "OCR",
