@@ -808,6 +808,16 @@ def dragonwish(targetWish: str, context: Context):
 
 
 def Auto_CallDog(context: Context):
+    # 叫狗初始化
+    OpenDetail = context.run_task("Bag_Open")
+    if OpenDetail.nodes:
+        if not checkEquipment("腰带", 2, "电弧束带", context):
+            findEquipment(2, "电弧束带", True, context)
+        if not checkEquipment("宝物", 4, "毁灭者石板", context):
+            findEquipment(4, "毁灭者石板", True, context)
+        context.run_task("Fight_ReturnMainWindow")
+        logger.info(f"叫狗装备检查完成")
+
     # 打开背包
     OpenDetail = context.run_task("Bag_Open")
     if OpenDetail.nodes:
