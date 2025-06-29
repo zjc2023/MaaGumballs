@@ -280,7 +280,7 @@ class JJC101(CustomAction):
     def handle_boos_100_event(self, context: Context):
         fightUtils.cast_magic("气", "静电场", context)
         fightUtils.cast_magic("火", "毁灭之刃", context)
-        fightUtils.cast_magic("气", "瓦解术", context)
+        fightUtils.cast_magic("气", "瓦解射线", context)
         for _ in range(6):
             context.tasker.controller.post_click(boss_x, boss_y).wait()
             time.sleep(0.3)
