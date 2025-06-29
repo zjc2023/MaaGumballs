@@ -88,7 +88,7 @@ class JJC101(CustomAction):
 
                 if not fightUtils.checkEquipment("鞋子", 6, "次元靴", context):
                     fightUtils.findEquipment(6, "次元靴", True, context)
-                    
+
                 if not fightUtils.checkEquipment("项链", 6, "星月教挂坠", context):
                     fightUtils.findEquipment(6, "星月教挂坠", True, context)
                 context.run_task("Fight_ReturnMainWindow")

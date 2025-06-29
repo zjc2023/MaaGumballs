@@ -8,7 +8,9 @@
 # MaaGumballs
 
 基于全新架构的 不思议迷宫 小助手。图像技术 + 模拟控制，解放双手！
-由 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 强力驱动！
+由 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 强力驱动  
+<a href="https://maagb.xyz/" target="_blank" style="font-weight: bold;">🔗 本项目 文档站 仓库</a>  
+<a href="https://github.com/KhazixW2/MaaGumballs" target="_blank" style="font-weight: bold;">🔗 本项目 GitHub 仓库</a>
 
 </div>
 <p align="center">
@@ -41,7 +43,7 @@
 
 - [新手上路](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/新手上路.md)(**使用前必看**)
 - [功能介绍](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/功能介绍.md)
-- [MaaPiCli使用说明](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/MaaPiCli.md)
+- [MaaPiCli使用说明](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/MaaPicli.md)
 - [连接设置](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/连接设置.md)
 - [常见问题](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/常见问题.md)
 - [Mirror酱使用说明](https://github.com/KhazixW2/MaaGumballs/blob/main/docs/zh_cn/manual/Mirror酱.md)
