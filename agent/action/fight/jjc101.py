@@ -342,12 +342,122 @@ class JJC101(CustomAction):
                 return False
         return True
 
-    def handle_layers_event(self, context: Context):
+    def handle_preLayers_event(self, context: Context):
+        logger.info(f"第{self.layers}层 战前准备")
         self.Check_DefaultEquipment(context)
         self.Check_DefaultTitle(context)
-        self.Check_DefaultStatus(context)
         self.handle_dog_event(context)
         self.handle_abattoir_event(context)
+        return True
+
+    def handle_perfect_event(self, context: Context):
+        # 检测完美击败
+        if not self.isHaveSpartanHat and context.run_recognition(
+            "Fight_Perfect", context.tasker.controller.post_screencap().wait().get()
+        ):
+            logger.info(f"第{self.layers} 完美击败")
+            while context.run_recognition(
+                "Fight_Perfect",
+                context.tasker.controller.post_screencap().wait().get(),
+            ):
+                pass
+
+    def handle_sparta_event(self, context: Context):
+        # 寻找斯巴达头盔
+        if not self.isHaveSpartanHat:
+            # 检测三次斯巴达的头盔，检查到了就提前结束检查
+            time.sleep(1)
+            for _ in range(5):
+                img = context.tasker.controller.post_screencap().wait().get()
+                if context.run_recognition("JJC_Find_Body", img):
+                    context.run_task("JJC_Find_Body")
+                    self.isHaveSpartanHat = True
+                    logger.info("已有斯巴达头盔，或找到斯巴达头盔了！！")
+                    break
+
+    def handle_skillShop_event(self, context: Context):
+        # 打开技能商店
+        image = context.tasker.controller.post_screencap().wait().get()
+        if context.run_recognition("Fight_SkillShop", image):
+            context.run_task("Fight_SkillShop")
+
+    def handle_downstair_event(self, context: Context):
+        recoDetail = context.run_task("Fight_OpenedDoor")
+        if not recoDetail.nodes and context.run_recognition(
+            "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
+        ):
+            logger.warning("检查到神秘的洞穴捏，请冒险者大人检查！！")
+            fightUtils.send_alert("洞穴警告", "发现神秘洞穴，请及时处理！")
+
+            while not context.run_recognition(
+                "Fight_OpenedDoor",
+                context.tasker.controller.post_screencap().wait().get(),
+            ):
+                time.sleep(3)
+
+            logger.info("冒险者大人已找到钥匙捏，继续探索")
+            context.run_task("Fight_OpenedDoor")
+
+    def handle_stone_event(self, context: Context):
+        if self.layers <= 29 and context.run_recognition(
+            "JJC_StoneChest", context.tasker.controller.post_screencap().wait().get()
+        ):
+            context.run_task("JJC_StoneChest")
+
+    def handle_postLayers_event(self, context: Context):
+        logger.info(f"第{self.layers}层 战后事件检测中")
+        self.handle_perfect_event(context)
+        self.Check_DefaultStatus(context)
+        self.handle_stone_event(context)
+        self.handle_sparta_event(context)
+        self.handle_skillShop_event(context)
+        self.handle_downstair_event(context)
+
+    def handle_clearCurLayer_event(self, context: Context):
+        # Boos层开始探索
+        if self.layers >= 30 and self.layers % 10 == 0:
+            # boss召唤动作
+            time.sleep(6)
+            self.handle_boos_event(context)
+            # 检测神龙
+            time.sleep(1)
+            img = context.tasker.controller.post_screencap().wait().get()
+            if context.run_recognition("Fight_FindDragon", img):
+                logger.info("是神龙,俺,俺们有救了！！！")
+                fightUtils.dragonwish("工资", context)
+                logger.info("神龙带肥家lo~")
+
+            return False
+        # 小怪层探索
+        else:
+            if (
+                self.layers >= 85
+                and self.layers % 2 == 1
+                and fightUtils.cast_magic("土", "地震术", context)
+            ):
+                pass
+            else:
+                context.run_task("JJC_Fight_ClearCurrentLayer")
+
+        return True
+
+    def handle_interrupt_event(self, context: Context):
+        # 检测卡剧情
+        image = context.tasker.controller.post_screencap().wait().get()
+        if context.run_recognition(
+            "JJC_Inter_Confirm",
+            image,
+        ):
+            logger.info("检测到卡剧情, 本层重新探索")
+            context.run_task("JJC_Inter_Confirm")
+            return False
+
+        # 检测卡返回
+        if context.run_recognition("BackText", image):
+            logger.info("检测到卡返回, 本层重新探索")
+            context.run_task("Fight_ReturnMainWindow")
+            return False
+
         return True
 
     # 执行函数
@@ -366,109 +476,42 @@ class JJC101(CustomAction):
                 logger.info("检测到停止任务, 开始退出agent")
                 return CustomAction.RunResult(success=False)
 
-            # 检查当前层数
+            # 检查当前层数, 确保不是0层
             context.run_task("Fight_ReturnMainWindow")
-            RunResult = context.run_task("Fight_CheckLayer")
-            if RunResult.nodes:
-                self.layers = fightUtils.extract_num_layer(
-                    RunResult.nodes[0].recognition.best_result.text
+            tempLayers = -1
+            while tempLayers <= 0 and (
+                RunResult := context.run_recognition(
+                    "Fight_CheckLayer",
+                    context.tasker.controller.post_screencap().wait().get(),
                 )
+            ):
 
-            # 检查是否到达100层
-            if self.layers == 96:
-                logger.info(f"current layers {self.layers}, 开始退出agent")
-                break
+                tempLayers = fightUtils.extract_num_layer(RunResult.best_result.text)
+                if context.tasker.stopping:
+                    logger.info("检测到停止任务, 开始退出agent")
+                    return CustomAction.RunResult(success=False)
+            self.layers = tempLayers
+
             logger.info(f"Start Explore {self.layers} layer.")
 
-            # 检测是否触发层数事件
-            self.handle_layers_event(context)
+            # 检测是否触发战前事件
+            self.handle_preLayers_event(context)
 
-            # Boos层开始探索
-            if self.layers >= 30 and self.layers % 10 == 0:
-                # boss召唤动作
-                time.sleep(6)
-                self.handle_boos_event(context)
-                # 检测神龙
-                time.sleep(1)
-                img = context.tasker.controller.post_screencap().wait().get()
-                if context.run_recognition("Fight_FindDragon", img):
-                    logger.info("是神龙,俺,俺们有救了！！！")
-                    fightUtils.dragonwish("工资", context)
-                    logger.info("神龙带肥家lo~")
+            # 检查是否到达100层
+            if self.layers == 95:
+                logger.info(f"current layers {self.layers}, 开始退出agent")
+                break
 
-                continue
-            # 小怪层探索
-            else:
-                if (
-                    self.layers >= 85
-                    and self.layers % 2 == 1
-                    and fightUtils.cast_magic("土", "地震术", context)
-                ):
-                    pass
-                else:
-                    context.run_task("JJC_Fight_ClearCurrentLayer")
-
-            # logger.info(f"头盔状态: {self.isHaveSpartanHat}")
-            # 检测完美击败
-            if not self.isHaveSpartanHat and context.run_recognition(
-                "Fight_Perfect", context.tasker.controller.post_screencap().wait().get()
-            ):
-                logger.info(f"第{self.layers} 完美击败")
-                while context.run_recognition(
-                    "Fight_Perfect",
-                    context.tasker.controller.post_screencap().wait().get(),
-                ):
-                    pass
-
-            # 检测卡剧情
-            image = context.tasker.controller.post_screencap().wait().get()
-            if context.run_recognition(
-                "JJC_Inter_Confirm",
-                image,
-            ):
-                logger.info("检测到卡剧情, 本层重新探索")
-                context.run_task("JJC_Inter_Confirm")
+            # 探索当前层
+            if not self.handle_clearCurLayer_event(context):
                 continue
 
-            # 检测卡返回
-            image = context.tasker.controller.post_screencap().wait().get()
-            if context.run_recognition("BackText", image):
-                logger.info("检测到卡返回, 本层重新探索")
-                context.run_task("Fight_ReturnMainWindow")
+            # 检查是否触发中断事件
+            if not self.handle_interrupt_event(context):
                 continue
 
-            # 胜利者石柱
-            if self.layers <= 26:
-                context.run_task("JJC_StoneChest")
-
-            # 寻找斯巴达头盔
-            if not self.isHaveSpartanHat:
-                # 检测三次斯巴达的头盔，检查到了就提前结束检查
-                time.sleep(1)
-                for _ in range(5):
-                    img = context.tasker.controller.post_screencap().wait().get()
-                    if context.run_recognition("JJC_Find_Body", img):
-                        context.run_task("JJC_Find_Body")
-                        self.isHaveSpartanHat = True
-                        logger.info("已有斯巴达头盔，或找到斯巴达头盔了！！")
-                        break
-
-            # 该层探索结束
-            recoDetail = context.run_task("Fight_OpenedDoor")
-            if not recoDetail.nodes and context.run_recognition(
-                "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
-            ):
-                logger.warning("检查到神秘的洞穴捏，请冒险者大人检查！！")
-                fightUtils.send_alert("洞穴警告", "发现神秘洞穴，请及时处理！")
-
-                while not context.run_recognition(
-                    "Fight_OpenedDoor",
-                    context.tasker.controller.post_screencap().wait().get(),
-                ):
-                    time.sleep(3)
-
-                logger.info("冒险者大人已找到钥匙捏，继续探索")
-                context.run_task("Fight_OpenedDoor")
+            # 检查是否触发战后事件
+            self.handle_postLayers_event(context)
 
         logger.info(f"竞技场探索结束，当前到达{self.layers}层")
         context.run_task("Fight_LeaveMaze")
