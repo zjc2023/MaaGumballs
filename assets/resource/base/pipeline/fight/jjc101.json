@@ -225,7 +225,8 @@
     "JJC_OpenForceOfNature": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight/JJC/自然之子技能.png"
+            "fight/JJC/自然之子技能.png",
+            "fight/JJC/自然之子_春回大地.png"
         ],
         "roi": [
             449,
