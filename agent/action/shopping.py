@@ -258,8 +258,8 @@ class SkillShop_Shopping(CustomAction):
                 }
             },
         ):
-            logger.info(f"找到商品{len(recoDetail.all_results)}个, 开始购物")
-            for result in recoDetail.all_results:
+            logger.info(f"找到商品{len(recoDetail.filterd_results)}个, 开始购物")
+            for result in recoDetail.filterd_results:
                 if result.score < 0.8:
                     continue
                 box = result.box
