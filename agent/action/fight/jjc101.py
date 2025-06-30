@@ -405,6 +405,7 @@ class JJC101(CustomAction):
         # 打开技能商店
         image = context.tasker.controller.post_screencap().wait().get()
         if context.run_recognition("Fight_SkillShop", image):
+            logger.info("打开技能商店")
             context.run_task("Fight_SkillShop")
 
     def handle_downstair_event(self, context: Context):

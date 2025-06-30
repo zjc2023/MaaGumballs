@@ -41,8 +41,10 @@ def send_alert(title, message):
         logger.error(f"通知发送失败：{str(e)}")
 
 
-# 从字符串中识别并返回数字
 def extract_num(input_string):
+    """
+    从字符串中识别并返回数字
+    """
     match = re.search(r"(\d+)", input_string)
     if match:
         return int(match.group(1))
@@ -50,8 +52,10 @@ def extract_num(input_string):
         return 0
 
 
-# 从字符串中识别并返回有“层”这个文字的前缀数字
 def extract_num_layer(input_string):
+    """
+    从字符串中识别并返回有“层”这个文字的前缀数字
+    """
     match = re.search(r"(\d+)层", input_string)
     if match:
         return int(match.group(1))
@@ -525,9 +529,9 @@ def checkBuffStatus(buffName: str, context: Context):
             }
         },
     ):
-        logger.info(f"已发现: {buffName}")
+        logger.info(f"已发现: {buffName} buff")
         return True
-    logger.info(f"未发现: {buffName}")
+    logger.info(f"未发现: {buffName} buff")
     return False
 
 
