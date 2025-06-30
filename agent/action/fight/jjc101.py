@@ -4,13 +4,10 @@ from maa.context import Context
 from utils import logger
 
 from action.fight import fightUtils
+from action.fight import fightProcessor
 
 import time
 
-cols, rows = 5, 6
-roi_list = fightUtils.calRoiList()
-roi_matrix = [roi_list[i * cols : (i + 1) * cols] for i in range(rows)]
-visited = [[0] * cols for _ in range(rows)]
 boss_x, boss_y = 360, 800
 
 
@@ -521,44 +518,9 @@ class JJC101(CustomAction):
 @AgentServer.custom_action("JJC_Fight_ClearCurrentLayer")
 class JJC_Fight_ClearCurrentLayer(CustomAction):
 
-    def CheckMonsterCnt(self, context: Context):
-        global visited
-        img = context.tasker.controller.post_screencap().wait().get()
-
-        # 检测是否有怪物并攻击
-        for r in range(rows):
-            for c in range(cols):  # 重试次数
-                if visited[r][c] >= 30:
-                    continue
-                # 计算 ROI 区域
-                x, y, w, h = roi_matrix[r][c]
-                roi_image = img[y : y + h, x : x + w]
-                LeftBottomImg = roi_image[0:60, 0:60].copy()  # 提取左下角 20x20 区域
-                left_detected = fightUtils.rgb_pixel_count(
-                    LeftBottomImg, [190, 35, 35], [235, 65, 65], 20, context
-                )
-                if left_detected:
-                    visited[r][c] += 1
-                    # logger.info(f"检测({r + 1},{c + 1})有怪物: {x}, {y}, {w}, {h}")
-                    for _ in range(3):
-                        context.tasker.controller.post_click(
-                            x + w // 2, y + h // 2
-                        ).wait()
-                        time.sleep(0.1)
-                    time.sleep(0.1)
-        return True
-
-    def CheckClosedDoor(self, context: Context):
-        image = context.tasker.controller.post_screencap().wait().get()
-        if recoDetail := context.run_recognition("Fight_ClosedDoor", image):
-            for r in range(rows):
-                for c in range(cols):
-                    if fightUtils.is_roi_in_or_mostly_in(
-                        recoDetail.box, roi_matrix[r][c]
-                    ):
-                        logger.info(f"识别到 ClosedDoor 位于 {r+1},{c+1}")
-                        return r, c
-        return 0, 0
+    def __init__(self):
+        super().__init__()
+        self.fightProcessor = fightProcessor.FightProcessor()
 
     # 执行函数
     def run(
@@ -566,89 +528,7 @@ class JJC_Fight_ClearCurrentLayer(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
-        # 初始化
-        isCheckDragon = False
-        FailCheckMonsterCnt = 0
-        FailCheckGridCnt = 0
-        checkGridCnt = 0
-        global visited
-        DoorX, DoorY = self.CheckClosedDoor(context)
-        visited = [[0] * cols for _ in range(rows)]
-        visited[DoorX][DoorY] = 999
-
-        if context.run_recognition(
-            "Fight_CheckDragonBall",
-            context.tasker.controller.post_screencap().wait().get(),
-        ):
-            isCheckDragon = True
-        else:
-            isCheckDragon = False
-
-        # 开始清理当前层
-        cnt = 18
-        while cnt > 0:
-            if context.tasker.stopping:
-                logger.info("JJC_Fight_ClearCurrentLayer 被停止")
-                return CustomAction.RunResult(success=False)
-
-            # 截图
-            img = context.tasker.controller.post_screencap().wait().get()
-
-            # 检测神龙
-            if isCheckDragon and context.run_recognition("Fight_FindDragon", img):
-                logger.info("是神龙,俺,俺们有救了！！！")
-                fightUtils.dragonwish("工资", context)
-                logger.info("神龙带肥家lo~")
-                continue
-
-            # 检测地板
-            cnt -= 1
-            checkGridCnt = 0
-            for r in range(rows):
-                for c in range(cols):  # 重试次数
-                    # 如果已经访问过该格子，并且已经清理过，跳过
-                    if visited[r][c] >= 5:
-                        continue
-
-                    # 计算 ROI 区域
-                    x, y, w, h = roi_matrix[r][c]
-                    roi_image = img[y : y + h, x : x + w]
-                    LeftBottomImg = roi_image[
-                        h - 15 : h, 0:20
-                    ].copy()  # 提取左下角 20x20 区域
-                    RightBottomImg = roi_image[
-                        h - 15 : h, w - 20 : w
-                    ].copy()  # 提取右下角 20x20 区域
-
-                    # OpenCV方式
-                    left_detected = fightUtils.rgb_pixel_count(
-                        LeftBottomImg, [130, 135, 143], [170, 175, 183], 10, context
-                    )
-                    right_detected = fightUtils.rgb_pixel_count(
-                        RightBottomImg, [130, 135, 143], [170, 175, 183], 10, context
-                    )
-
-                    if left_detected or right_detected:
-                        context.tasker.controller.post_click(
-                            x + w // 2, y + h // 2
-                        ).wait()
-                        visited[r][c] += 1
-                        checkGridCnt += 1
-                        time.sleep(0.1)
-
-            # 检测怪物并进行攻击
-            if not self.CheckMonsterCnt(context):
-                FailCheckMonsterCnt += 1
-
-            # 检测grid是否清理完, 几次清理完则退出
-            if not checkGridCnt:
-                FailCheckGridCnt += 1
-
-            # 如果提前清理完该层，那么不需要继续等待，可以提前退出
-            if FailCheckMonsterCnt >= 5 or FailCheckGridCnt >= 3:
-                logger.info("找不到怪物或格子, 检测下一层的门")
-                break
-
+        self.fightProcessor.clearCurrentLayer(context)
         return CustomAction.RunResult(success=True)
 
 

@@ -5,9 +5,6 @@ from plyer import notification
 import math
 import re
 import time
-import cv2
-import numpy as np
-
 
 # 神龙许愿ROI [77,465,570,553]
 # 神龙许愿list = ["我要获得钻石", "我要神奇的果实", "我要更多的伙伴", "我要获得巨龙之力", "我要学习龙语魔法", "我要变得更强", "我要变得富有", "我要最凶残的装备", "我要更多的伙伴", "我要大量的矿石", "我要你的收藏品", "我要您的碎片"]
@@ -60,40 +57,6 @@ def extract_num_layer(input_string):
         return int(match.group(1))
     else:
         return 0
-
-
-# 初始化地板的 ROI 列表
-def calRoiList():
-    start_x, start_y = 15, 222
-    width, height = 138, 126
-    cols, rows = 5, 6
-
-    roi_list = []
-
-    for r in range(rows):
-        for c in range(cols):
-            x = start_x + c * width
-            y = start_y + r * height
-            roi = [x, y, width, height]
-            roi_list.append(roi)
-    return roi_list
-
-
-# 假设存在一个辅助函数用于判断两个 ROI 区域是否重叠或者大部分重叠
-# 这里需要根据实际的 ROI 数据结构实现具体逻辑
-def is_roi_in_or_mostly_in(roi1, roi2):
-    # 简单示例：假设 ROI 是 (x, y, width, height) 元组
-    # 计算两个 ROI 的交集面积
-    x1 = max(roi1[0], roi2[0])
-    y1 = max(roi1[1], roi2[1])
-    x2 = min(roi1[0] + roi1[2], roi2[0] + roi2[2])
-    y2 = min(roi1[1] + roi1[3], roi2[1] + roi2[3])
-    if x2 > x1 and y2 > y1:
-        intersection_area = (x2 - x1) * (y2 - y1)
-        roi1_area = roi1[2] * roi1[3]
-        # 判断交集面积是否超过 roi1 面积的一半
-        return intersection_area / roi1_area >= 0.5
-    return False
 
 
 def cast_magic(Type: str, MagicName: str, context: Context, TargetPos: tuple = (0, 0)):
@@ -859,58 +822,6 @@ def Auto_CallDog(context: Context):
         time.sleep(1)
         logger.info("狗子召唤成功！！！")
     return True
-
-
-def rgb_pixel_count(
-    image,
-    lower,
-    upper,
-    count,
-    context: Context,
-    method="opencv",
-) -> int:
-    """
-    RGB颜色空间像素计数
-    :param image: BGR格式图像（需转换）
-    :param roi: 检测区域 [x,y,w,h]
-    :param lower: RGB下限 [R,G,B] (0-255)
-    :param upper: RGB上限 [R,G,B]
-    :return: 匹配像素数量
-    """
-
-    # RGB转BGR
-    lower = [lower[2], lower[1], lower[0]]
-    upper = [upper[2], upper[1], upper[0]]
-
-    if method == "opencv":
-        # 创建三维掩膜
-        lower_bound = np.array(lower, dtype=np.uint8)
-        upper_bound = np.array(upper, dtype=np.uint8)
-        mask = cv2.inRange(image, lower_bound, upper_bound)
-
-        # 统计有效像素数量
-        valid_pixel_count = cv2.countNonZero(mask)
-        return valid_pixel_count if valid_pixel_count > count else 0
-
-    elif recoDetail := context.run_recognition(
-        "GridCheckTemplate",
-        image,
-        pipeline_override={
-            "GridCheckTemplate": {
-                "recognition": "ColorMatch",
-                "method": 4,
-                "lower": lower,
-                "upper": upper,
-                "count": count,
-            }
-        },
-    ):
-        if recoDetail:
-            valid_pixel_count = recoDetail.best_result.count
-            return valid_pixel_count if valid_pixel_count > count else 0
-        return 0
-    else:
-        return 0
 
 
 def PushOne(context: Context):
