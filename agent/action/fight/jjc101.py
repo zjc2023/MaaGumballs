@@ -276,6 +276,33 @@ class JJC101(CustomAction):
         for _ in range(3):
             context.tasker.controller.post_click(boss_x, boss_y).wait()
 
+    def handle_boss_80_90_event(self, context: Context):
+        context.run_task(
+            "JJC_OpenForceOfNature",
+            pipeline_override={
+                "JJC_OpenForceOfNature_Switch": {
+                    "expected": ["开启自然守护"],
+                }
+            },
+        )
+        logger.info("没有时停，开启自然守护流打法")
+        fightUtils.cast_magic("火", "失明术", context)
+        fightUtils.PushOne_defense(context)
+        fightUtils.PushOne_defense(context)
+
+        # 循环——直到boos死亡
+        while context.run_recognition(
+            "Fight_CheckBossStatus",
+            context.tasker.controller.post_screencap().wait().get(),
+        ):
+            fightUtils.cast_magic("水", "冰锥术", context)
+            fightUtils.PushOne_defense(context)
+            fightUtils.cast_magic("土", "石肤术", context)
+            fightUtils.cast_magic("火", "失明术", context)
+            fightUtils.PushOne_defense(context)
+            fightUtils.PushOne_defense(context)
+            fightUtils.PushOne_defense(context)
+
     def handle_boos_100_event(self, context: Context):
         fightUtils.cast_magic("气", "静电场", context)
         fightUtils.cast_magic("火", "毁灭之刃", context)
@@ -316,15 +343,15 @@ class JJC101(CustomAction):
             fightUtils.cast_magic("水", "治疗术", context)
 
         elif self.layers <= 80:
-            self.handle_boos_80_event(context)
+            self.handle_boss_80_90_event(context)
 
         elif self.layers <= 100:
             if fightUtils.cast_magic("气", "时间停止", context):
                 self.handle_boos_100_event(context)
             else:
-                self.handle_boos_80_event(context)
+                self.handle_boss_80_90_event(context)
         # 捡东西
-        time.sleep(2)
+        time.sleep(3)
         context.run_task("Fight_OpenedDoor")
         return True
 

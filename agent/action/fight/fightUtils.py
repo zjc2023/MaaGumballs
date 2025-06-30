@@ -837,6 +837,23 @@ def PushOne(context: Context):
     return True
 
 
+def PushOne_defense(context: Context):
+    """
+    防御性的拖回合
+    """
+    if not cast_magic("水", "寒冰护盾", context):
+        if not cast_magic("水", "治疗术", context):
+            if not cast_magic("光", "神恩术", context):
+                if not cast_magic("光", "祝福术", context):
+                    pass
+                else:
+                    logger.info("怎么什么都没有，只能释放闪电火球了")
+                    if not cast_magic("气", "闪电术", context):
+                        cast_magic("火", "火球术", context)
+
+    return True
+
+
 def autoOpenPicup(context: Context):
     # 测试中
     context.tasker.controller.post_touch_down(68, 661)
