@@ -263,7 +263,7 @@ class JJC101(CustomAction):
             context.run_task("Fight_OpenedDoor")
         return True
 
-    def handle_boos_80_event(self, context: Context):
+    def handle_boss_80_event(self, context: Context):
         fightUtils.cast_magic("火", "失明术", context)
         fightUtils.cast_magic("气", "静电场", context)
         if not fightUtils.cast_magic("水", "冰锥术", context):
@@ -290,7 +290,7 @@ class JJC101(CustomAction):
         fightUtils.PushOne_defense(context)
         fightUtils.PushOne_defense(context)
 
-        # 循环——直到boos死亡
+        # 循环——直到boss死亡
         while context.run_recognition(
             "Fight_CheckBossStatus",
             context.tasker.controller.post_screencap().wait().get(),
@@ -303,7 +303,7 @@ class JJC101(CustomAction):
             fightUtils.PushOne_defense(context)
             fightUtils.PushOne_defense(context)
 
-    def handle_boos_100_event(self, context: Context):
+    def handle_boss_100_event(self, context: Context):
         fightUtils.cast_magic("气", "静电场", context)
         fightUtils.cast_magic("火", "毁灭之刃", context)
         fightUtils.cast_magic("气", "瓦解射线", context)
@@ -311,7 +311,7 @@ class JJC101(CustomAction):
             context.tasker.controller.post_click(boss_x, boss_y).wait()
             time.sleep(0.3)
 
-    def handle_boos_100Dragon_event(self, context: Context):
+    def handle_boss_100Dragon_event(self, context: Context):
         fightUtils.cast_magic("火", "失明术", context)
         for _ in range(2):
             context.tasker.controller.post_click(boss_x, boss_y).wait()
@@ -322,7 +322,7 @@ class JJC101(CustomAction):
         for _ in range(2):
             context.tasker.controller.post_click(boss_x, boss_y).wait()
 
-    def handle_boos_event(self, context: Context):
+    def handle_boss_event(self, context: Context):
         if self.layers == 30:
             fightUtils.cast_magic("光", "祝福术", context)
             for _ in range(3):
@@ -347,7 +347,7 @@ class JJC101(CustomAction):
 
         elif self.layers <= 100:
             if fightUtils.cast_magic("气", "时间停止", context):
-                self.handle_boos_100_event(context)
+                self.handle_boss_100_event(context)
             else:
                 self.handle_boss_80_90_event(context)
         # 捡东西
@@ -441,11 +441,11 @@ class JJC101(CustomAction):
         self.handle_downstair_event(context)
 
     def handle_clearCurLayer_event(self, context: Context):
-        # Boos层开始探索
+        # boss层开始探索
         if self.layers >= 30 and self.layers % 10 == 0:
             # boss召唤动作
             time.sleep(6)
-            self.handle_boos_event(context)
+            self.handle_boss_event(context)
             # 检测神龙
             time.sleep(1)
             img = context.tasker.controller.post_screencap().wait().get()
@@ -579,13 +579,13 @@ class Fight_Select(CustomAction):
         # logger.info("选择自然之子中")
         context.run_task(
             "Select_Gumball_1",
-            pipeline_override={"Seleect_InputBox_Text": {"input_text": "自然之子"}},
+            pipeline_override={"select_InputBox_Text": {"input_text": "自然之子"}},
         )
 
         # logger.info("选择贵族")
         context.run_task(
             "Select_Gumball_2",
-            pipeline_override={"Seleect_InputBox_Text": {"input_text": "贵族"}},
+            pipeline_override={"select_InputBox_Text": {"input_text": "贵族"}},
         )
 
         return CustomAction.RunResult(success=True)
