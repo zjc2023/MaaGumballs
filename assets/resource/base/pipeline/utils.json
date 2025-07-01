@@ -251,5 +251,10 @@
         ],
         "duration": 1000,
         "post_delay": 1000
+    },
+    "TaskFailNotify": {
+        "focus": {
+            "succeeded": "[color:Tomato]识别错误,请冒险者大人来看看哦~[/color]"
+        }
     }
 }
