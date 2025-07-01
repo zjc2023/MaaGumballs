@@ -162,8 +162,10 @@ class JJC101(CustomAction):
 
         # 检查冈布奥状态
         tempNum = self.layers % 10
-        if (self.layers >= 55 and (tempNum == 1 or tempNum == 5 or tempNum == 9)) or (
-            self.layers >= 90 and tempNum == 4
+        if (
+            (self.layers >= 55 and (tempNum == 1 or tempNum == 5 or tempNum == 9))
+            or (self.layers >= 90 and tempNum == 4)
+            or (self.layers == 39)
         ):
             StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
             CurrentHP = float(StatusDetail["当前生命值"])
