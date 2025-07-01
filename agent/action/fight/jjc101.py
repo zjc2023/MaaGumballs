@@ -400,6 +400,8 @@ class JJC101(CustomAction):
 
     def handle_skillShop_event(self, context: Context):
         # 打开技能商店
+        if self.layers >= 40:
+            return True
         image = context.tasker.controller.post_screencap().wait().get()
         if context.run_recognition("Fight_SkillShop", image):
             logger.info("打开技能商店")
