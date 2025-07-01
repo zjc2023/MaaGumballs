@@ -206,7 +206,7 @@ class JJC101(CustomAction):
             "JJC_Find_Abattoir",
             image,
         ):
-            logger.info(f"current layers {self.layers} 开始进入角斗场战斗！！！")
+            logger.info(f"进入角斗场战斗！！！")
             context.run_task("JJC_Find_Abattoir")
             if self.layers <= 35:
                 fightUtils.cast_magic("光", "祝福术", context)
@@ -349,7 +349,6 @@ class JJC101(CustomAction):
         return True
 
     def handle_preLayers_event(self, context: Context):
-        logger.info(f"第{self.layers}层 战前准备")
         self.Check_DefaultEquipment(context)
         self.Check_DefaultTitle(context)
         self.handle_dog_event(context)
@@ -400,10 +399,14 @@ class JJC101(CustomAction):
                 "Fight_OpenedDoor",
                 context.tasker.controller.post_screencap().wait().get(),
             ):
+                if context.tasker.stopping:
+                    logger.info("检测到停止任务, 开始退出agent")
+                    return False
                 time.sleep(3)
 
             logger.info("冒险者大人已找到钥匙捏，继续探索")
             context.run_task("Fight_OpenedDoor")
+        return True
 
     def handle_stone_event(self, context: Context):
         if self.layers <= 29 and context.run_recognition(
@@ -412,7 +415,6 @@ class JJC101(CustomAction):
             context.run_task("JJC_StoneChest")
 
     def handle_postLayers_event(self, context: Context):
-        logger.info(f"第{self.layers}层 战后事件检测中")
         self.handle_perfect_event(context)
         self.Check_DefaultStatus(context)
         self.handle_stone_event(context)
