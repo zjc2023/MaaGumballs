@@ -124,7 +124,7 @@
         ],
         "action": "Click",
         "post_delay": 1000,
-        "threshold": 0.8,
+        "threshold": 0.9,
         "timeout": 2000
     },
     "Bag_LoadItem": {
