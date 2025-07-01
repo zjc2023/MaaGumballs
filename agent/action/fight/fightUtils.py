@@ -796,7 +796,7 @@ def Auto_CallDog(context: Context):
 
         # 拖回合
         for i in range(1, 76):
-            context.run_task("JJC_OpenForceOfNature")
+            OpenNatureSwitch(i % 2, context)
         cast_magic("气", "静电场", context)
 
         if cast_magic("火", "毁灭之刃", context):
@@ -856,6 +856,21 @@ def PushOne_defense(context: Context):
                         cast_magic("火", "火球术", context)
 
     return True
+
+
+def OpenNatureSwitch(isDefense: bool, context: Context):
+    tempStr: str = "自然守护" if isDefense else "自然之力"
+    context.run_task(
+        "JJC_OpenForceOfNature",
+        pipeline_override={
+            "JJC_OpenForceOfNature_Switch": {
+                "expected": [f"开启{tempStr}"],
+            },
+            "JJC_OpenForceOfNature_Fail": {
+                "expected": [f"关闭{tempStr}"],
+            },
+        },
+    )
 
 
 def autoOpenPicup(context: Context):

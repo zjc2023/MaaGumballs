@@ -186,25 +186,12 @@ class JJC101(CustomAction):
             else:
                 logger.info("当前生命值大于80%，不使用治疗")
 
+        context.run_task("Fight_ReturnMainWindow")
         if tempNum == 9 and self.layers >= 61 and self.layers <= 90:
-            context.run_task(
-                "JJC_OpenForceOfNature",
-                pipeline_override={
-                    "JJC_OpenForceOfNature_Switch": {
-                        "expected": ["开启自然之力"],
-                    }
-                },
-            )
+            fightUtils.OpenNatureSwitch(False, context)
             logger.info("开启自然之力")
         elif tempNum == 1 and self.layers >= 61 and self.layers <= 90:
-            context.run_task(
-                "JJC_OpenForceOfNature",
-                pipeline_override={
-                    "JJC_OpenForceOfNature_Switch": {
-                        "expected": ["开启自然守护"],
-                    }
-                },
-            )
+            fightUtils.OpenNatureSwitch(True, context)
             logger.info("开启自然守护")
 
         # 保命
@@ -277,14 +264,7 @@ class JJC101(CustomAction):
             context.tasker.controller.post_click(boss_x, boss_y).wait()
 
     def handle_boss_80_90_event(self, context: Context):
-        context.run_task(
-            "JJC_OpenForceOfNature",
-            pipeline_override={
-                "JJC_OpenForceOfNature_Switch": {
-                    "expected": ["开启自然守护"],
-                }
-            },
-        )
+        fightUtils.OpenNatureSwitch(True, context)
         logger.info("没有时停，开启自然守护流打法")
         fightUtils.cast_magic("火", "失明术", context)
         fightUtils.PushOne_defense(context)

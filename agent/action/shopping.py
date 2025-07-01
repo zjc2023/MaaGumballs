@@ -252,7 +252,7 @@ class SkillShop_Shopping(CustomAction):
             pipeline_override={
                 "SkillShop_Reco": {
                     "recognition": "TemplateMatch",
-                    "template": "items/scroll/",
+                    "template": "items/star_scroll/",
                     "roi": [65, 334, 610, 686],
                     "threshold": 0.8,
                 }

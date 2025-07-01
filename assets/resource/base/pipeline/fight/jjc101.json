@@ -239,7 +239,8 @@
         "post_delay": 100,
         "timeout": 2000,
         "next": [
-            "JJC_OpenForceOfNature_Switch"
+            "JJC_OpenForceOfNature_Switch",
+            "JJC_OpenForceOfNature_Fail"
         ]
     },
     "JJC_OpenForceOfNature_Switch": {
@@ -259,6 +260,24 @@
         "timeout": 2000,
         "next": [
             "ClickCenter_200ms"
+        ]
+    },
+    "JJC_OpenForceOfNature_Fail": {
+        "recognition": "OCR",
+        "expected": [
+            "关闭自然之力"
+        ],
+        "roi": [
+            87,
+            652,
+            554,
+            287
+        ],
+        "action": "DoNothing",
+        "post_delay": 200,
+        "timeout": 2000,
+        "next": [
+            "BackText_500ms"
         ]
     }
 }
