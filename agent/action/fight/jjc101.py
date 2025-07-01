@@ -270,18 +270,36 @@ class JJC101(CustomAction):
         fightUtils.PushOne_defense(context)
         fightUtils.PushOne_defense(context)
 
-        # 循环——直到boss死亡
-        while context.run_recognition(
-            "Fight_CheckBossStatus",
-            context.tasker.controller.post_screencap().wait().get(),
-        ):
-            fightUtils.cast_magic("水", "冰锥术", context)
-            fightUtils.PushOne_defense(context)
-            fightUtils.cast_magic("土", "石肤术", context)
-            fightUtils.cast_magic("火", "失明术", context)
-            fightUtils.PushOne_defense(context)
-            fightUtils.PushOne_defense(context)
-            fightUtils.PushOne_defense(context)
+        # 循环——直到boss死亡：使用动作队列逐个执行并检查boss状态
+        actions = [
+            lambda: fightUtils.cast_magic("水", "冰锥术", context),
+            lambda: fightUtils.PushOne_defense(context),
+            lambda: fightUtils.cast_magic("土", "石肤术", context),
+            lambda: fightUtils.cast_magic("火", "失明术", context),
+            lambda: fightUtils.PushOne_defense(context),
+            lambda: fightUtils.PushOne_defense(context),
+            lambda: fightUtils.PushOne_defense(context),
+        ]
+
+        index = 0
+        for _ in range(10):
+            # 执行当前动作
+            actions[index]()
+
+            # 检查boss是否存在
+            if context.run_recognition(
+                "Fight_CheckBossStatus",
+                context.tasker.controller.post_screencap().wait().get(),
+            ):
+                logger.info(f"当前层数 {self.layers} 已经击杀boss")
+                fightUtils.OpenNatureSwitch(False, context)
+                return True
+
+            # 移动到下一个动作，循环执行
+            index = (index + 1) % len(actions)
+
+        logger.warning("十多个回合还没有拿下，是不是狗子挂了")
+        return False
 
     def handle_boss_100_event(self, context: Context):
         fightUtils.cast_magic("气", "静电场", context)
@@ -444,7 +462,7 @@ class JJC101(CustomAction):
                 and self.layers % 2 == 1
                 and fightUtils.cast_magic("土", "地震术", context)
             ):
-                pass
+                time.sleep(3)
             else:
                 context.run_task("JJC_Fight_ClearCurrentLayer")
 

@@ -78,14 +78,8 @@
         "recognition": "DirectHit",
         "action": "Custom",
         "custom_action": "JJC_Fight_ClearCurrentLayer",
-        "post_delay": 300,
-        "timeout": 1000,
-        "next": [],
-        "interrupt": [
-            "Fight_OpenRewardBox",
-            "BackText",
-            "Fight_CheckOpenedDoor"
-        ]
+        "post_delay": 200,
+        "timeout": 1000
     },
     "Fight_ClearCurrentLayer_time_stop": {
         "recognition": "DirectHit",

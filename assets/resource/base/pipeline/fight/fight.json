@@ -583,27 +583,21 @@
         "timeout": 2000
     },
     "Fight_CheckBossStatus": {
-        "doc": "仅仅用作识别boss血量,不做runtask执行",
-        "recognition": "ColorMatch",
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/openedDoor.png",
+            "fight/openedDoor1.png"
+        ],
         "roi": [
-            141,
-            440,
-            85,
-            70
+            147,
+            735,
+            552,
+            339
         ],
-        "lower": [
-            237,
-            79,
-            79
-        ],
-        "upper": [
-            255,
-            99,
-            99
-        ],
-        "count": 15,
         "action": "DoNothing",
-        "timeout": 1000
+        "threshold": 0.7,
+        "post_delay": 500,
+        "timeout": 3000
     },
     "Fight_CheckDragonBall": {
         "recognition": "TemplateMatch",
