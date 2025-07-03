@@ -1,0 +1,113 @@
+{
+    "Activity_Start": {
+        "recognition": "TemplateMatch",
+        "template": "fight/kairo_maze/entry.png",
+        "roi": [
+            333,
+            273,
+            156,
+            690
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 1500,
+        "next": [
+            "Activity_EntryMaze"
+        ],
+        "interrupt": [
+            "Activity_SelectEasy_Interrupt",
+            "Activity_SelectEasy",
+            "Activity_BuyPower",
+            "ConfirmButton",
+            "ClickCenter"
+        ]
+    },
+    "Activity_SelectEasy": {
+        "recognition": "OCR",
+        "expected": "简单模式",
+        "roi": [
+            52,
+            330,
+            621,
+            553
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 500
+    },
+    "Activity_SelectEasy_Interrupt": {
+        "recognition": "OCR",
+        "expected": "进入(.*?)迷宫",
+        "roi": [
+            94,
+            272,
+            572,
+            561
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 500
+    },
+    "Activity_BuyPower": {
+        "recognition": "OCR",
+        "expected": "购买",
+        "roi": [
+            151,
+            704,
+            426,
+            73
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 500
+    },
+    "Activity_EntryMaze": {
+        "recognition": "OCR",
+        "expected": "进入迷宫",
+        "roi": [
+            173,
+            867,
+            398,
+            87
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 500,
+        "next": [
+            "Activity_EntryMazeUpdate",
+            "Activity_Fighting"
+        ]
+    },
+    "Activity_EntryMazeUpdate": {
+        "recognition": "OCR",
+        "expected": "更换",
+        "roi": [
+            102,
+            701,
+            223,
+            70
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 500,
+        "next": [
+            "Activity_EntryMaze"
+        ]
+    },
+    "Activity_Fighting": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "pre_delay": 7000,
+        "custom_action": "Activity_Fighting_Test",
+        "post_delay": 500,
+        "timeout": 200
+    },
+    "Activity_Fighting_1": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "pre_delay": 7000,
+        "next": "kairo_return_home",
+        "post_delay": 500,
+        "timeout": 200
+    }
+}
