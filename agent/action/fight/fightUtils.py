@@ -879,3 +879,31 @@ def autoOpenPicup(context: Context):
     time.sleep(5)
     context.run_task("Fight_OpenedDoor")
     context.tasker.controller.post_touch_up()
+
+
+def Saveyourlife(context: Context):
+    checkcount = 0
+    while checkcount < 3:
+        TextRecoDetail = context.run_recognition(
+            "Fight_FindRespawn",
+            context.tasker.controller.post_screencap().wait().get(),
+            pipeline_override={
+                "Fight_FindRespawn": {
+                    "roi": [66, 563, 583, 446],
+                    "expected": "复活",
+                }
+            },
+        )
+        checkcount += 1
+        time.sleep(0.5)
+        if TextRecoDetail:
+            break
+
+    if TextRecoDetail:
+        logger.info("夭寿啦！！！检测到冈布奥倒下啦！")
+        # 小SL, 保住狗命
+        context.run_task("LogoutGame")
+        context.run_task("ReturnMaze")
+    else:
+        logger.info("没有检测到冈布奥倒下！可能没死吧！！继续战斗！！")
+    return True
