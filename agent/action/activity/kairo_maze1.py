@@ -173,9 +173,7 @@ class Kairo_Difficulty3_Start(CustomAction):
 
             if not task_successful:
                 logger.error(f"任务 '{task_description}' 执行失败或未达到成功条件！")
-                return CustomAction.RunResult(
-                    success=False, message=f"Task '{task_name}' failed."
-                )
+                return CustomAction.RunResult(success=False)
             else:
                 # logger.info(f"任务 {task_description} 执行成功。")
                 pass
