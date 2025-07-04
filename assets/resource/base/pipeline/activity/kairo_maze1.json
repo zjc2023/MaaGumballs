@@ -46,8 +46,8 @@
             "Kairo_Confirm_Onbigmap"
         ],
         "interrupt": [
-            "Kairo_Save_Status",
             "Kairo_GumballHaveRest",
+            "Kairo_Save_Status",
             "Kairo_Fight_OpenedDoor"
         ]
     },
