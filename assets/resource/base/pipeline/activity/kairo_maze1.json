@@ -47,7 +47,77 @@
         ],
         "interrupt": [
             "Kairo_Save_Status",
+            "Kairo_GumballHaveRest",
             "Kairo_Fight_OpenedDoor"
+        ]
+    },
+    "Kairo_GumballHaveRest": {
+        "recognition": "OCR",
+        "expected": [
+            "阵亡"
+        ],
+        "next": [
+            "Kairo_Relive"
+        ],
+        "interrupt": [
+            "BackText_500ms"
+        ]
+    },
+    "Kairo_Relive": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Kairo_maze/kairoRestPoint.png",
+        "roi": [
+            11,
+            794,
+            230,
+            266
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Kairo_Relive_RestPoint",
+            "Kairo_Relive"
+        ]
+    },
+    "Kairo_Relive_RestPoint": {
+        "recognition": "OCR",
+        "expected": "墓地",
+        "roi": [
+            80,
+            357,
+            569,
+            618
+        ],
+        "action": "DoNothing",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Kairo_Relive_Gumball"
+        ]
+    },
+    "Kairo_Relive_Gumball": {
+        "recognition": "TemplateMatch",
+        "template": "fight/kairo_maze/GumballCoinIcon.png",
+        "roi": [
+            28,
+            492,
+            641,
+            526
+        ],
+        "action": "Click",
+        "target_offset": [
+            60,
+            -60,
+            0,
+            0
+        ],
+        "next": [
+            "Kairo_Return_hotel"
+        ],
+        "interrupt": [
+            "ConfirmButton",
+            "BackText_500ms"
         ]
     },
     "Kairo_Save_Status": {
