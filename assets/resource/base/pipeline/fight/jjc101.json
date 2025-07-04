@@ -5,7 +5,6 @@
             "JJC_Fighting"
         ],
         "interrupt": [
-            "GameLoading",
             "MapSwipeDownToUp"
         ]
     },

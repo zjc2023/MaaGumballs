@@ -142,7 +142,7 @@
             738
         ],
         "action": "Click",
-        "post_delay": 4000,
+        "post_delay": 1000,
         "next": [
             "Kairo_Click_Bell"
         ],
@@ -160,7 +160,7 @@
             738
         ],
         "action": "Click",
-        "post_delay": 4000,
+        "post_delay": 1000,
         "next": [
             "Kairo_Click_Bell"
         ],
@@ -178,7 +178,7 @@
             738
         ],
         "action": "Click",
-        "post_delay": 4000,
+        "post_delay": 1000,
         "next": [
             "Kairo_Click_Bell"
         ],
@@ -215,7 +215,9 @@
         ],
         "action": "Click",
         "threshold": 0.8,
+        "pre_delay": 2000,
         "post_delay": 4000,
+        "timeout": 10000,
         "next": [
             "Kairo_Fight_OpenedDoor"
         ]
@@ -312,7 +314,6 @@
             "ClickCenter"
         ]
     },
-
     "Kairo_Enter_WeaponStore": {
         "recognition": "TemplateMatch",
         "template": "fight/Kairo_maze/WeaponStore.png",
