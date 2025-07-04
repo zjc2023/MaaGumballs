@@ -1,7 +1,22 @@
 from maa.agent.agent_server import AgentServer
 from maa.context import Context
 from maa.custom_action import CustomAction
+from utils import logger
+
 import time
+
+
+@AgentServer.custom_action("Reward_Execute")
+class Reward_Execute(CustomAction):
+    def run(
+        self, context: Context, argv: CustomAction.RunArg
+    ) -> CustomAction.RunResult:
+        logger.info("开始领取联盟奖励")
+        context.run_task("UnionReward_Start")
+        logger.info("开始领取好友奖励")
+        context.run_task("ObtainFriendReward")
+
+        return CustomAction.RunResult(success=True)
 
 
 @AgentServer.custom_action("UnionReward")

@@ -1,4 +1,9 @@
 {
+    "Reward_Execute": {
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "Reward_Execute"
+    },
     "UnionReward_Start": {
         "next": [
             "CheckUnionWindows_Next"

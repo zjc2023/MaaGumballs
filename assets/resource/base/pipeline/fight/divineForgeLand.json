@@ -1,4 +1,9 @@
 {
+    "DivineForgeLand_Start": {
+        "next": [
+            "PoolTrick"
+        ]
+    },
     "GoDownstairsTrick": {
         "recognition": "DirectHit",
         "action": "Custom",
