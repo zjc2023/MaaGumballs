@@ -122,6 +122,17 @@
         ],
         "post_delay": 200
     },
+    "ClickCenterBelow_500ms": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            332,
+            958,
+            39,
+            44
+        ],
+        "post_delay": 500
+    },
     "ReturnHall": {
         "recognition": "DirectHit",
         "next": [
@@ -256,5 +267,9 @@
         "focus": {
             "succeeded": "[color:Tomato]识别错误,请冒险者大人来看看哦~[/color]"
         }
+    },
+    "CountTask_RunNode": {
+        "doc": "这是count的辅助节点，搭配count action使用",
+        "next": "Activity_Start"
     }
 }

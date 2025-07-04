@@ -1,30 +1,39 @@
 {
     "Activity_Start": {
+        "post_delay": 1000,
+        "next": [
+            "Activity_Entry",
+            "Activity_Fighting"
+        ],
+        "interrupt": [
+            "MapSwipeUpToDown"
+        ]
+    },
+    "Activity_Entry": {
         "recognition": "TemplateMatch",
         "template": "fight/kairo_maze/entry.png",
         "roi": [
-            333,
-            273,
-            156,
-            690
+            331,
+            150,
+            174,
+            915
         ],
         "action": "Click",
-        "post_delay": 1000,
-        "timeout": 1500,
         "next": [
             "Activity_EntryMaze"
         ],
         "interrupt": [
-            "Activity_SelectEasy_Interrupt",
-            "Activity_SelectEasy",
-            "Activity_BuyPower",
+            "Activity_LackOfPower",
+            "Activity_Select",
             "ConfirmButton",
-            "ClickCenter"
-        ]
+            "ClickCenterBelow_500ms"
+        ],
+        "post_delay": 1000,
+        "timeout": 2000
     },
-    "Activity_SelectEasy": {
+    "Activity_Select_Hard": {
         "recognition": "OCR",
-        "expected": "简单模式",
+        "expected": "困难模式",
         "roi": [
             52,
             330,
@@ -33,9 +42,9 @@
         ],
         "action": "Click",
         "post_delay": 500,
-        "timeout": 500
+        "timeout": 2000
     },
-    "Activity_SelectEasy_Interrupt": {
+    "Activity_Select": {
         "recognition": "OCR",
         "expected": "进入(.*?)迷宫",
         "roi": [
@@ -46,7 +55,25 @@
         ],
         "action": "Click",
         "post_delay": 1000,
-        "timeout": 500
+        "timeout": 2000,
+        "next": [
+            "Activity_Select_Hard"
+        ]
+    },
+    "Activity_LackOfPower": {
+        "recognition": "OCR",
+        "expected": "体力不足",
+        "roi": [
+            157,
+            432,
+            381,
+            412
+        ],
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Activity_BuyPower"
+        ]
     },
     "Activity_BuyPower": {
         "recognition": "OCR",
@@ -59,7 +86,7 @@
         ],
         "action": "Click",
         "post_delay": 500,
-        "timeout": 500
+        "timeout": 2000
     },
     "Activity_EntryMaze": {
         "recognition": "OCR",
@@ -71,11 +98,14 @@
             87
         ],
         "action": "Click",
-        "post_delay": 500,
-        "timeout": 500,
+        "post_delay": 3000,
+        "timeout": 10000,
         "next": [
             "Activity_EntryMazeUpdate",
             "Activity_Fighting"
+        ],
+        "interrupt": [
+            "GameLoading"
         ]
     },
     "Activity_EntryMazeUpdate": {
@@ -89,25 +119,30 @@
         ],
         "action": "Click",
         "post_delay": 500,
-        "timeout": 500,
+        "timeout": 2000,
         "next": [
             "Activity_EntryMaze"
         ]
     },
     "Activity_Fighting": {
-        "recognition": "DirectHit",
+        "recognition": "TemplateMatch",
+        "template": "fight/UniversalUI/MazePackage.png",
         "action": "Custom",
-        "pre_delay": 7000,
-        "custom_action": "Activity_Fighting_Test",
-        "post_delay": 500,
-        "timeout": 200
+        "custom_action": "Kairo_Difficulty3_Start",
+        "roi": [
+            47,
+            1147,
+            136,
+            117
+        ]
     },
-    "Activity_Fighting_1": {
-        "recognition": "DirectHit",
-        "action": "DoNothing",
-        "pre_delay": 7000,
-        "next": "kairo_return_home",
-        "post_delay": 500,
-        "timeout": 200
+    "Activity_Start_Count": {
+        "action": "Custom",
+        "custom_action": "CountTask",
+        "custom_action_param": {
+            "count": 0,
+            "target_count": 2,
+            "next_node": []
+        }
     }
 }

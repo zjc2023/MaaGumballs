@@ -204,11 +204,7 @@
         "custom_action_param": {
             "count": 0,
             "target_count": 2,
-            
             "next_node": []
         }
-    },
-    "CountTask_RunNode": {
-        "next": "TL01_Start"
     }
 }

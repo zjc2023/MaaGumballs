@@ -20,7 +20,7 @@ class Kairo_Difficulty3_Start(CustomAction):
         :param argv: 动作的参数（如果JSON中配置了）。
         :return: CustomAction.RunResult，表示动作的成功或失败。
         """
-        logger.info("Kairo_Difficulty3_Start: Custom Action 开始执行。")
+        logger.info("开始探索开罗迷宫执行。")
 
         # 定义需要顺序执行的任务列表
         """ 
@@ -28,7 +28,7 @@ class Kairo_Difficulty3_Start(CustomAction):
               
         ]
         """
-      
+
         tasks_to_execute = [
             ("Kairo_Enter_Cave1", "进入洞穴1"),
             ("Kairo_Return_Home", "返回家园"),
@@ -93,7 +93,7 @@ class Kairo_Difficulty3_Start(CustomAction):
             ("Kairo_Choose_Armor", "买神圣铠甲"),
             ("Kairo_Choose_Armor", "买神圣铠甲"),
             ("Kairo_Choose_Armor", "买神圣铠甲"),
-            ("BackText_500ms", "出防具店"),        
+            ("BackText_500ms", "出防具店"),
             ("Kairo_ViewTeams", "查看队伍并点击第一个角色"),
             ("Kairo_ClickEquipmentBar2", "点防具栏"),
             ("Kairo_Choose_Armor", "背包里找到铠甲并装备"),
@@ -155,21 +155,16 @@ class Kairo_Difficulty3_Start(CustomAction):
         ]
 
         for task_name, task_description in tasks_to_execute:
-            logger.info(
-                f"Kairo_Difficulty3_Start: 正在执行任务 - {task_description} ({task_name})..."
-            )
+            logger.info(f"正在执行任务 - {task_description}.")
 
             # 检查是否收到停止任务的请求
             if context.tasker.stopping:
-                logger.info(
-                    f"Kairo_Difficulty3_Start: 检测到停止任务请求，在执行 {task_description} 前退出。"
-                )
+                logger.info(f"检测到停止任务请求，在执行 {task_description} 前退出。")
                 return CustomAction.RunResult(success=False)
 
             run_result_detail = context.run_task(task_name)
 
             # 判断任务是否成功：
-
             if hasattr(run_result_detail, "nodes") and not run_result_detail.nodes:
                 if not run_result_detail.nodes:
                     task_successful = False
@@ -177,17 +172,15 @@ class Kairo_Difficulty3_Start(CustomAction):
                 task_successful = True  # 假设只要 run_task 没有抛异常，且不是识别失败（nodes为空），就算成功
 
             if not task_successful:
-                logger.error(
-                    f"Kairo_Difficulty3_Start: 任务 '{task_description}' ({task_name}) 执行失败或未达到成功条件！"
-                )
+                logger.error(f"任务 '{task_description}' 执行失败或未达到成功条件！")
                 return CustomAction.RunResult(
                     success=False, message=f"Task '{task_name}' failed."
                 )
             else:
-                logger.info(
-                    f"Kairo_Difficulty3_Start: 任务 '{task_description}' ({task_name}) 执行成功。"
-                )
+                # logger.info(f"任务 {task_description} 执行成功。")
+                pass
+
             # 模拟用户操作间隔
-            time.sleep(1)  # 1秒的延时
-        logger.info("Kairo_Difficulty3_Start: 所有顺序任务执行完毕，自定义动作执行成功。")
+            time.sleep(1)
+        logger.info("所有顺序任务执行完毕，成功探索开罗迷宫。")
         return CustomAction.RunResult(success=True)
