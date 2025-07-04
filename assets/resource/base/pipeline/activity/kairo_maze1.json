@@ -233,11 +233,10 @@
         ],
         "action": "Click",
         "threshold": 0.8,
-        "post_delay": 4000,
+        "post_delay": 1000,
         "next": [
-            "Kairo_Confirm_NoBoss"
-        ],
-        "interrupt": "Kairo_Click_Bell_Boss"
+            "Kairo_Confirm_Boss"
+        ]
     },
     "Kairo_Fight_OpenedDoor": {
         "recognition": "TemplateMatch",
@@ -715,11 +714,11 @@
             72
         ],
         "next": [
-            "Kairo_Confirm_NoBoss"
+            "Kairo_Click_Bell_Boss",
+            "Kairo_Confirm_NoBoss",
+            "Kairo_Confirm_Boss"
         ],
-        "interrupt": [
-            "Kairo_Click_Bell_Boss"
-        ]
+        "post_delay": 500
     },
     "Kairo_Confirm_NoBoss": {
         "recognition": "TemplateMatch",

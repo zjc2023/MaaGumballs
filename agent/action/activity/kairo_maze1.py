@@ -11,6 +11,124 @@ class Kairo_Difficulty3_Start(CustomAction):
     一个按顺序执行多个预定义Maa Pipeline节点的自定义动作。
     """
 
+    def __init__(self):
+        super().__init__()
+        self.context = None
+        self.targetCnt = 9
+
+    def _initialize(self, context: Context):
+        self.context = context
+        logger.info("初始化完毕,开始探索开罗迷宫")
+
+    def _run_task(self, task_name: str, task_description: str = None):
+        if task_description != None:
+            logger.info(f"执行 '{task_description}' ")
+        run_result_detail = self.context.run_task(task_name)
+        if run_result_detail.nodes:
+            pass
+        else:
+            logger.error(f"执行 '{task_description}' 失败或未达到成功条件！")
+            return False
+
+        return True
+
+    def handle_Phase_1(self) -> bool:
+        # 第一阶段
+        self._run_task("Kairo_Return_Home", "返回家园")
+        self._run_task("Kairo_Enter_Pub", "去酒馆招募三个冒险者")
+        for _ in range(3):
+            self._run_task("Kairo_SearchingMale")
+        self.context.run_task("Fight_ReturnMainWindow")
+
+        return True
+
+    def handle_Phase_2(self) -> bool:
+        # 第二阶段：洞穴探索循环
+        for _ in range(self.targetCnt):
+            self._run_task("Kairo_Return_Hotel")
+            logger.info(f"第{_+1}/{self.targetCnt}次探索, 去洞穴1,2探索")
+            self._run_task("Kairo_Enter_Cave1")
+            self._run_task("Kairo_Enter_Cave2")
+            self._run_task("Kairo_Return_Home")
+        return True
+
+    def handle_Phase_3(self) -> bool:
+        # 第三阶段：武器购买与装备
+        ## 购买武器和防具
+        self._run_task("Kairo_Enter_WeaponStore", "买2权杖3斧子")
+        for _ in range(2):
+            self._run_task("Kairo_Choose_HolyMace")
+        for _ in range(3):
+            self._run_task("Kairo_Choose_Axe")
+        self.context.run_task("Fight_ReturnMainWindow")
+
+        self._run_task("Kairo_Enter_ArmorStore", "买5个神圣铠甲")
+        for _ in range(5):
+            self._run_task("Kairo_Choose_Armor")
+        self.context.run_task("Fight_ReturnMainWindow")
+
+        ## 购买徽章
+        self._run_task("Kairo_Enter_WarriorPromotionStore", "买战士5级徽章3个")
+        for _ in range(3):
+            self._run_task("Kairo_Choose_WarriorMedal")
+        self.context.run_task("Fight_ReturnMainWindow")
+        self._run_task("Kairo_Enter_SupportPromotionStore", "买辅助5级徽章1个")
+        self._run_task("Kairo_Choose_SupportMedal")
+        self.context.run_task("Fight_ReturnMainWindow")
+        self._run_task("Kairo_Enter_MonkPromotionStore", "买法师5级徽章1个")
+        self._run_task("Kairo_Choose_MonkMedal")
+        self.context.run_task("Fight_ReturnMainWindow")
+
+        ## 装备5个角色
+        for _ in range(5):
+            logger.info(f"武装第{_+1}个冒险者")
+            if _ < 1:
+                self._run_task("Kairo_ViewTeams")
+            else:
+                self._run_task("Kairo_ClickChangeCharacter")
+
+            self._run_task("Kairo_ClickEquipmentBar1")
+            if _ < 2:
+                self._run_task("Kairo_Choose_HolyMace")
+            else:
+                self._run_task("Kairo_Choose_Axe")
+
+            self._run_task("Kairo_ClickEquipmentBar2")
+            self._run_task("Kairo_Choose_Armor")
+
+        self.context.run_task("Fight_ReturnMainWindow")
+        return True
+
+    def handle_Phase_4(self):
+        # 第四阶段：高级转职与最终战斗
+        # 角色1-5转职
+        for _ in range(5):
+            if _ < 1:
+                self._run_task("Kairo_ViewTeams")
+            else:
+                self._run_task("Kairo_ClickChangeCharacter")
+            self._run_task("Kairo_ClickPromotionInterface")
+
+            if _ < 1:
+                self._run_task("Kairo_ClickSwitchMagic")
+            self._run_task("MapSwipeUpToDown")
+
+            if _ == 0:
+                self._run_task("Kairo_PromoteToMonk", f"将第{_+1}个角色转职为主教")
+            elif _ == 1:
+                self._run_task(
+                    "Kairo_PromoteToWhiteQueen", f"将第{_+1}个角色转职为白皇后"
+                )
+            else:
+                self._run_task(
+                    "Kairo_PromoteToKnight", f"将第{_+1}个角色转职为光辉骑士"
+                )
+
+        self.context.run_task("Fight_ReturnMainWindow")
+        self._run_task("Kairo_Return_Hotel", "住旅馆并返回大地图")
+        self._run_task("Kairo_Enter_Cave7", "打boss并进行结算")
+        return True
+
     def run(
         self, context: Context, argv: CustomAction.RunArg
     ) -> CustomAction.RunResult:
@@ -20,173 +138,27 @@ class Kairo_Difficulty3_Start(CustomAction):
         :param argv: 动作的参数（如果JSON中配置了）。
         :return: CustomAction.RunResult，表示动作的成功或失败。
         """
-        logger.info("开始探索开罗迷宫执行。")
+        # 初始化
+        self._initialize(context)
 
-        # 定义需要顺序执行的任务列表
-        """ 
-        tasks_to_execute = [
-              
-        ]
-        """
-
-        tasks_to_execute = [
-            ("Kairo_Enter_Cave1", "进入洞穴1"),
-            ("Kairo_Return_Home", "返回家园"),
-            ("Kairo_Enter_Pub", "进入酒馆"),
-            ("Kairo_SearchingMale", "找男冒险者并招募"),
-            ("Kairo_SearchingMale", "找男冒险者并招募"),
-            ("Kairo_SearchingMale", "找男冒险者并招募"),
-            ("BackText_500ms", "出酒馆"),
-            ("Kairo_Return_Hotel", "住旅馆并返回大地图"),
-            ("Kairo_Enter_Cave1", "进入洞穴1"),
-            ("Kairo_Enter_Cave2", "进入洞穴2"),
-            ("Kairo_Return_Home", "返回家园"),
-            ("Kairo_Return_Hotel", "住旅馆并返回大地图"),
-            ("Kairo_Enter_Cave1", "进入洞穴1"),
-            ("Kairo_Enter_Cave2", "进入洞穴2"),
-            ("Kairo_Return_Home", "返回家园"),
-            ("Kairo_Return_Hotel", "住旅馆并返回大地图"),
-            ("Kairo_Enter_Cave1", "进入洞穴1"),
-            ("Kairo_Enter_Cave2", "进入洞穴2"),
-            ("Kairo_Return_Home", "返回家园"),
-            ("Kairo_Return_Hotel", "住旅馆并返回大地图"),
-            ("Kairo_Enter_Cave1", "进入洞穴1"),
-            ("Kairo_Enter_Cave2", "进入洞穴2"),
-            ("Kairo_Return_Home", "返回家园"),
-            ("Kairo_Enter_WeaponStore", "进武器店"),
-            ("Kairo_Choose_HolyMace", "买权杖"),
-            ("Kairo_Choose_HolyMace", "买权杖"),
-            ("Kairo_Choose_Axe", "买斧子"),
-            ("Kairo_Choose_Axe", "买斧子"),
-            ("Kairo_Choose_Axe", "买斧子"),
-            ("BackText_500ms", "出武器店"),
-            ("Kairo_Enter_MonkPromotionStore", "进法师转职商店"),
-            ("Kairo_Choose_MonkMedal_4", "买4阶法师转职"),
-            ("BackText_500ms", "出来"),
-            ("Kairo_ViewTeams", "查看队伍并点击第一个角色"),
-            ("Kairo_ClickEquipmentBar1", "点武器栏"),
-            ("Kairo_Choose_HolyMace", "背包里找到权杖并装备"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickEquipmentBar1", "点武器栏"),
-            ("Kairo_Choose_HolyMace", "背包里找到权杖并装备"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickEquipmentBar1", "点武器栏"),
-            ("Kairo_Choose_Axe", "背包里找到斧子并装备"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickEquipmentBar1", "点武器栏"),
-            ("Kairo_Choose_Axe", "背包里找到斧子并装备"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickEquipmentBar1", "点武器栏"),
-            ("Kairo_Choose_Axe", "背包里找到斧子并装备"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickPromotionInterface", "点进进入转职界面"),
-            ("Kairo_ClickSwitchMagic", "切换到魔法职业"),
-            ("MapSwipeUpToDown", "翻到转职界面底部"),
-            ("Kairo_PromoteToMonk_0", "转职为主教"),
-            ("BackText_500ms", "退出角色界面"),
-            ("BackText_500ms", "退出队伍界面"),
-            ("Kairo_Return_Hotel", "住旅馆并返回大地图"),
-            ("Kairo_Enter_Cave3", "进入洞穴3"),
-            ("Kairo_Enter_Cave2", "进入洞穴2"),
-            ("Kairo_Enter_Cave1", "进入洞穴1"),
-            ("Kairo_Return_Home", "返回家园"),
-            ("Kairo_Return_Hotel", "住旅馆并返回大地图"),
-            ("Kairo_Enter_Cave3", "进入洞穴3"),
-            ("Kairo_Enter_Cave2", "进入洞穴2"),
-            ("Kairo_Enter_Cave1", "进入洞穴1"),
-            ("Kairo_Return_Home", "返回家园"),
-            ("Kairo_Enter_ArmorStore", "进防具店"),
-            ("Kairo_Choose_Armor", "买神圣铠甲"),
-            ("Kairo_Choose_Armor", "买神圣铠甲"),
-            ("Kairo_Choose_Armor", "买神圣铠甲"),
-            ("Kairo_Choose_Armor", "买神圣铠甲"),
-            ("Kairo_Choose_Armor", "买神圣铠甲"),
-            ("BackText_500ms", "出防具店"),
-            ("Kairo_ViewTeams", "查看队伍并点击第一个角色"),
-            ("Kairo_ClickEquipmentBar2", "点防具栏"),
-            ("Kairo_Choose_Armor", "背包里找到铠甲并装备"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickEquipmentBar2", "点防具栏"),
-            ("Kairo_Choose_Armor", "背包里找到铠甲并装备"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickEquipmentBar2", "点防具栏"),
-            ("Kairo_Choose_Armor", "背包里找到铠甲并装备"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickEquipmentBar2", "点防具栏"),
-            ("Kairo_Choose_Armor", "背包里找到铠甲并装备"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickEquipmentBar2", "点防具栏"),
-            ("Kairo_Choose_Armor", "背包里找到铠甲并装备"),
-            ("BackText_500ms", "退出角色界面"),
-            ("BackText_500ms", "退出队伍界面"),
-            ("Kairo_Return_Hotel", "住旅馆并返回大地图"),
-            ("Kairo_Enter_Cave3", "进入洞穴3"),
-            ("Kairo_Enter_Cave2", "进入洞穴2"),
-            ("Kairo_Enter_Cave1", "进入洞穴1"),
-            ("Kairo_Return_Home", "返回家园"),
-            ("Kairo_Enter_WarriorPromotionStore", "进战士转职商店"),
-            ("Kairo_Choose_WarriorMedal", "买5阶战士转职"),
-            ("Kairo_Choose_WarriorMedal", "买5阶战士转职"),
-            ("Kairo_Choose_WarriorMedal", "买5阶战士转职"),
-            ("BackText_500ms", "出来"),
-            ("Kairo_Enter_SupportPromotionStore", "进辅助转职商店"),
-            ("Kairo_Choose_SupportMedal", "买5阶辅助转职"),
-            ("BackText_500ms", "出来"),
-            ("Kairo_Enter_MonkPromotionStore", "进法师转职商店"),
-            ("Kairo_Choose_MonkMedal", "买5阶法师转职"),
-            ("BackText_500ms", "出来"),
-            ("Kairo_ViewTeams", "查看队伍并点击第一个角色"),
-            ("Kairo_ClickPromotionInterface", "点进进入转职界面"),
-            ("Kairo_ClickSwitchMagic", "切换到魔法职业"),
-            ("MapSwipeUpToDown", "翻到转职界面底部"),
-            ("Kairo_PromoteToMonk", "转职为大主教"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickPromotionInterface", "点进进入转职界面"),
-            ("MapSwipeUpToDown", "翻到转职界面底部"),
-            ("Kairo_PromoteToWhiteQueen", "转职为白皇后"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickPromotionInterface", "点进进入转职界面"),
-            ("MapSwipeUpToDown", "翻到转职界面底部"),
-            ("Kairo_PromoteToKnight", "转职为光辉骑士"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickPromotionInterface", "点进进入转职界面"),
-            ("MapSwipeUpToDown", "翻到转职界面底部"),
-            ("Kairo_PromoteToKnight", "转职为光辉骑士"),
-            ("Kairo_ClickChangeCharacter", "切换下一个角色"),
-            ("Kairo_ClickPromotionInterface", "点进进入转职界面"),
-            ("MapSwipeUpToDown", "翻到转职界面底部"),
-            ("Kairo_PromoteToSwordsman", "转职为剑士统帅"),
-            ("BackText_500ms", "退出角色界面"),
-            ("BackText_500ms", "退出队伍界面"),
-            ("Kairo_Return_Hotel", "住旅馆并返回大地图"),
-            ("Kairo_Enter_Cave7", "打boss结束"),
+        # 按阶段顺序执行任务
+        phases = [
+            # self.handle_Phase_1,
+            # self.handle_Phase_2,
+            # self.handle_Phase_3,
+            self.handle_Phase_4,
         ]
 
-        for task_name, task_description in tasks_to_execute:
-            logger.info(f"正在执行任务 - {task_description}.")
-
+        for i, phase in enumerate(phases, 1):
+            logger.info(f"开始执行第{i}阶段任务")
+            if not phase():
+                logger.error(f"第{i}阶段任务执行失败")
+                return CustomAction.RunResult(success=False)
             # 检查是否收到停止任务的请求
-            if context.tasker.stopping:
-                logger.info(f"检测到停止任务请求，在执行 {task_description} 前退出。")
+            if self.context.tasker.stopping:
+                logger.info(f"检测到停止任务请求，在第{i}阶段后退出。")
                 return CustomAction.RunResult(success=False)
-
-            run_result_detail = context.run_task(task_name)
-
-            # 判断任务是否成功：
-            if hasattr(run_result_detail, "nodes") and not run_result_detail.nodes:
-                if not run_result_detail.nodes:
-                    task_successful = False
-            else:
-                task_successful = True  # 假设只要 run_task 没有抛异常，且不是识别失败（nodes为空），就算成功
-
-            if not task_successful:
-                logger.error(f"任务 '{task_description}' 执行失败或未达到成功条件！")
-                return CustomAction.RunResult(success=False)
-            else:
-                # logger.info(f"任务 {task_description} 执行成功。")
-                pass
-
-            # 模拟用户操作间隔
             time.sleep(1)
-        logger.info("所有顺序任务执行完毕，成功探索开罗迷宫。")
+
+        logger.info("所有阶段任务执行完毕，成功探索开罗迷宫。")
         return CustomAction.RunResult(success=True)
