@@ -6,6 +6,7 @@
             "Activity_Fighting"
         ],
         "interrupt": [
+            "AlchemyReward",
             "MapSwipeUpToDown"
         ]
     },
@@ -24,6 +25,7 @@
         ],
         "interrupt": [
             "Activity_LackOfPower",
+            "Activity_Select_Hard",
             "Activity_Select",
             "ConfirmButton",
             "ClickCenterBelow_500ms"
@@ -55,10 +57,7 @@
         ],
         "action": "Click",
         "post_delay": 1000,
-        "timeout": 2000,
-        "next": [
-            "Activity_Select_Hard"
-        ]
+        "timeout": 2000
     },
     "Activity_LackOfPower": {
         "recognition": "OCR",
