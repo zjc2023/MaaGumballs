@@ -16,7 +16,7 @@ class Mars101(CustomAction):
     def __init__(self):
         super().__init__()
         self.isTitle_L3 = False
-        self.isTitle_L56 = False
+        self.isTitle_L66 = False
         self.isTitle_L76 = False
         self.useEarthGate = 0
         self.isShutDownTitan = False
@@ -64,42 +64,20 @@ class Mars101(CustomAction):
     def Check_DefaultTitle(self, context: Context):
         """
         检查默认称号
-        1. 检查56层的称号: 位面点满即可
-        2. 大地之前确认魔法系点满
-        3. 检查66层的称号: 位面，大铸剑师，大剑师都点满
+        1. 检查66层的称号: 位面点满即可
+        3. 检查76层的称号: 位面，大铸剑师，大剑师都点满
         """
         if (self.layers == 3 or self.layers == 4) and self.isTitle_L3 == False:
-            fightUtils.title_learn("魔法", 1, "魔法学徒", 1, context)
+            fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
             context.run_task("Fight_ReturnMainWindow")
             self.isTitle_L3 = True
-        elif self.layers == 56 or self.layers == 57:
-            if self.isTitle_L56 == False:
 
-                fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
-                fightUtils.title_learn("魔法", 2, "黑袍法师", 1, context)
-                fightUtils.title_learn("魔法", 3, "咒术师", 1, context)
-                fightUtils.title_learn("魔法", 4, "土系大师", 1, context)
-                fightUtils.title_learn("魔法", 5, "位面先知", 1, context)
-                context.run_task("Fight_ReturnMainWindow")
-
-                fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
-                fightUtils.title_learn_branch("魔法", 5, "生命强化", 3, context)
-                fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
-                context.run_task("Fight_ReturnMainWindow")
-
-                fightUtils.title_learn("魔法", 4, "土系大师", 3, context)
-                fightUtils.title_learn("魔法", 2, "黑袍法师", 3, context)
-                context.run_task("Fight_ReturnMainWindow")
-
-                context.run_task("Save_Status")
-                context.run_task("Fight_ReturnMainWindow")
-                self.isTitle_L56 = True
-
-        elif (self.layers == 61 or self.layers == 71) and self.useEarthGate < 2:
-
+        elif (self.layers == 65 or self.layers == 66) and self.isTitle_L66 == False:
+            fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
             fightUtils.title_learn("魔法", 2, "黑袍法师", 3, context)
             fightUtils.title_learn("魔法", 3, "咒术师", 3, context)
             fightUtils.title_learn("魔法", 4, "土系大师", 3, context)
+            fightUtils.title_learn("魔法", 5, "位面先知", 1, context)
             context.run_task("Fight_ReturnMainWindow")
 
             fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
@@ -109,7 +87,6 @@ class Mars101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
             context.run_task("Fight_ReturnMainWindow")
-            self.isuseEarthGate = False
 
         elif self.layers == 76 or self.layers == 77 and self.isTitle_L76 == False:
             fightUtils.title_learn("战斗", 1, "见习战士", 3, context)
@@ -141,7 +118,7 @@ class Mars101(CustomAction):
                 fightUtils.title_learn_branch("巨龙", 5, "生命强化", 3, context)
                 # fightUtils.title_learn_branch("巨龙", 5, "攻击强化", 3, context)
                 fightUtils.title_learn_branch("巨龙", 5, "攻击强化", 3, context)
-
+                context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
             context.run_task("Fight_ReturnMainWindow")
             self.isTitle_L76 = True
@@ -240,7 +217,7 @@ class Mars101(CustomAction):
         return True
 
     def handle_EarthGate_event(self, context: Context):
-        if (self.layers == 61 or self.layers == 71) and self.useEarthGate < 2:
+        if (self.layers == 67 or self.layers == 68) and self.useEarthGate < 2:
             if fightUtils.cast_magic("土", "大地之门", context):
                 self.useEarthGate += 1
             elif self.layers == 71:
