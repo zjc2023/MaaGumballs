@@ -437,6 +437,7 @@ class JJC101(CustomAction):
             context.run_task("JJC_StoneChest")
 
     def handle_postLayers_event(self, context: Context):
+        time.sleep(1)
         self.handle_perfect_event(context)
         self.Check_DefaultStatus(context)
         self.handle_stone_event(context)

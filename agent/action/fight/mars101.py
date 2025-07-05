@@ -239,7 +239,7 @@ class Mars101(CustomAction):
             context.run_task("Fight_OpenedDoor")
         return True
 
-    def handle_earthgate_event(self, context: Context):
+    def handle_EarthGate_event(self, context: Context):
         if (self.layers == 61 or self.layers == 71) and self.useEarthGate < 2:
             if fightUtils.cast_magic("土", "大地之门", context):
                 self.useEarthGate += 1
@@ -380,6 +380,7 @@ class Mars101(CustomAction):
                     self.isShutDownTitan = True
 
     def handle_postLayers_event(self, context: Context):
+        time.sleep(1)
         self.handle_perfect_event(context)
         self.Check_DefaultStatus(context)
         self.handle_MarsBody_event(context)
@@ -387,7 +388,7 @@ class Mars101(CustomAction):
         self.handle_MarsRuinsShop_event(context)
         self.handle_MarsStatue_event(context)
         self.handle_MarsReward_event(context)
-        self.handle_earthgate_event(context)
+        self.handle_EarthGate_event(context)
         if self.layers == 99:
             self.handle_before_leave_maze_event(context)
         else:
