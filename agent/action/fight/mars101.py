@@ -229,7 +229,6 @@ class Mars101(CustomAction):
         self.handle_android_skill_event(context)
         self.Check_DefaultEquipment(context)
         self.Check_DefaultTitle(context)
-        self.Check_DefaultStatus(context)
 
         return True
 
@@ -246,6 +245,7 @@ class Mars101(CustomAction):
                 pass
 
     def handle_before_leave_maze_event(self, context: Context):
+        logger.info("准备结算离开迷宫")
         for _ in range(3):
             fightUtils.cast_magic_special("生命颂歌", context)
 
@@ -436,13 +436,12 @@ class Mars101(CustomAction):
                     context.tasker.controller.post_screencap().wait().get(),
                 )
             ):
-
                 tempLayers = fightUtils.extract_num_layer(RunResult.best_result.text)
                 if context.tasker.stopping:
                     logger.info("检测到停止任务, 开始退出agent")
                     return CustomAction.RunResult(success=False)
-            self.layers = tempLayers
 
+            self.layers = tempLayers
             logger.info(f"Start Explore {self.layers} layer.")
 
             # 检测是否触发战前事件
