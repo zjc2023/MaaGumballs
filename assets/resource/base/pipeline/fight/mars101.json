@@ -420,6 +420,22 @@
         "action": "Click",
         "timeout": 2000
     },
+    "Mars_Exchange_Shop": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/Mars/MarsExchangeShop_01.png",
+            "fight/Mars/MarsExchangeShop_02.png"
+        ],
+        "roi": [
+            33,
+            677,
+            658,
+            180
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000
+    },
     "Mars_GotoSpecialLayer": {
         "recognition": "TemplateMatch",
         "template": "fight/Mars/MarsSpecialLayer.png",
