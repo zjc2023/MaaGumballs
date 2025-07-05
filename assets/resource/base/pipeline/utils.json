@@ -178,31 +178,32 @@
         "expected": "商店"
     },
     "PowerLack": {
-        "post_delay": 1000,
         "recognition": "OCR",
         "expected": "体力不足",
         "roi": [
-            22,
-            414,
-            696,
-            447
+            157,
+            432,
+            381,
+            412
         ],
-        "action": "DoNothing",
+        "post_delay": 1000,
+        "timeout": 2000,
         "next": [
             "PowerBuy"
         ]
     },
     "PowerBuy": {
-        "post_delay": 1000,
         "recognition": "OCR",
         "expected": "购买",
         "roi": [
-            37,
-            669,
-            651,
-            145
+            151,
+            704,
+            426,
+            73
         ],
-        "action": "Click"
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000
     },
     "drawReward": {
         "recognition": "OCR",

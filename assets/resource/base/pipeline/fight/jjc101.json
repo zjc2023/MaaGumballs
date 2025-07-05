@@ -5,6 +5,7 @@
             "JJC_Fighting"
         ],
         "interrupt": [
+            "AlchemyReward",
             "MapSwipeDownToUp"
         ]
     },
@@ -24,7 +25,10 @@
             "JJC_Select"
         ],
         "interrupt": [
-            "Select_MainWindow"
+            "PowerLack",
+            "Select_MainWindow",
+            "ConfirmButton",
+            "ClickCenterBelow_500ms"
         ]
     },
     "JJC_Select": {

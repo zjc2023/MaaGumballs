@@ -150,6 +150,23 @@
         {
             "name": "刷竞技场",
             "entry": "JJC",
+            "option": [
+                "自动肉鸽时使用钻石购买体力"
+            ],
+            "pipeline_override": {
+                "Select_Drug_Next": {
+                    "template": "items/狼人药剂.png"
+                },
+                "Select_Artifact_Next": {
+                    "template": "equipments/7level/冒险家竖琴.png"
+                },
+                "select_InputBox_Text1": {
+                    "input_text": "自然之子"
+                },
+                "select_InputBox_Text2": {
+                    "input_text": "贵族"
+                }
+            },
             "repeatable": true,
             "repeat_count": 1,
             "doc": [
@@ -198,6 +215,61 @@
             "name": "自动叫狗",
             "entry": "Fight_CallDog_Func",
             "doc": "该节点不点称号,仅吃狼人药剂叫狗"
+        },
+        {
+            "name": "马尔斯(测试)",
+            "entry": "Mars",
+            "repeatable": true,
+            "repeat_count": 1,
+            "option": [
+                "自动肉鸽时使用钻石购买体力"
+            ],
+            "pipeline_override": {
+                "Select_Drug_Next": {
+                    "template": "items/电能试剂.png"
+                },
+                "Select_Artifact_Next": {
+                    "template": "equipments/7level/冒险家竖琴.png"
+                },
+                "select_InputBox_Text1": {
+                    "input_text": "太阳冈布奥"
+                },
+                "select_InputBox_Text2": {
+                    "input_text": "天启者"
+                }
+            },
+            "doc": [
+                "## MaaGB半自动马尔斯说明",
+                "### 自动执行功能说明",
+                "1. **马尔斯与阵容**  ",
+                "   - 默认阵容:仿生人 + 太阳(灵魂链接) + 天启者(灵魂链接)  ",
+                "   - 药剂为：电能试剂， 神器为：竖琴 ",
+                "",
+                "2. **楼层操作**  ",
+                "   - 自动开启仿生人技能(5/6层) ",
+                "   - 自动点称号(3/56/76层/使用大地之门之前/出图之前)  ",
+                "   - 自动检查状态并使用恢复药剂(≥50层的*1/*4/*9层, >80层之后的每层)  ",
+                "   - 自动处理大部分事件  ",
+                "",
+                "3. **Boss与迷宫策略**  ",
+                "   - 自动控制Boss战:  ",
+                "       - 3次柱子, 然后祝福A冰锥AA循环  ",
+                "   - 99层自动结算  ",
+                "",
+                "---",
+                "",
+                "### 需用户手动操作事项",
+                "▶️ **开局准备**  ",
+                "   - 手动选择仿生人出战  ",
+                "   - 准备电能试剂并进图  ",
+                "   - 备好太阳与天启者冈布奥  ",
+                "▶️ **关键设置**  ",
+                "   - 手动开启自动拾取(可2/3层暂停任务后补开)  ",
+                "▶️ **注意事项**  ",
+                "   - 不处理隐秘洞穴小游戏(需手动探索拿钥匙)  ",
+                "   - 遇异常时提供截图/录屏/maa.log文件反馈  ",
+                ""
+            ]
         },
         {
             "name": "神锻系列",
@@ -251,6 +323,9 @@
         {
             "name": "开罗活动迷宫",
             "entry": "Activity_Start",
+            "option": [
+                "自动肉鸽时使用钻石购买体力"
+            ],
             "doc": [
                 "### 开罗活动迷宫注意事项",
                 "- **确保**城镇大厅建筑和天赋点全部点满。一般来说打一局简单,一局普通就能够全部点满天赋了。",
@@ -278,147 +353,9 @@
             "name": "退出游戏",
             "entry": "StopGumballs",
             "doc": "注意: 该node只在完成所有任务后,仅退出游戏"
-        },
-        {
-            "name": "马尔斯(测试)",
-            "entry": "Mars_Fighting",
-            "doc": [
-                "## MaaGB半自动马尔斯说明",
-                "### 自动执行功能说明",
-                "1. **马尔斯与阵容**  ",
-                "   - 默认阵容:仿生人 + 太阳(灵魂链接) + 天启者(灵魂链接)  ",
-                "   - 药剂为：电能试剂， 神器为：竖琴 ",
-                "",
-                "2. **楼层操作**  ",
-                "   - 自动开启仿生人技能(5/6层) ",
-                "   - 自动点称号(3/56/76层/使用大地之门之前/出图之前)  ",
-                "   - 自动检查状态并使用恢复药剂(≥50层的*1/*4/*9层, >80层之后的每层)  ",
-                "   - 自动处理大部分事件  ",
-                "",
-                "3. **Boss与迷宫策略**  ",
-                "   - 自动控制Boss战:  ",
-                "       - 3次柱子, 然后祝福A冰锥AA循环  ",
-                "   - 99层自动结算  ",
-                "",
-                "---",
-                "",
-                "### 需用户手动操作事项",
-                "▶️ **开局准备**  ",
-                "   - 手动选择仿生人出战  ",
-                "   - 准备电能试剂并进图  ",
-                "   - 备好太阳与天启者冈布奥  ",
-                "▶️ **关键设置**  ",
-                "   - 手动开启自动拾取(可2/3层暂停任务后补开)  ",
-                "▶️ **注意事项**  ",
-                "   - 不处理隐秘洞穴小游戏(需手动探索拿钥匙)  ",
-                "   - 遇异常时提供截图/录屏/maa.log文件反馈  ",
-                ""
-            ]
         }
     ],
     "option": {
-        "刷取次数": {
-            "cases": [
-                {
-                    "name": "1",
-                    "pipeline_override": {
-                        "TL01_Start_Count": {
-                            "custom_action_param": {
-                                "count": 0,
-                                "target_count": 1,
-                                "next_node": [
-                                    "BackText"
-                                ]
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "2",
-                    "pipeline_override": {
-                        "TL01_Start_Count": {
-                            "custom_action_param": {
-                                "count": 0,
-                                "target_count": 2,
-                                "next_node": [
-                                    "BackText"
-                                ]
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "3",
-                    "pipeline_override": {
-                        "TL01_Start_Count": {
-                            "custom_action_param": {
-                                "count": 0,
-                                "target_count": 3,
-                                "next_node": [
-                                    "BackText"
-                                ]
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "4",
-                    "pipeline_override": {
-                        "TL01_Start_Count": {
-                            "custom_action_param": {
-                                "count": 0,
-                                "target_count": 4,
-                                "next_node": [
-                                    "BackText"
-                                ]
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "5",
-                    "pipeline_override": {
-                        "TL01_Start_Count": {
-                            "custom_action_param": {
-                                "count": 0,
-                                "target_count": 5,
-                                "next_node": [
-                                    "BackText"
-                                ]
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "10",
-                    "pipeline_override": {
-                        "TL01_Start_Count": {
-                            "custom_action_param": {
-                                "count": 0,
-                                "target_count": 10,
-                                "next_node": [
-                                    "BackText"
-                                ]
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "20",
-                    "pipeline_override": {
-                        "TL01_Start_Count": {
-                            "custom_action_param": {
-                                "count": 0,
-                                "target_count": 20,
-                                "next_node": [
-                                    "BackText"
-                                ]
-                            }
-                        }
-                    }
-                }
-            ]
-        },
         "选择神锻任务": {
             "default_case": "黑水池",
             "cases": [
@@ -511,6 +448,26 @@
                             "expected": [
                                 "取消"
                             ]
+                        }
+                    }
+                }
+            ]
+        },
+        "自动肉鸽时使用钻石购买体力": {
+            "cases": [
+                {
+                    "name": "no",
+                    "pipeline_override": {
+                        "PowerBuy": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "yes",
+                    "pipeline_override": {
+                        "PowerBuy": {
+                            "enabled": true
                         }
                     }
                 }

@@ -79,13 +79,23 @@
         "post_delay": 500,
         "timeout": 2000,
         "next": [
-            "select_InputBox_Text"
+            "select_InputBox_Text1"
         ]
     },
-    "select_InputBox_Text": {
+    "select_InputBox_Text1": {
         "recognition": "DirectHit",
         "action": "Text",
         "input_text": "自然之子",
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "select_InputBox_Search"
+        ]
+    },
+    "select_InputBox_Text2": {
+        "recognition": "DirectHit",
+        "action": "Text",
+        "input_text": "贵族",
         "post_delay": 500,
         "timeout": 2000,
         "next": [

@@ -24,7 +24,7 @@
             "Activity_EntryMaze"
         ],
         "interrupt": [
-            "Activity_LackOfPower",
+            "PowerLack",
             "Activity_Select_Hard",
             "Activity_Select",
             "ConfirmButton",
@@ -57,34 +57,6 @@
         ],
         "action": "Click",
         "post_delay": 1000,
-        "timeout": 2000
-    },
-    "Activity_LackOfPower": {
-        "recognition": "OCR",
-        "expected": "体力不足",
-        "roi": [
-            157,
-            432,
-            381,
-            412
-        ],
-        "post_delay": 1000,
-        "timeout": 2000,
-        "next": [
-            "Activity_BuyPower"
-        ]
-    },
-    "Activity_BuyPower": {
-        "recognition": "OCR",
-        "expected": "购买",
-        "roi": [
-            151,
-            704,
-            426,
-            73
-        ],
-        "action": "Click",
-        "post_delay": 500,
         "timeout": 2000
     },
     "Activity_EntryMaze": {

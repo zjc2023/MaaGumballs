@@ -583,13 +583,17 @@ class Fight_Select(CustomAction):
         # logger.info("选择自然之子中")
         context.run_task(
             "Select_Gumball_1",
-            pipeline_override={"select_InputBox_Text": {"input_text": "自然之子"}},
+            pipeline_override={
+                "select_InputBox_Click": {"next": "select_InputBox_Text1"}
+            },
         )
 
         # logger.info("选择贵族")
         context.run_task(
             "Select_Gumball_2",
-            pipeline_override={"select_InputBox_Text": {"input_text": "贵族"}},
+            pipeline_override={
+                "select_InputBox_Click": {"next": "select_InputBox_Text2"}
+            },
         )
 
         return CustomAction.RunResult(success=True)
@@ -626,7 +630,6 @@ class Fight_TestAction(CustomAction):
         # fightUtils.title_learn("魔法", 3, "祭司", 3, context)
         # fightUtils.title_learn("魔法", 4, "气系大师", 3, context)
 
-
         # fightUtils.disassembleEquipment(
         #     6,
         #     [
@@ -648,7 +651,6 @@ class Fight_TestAction(CustomAction):
         #     context,
         # )
 
-
         # fightUtils.title_learn("魔法", 3, "祭司", 1, context)
         # fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
         # fightUtils.title_learn("魔法", 5, " 传奇法师", 1, context)
@@ -658,7 +660,6 @@ class Fight_TestAction(CustomAction):
         # fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
         # fightUtils.title_learn_branch("冒险", 5, "生命强化", 3, context)
         # context.run_task("Fight_ReturnMainWindow")
-
 
         return CustomAction.RunResult(success=True)
 
