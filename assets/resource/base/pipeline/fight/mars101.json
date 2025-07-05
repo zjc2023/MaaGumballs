@@ -1,4 +1,82 @@
 {
+    "Mars": {
+        "next": [
+            "Mars_Start",
+            "Mars_Fighting"
+        ],
+        "interrupt": [
+            "AlchemyReward",
+            "MapSwipeDownToUp"
+        ]
+    },
+    "Mars_Start": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Mars/Mars_Entry.png",
+        "roi": [
+            15,
+            161,
+            691,
+            878
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 1500,
+        "next": [
+            "Mars_Select"
+        ],
+        "interrupt": [
+            "PowerLack",
+            "Select_MainWindow",
+            "ConfirmButton",
+            "ClickCenterBelow_500ms"
+        ]
+    },
+    "Mars_Select": {
+        "recognition": "OCR",
+        "expected": "进入迷宫",
+        "roi": [
+            165,
+            871,
+            418,
+            91
+        ],
+        "action": "Custom",
+        "custom_action": "Fight_Select",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Mars_EntryMaze"
+        ]
+    },
+    "Mars_EntryMaze": {
+        "recognition": "OCR",
+        "expected": "进入迷宫",
+        "roi": [
+            165,
+            871,
+            418,
+            91
+        ],
+        "action": "Click",
+        "next": [
+            "Mars_Fighting"
+        ],
+        "interrupt": [
+            "GameLoading"
+        ]
+    },
+    "Mars_Fighting": {
+        "recognition": "TemplateMatch",
+        "template": "fight/UniversalUI/MazePackage.png",
+        "action": "Custom",
+        "custom_action": "Mars101",
+        "roi": [
+            47,
+            1147,
+            136,
+            117
+        ]
+    },
     "Mars_Reward": {
         "recognition": "TemplateMatch",
         "template": "fight/Mars/MarsReward.png",
@@ -229,18 +307,6 @@
         "custom_action": "Mars_Fight_ClearCurrentLayer",
         "post_delay": 300,
         "timeout": 1000
-    },
-    "Mars_Fighting": {
-        "recognition": "TemplateMatch",
-        "template": "fight/UniversalUI/MazePackage.png",
-        "action": "Custom",
-        "custom_action": "Mars101",
-        "roi": [
-            47,
-            1147,
-            136,
-            117
-        ]
     },
     "Mars_Statue": {
         "recognition": "TemplateMatch",
