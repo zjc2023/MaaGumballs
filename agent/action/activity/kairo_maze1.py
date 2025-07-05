@@ -143,9 +143,9 @@ class Kairo_Difficulty3_Start(CustomAction):
 
         # 按阶段顺序执行任务
         phases = [
-            # self.handle_Phase_1,
-            # self.handle_Phase_2,
-            # self.handle_Phase_3,
+            self.handle_Phase_1,
+            self.handle_Phase_2,
+            self.handle_Phase_3,
             self.handle_Phase_4,
         ]
 
