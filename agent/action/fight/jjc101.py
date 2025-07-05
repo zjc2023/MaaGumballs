@@ -618,6 +618,15 @@ class Fight_TestAction(CustomAction):
     ) -> CustomAction.RunResult:
         # fightUtils.autoOpenPicup(context)
 
+        # fightUtils.checkGumballsStatusV2(context)
+        # fightUtils.title_learn_branch("魔法", 5, "魔力强化", 1, context)
+        # fightUtils.title_learn_branch("魔法", 5, "生命强化", 2, context)
+
+        # fightUtils.title_learn("魔法", 2, "白袍法师", 3, context)
+        # fightUtils.title_learn("魔法", 3, "祭司", 3, context)
+        # fightUtils.title_learn("魔法", 4, "气系大师", 3, context)
+
+
         # fightUtils.disassembleEquipment(
         #     6,
         #     [
@@ -639,11 +648,18 @@ class Fight_TestAction(CustomAction):
         #     context,
         # )
 
-        # fightUtils.disassembleEquipment(
-        #     777,
-        #     ["白刃枪", "短剑", "铁斧", "木杖", "铁剑", "橡木杖", "佣兵之斧"],
-        #     context,
-        # )
+
+        # fightUtils.title_learn("魔法", 3, "祭司", 1, context)
+        # fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
+        # fightUtils.title_learn("魔法", 5, " 传奇法师", 1, context)
+        # context.run_task("Fight_ReturnMainWindow")
+        fightUtils.findItem("武器大师执照", True, context)
+        # fightUtils.title_learn_branch("冒险", 5, "魔法强化", 3, context)
+        # fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
+        # fightUtils.title_learn_branch("冒险", 5, "生命强化", 3, context)
+        # context.run_task("Fight_ReturnMainWindow")
+
+
         return CustomAction.RunResult(success=True)
 
 

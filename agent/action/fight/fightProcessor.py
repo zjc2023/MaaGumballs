@@ -31,6 +31,7 @@ class FightProcessor:
             self._grid_lower = [130, 135, 143]
             self._grid_upper = [170, 175, 183]
             self._grid_count = 10
+            self._hit_monster_count = 3
             self.max_grid_loop = 18
             self.max_monster_loop_fail = 5
             self.max_grid_loop_fail = 3
@@ -111,6 +112,16 @@ class FightProcessor:
         if not isinstance(value, int) or value <= 0:
             raise ValueError("grid_count must be a positive integer")
         self._grid_count = value
+
+    @property
+    def hit_monster_count(self):
+        return self._hit_monster_count
+
+    @hit_monster_count.setter
+    def hit_monster_count(self, value):
+        if not isinstance(value, int) or value <= 0:
+            raise ValueError("hit_monster_count must be a positive integer")
+        self._hit_monster_count = value
 
     def generate_floor_roi_grid(self) -> List[List[int]]:
         """生成地板网格的ROI区域列表
@@ -247,7 +258,7 @@ class FightProcessor:
                     context,
                 ):
                     self.visited[r][c] += 1
-                    for _ in range(3):
+                    for _ in range(self.hit_monster_count):
                         context.tasker.controller.post_click(
                             x + w // 2, y + h // 2
                         ).wait()
@@ -266,6 +277,19 @@ class FightProcessor:
                         recoDetail.box, self.roi_matrix[r][c]
                     ):
                         logger.info(f"识别到 ClosedDoor 位于 {r+1},{c+1}")
+                        return r, c
+        return 0, 0
+
+    def checkOpenedDoor(self, context: Context) -> tuple[int, int]:
+        if recoDetail := context.run_recognition(
+            "Fight_OpenedDoor", context.tasker.controller.post_screencap().wait().get()
+        ):
+            for r in range(self.rows):
+                for c in range(self.cols):
+                    if self.is_roi_mostly_overlapping(
+                        recoDetail.box, self.roi_matrix[r][c]
+                    ):
+                        logger.info(f"识别到 OpenedDoor 位于 {r+1},{c+1}")
                         return r, c
         return 0, 0
 
@@ -330,6 +354,8 @@ class FightProcessor:
         fail_check_grid_cnt = 0
         fail_check_monster_cnt = 0
         DoorX, DoorY = self.checkClosedDoor(context)
+        if DoorX == 0 and DoorY == 0:  # 没检测到关着的门
+            DoorX, DoorY = self.checkOpenedDoor(context)  # 那就检测开着的门
         self.visited = [[0] * self.cols for _ in range(self.rows)]
         self.visited[DoorX][DoorY] = 999
 

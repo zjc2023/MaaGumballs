@@ -270,3 +270,60 @@ class SkillShop_Shopping(CustomAction):
                 context.run_task("ConfirmButton_500ms")
         context.run_task("Fight_ReturnMainWindow")
         return CustomAction.RunResult(success=True)
+
+
+@AgentServer.custom_action("Mars_Shopping")
+class Mars_Shopping(CustomAction):
+    def run(
+        self, context: Context, argv: CustomAction.RunArg
+    ) -> CustomAction.RunResult:
+        # 马尔斯特殊商店开始购物
+        if recoDetail := context.run_recognition(
+            "Shop_FindMarsRuinCoinsIcon_reco",
+            context.tasker.controller.post_screencap().wait().get(),
+            pipeline_override={
+                "Shop_FindMarsRuinCoinsIcon_reco": {
+                    "recognition": "TemplateMatch",
+                    "template": "Shop/MarsRuinCoinsIcon.png",
+                    "roi": [66, 344, 590, 665],
+                    "threshold": 0.8,
+                }
+            },
+        ):
+            logger.info(f"找到战利品{len(recoDetail.filterd_results)}个, 开始购物")
+            for result in recoDetail.filterd_results:
+                if result.score < 0.8:
+                    continue
+                box = result.box
+                context.tasker.controller.post_click(
+                    int(box[0] + box[2] / 2) + 65, int(box[1] + box[3] / 2) - 85
+                ).wait()
+                time.sleep(0.5)
+
+                context.run_task("ConfirmButton_500ms")
+        time.sleep(0.5)
+        if recoDetail := context.run_recognition(
+            "Shop_FindMarsSpecialBox_reco",
+            context.tasker.controller.post_screencap().wait().get(),
+            pipeline_override={
+                "Shop_FindMarsSpecialBox_reco": {
+                    "recognition": "TemplateMatch",
+                    "template": "fight/Mars/MarsSpecialBox.png",
+                    "roi": [65, 334, 610, 686],
+                    "threshold": 0.8,
+                }
+            },
+        ):
+            logger.info(f"找到特殊战利品{len(recoDetail.filterd_results)}个, 开始购物")
+            for result in recoDetail.filterd_results:
+                if result.score < 0.8:
+                    continue
+                box = result.box
+                context.tasker.controller.post_click(
+                    box[0] + box[2] // 2, box[1] + box[3] // 2
+                )
+                time.sleep(0.5)
+                context.run_task("ConfirmButton_500ms")
+
+        context.run_task("Fight_ReturnMainWindow")
+        return CustomAction.RunResult(success=True)
