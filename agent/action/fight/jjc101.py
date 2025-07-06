@@ -621,46 +621,12 @@ class Fight_TestAction(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
-        # fightUtils.autoOpenPicup(context)
-
-        # fightUtils.checkGumballsStatusV2(context)
-        # fightUtils.title_learn_branch("魔法", 5, "魔力强化", 1, context)
-        # fightUtils.title_learn_branch("魔法", 5, "生命强化", 2, context)
-
-        # fightUtils.title_learn("魔法", 2, "白袍法师", 3, context)
-        # fightUtils.title_learn("魔法", 3, "祭司", 3, context)
-        # fightUtils.title_learn("魔法", 4, "气系大师", 3, context)
-
-        # fightUtils.disassembleEquipment(
-        #     6,
-        #     [
-        #         "土系魔法书",
-        #         "气系魔法书",
-        #         "火系魔法书",
-        #         "水系魔法书",
-        #         "光系魔法书",
-        #         "暗系魔法书",
-        #         "执政官铠甲",
-        #         "骨灰指轮",
-        #         "次元靴",
-        #         "大德鲁伊斗篷",
-        #         "法老面具",
-        #         "格斗大师拳套",
-        #         "圣者的日记",
-        #         "伊斯坦丁",
-        #     ],
-        #     context,
-        # )
-
-        # fightUtils.title_learn("魔法", 3, "祭司", 1, context)
-        # fightUtils.title_learn("魔法", 4, "气系大师", 1, context)
-        # fightUtils.title_learn("魔法", 5, " 传奇法师", 1, context)
-        # context.run_task("Fight_ReturnMainWindow")
-        fightUtils.findItem("武器大师执照", True, context)
-        # fightUtils.title_learn_branch("冒险", 5, "魔法强化", 3, context)
-        # fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
-        # fightUtils.title_learn_branch("冒险", 5, "生命强化", 3, context)
-        # context.run_task("Fight_ReturnMainWindow")
+        context.run_task("Fight_ReturnMainWindow")
+        fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
+        fightUtils.title_learn("魔法", 2, "黑袍法师", 3, context)
+        fightUtils.title_learn("魔法", 3, "咒术师", 3, context)
+        fightUtils.title_learn("魔法", 4, "土系大师", 3, context)
+        fightUtils.title_learn("魔法", 5, "位面先知", 1, context)
 
         return CustomAction.RunResult(success=True)
 
