@@ -338,7 +338,8 @@
         "timeout": 2000,
         "next": [
             "Mars_Statue_Open_Next2",
-            "Mars_Statue_Open_Next1"
+            "Mars_Statue_Open_Next1",
+            "Fight_ReturnMainWindow"
         ]
     },
     "Mars_Statue_Open_Next1": {
