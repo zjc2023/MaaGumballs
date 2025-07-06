@@ -87,6 +87,7 @@ class Mars101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
             context.run_task("Fight_ReturnMainWindow")
+            self.isTitle_L66 = True
 
         elif self.layers == 76 or self.layers == 77 and self.isTitle_L76 == False:
             fightUtils.title_learn("战斗", 1, "见习战士", 3, context)
