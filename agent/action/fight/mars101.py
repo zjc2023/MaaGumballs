@@ -184,14 +184,22 @@ class Mars101(CustomAction):
 
             for _ in range(3):
                 fightUtils.cast_magic_special("生命颂歌", context)
-
-            actions = [
-                lambda: fightUtils.cast_magic("光", "祝福术", context),
-                lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
-                lambda: fightUtils.cast_magic("水", "冰锥术", context),
-                lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
-                lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
-            ]
+            actions = []
+            if self.layers <= 70:
+                actions = [
+                    lambda: fightUtils.cast_magic("光", "祝福术", context),
+                    lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
+                    lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
+                    lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
+                ]
+            elif self.layers >= 80 and self.layers <= 100:
+                actions = [
+                    lambda: fightUtils.cast_magic("光", "祝福术", context),
+                    lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
+                    lambda: fightUtils.cast_magic("水", "冰锥术", context),
+                    lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
+                    lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
+                ]
             index = 0
             for _ in range(10):
                 # 执行当前动作
