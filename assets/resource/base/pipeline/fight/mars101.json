@@ -130,7 +130,11 @@
     },
     "MarsBossReward_Select1": {
         "recognition": "TemplateMatch",
-        "template": "fight/Mars/MarsBossReward_HP.png",
+        "template": [
+            "fight/Mars/MarsBossReward_HP.png",
+            "fight/Mars/MarsBossReward_MAG.png",
+            "fight/Mars/MarsBossReward_MP.png"
+        ],
         "roi": [
             35,
             463,
@@ -145,7 +149,10 @@
     },
     "MarsBossReward_Select2": {
         "recognition": "TemplateMatch",
-        "template": "fight/Mars/MarsBossReward_MAG.png",
+        "template": [
+            "fight/Mars/MarsBossReward_DamageReduction.png",
+            "fight/Mars/MarsBossReward_HPSteal.png"
+        ],
         "roi": [
             35,
             463,
@@ -160,7 +167,7 @@
     },
     "MarsBossReward_Select3": {
         "recognition": "TemplateMatch",
-        "template": "fight/Mars/MarsBossReward_MP.png",
+        "template": "fight/Mars/MarsBossReward_5w.png",
         "roi": [
             35,
             463,
@@ -207,7 +214,8 @@
         "recognition": "TemplateMatch",
         "template": [
             "fight/Mars/MarsBody1.png",
-            "fight/Mars/MarsBody2.png"
+            "fight/Mars/MarsBody2.png",
+            "fight/Mars/MarsBody3.png"
         ],
         "roi": [
             4,
@@ -428,13 +436,78 @@
             "fight/Mars/MarsExchangeShop_02.png"
         ],
         "roi": [
-            33,
-            677,
-            658,
-            180
+            4,
+            182,
+            705,
+            839
         ],
         "action": "Click",
         "post_delay": 500,
+        "timeout": 2000
+    },
+    "Mars_Exchange_Shop_Check": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/Mars/MarsDagger.png"
+        ],
+        "roi": [
+            424,
+            461,
+            217,
+            187
+        ],
+        "timeout": 2000
+    },
+    "Mars_Exchange_Shop_Add": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/Mars/MarsExchangeShop_Add.png"
+        ],
+        "roi": [
+            107,
+            458,
+            175,
+            184
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Mars_Exchange_Shop_Add_Equipment_Select": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Mars/MarsExchangeShop_AddEquipmentSelect.png",
+        "roi": [
+            43,
+            635,
+            644,
+            216
+        ],
+        "action": "Click",
+        "timeout": 2000
+    },
+    "Mars_Exchange_Shop_Click_Add_Button": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Mars/MarsExchangeShop_ClickAddButton.png",
+        "roi": [
+            470,
+            625,
+            177,
+            133
+        ],
+        "action": "Click",
+        "timeout": 2000
+    },
+    "Mars_Exchange_Shop_Confirm_Exchange": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Mars/MarsExchangeShop_ConfirmExchange.png",
+        "roi": [
+            36,
+            734,
+            649,
+            245
+        ],
+        "action": "Click",
+        "post_delay": 1000,
         "timeout": 2000
     },
     "Mars_GotoSpecialLayer": {
@@ -503,12 +576,21 @@
         "expected": [
             "外接皮"
         ],
+        "action": "DoNothing",
+        "next": [
+            "Mars_Android_Skill_Choose_Click"
+        ]
+    },
+    "Mars_Android_Skill_Choose_Click": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Mars/Mars_Android_Skill_Choose_Click.png",
         "action": "Click",
-        "target_offset": [
-            446,
-            38,
+        "roi": "Mars_Android_Skill_Choose",
+        "roi_offset": [
             0,
-            0
+            0,
+            570,
+            80
         ],
         "next": [
             "Mars_Android_Skill_Choose_Success",
@@ -518,46 +600,50 @@
     "Mars_Android_Skill_Swipedowntoup": {
         "action": "Swipe",
         "begin": [
-            360,
-            923,
+            138,
+            881,
             1,
             1
         ],
         "end": [
-            360,
-            814,
+            142,
+            750,
             1,
             1
         ],
-        "post_delay": 500
+        "duration": 500
     },
     "Mars_Android_Skill_Choose_Fail": {
-        "recognition": "OCR",
-        "expected": [
-            "能量不足"
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/Mars/Mars_Android_Skill_Choose_Fail.png",
+            "fight/Mars/Mars_Android_Skill_Choose_Fail2.png"
         ],
         "roi": [
-            114,
-            358,
-            477,
-            103
+            266,
+            605,
+            96,
+            96
         ],
+        "threshold": 0.9,
         "timeout": 3000,
         "next": [
             "Fight_ReturnMainWindow"
         ]
     },
     "Mars_Android_Skill_Choose_Success": {
-        "recognition": "OCR",
-        "expected": [
-            "激活成功"
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/Mars/Mars_Android_Skill_Choose_Success.png",
+            "fight/Mars/Mars_Android_Skill_Choose_Success2.png"
         ],
         "roi": [
-            114,
-            358,
-            477,
-            103
+            266,
+            605,
+            96,
+            96
         ],
+        "threshold": 0.9,
         "timeout": 3000,
         "next": [
             "Fight_ReturnMainWindow"

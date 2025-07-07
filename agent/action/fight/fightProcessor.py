@@ -36,6 +36,7 @@ class FightProcessor:
             self.max_monster_loop_fail = 5
             self.max_grid_loop_fail = 3
             self.isCheckDragon = False
+            self.targetWish = "工资"
 
             # 初始化逻辑
             roi_list = self.generate_floor_roi_grid()
@@ -344,7 +345,7 @@ class FightProcessor:
         """处理遇到神龙的逻辑"""
         if self.isCheckDragon and context.run_recognition("Fight_FindDragon", img):
             logger.info("是神龙,俺,俺们有救了！！！")
-            fightUtils.dragonwish("工资", context)
+            fightUtils.dragonwish(self.targetWish, context)
             logger.info("神龙带肥家lo~")
             return True
         return False
