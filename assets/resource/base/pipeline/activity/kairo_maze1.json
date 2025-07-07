@@ -731,7 +731,7 @@
         ],
         "inverse": true,
         "next": [
-            "Kairo_Fight_OpenedDoor"
+            "Fight_LeaveMaze"
         ]
     },
     "Kairo_Confirm_OutsideMap": {
