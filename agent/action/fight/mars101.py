@@ -120,20 +120,22 @@ class Mars101(CustomAction):
         # 检查冈布奥状态
         tempNum = self.layers % 10
         if (
-            (50 <= self.layers <= 79) and (tempNum == 1 or tempNum == 5 or tempNum == 9)
+            (11 <= self.layers <= 79) and (tempNum == 1 or tempNum == 5 or tempNum == 9)
         ) or self.layers >= 80:
             StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
             CurrentHP = float(StatusDetail["当前生命值"])
             MaxHp = float(StatusDetail["最大生命值"])
             HPStatus = CurrentHP / MaxHp
+            logger.info(f"current hp is {CurrentHP}, HPStatus is {HPStatus}")
 
             if HPStatus < 0.8:
                 while HPStatus < 0.8:
-                    if not fightUtils.cast_magic("光", "神恩术", context):
-                        if not fightUtils.cast_magic("水", "治疗术", context):
-                            if not fightUtils.cast_magic("水", "治愈术", context):
-                                logger.info("没有任何治疗方法了= =")
-                                break
+                    if not fightUtils.cast_magic_special("生命颂歌", context):
+                        if not fightUtils.cast_magic("光", "神恩术", context):
+                            if not fightUtils.cast_magic("水", "治疗术", context):
+                                if not fightUtils.cast_magic("水", "治愈术", context):
+                                    logger.info("没有任何治疗方法了= =")
+                                    break
                     context.run_task("Fight_ReturnMainWindow")
                     StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
                     CurrentHP = float(StatusDetail["当前生命值"])

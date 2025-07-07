@@ -163,7 +163,7 @@ class JJC101(CustomAction):
             CurrentHP = float(StatusDetail["当前生命值"])
             MaxHp = float(StatusDetail["最大生命值"])
             HPStatus = CurrentHP / MaxHp
-
+            logger.info(f"current hp is {CurrentHP}, HPStatus is {HPStatus}")
             if HPStatus < 0.8:
                 while HPStatus < 0.8:
                     if not fightUtils.cast_magic("光", "神恩术", context):

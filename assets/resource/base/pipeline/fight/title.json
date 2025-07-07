@@ -31,7 +31,8 @@
         "post_delay": 1200,
         "timeout": 2000,
         "next": [
-            "TitlePanel_Series"
+            "TitlePanel_Series",
+            "TitlePanel_Open"
         ]
     },
     "TitlePanel_Series": {

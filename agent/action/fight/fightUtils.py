@@ -615,7 +615,7 @@ def checkGumballsStatusV2(context: Context):
         logger.warning("状态识别失败，保持默认值")
 
     # 输出状态字典
-    logger.info(status)
+    # logger.info(status)
 
     context.run_task("Fight_ReturnMainWindow")
     return status
