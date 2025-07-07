@@ -146,6 +146,11 @@ class Mars101(CustomAction):
             else:
                 logger.info("当前生命值大于80%，不使用治疗")
 
+            # 保命
+            if self.layers >= 71 and not fightUtils.checkBuffStatus(
+                "神圣重生", context
+            ):
+                fightUtils.cast_magic("光", "神圣重生", context)
         return True
 
     def handle_android_skill_event(self, context: Context):
@@ -221,7 +226,7 @@ class Mars101(CustomAction):
 
     def handle_EarthGate_event(self, context: Context):
         if (
-            self.layers == 67 or self.layers == 68 or self.layers == 95
+            self.layers == 67 or self.layers == 68 or self.layers == 85
         ) and self.useEarthGate < 2:
             if fightUtils.cast_magic("土", "大地之门", context):
                 self.useEarthGate += 1
@@ -372,7 +377,7 @@ class Mars101(CustomAction):
         self.handle_MarsStatue_event(context)
         self.handle_MarsReward_event(context)
         self.handle_EarthGate_event(context)
-        if self.layers == 99:
+        if self.layers == 89:
             self.handle_before_leave_maze_event(context)
         else:
             self.handle_downstair_event(context)
