@@ -12,27 +12,34 @@
     },
     "TitlePanel_Open": {
         "recognition": "TemplateMatch",
-        "template": "fight/UniversalUI/MazePackage.png",
+        "template": "fight/UniversalUI/titlePanelBelow.png",
         "roi": [
-            47,
-            1147,
-            136,
-            117
+            269,
+            1105,
+            209,
+            174
         ],
         "action": "Click",
-        "target": true,
-        "target_offset": [
-            325,
-            75,
-            0,
-            0
-        ],
         "threshold": 0.8,
         "post_delay": 1200,
         "timeout": 2000,
         "next": [
-            "TitlePanel_Series"
+            "TitlePanel_Series",
+            "TitlePanel_Open"
         ]
+    },
+    "TitlePanel_Series": {
+        "recognition": "OCR",
+        "expected": "冒险",
+        "roi": [
+            47,
+            964,
+            612,
+            151
+        ],
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 2000
     },
     "TitlePanel_ReturnPanel": {
         "next": [
@@ -66,8 +73,7 @@
             81
         ],
         "next": [
-            "TitlePanel_Learnable_Next",
-            "TitlePanel_Learnable_Fnish"
+            "TitlePanel_Learnable_Click"
         ],
         "interrupt": [
             "TitlePanel_ReturnPanel"
@@ -76,60 +82,62 @@
         "post_delay": 500,
         "timeout": 2000
     },
-    "TitlePanel_Series": {
-        "recognition": "OCR",
-        "expected": "冒险",
-        "roi": [
-            47,
-            964,
-            612,
-            151
-        ],
-        "action": "Click",
-        "post_delay": 500,
-        "timeout": 2000
-    },
     "TitlePanel_Learnable_Fnish": {
         "recognition": "TemplateMatch",
         "roi": [
-            53,
-            843,
+            169,
             138,
-            152
+            387,
+            127
         ],
         "template": [
-            "fight/UniversalUI/star_3.png",
-            "fight/UniversalUI/star_3_2.png",
-            "fight/UniversalUI/Moon_3.png",
-            "fight/UniversalUI/Moon_3_2.png",
-            "fight/UniversalUI/Moon_3_3.png"
+            "fight/UniversalUI/new_Star_3.png",
+            "fight/UniversalUI/new_Moon_3.png"
         ],
         "action": "DoNothing",
         "threshold": 0.9,
+        "next": [
+            "BackText_700ms"
+        ],
         "post_delay": 200,
         "timeout": 2000
     },
-    "TitlePanel_Learnable_Next": {
+    "TitlePanel_Learnable_Check": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight/UniversalUI/GreyStar.png",
-            "fight/UniversalUI/Title_Learnable.png",
-            "fight/UniversalUI/Title_Learnable1.png",
-            "fight/UniversalUI/GreyMoon.png"
+            "fight/UniversalUI/new_GreyStar.png",
+            "fight/UniversalUI/new_GreyMoon.png",
+            "fight/UniversalUI/new_Title.png"
         ],
         "roi": [
-            199,
-            875,
-            89,
-            84
+            169,
+            138,
+            387,
+            127
         ],
-        "threshold": 0.825,
+        "threshold": 0.9,
         "order_by": "Score",
         "action": "Click",
         "next": [
             "TitlePanel_TitleCheck_New",
             "TitlePanel_TitleLearn",
             "TitlePanel_CurrentPanel"
+        ],
+        "post_delay": 300,
+        "timeout": 2000
+    },
+    "TitlePanel_Learnable_Click": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            53,
+            843,
+            138,
+            152
+        ],
+        "next": [
+            "TitlePanel_Learnable_Check",
+            "TitlePanel_Learnable_Fnish"
         ],
         "post_delay": 300,
         "timeout": 2000

@@ -190,11 +190,8 @@ def title_learn(
         context.run_task(
             "TitlePanel_Learnable",
             pipeline_override={
-                "TitlePanel_Learnable_Next": {
-                    "roi": titileRect[titleLevel],
-                },
-                "TitlePanel_Learnable_Fnish": {
-                    "roi": titileRect[titleLevel],
+                "TitlePanel_Learnable_Click": {
+                    "target": titileRect[titleLevel],
                 },
                 "TitlePanel_TitleCheck_New": {
                     "expected": titleName,
@@ -213,6 +210,7 @@ def title_learn(
 
 def title_check(titleType: str, context: Context):
     """检查是否存在目标称号系列"""
+    isSuccess = False
     context.run_task("Fight_ReturnMainWindow")
     context.run_task("TitlePanel_Open")
     time.sleep(1)
@@ -221,7 +219,7 @@ def title_check(titleType: str, context: Context):
         if context.run_recognition(
             "TitlePanel_CurrentPanel_Check",
             context.tasker.controller.post_screencap().wait().get(),
-            {
+            pipeline_override={
                 "TitlePanel_CurrentPanel_Check": {
                     "recognition": "OCR",
                     "roi": [40, 986, 435, 108],
@@ -230,12 +228,15 @@ def title_check(titleType: str, context: Context):
                 }
             },
         ):
-            return True
+            isSuccess = True
+            break
+
         else:
             context.tasker.controller.post_click(433, 1037).wait()
             checkcount += 1
             time.sleep(0.5)
-    return False
+        context.run_task("Fight_ReturnMainWindow")
+    return isSuccess
 
 
 def title_learn_branch(
@@ -261,11 +262,8 @@ def title_learn_branch(
         context.run_task(
             "TitlePanel_Learnable",
             pipeline_override={
-                "TitlePanel_Learnable_Next": {
-                    "roi": titileRect[titleLevel],
-                },
-                "TitlePanel_Learnable_Fnish": {
-                    "roi": titileRect[titleLevel],
+                "TitlePanel_Learnable_Click": {
+                    "target": titileRect[titleLevel],
                 },
                 "TitlePanel_TitleCheck_New": {
                     "expected": titleName,

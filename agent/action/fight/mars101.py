@@ -94,19 +94,14 @@ class Mars101(CustomAction):
             fightUtils.title_learn("战斗", 2, "战士", 3, context)
             fightUtils.title_learn("战斗", 3, "剑舞者", 3, context)
             fightUtils.title_learn("战斗", 4, "大剑师", 3, context)
-            context.run_task("Fight_ReturnMainWindow")
-
             fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
             fightUtils.title_learn("冒险", 2, "勘探家", 3, context)
             fightUtils.title_learn("冒险", 3, "锻造师", 3, context)
             fightUtils.title_learn("冒险", 4, "武器大师", 3, context)
             fightUtils.title_learn("冒险", 5, "大铸剑师", 1, context)
-            context.run_task("Fight_ReturnMainWindow")
-
             fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
             fightUtils.title_learn_branch("冒险", 5, "生命强化", 3, context)
             fightUtils.title_learn_branch("冒险", 5, "魔法强化", 3, context)
-            context.run_task("Fight_ReturnMainWindow")
 
             if fightUtils.title_check("巨龙", context):
                 fightUtils.title_learn("巨龙", 1, "亚龙血统", 3, context)
@@ -114,12 +109,10 @@ class Mars101(CustomAction):
                 fightUtils.title_learn("巨龙", 3, "中级龙族血统", 3, context)
                 fightUtils.title_learn("巨龙", 4, "高级龙族血统", 3, context)
                 fightUtils.title_learn("巨龙", 5, "邪龙血统", 1, context)
-                context.run_task("Fight_ReturnMainWindow")
-
                 fightUtils.title_learn_branch("巨龙", 5, "生命强化", 3, context)
-                # fightUtils.title_learn_branch("巨龙", 5, "攻击强化", 3, context)
                 fightUtils.title_learn_branch("巨龙", 5, "攻击强化", 3, context)
-                context.run_task("Fight_ReturnMainWindow")
+
+            context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
             context.run_task("Fight_ReturnMainWindow")
             self.isTitle_L76 = True
