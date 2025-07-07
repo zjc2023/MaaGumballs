@@ -129,7 +129,8 @@ class Mars101(CustomAction):
             logger.info(f"current hp is {CurrentHP}, HPStatus is {HPStatus}")
 
             if HPStatus < 0.8:
-                fightUtils.cast_magic_special("生命颂歌", context)
+                if self.layers <= 80:
+                    fightUtils.cast_magic_special("生命颂歌", context)
                 while HPStatus < 0.8:
                     if not fightUtils.cast_magic("光", "神恩术", context):
                         if not fightUtils.cast_magic("水", "治疗术", context):
