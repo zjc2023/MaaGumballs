@@ -469,7 +469,7 @@ class Mars101(CustomAction):
             # 检查是否触发战后事件
             self.handle_postLayers_event(context)
 
-            if self.layers == 99:
+            if self.layers == 89:
                 logger.info(f"current layers {self.layers}, 开始退出agent")
                 break
 
