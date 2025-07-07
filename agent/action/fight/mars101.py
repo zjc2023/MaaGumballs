@@ -414,6 +414,7 @@ class Mars101(CustomAction):
     def handle_postLayers_event(self, context: Context):
         time.sleep(1)
         self.handle_perfect_event(context)
+        self.handle_dragon_event(context)
         self.Check_DefaultStatus(context)
         self.handle_MarsBody_event(context)
         self.handle_MarsStele_event(context)
@@ -430,20 +431,22 @@ class Mars101(CustomAction):
         else:
             self.handle_downstair_event(context)
 
+    def handle_dragon_event(self, context: Context):
+        # 检测神龙
+        time.sleep(1)
+        img = context.tasker.controller.post_screencap().wait().get()
+        if context.run_recognition("Fight_FindDragon", img):
+            logger.info("是神龙,俺,俺们有救了！！！")
+            fightUtils.dragonwish("马尔斯", context)
+            logger.info("神龙带肥家lo~")
+
     def handle_clearCurLayer_event(self, context: Context):
         # boss层开始探索
         if self.layers >= 30 and self.layers % 10 == 0:
             # boss召唤动作
             time.sleep(6)
             self.handle_boss_event(context)
-            # 检测神龙
-            time.sleep(1)
-            img = context.tasker.controller.post_screencap().wait().get()
-            if context.run_recognition("Fight_FindDragon", img):
-                logger.info("是神龙,俺,俺们有救了！！！")
-                fightUtils.dragonwish("马尔斯", context)
-                logger.info("神龙带肥家lo~")
-
+            self.handle_dragon_event
             return False
         # 小怪层探索
         else:
