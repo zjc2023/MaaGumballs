@@ -129,13 +129,13 @@ class Mars101(CustomAction):
             logger.info(f"current hp is {CurrentHP}, HPStatus is {HPStatus}")
 
             if HPStatus < 0.8:
+                fightUtils.cast_magic_special("生命颂歌", context)
                 while HPStatus < 0.8:
-                    if not fightUtils.cast_magic_special("生命颂歌", context):
-                        if not fightUtils.cast_magic("光", "神恩术", context):
-                            if not fightUtils.cast_magic("水", "治疗术", context):
-                                if not fightUtils.cast_magic("水", "治愈术", context):
-                                    logger.info("没有任何治疗方法了= =")
-                                    break
+                    if not fightUtils.cast_magic("光", "神恩术", context):
+                        if not fightUtils.cast_magic("水", "治疗术", context):
+                            if not fightUtils.cast_magic("水", "治愈术", context):
+                                logger.info("没有任何治疗方法了= =")
+                                break
                     context.run_task("Fight_ReturnMainWindow")
                     StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
                     CurrentHP = float(StatusDetail["当前生命值"])
@@ -219,7 +219,9 @@ class Mars101(CustomAction):
         return True
 
     def handle_EarthGate_event(self, context: Context):
-        if (self.layers == 67 or self.layers == 68) and self.useEarthGate < 2:
+        if (
+            self.layers == 67 or self.layers == 68 or self.layers == 95
+        ) and self.useEarthGate < 2:
             if fightUtils.cast_magic("土", "大地之门", context):
                 self.useEarthGate += 1
             elif self.layers == 71:
