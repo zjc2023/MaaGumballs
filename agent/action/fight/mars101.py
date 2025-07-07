@@ -78,8 +78,6 @@ class Mars101(CustomAction):
             fightUtils.title_learn("魔法", 3, "咒术师", 3, context)
             fightUtils.title_learn("魔法", 4, "土系大师", 3, context)
             fightUtils.title_learn("魔法", 5, "位面先知", 1, context)
-            context.run_task("Fight_ReturnMainWindow")
-
             fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "生命强化", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
@@ -248,6 +246,7 @@ class Mars101(CustomAction):
 
     def handle_before_leave_maze_event(self, context: Context):
         logger.info("准备结算离开迷宫")
+        context.run_task("Fight_ReturnMainWindow")
         for _ in range(3):
             fightUtils.cast_magic_special("生命颂歌", context)
 
