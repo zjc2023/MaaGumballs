@@ -359,42 +359,24 @@ class Mars101(CustomAction):
                 ):
                     for _ in range(5):
                         context.run_task("Mars_Exchange_Shop_Add")
-                        time.sleep(1)
-                        context.run_task("Mars_Exchange_Shop_Add_Equipment_Choose")
-                        time.sleep(1)
                         if context.run_recognition(
                             "Mars_Exchange_Shop_Add_Equipment_Select",
                             context.tasker.controller.post_screencap().wait().get(),
                         ):
                             context.run_task("Mars_Exchange_Shop_Add_Equipment_Select")
                         else:
-                            logger.info(
-                                "除了短剑，法杖，盾牌以外没有其他装备了,回到主页面继续下楼"
-                            )
-                            context.run_task("Fight_MainWindow")
+                            logger.info("没有短剑，法杖和盾牌之外的装备了,跳过这次交换")
                             break
+
                         if AddButtonRecoDetail := context.run_recognition(
-                            "Mars_Exchange_Shop_ClickAddButton",
+                            "Mars_Exchange_Shop_AddButtonReco",
                             context.tasker.controller.post_screencap().wait().get(),
-                            pipeline_override={
-                                "Mars_Exchange_Shop_ClickAddButton": {
-                                    "recognition": "TemplateMatch",
-                                    "template": [
-                                        "fight/Mars/MarsExchangeShop_ClickAddButton.png",
-                                    ],
-                                    "roi": [495, 632, 126, 110],
-                                    "timeout": 2000,
-                                }
-                            },
                         ):
                             box = AddButtonRecoDetail.best_result.box
-                            AddButton_center_x, AddButton_center_y = (
-                                box[0] + box[2] // 2,
-                                box[1] + box[3] // 2,
-                            )
                             for _ in range(10):
                                 context.tasker.controller.post_click(
-                                    AddButton_center_x, AddButton_center_y
+                                    box[0] + box[2] // 2,
+                                    box[1] + box[3] // 2,
                                 ).wait()
                                 time.sleep(0.05)
                         else:
