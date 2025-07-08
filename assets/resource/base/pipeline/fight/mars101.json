@@ -396,6 +396,19 @@
         "action": "Click",
         "timeout": 2000
     },
+    "Mars_Exchange_Shop_AddButtonReco": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/Mars/MarsExchangeShop_ClickAddButton.png"
+        ],
+        "roi": [
+            495,
+            632,
+            126,
+            110
+        ],
+        "timeout": 2000
+    },
     "Mars_Exchange_Shop": {
         "recognition": "TemplateMatch",
         "template": [

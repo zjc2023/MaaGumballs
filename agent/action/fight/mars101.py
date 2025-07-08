@@ -171,11 +171,11 @@ class Mars101(CustomAction):
                 if skill == "机械起":
                     target_skill_checkroi = [363, 605, 96, 96]
                 if context.run_recognition(
-                    "Mars_Android_Skill_Open",
+                    "Mars_Android_Skill",
                     context.tasker.controller.post_screencap().wait().get(),
                 ):
                     context.run_task(
-                        "Mars_Android_Skill_Open",
+                        "Mars_Android_Skill",
                         pipeline_override={
                             "Mars_Android_Skill_Choose": {
                                 "expected": skill,
