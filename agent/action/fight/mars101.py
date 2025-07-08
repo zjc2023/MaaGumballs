@@ -130,7 +130,7 @@ class Mars101(CustomAction):
             logger.info(f"current hp is {CurrentHP}, HPStatus is {HPStatus}")
 
             if HPStatus < 0.8:
-                if self.layers <= 80:
+                if self.layers <= 60:
                     fightUtils.cast_magic_special("生命颂歌", context)
                 while HPStatus < 0.8:
                     if not fightUtils.cast_magic("光", "神恩术", context):
@@ -148,7 +148,7 @@ class Mars101(CustomAction):
                 logger.info("当前生命值大于80%，不使用治疗")
 
             # 保命
-            if self.layers >= 71 and not fightUtils.checkBuffStatus(
+            if self.layers >= 51 and not fightUtils.checkBuffStatus(
                 "神圣重生", context
             ):
                 fightUtils.cast_magic("光", "神圣重生", context)
@@ -538,7 +538,7 @@ class Mars_Fight_ClearCurrentLayer(CustomAction):
         self.fightProcessor = fightProcessor.FightProcessor()
         # 进行特殊配置以适应Mars
         self.fightProcessor.grid_count = 40
-        self.fightProcessor.hit_monster_count = 3
+        self.fightProcessor.hit_monster_count = 5
         self.fightProcessor.targetWish = "马尔斯"
 
     # 执行函数
