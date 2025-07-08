@@ -109,7 +109,6 @@
         "next": [
             "MarsBossReward_Select1",
             "MarsBossReward_Select2",
-            "MarsBossReward_Select3",
             "MarsReward_Open"
         ]
     },
@@ -133,7 +132,7 @@
         "template": [
             "fight/Mars/MarsBossReward_HP.png",
             "fight/Mars/MarsBossReward_MAG.png",
-            "fight/Mars/MarsBossReward_MP.png"
+            "fight/Mars/MarsBossReward_5w.png"
         ],
         "roi": [
             35,
@@ -151,38 +150,9 @@
         "recognition": "TemplateMatch",
         "template": [
             "fight/Mars/MarsBossReward_DamageReduction.png",
-            "fight/Mars/MarsBossReward_HPSteal.png"
+            "fight/Mars/MarsBossReward_HPSteal.png",
+            "fight/Mars/MarsBossReward_MP.png"
         ],
-        "roi": [
-            35,
-            463,
-            662,
-            489
-        ],
-        "action": "Click",
-        "timeout": 2000,
-        "next": [
-            "MarsReward_Open"
-        ]
-    },
-    "MarsBossReward_Select3": {
-        "recognition": "TemplateMatch",
-        "template": "fight/Mars/MarsBossReward_5w.png",
-        "roi": [
-            35,
-            463,
-            662,
-            489
-        ],
-        "action": "Click",
-        "timeout": 2000,
-        "next": [
-            "MarsReward_Open"
-        ]
-    },
-    "MarsBossReward_Select4": {
-        "recognition": "TemplateMatch",
-        "template": "fight/Mars/MarsBossReward_5w.png",
         "roi": [
             35,
             463,
@@ -471,6 +441,24 @@
         ],
         "action": "Click",
         "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Mars_Exchange_Shop_Add_Equipment_Choose": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/Mars/MarsExchangeShop_Could01.png",
+            "fight/Mars/MarsExchangeShop_Could02.png",
+            "fight/Mars/MarsExchangeShop_Could03.png",
+            "fight/Mars/MarsExchangeShop_Could04.png",
+            "fight/Mars/MarsExchangeShop_Could05.png"
+        ],
+        "roi": [
+            75,
+            356,
+            584,
+            523
+        ],
+        "action": "Click",
         "timeout": 2000
     },
     "Mars_Exchange_Shop_Add_Equipment_Select": {

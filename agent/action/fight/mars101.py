@@ -82,7 +82,10 @@ class Mars101(CustomAction):
             fightUtils.title_learn_branch("魔法", 5, "魔力强化", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "生命强化", 3, context)
             fightUtils.title_learn_branch("魔法", 5, "魔法强化", 3, context)
+            context.run_task("Fight_ReturnMainWindow")
 
+            # 如果探索点足够,则把土系大师也学习了
+            fightUtils.title_learn("魔法", 4, "土系大师", 3, context)
             context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
             context.run_task("Fight_ReturnMainWindow")
@@ -335,7 +338,8 @@ class Mars101(CustomAction):
             context.run_task("Fight_OpenedDoor")
 
     def handle_MarsExchangeShop_event(self, context: Context):
-        if self.layers > 30 and context.run_recognition(
+        # 大于10层才处理交换商店事件
+        if self.layers > 10 and context.run_recognition(
             "Mars_Exchange_Shop",
             context.tasker.controller.post_screencap().wait().get(),
         ):
@@ -353,7 +357,7 @@ class Mars101(CustomAction):
                     for _ in range(5):
                         context.run_task("Mars_Exchange_Shop_Add")
                         time.sleep(1)
-                        context.tasker.controller.post_click(568, 533).wait()
+                        context.run_task("Mars_Exchange_Shop_Add_Equipment_Choose")
                         time.sleep(1)
                         if context.run_recognition(
                             "Mars_Exchange_Shop_Add_Equipment_Select",
@@ -361,11 +365,39 @@ class Mars101(CustomAction):
                         ):
                             context.run_task("Mars_Exchange_Shop_Add_Equipment_Select")
                         else:
-                            logger.warning("除了短剑，法杖，盾牌以外没有其他装备了")
+                            logger.info(
+                                "除了短剑，法杖，盾牌以外没有其他装备了,回到主页面继续下楼"
+                            )
+                            context.run_task("Fight_MainWindow")
                             break
-                        for _ in range(10):
-                            context.tasker.controller.post_click(547, 679).wait()
-                            time.sleep(0.05)
+                        if AddButtonRecoDetail := context.run_recognition(
+                            "Mars_Exchange_Shop_ClickAddButton",
+                            context.tasker.controller.post_screencap().wait().get(),
+                            pipeline_override={
+                                "Mars_Exchange_Shop_ClickAddButton": {
+                                    "recognition": "TemplateMatch",
+                                    "template": [
+                                        "fight/Mars/MarsExchangeShop_ClickAddButton.png",
+                                    ],
+                                    "roi": [495, 632, 126, 110],
+                                    "timeout": 2000,
+                                }
+                            },
+                        ):
+                            box = AddButtonRecoDetail.best_result.box
+                            AddButton_center_x, AddButton_center_y = (
+                                box[0] + box[2] // 2,
+                                box[1] + box[3] // 2,
+                            )
+                            for _ in range(10):
+                                context.tasker.controller.post_click(
+                                    AddButton_center_x, AddButton_center_y
+                                ).wait()
+                                time.sleep(0.05)
+                        else:
+                            logger.warning(
+                                "一般不会到这里,进入这里说明由于未知原因离开交换商店了。"
+                            )
                         context.run_task("Mars_Exchange_Shop_Confirm_Exchange")
 
                         # 如果交换完已经在桌面了，说明10个短剑都交换完了
@@ -375,7 +407,10 @@ class Mars101(CustomAction):
                         ):
                             logger.info("已经交换了十把短剑~")
                             break
-
+                        else:
+                            logger.info("可用于更换的战利品没有了, 去获取更多吧~")
+            else:
+                logger.info("这个交换商店没有短剑, 去其他楼层找吧~")
             context.run_task("Fight_ReturnMainWindow")
 
     def handle_MarsRuinsShop_event(self, context: Context):
@@ -473,7 +508,8 @@ class Mars101(CustomAction):
         return True
 
     def handle_interrupt_event(self, context: Context):
-        # 检测卡剧情
+        # 检测卡剧情,等待1秒，如果出现卡剧情，则重新探索
+        time.sleep(1)
         image = context.tasker.controller.post_screencap().wait().get()
         if context.run_recognition(
             "JJC_Inter_Confirm",
