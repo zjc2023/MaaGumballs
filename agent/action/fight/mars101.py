@@ -287,6 +287,19 @@ class Mars101(CustomAction):
                 context.tasker.controller.post_screencap().wait().get(),
             ):
                 pass
+        else:
+            context.run_task("Mars_Fight_ClearCurrentLayer")
+            time.sleep(1)
+            if context.run_recognition(
+                "Fight_Perfect", context.tasker.controller.post_screencap().wait().get()
+            ):
+                logger.info(f"第{self.layers} 完美击败")
+                while context.run_recognition(
+                    "Fight_Perfect",
+                    context.tasker.controller.post_screencap().wait().get(),
+                ):
+                    pass
+        return True
 
     def handle_before_leave_maze_event(self, context: Context):
         logger.info("触发Mars结算事件")
