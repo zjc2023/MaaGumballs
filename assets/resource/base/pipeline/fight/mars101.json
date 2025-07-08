@@ -342,8 +342,8 @@
             489
         ],
         "action": "Click",
-        "post_delay": 500,
-        "timeout": 2000,
+        "post_delay": 1250,
+        "timeout": 3000,
         "next": [
             "Mars_Statue_Open_Next2",
             "Mars_Statue_Open_Next1",
