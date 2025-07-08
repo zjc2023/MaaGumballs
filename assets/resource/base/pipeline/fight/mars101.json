@@ -91,7 +91,7 @@
         "timeout": 2000,
         "next": [
             "MarsReward_Select",
-            "Mars_Inter_Confirm"
+            "MarsReward_Open"
         ]
     },
     "Mars_BossReward": {
@@ -109,8 +109,23 @@
         "next": [
             "MarsBossReward_Select1",
             "MarsBossReward_Select2",
-            "Mars_Inter_Confirm"
+            "MarsReward_Open"
         ]
+    },
+    "MarsReward_Open": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/Mars/MarsReward_Open.png",
+            "fight/Mars/MarsReward_OpenAll.png"
+        ],
+        "roi": [
+            35,
+            463,
+            662,
+            489
+        ],
+        "action": "Click",
+        "timeout": 2000
     },
     "MarsReward_Select": {
         "recognition": "TemplateMatch",
@@ -124,7 +139,7 @@
         "action": "Click",
         "timeout": 2000,
         "next": [
-            "Mars_Inter_Confirm"
+            "MarsReward_Open"
         ]
     },
     "MarsBossReward_Select1": {
@@ -143,7 +158,7 @@
         "action": "Click",
         "timeout": 2000,
         "next": [
-            "Mars_Inter_Confirm"
+            "MarsReward_Open"
         ]
     },
     "MarsBossReward_Select2": {
@@ -162,7 +177,7 @@
         "action": "Click",
         "timeout": 2000,
         "next": [
-            "Mars_Inter_Confirm"
+            "MarsReward_Open"
         ]
     },
     "Mars_Body": {
@@ -194,7 +209,6 @@
             "翻找",
             "离开",
             "打开",
-            "开启",
             "进入",
             "斩断",
             "抄写"
