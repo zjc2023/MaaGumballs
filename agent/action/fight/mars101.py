@@ -38,6 +38,23 @@ class Mars101(CustomAction):
         # 进入地图初始化
         logger.info(f"当前层数: {self.layers}, 进入地图初始化")
 
+    def Check_CurrentLayers(self, context: Context):
+        context.run_task("Fight_ReturnMainWindow")
+        tempLayers = -1
+        while tempLayers <= 0 and (
+            RunResult := context.run_recognition(
+                "Fight_CheckLayer",
+                context.tasker.controller.post_screencap().wait().get(),
+            )
+        ):
+            tempLayers = fightUtils.extract_num_layer(RunResult.best_result.text)
+            if context.tasker.stopping:
+                logger.info("检测到停止任务, 开始退出agent")
+                return False
+
+        self.layers = tempLayers
+        return True
+
     def Check_DefaultEquipment(self, context: Context):
         """
         检查默认装备
@@ -232,7 +249,9 @@ class Mars101(CustomAction):
 
             # 捡东西
             time.sleep(1)
-            self.handle_MarsReward_event(context)
+            self.handle_MarsReward_event(
+                context, context.tasker.controller.post_screencap().wait().get()
+            )
             if self.isShutDownTitan == False and self.layers > 80:
                 if fightUtils.cast_magic_special("泰坦之足", context):
                     self.isShutDownTitan = True
@@ -245,8 +264,9 @@ class Mars101(CustomAction):
                 fightUtils.cast_magic("气", "静电场", context)
                 if fightUtils.cast_magic("土", "大地之门", context):
                     self.useEarthGate += 1
+                    self.handle_clearCurLayer_event(context)
+                    self.Check_CurrentLayers(context)
                     return True
-                self.handle_clearCurLayer_event(context)
         return False
 
     def handle_preLayers_event(self, context: Context):
@@ -340,12 +360,9 @@ class Mars101(CustomAction):
             logger.info("冒险者大人已找到钥匙捏，继续探索")
             context.run_task("Fight_OpenedDoor")
 
-    def handle_MarsExchangeShop_event(self, context: Context):
+    def handle_MarsExchangeShop_event(self, context: Context, image):
         # 大于10层才处理交换商店事件
-        if self.layers > 10 and context.run_recognition(
-            "Mars_Exchange_Shop",
-            context.tasker.controller.post_screencap().wait().get(),
-        ):
+        if self.layers > 10 and context.run_recognition("Mars_Exchange_Shop", image):
             logger.info("触发Mars交换战利品事件")
             context.run_task("Mars_Exchange_Shop")
             if context.run_recognition(
@@ -399,37 +416,33 @@ class Mars101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
             return True
 
-    def handle_MarsRuinsShop_event(self, context: Context):
-        if context.run_recognition(
-            "Mars_RuinsShop", context.tasker.controller.post_screencap().wait().get()
-        ):
+    def handle_MarsRuinsShop_event(self, context: Context, image):
+        if context.run_recognition("Mars_RuinsShop", image):
             logger.info("触发Mars商店事件")
             context.run_task("Mars_RuinsShop")
             return True
         return False
 
-    def handle_MarsReward_event(self, context: Context):
+    def handle_MarsReward_event(self, context: Context, image):
         normalReward = self.layers % 2 == 1
         bossReward = self.layers >= 30 and self.layers % 10 == 0
         if not (normalReward or bossReward):
             return False
 
-        img = context.tasker.controller.post_screencap().wait().get()
-        if normalReward and context.run_recognition("Mars_Reward", img):
+        if normalReward and context.run_recognition("Mars_Reward", image):
             logger.info("触发Mars奖励事件")
             context.run_task("Mars_Reward")
             return True
 
-        if bossReward and context.run_recognition("Mars_BossReward", img):
+        if bossReward and context.run_recognition("Mars_BossReward", image):
             logger.info("触发MarsBoss奖励事件")
             context.run_task("Mars_BossReward")
             return True
 
         return False
 
-    def handle_MarsBody_event(self, context: Context):
-        img = context.tasker.controller.post_screencap().wait().get()
-        if bodyRecoDetail := context.run_recognition("Mars_Body", img):
+    def handle_MarsBody_event(self, context: Context, image):
+        if bodyRecoDetail := context.run_recognition("Mars_Body", image):
             logger.info("触发Mars摸金事件")
             for body in bodyRecoDetail.filterd_results:
                 box = body.box
@@ -442,36 +455,40 @@ class Mars101(CustomAction):
             return True
         return False
 
-    def handle_MarsStele_event(self, context: Context):
-        if context.run_recognition(
-            "Mars_Stele", context.tasker.controller.post_screencap().wait().get()
-        ):
+    def handle_MarsStele_event(self, context: Context, image):
+        if context.run_recognition("Mars_Stele", image):
             logger.info("触发Mars斩断事件")
             context.run_task("Mars_Stele")
             context.run_task("Mars_Fight_ClearCurrentLayer")
             time.sleep(1)
+            return True
+        return False
 
-    def handle_MarsStatue_event(self, context: Context):
-        if self.layers >= 10 and context.run_recognition(
-            "Mars_Statue", context.tasker.controller.post_screencap().wait().get()
-        ):
+    def handle_MarsStatue_event(self, context: Context, image):
+        if self.layers < 10:
+            return False
+        if context.run_recognition("Mars_Statue", image):
             logger.info(f"触发Mars白胡子老头事件, 献祭一下战利品吧~")
             context.run_task("Mars_Statue")
             if self.isShutDownTitan == False and self.layers > 80:
                 if fightUtils.cast_magic_special("泰坦之足", context):
                     self.isShutDownTitan = True
+            return True
+        return False
 
     def handle_postLayers_event(self, context: Context):
-        time.sleep(1)
+        time.sleep(2)
         self.handle_perfect_event(context)
         self.handle_dragon_event(context)
         self.Check_DefaultStatus(context)
-        self.handle_MarsBody_event(context)
-        self.handle_MarsStele_event(context)
-        self.handle_MarsRuinsShop_event(context)
-        self.handle_MarsStatue_event(context)
-        self.handle_MarsReward_event(context)
-        self.handle_MarsExchangeShop_event(context)
+
+        image = context.tasker.controller.post_screencap().wait().get()
+        self.handle_MarsBody_event(context, image)
+        self.handle_MarsStele_event(context, image)
+        self.handle_MarsStatue_event(context, image)
+        self.handle_MarsRuinsShop_event(context, image)
+        self.handle_MarsReward_event(context, image)
+        self.handle_MarsExchangeShop_event(context, image)
         self.handle_EarthGate_event(context)
         if self.layers >= 87 and context.run_recognition(
             "Mars_GotoSpecialLayer",
@@ -483,7 +500,6 @@ class Mars101(CustomAction):
 
     def handle_dragon_event(self, context: Context):
         # 检测神龙
-        time.sleep(1)
         img = context.tasker.controller.post_screencap().wait().get()
         if context.run_recognition("Fight_FindDragon", img):
             logger.info("是神龙,俺,俺们有救了！！！")
@@ -507,11 +523,11 @@ class Mars101(CustomAction):
     def handle_interrupt_event(self, context: Context):
         image = context.tasker.controller.post_screencap().wait().get()
         if context.run_recognition(
-            "JJC_Inter_Confirm",
+            "Mars_Inter_Confirm",
             image,
         ):
             logger.info("检测到卡剧情, 本层重新探索")
-            context.run_task("JJC_Inter_Confirm")
+            context.run_task("Mars_Inter_Confirm")
             return False
 
         # 检测卡返回
@@ -539,20 +555,8 @@ class Mars101(CustomAction):
                 return CustomAction.RunResult(success=False)
 
             # 检查当前层数, 确保不是0层
-            context.run_task("Fight_ReturnMainWindow")
-            tempLayers = -1
-            while tempLayers <= 0 and (
-                RunResult := context.run_recognition(
-                    "Fight_CheckLayer",
-                    context.tasker.controller.post_screencap().wait().get(),
-                )
-            ):
-                tempLayers = fightUtils.extract_num_layer(RunResult.best_result.text)
-                if context.tasker.stopping:
-                    logger.info("检测到停止任务, 开始退出agent")
-                    return CustomAction.RunResult(success=False)
-
-            self.layers = tempLayers
+            if not self.Check_CurrentLayers(context):
+                return CustomAction.RunResult(success=False)
             logger.info(f"Start Explore {self.layers} layer.")
 
             # 检测是否触发战前事件
