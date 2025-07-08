@@ -277,7 +277,7 @@ class FightProcessor:
                     if self.is_roi_mostly_overlapping(
                         recoDetail.box, self.roi_matrix[r][c]
                     ):
-                        logger.info(f"识别到 ClosedDoor 位于 {r+1},{c+1}")
+                        # logger.info(f"识别到 ClosedDoor 位于 {r+1},{c+1}")
                         return r, c
         return 0, 0
 
@@ -290,7 +290,7 @@ class FightProcessor:
                     if self.is_roi_mostly_overlapping(
                         recoDetail.box, self.roi_matrix[r][c]
                     ):
-                        logger.info(f"识别到 OpenedDoor 位于 {r+1},{c+1}")
+                        # logger.info(f"识别到 OpenedDoor 位于 {r+1},{c+1}")
                         return r, c
         return 0, 0
 
@@ -386,7 +386,7 @@ class FightProcessor:
                 fail_check_monster_cnt >= self.max_monster_loop_fail
                 or fail_check_grid_cnt >= self.max_grid_loop_fail
             ):
-                logger.info("找不到怪物或格子, 检测下一层的门")
-                break
 
+                break
+        logger.info("已完成清理当前层~")
         return True

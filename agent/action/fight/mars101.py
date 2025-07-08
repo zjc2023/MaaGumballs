@@ -236,7 +236,7 @@ class Mars101(CustomAction):
         return True
 
     def handle_EarthGate_event(self, context: Context):
-        if (self.layers > 60) and (self.layers % 10 == 7) and self.useEarthGate < 2:
+        if (self.layers > 50) and (self.layers % 10 == 9) and self.useEarthGate < 2:
             if fightUtils.check_magic("土", "大地之门", context):
                 fightUtils.cast_magic("气", "静电场", context)
                 if fightUtils.cast_magic("土", "大地之门", context):
@@ -263,7 +263,7 @@ class Mars101(CustomAction):
                 pass
 
     def handle_before_leave_maze_event(self, context: Context):
-        logger.info("准备结算离开迷宫")
+        logger.info("触发Mars结算事件")
         context.run_task("Fight_ReturnMainWindow")
         for _ in range(3):
             fightUtils.cast_magic_special("生命颂歌", context)
@@ -339,6 +339,7 @@ class Mars101(CustomAction):
             "Mars_Exchange_Shop",
             context.tasker.controller.post_screencap().wait().get(),
         ):
+            logger.info("触发Mars交换战利品事件")
             context.run_task("Mars_Exchange_Shop")
             if context.run_recognition(
                 "Mars_Exchange_Shop_Check",
@@ -367,17 +368,28 @@ class Mars101(CustomAction):
                             time.sleep(0.05)
                         context.run_task("Mars_Exchange_Shop_Confirm_Exchange")
 
+                        # 如果交换完已经在桌面了，说明10个短剑都交换完了
+                        if context.run_recognition(
+                            "Fight_MainWindow",
+                            context.tasker.controller.post_screencap().wait().get(),
+                        ):
+                            logger.info("已经交换了十把短剑~")
+                            break
+
             context.run_task("Fight_ReturnMainWindow")
 
     def handle_MarsRuinsShop_event(self, context: Context):
-        image = context.tasker.controller.post_screencap().wait().get()
-        if context.run_recognition("Mars_RuinsShop", image):
+        if context.run_recognition(
+            "Mars_RuinsShop", context.tasker.controller.post_screencap().wait().get()
+        ):
+            logger.info("触发Mars商店事件")
             context.run_task("Mars_RuinsShop")
 
     def handle_MarsReward_event(self, context: Context):
         if self.layers % 2 == 1 or context.run_recognition(
             "Mars_Reward", context.tasker.controller.post_screencap().wait().get()
         ):
+            logger.info("触发Mars奖励事件")
             context.run_task("Mars_Reward")
         if (
             self.layers >= 30
@@ -387,18 +399,23 @@ class Mars101(CustomAction):
                 context.tasker.controller.post_screencap().wait().get(),
             )
         ):
+            logger.info("触发MarsBoss奖励事件")
             context.run_task("Mars_BossReward")
+        return True
 
     def handle_MarsBody_event(self, context: Context):
         while context.run_recognition(
             "Mars_Body", context.tasker.controller.post_screencap().wait().get()
         ):
+            logger.info("触发Mars摸金事件")
             context.run_task("Mars_Body")
+        return True
 
     def handle_MarsStele_event(self, context: Context):
         if context.run_recognition(
             "Mars_Stele", context.tasker.controller.post_screencap().wait().get()
         ):
+            logger.info("触发Mars斩断事件")
             context.run_task("Mars_Stele")
             time.sleep(1)
 
@@ -406,6 +423,7 @@ class Mars101(CustomAction):
         if self.layers >= 10 and context.run_recognition(
             "Mars_Statue", context.tasker.controller.post_screencap().wait().get()
         ):
+            logger.info(f"触发Mars白胡子老头事件, 献祭一下战利品吧~")
             context.run_task("Mars_Statue")
             if self.isShutDownTitan == False and self.layers > 80:
                 if fightUtils.cast_magic_special("泰坦之足", context):
