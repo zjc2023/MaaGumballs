@@ -460,10 +460,10 @@
         "template": "fight/buff/毁灭之刃.png",
         "doc": "默认检测毁灭之刃",
         "roi": [
-            1,
-            89,
-            315,
-            108
+            4,
+            50,
+            334,
+            227
         ],
         "action": "DoNothing",
         "post_delay": 200,
