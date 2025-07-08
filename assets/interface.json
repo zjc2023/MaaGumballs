@@ -59,17 +59,31 @@
             ]
         },
         {
-            "name": "港台服",
+            "name": "hk_tw",
             "path": [
                 "{PROJECT_DIR}/resource/base",
                 "{PROJECT_DIR}/resource/hk_tw"
             ]
         },
         {
-            "name": "测试服",
+            "name": "test",
             "path": [
                 "{PROJECT_DIR}/resource/base",
                 "{PROJECT_DIR}/resource/test"
+            ]
+        },
+        {
+            "name": "tencent",
+            "path": [
+                "{PROJECT_DIR}/resource/base",
+                "{PROJECT_DIR}/resource/tencent"
+            ]
+        },
+        {
+            "name": "9u",
+            "path": [
+                "{PROJECT_DIR}/resource/base",
+                "{PROJECT_DIR}/resource/9u"
             ]
         }
     ],
