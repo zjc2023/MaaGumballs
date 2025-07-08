@@ -409,19 +409,18 @@ class Mars101(CustomAction):
         return False
 
     def handle_MarsReward_event(self, context: Context):
-        if self.layers % 2 == 1 or context.run_recognition(
-            "Mars_Reward", context.tasker.controller.post_screencap().wait().get()
-        ):
+        normalReward = self.layers % 2 == 1
+        bossReward = self.layers >= 30 and self.layers % 10 == 0
+        if not (normalReward or bossReward):
+            return False
+
+        img = context.tasker.controller.post_screencap().wait().get()
+        if normalReward and context.run_recognition("Mars_Reward", img):
             logger.info("触发Mars奖励事件")
             context.run_task("Mars_Reward")
-        if (
-            self.layers >= 30
-            and self.layers % 10 == 0
-            and context.run_recognition(
-                "Mars_BossReward",
-                context.tasker.controller.post_screencap().wait().get(),
-            )
-        ):
+            return True
+
+        if bossReward and context.run_recognition("Mars_BossReward", img):
             logger.info("触发MarsBoss奖励事件")
             context.run_task("Mars_BossReward")
             return True
@@ -429,12 +428,19 @@ class Mars101(CustomAction):
         return False
 
     def handle_MarsBody_event(self, context: Context):
-        while context.run_recognition(
-            "Mars_Body", context.tasker.controller.post_screencap().wait().get()
-        ):
+        img = context.tasker.controller.post_screencap().wait().get()
+        if bodyRecoDetail := context.run_recognition("Mars_Body", img):
             logger.info("触发Mars摸金事件")
-            context.run_task("Mars_Body")
-        return True
+            for body in bodyRecoDetail.filterd_results:
+                box = body.box
+                context.tasker.controller.post_click(
+                    box[0] + box[2] // 2,
+                    box[1] + box[3] // 2,
+                ).wait()
+                time.sleep(1)
+                context.run_task("Mars_Inter_Confirm")
+            return True
+        return False
 
     def handle_MarsStele_event(self, context: Context):
         if context.run_recognition(
@@ -442,6 +448,7 @@ class Mars101(CustomAction):
         ):
             logger.info("触发Mars斩断事件")
             context.run_task("Mars_Stele")
+            context.run_task("Mars_Fight_ClearCurrentLayer")
             time.sleep(1)
 
     def handle_MarsStatue_event(self, context: Context):
