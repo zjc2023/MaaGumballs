@@ -57,7 +57,14 @@
             170
         ],
         "post_delay": 3500,
-        "next": "Inter_ConfirmButton"
+        "timeout": 3000,
+        "next": [
+            "ReturnMazeButton"
+        ],
+        "interrupt": [
+            "Inter_ConfirmButton",
+            "Communicating"
+        ]
     },
     "Inter_ConfirmButton": {
         "recognition": "OCR",
@@ -73,8 +80,7 @@
             368
         ],
         "post_delay": 1000,
-        "action": "Click",
-        "next": "ReturnMazeButton"
+        "action": "Click"
     },
     "ReturnMazeButton": {
         "recognition": "TemplateMatch",
@@ -90,8 +96,13 @@
             309
         ],
         "post_delay": 4000,
-        "interrupt": "Inter_ConfirmButton",
-        "next": "ConfirmEquipmentPack"
+        "interrupt": [
+            "GameLoading",
+            "Inter_ConfirmButton"
+        ],
+        "next": [
+            "ConfirmEquipmentPack"
+        ]
     },
     "ConfirmEquipmentPack": {
         "recognition": "TemplateMatch",
