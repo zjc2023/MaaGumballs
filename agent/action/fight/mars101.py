@@ -15,7 +15,7 @@ boss_x, boss_y = 360, 800
 class Mars101(CustomAction):
     def __init__(self):
         super().__init__()
-        self.isTitle_L3 = False
+        self.isTitle_L1 = False
         self.isTitle_L58 = False
         self.isTitle_L76 = False
         self.useEarthGate = 0
