@@ -984,3 +984,34 @@ def Saveyourlife(context: Context):
     else:
         logger.info("没有检测到冈布奥倒下！可能没死吧！！继续战斗！！")
     return True
+
+
+def handle_dragon_event(context: Context):
+    # 检测神龙
+    img = context.tasker.controller.post_screencap().wait().get()
+    if context.run_recognition("Fight_FindDragon", img):
+        logger.info("是神龙,俺,俺们有救了！！！")
+        dragonwish("马尔斯", context)
+        logger.info("神龙带肥家lo~")
+
+
+def handle_downstair_event(context: Context):
+    recoDetail = context.run_task("Fight_OpenedDoor")
+    if not recoDetail.nodes and context.run_recognition(
+        "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
+    ):
+        logger.warning("检查到神秘的洞穴捏，请冒险者大人检查！！")
+        send_alert("洞穴警告", "发现神秘洞穴，请及时处理！")
+
+        while not context.run_recognition(
+            "Fight_OpenedDoor",
+            context.tasker.controller.post_screencap().wait().get(),
+        ):
+            if context.tasker.stopping:
+                logger.info("检测到停止任务, 开始退出agent")
+                return False
+            time.sleep(3)
+
+        logger.info("冒险者大人已找到钥匙捏，继续探索")
+        context.run_task("Fight_OpenedDoor")
+    return True

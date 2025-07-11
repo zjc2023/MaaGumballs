@@ -51,6 +51,23 @@ class JJC101(CustomAction):
 
         context.run_task("Fight_ReturnMainWindow")
 
+    def Check_CurrentLayers(self, context: Context):
+        context.run_task("Fight_ReturnMainWindow")
+        tempLayers = -1
+        while tempLayers <= 0 and (
+            RunResult := context.run_recognition(
+                "Fight_CheckLayer",
+                context.tasker.controller.post_screencap().wait().get(),
+            )
+        ):
+            tempLayers = fightUtils.extract_num_layer(RunResult.best_result.text)
+            if context.tasker.stopping:
+                logger.info("检测到停止任务, 开始退出agent")
+                return False
+
+        self.layers = tempLayers
+        return True
+
     def Check_DefaultEquipment(self, context: Context):
         """
         检查默认装备
@@ -401,27 +418,6 @@ class JJC101(CustomAction):
             logger.info("打开技能商店")
             context.run_task("Fight_SkillShop")
 
-    def handle_downstair_event(self, context: Context):
-        recoDetail = context.run_task("Fight_OpenedDoor")
-        if not recoDetail.nodes and context.run_recognition(
-            "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
-        ):
-            logger.warning("检查到神秘的洞穴捏，请冒险者大人检查！！")
-            fightUtils.send_alert("洞穴警告", "发现神秘洞穴，请及时处理！")
-
-            while not context.run_recognition(
-                "Fight_OpenedDoor",
-                context.tasker.controller.post_screencap().wait().get(),
-            ):
-                if context.tasker.stopping:
-                    logger.info("检测到停止任务, 开始退出agent")
-                    return False
-                time.sleep(3)
-
-            logger.info("冒险者大人已找到钥匙捏，继续探索")
-            context.run_task("Fight_OpenedDoor")
-        return True
-
     def handle_stone_event(self, context: Context):
         if self.layers <= 29 and context.run_recognition(
             "JJC_StoneChest", context.tasker.controller.post_screencap().wait().get()
@@ -435,7 +431,7 @@ class JJC101(CustomAction):
         self.handle_stone_event(context)
         self.handle_sparta_event(context)
         self.handle_skillShop_event(context)
-        self.handle_downstair_event(context)
+        fightUtils.handle_downstair_event(context)
 
     def handle_clearCurLayer_event(self, context: Context):
         # boss层开始探索
@@ -443,13 +439,7 @@ class JJC101(CustomAction):
             # boss召唤动作
             time.sleep(6)
             self.handle_boss_event(context)
-            # 检测神龙
-            time.sleep(1)
-            img = context.tasker.controller.post_screencap().wait().get()
-            if context.run_recognition("Fight_FindDragon", img):
-                logger.info("是神龙,俺,俺们有救了！！！")
-                fightUtils.dragonwish("工资", context)
-                logger.info("神龙带肥家lo~")
+            fightUtils.handle_dragon_event(context)
 
             return False
         # 小怪层探索
@@ -501,21 +491,8 @@ class JJC101(CustomAction):
                 return CustomAction.RunResult(success=False)
 
             # 检查当前层数, 确保不是0层
-            context.run_task("Fight_ReturnMainWindow")
-            tempLayers = -1
-            while tempLayers <= 0 and (
-                RunResult := context.run_recognition(
-                    "Fight_CheckLayer",
-                    context.tasker.controller.post_screencap().wait().get(),
-                )
-            ):
-
-                tempLayers = fightUtils.extract_num_layer(RunResult.best_result.text)
-                if context.tasker.stopping:
-                    logger.info("检测到停止任务, 开始退出agent")
-                    return CustomAction.RunResult(success=False)
-            self.layers = tempLayers
-
+            if not self.Check_CurrentLayers(context):
+                return CustomAction.RunResult(success=False)
             logger.info(f"Start Explore {self.layers} layer.")
 
             # 检测是否触发战前事件

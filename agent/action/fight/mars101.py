@@ -364,23 +364,6 @@ class Mars101(CustomAction):
         self.isLeaveMaze = True
         # 到这可以出图了
 
-    def handle_downstair_event(self, context: Context):
-        recoDetail = context.run_task("Fight_OpenedDoor")
-        if not recoDetail.nodes and context.run_recognition(
-            "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
-        ):
-            logger.warning("检查到神秘的洞穴捏，请冒险者大人检查！！")
-            fightUtils.send_alert("洞穴警告", "发现神秘洞穴，请及时处理！")
-
-            while not context.run_recognition(
-                "Fight_OpenedDoor",
-                context.tasker.controller.post_screencap().wait().get(),
-            ):
-                time.sleep(3)
-
-            logger.info("冒险者大人已找到钥匙捏，继续探索")
-            context.run_task("Fight_OpenedDoor")
-
     def handle_MarsExchangeShop_event(self, context: Context, image):
         # 大于10层才处理交换商店事件
         if self.layers > 10 and context.run_recognition("Mars_Exchange_Shop", image):
@@ -500,7 +483,7 @@ class Mars101(CustomAction):
     def handle_postLayers_event(self, context: Context):
         time.sleep(2)
         self.handle_perfect_event(context)
-        self.handle_dragon_event(context)
+        fightUtils.handle_dragon_event(context)
         self.Check_DefaultStatus(context)
 
         image = context.tasker.controller.post_screencap().wait().get()
@@ -517,15 +500,7 @@ class Mars101(CustomAction):
         ):
             self.handle_before_leave_maze_event(context)
         else:
-            self.handle_downstair_event(context)
-
-    def handle_dragon_event(self, context: Context):
-        # 检测神龙
-        img = context.tasker.controller.post_screencap().wait().get()
-        if context.run_recognition("Fight_FindDragon", img):
-            logger.info("是神龙,俺,俺们有救了！！！")
-            fightUtils.dragonwish("马尔斯", context)
-            logger.info("神龙带肥家lo~")
+            fightUtils.handle_downstair_event(context)
 
     def handle_clearCurLayer_event(self, context: Context):
         # boss层开始探索
@@ -533,7 +508,7 @@ class Mars101(CustomAction):
             # boss召唤动作
             time.sleep(6)
             self.handle_boss_event(context)
-            self.handle_dragon_event(context)
+            fightUtils.handle_dragon_event(context)
             return False
         # 小怪层探索
         else:
