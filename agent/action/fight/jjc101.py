@@ -439,7 +439,7 @@ class JJC101(CustomAction):
             # boss召唤动作
             time.sleep(6)
             self.handle_boss_event(context)
-            fightUtils.handle_dragon_event(context)
+            fightUtils.handle_dragon_event("工资", context)
 
             return False
         # 小怪层探索

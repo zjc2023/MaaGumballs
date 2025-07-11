@@ -483,7 +483,7 @@ class Mars101(CustomAction):
     def handle_postLayers_event(self, context: Context):
         time.sleep(2)
         self.handle_perfect_event(context)
-        fightUtils.handle_dragon_event(context)
+        fightUtils.handle_dragon_event("马尔斯", context)
         self.Check_DefaultStatus(context)
 
         image = context.tasker.controller.post_screencap().wait().get()
@@ -508,7 +508,7 @@ class Mars101(CustomAction):
             # boss召唤动作
             time.sleep(6)
             self.handle_boss_event(context)
-            fightUtils.handle_dragon_event(context)
+            fightUtils.handle_dragon_event("马尔斯", context)
             return False
         # 小怪层探索
         else:

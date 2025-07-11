@@ -986,12 +986,12 @@ def Saveyourlife(context: Context):
     return True
 
 
-def handle_dragon_event(context: Context):
+def handle_dragon_event(map_str: str, context: Context):
     # 检测神龙
     img = context.tasker.controller.post_screencap().wait().get()
     if context.run_recognition("Fight_FindDragon", img):
         logger.info("是神龙,俺,俺们有救了！！！")
-        dragonwish("马尔斯", context)
+        dragonwish(map_str, context)
         logger.info("神龙带肥家lo~")
 
 
