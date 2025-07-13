@@ -454,6 +454,9 @@ class Mars101(CustomAction):
             logger.info("触发Mars商店事件")
             context.run_task("Mars_RuinsShop")
             return True
+        if context.run_recognition("BackText", image):
+            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
+            context.run_task("Fight_ReturnMainWindow")
         return False
 
     @timing_decorator
@@ -473,6 +476,10 @@ class Mars101(CustomAction):
             context.run_task("Mars_BossReward")
             return True
 
+        if context.run_recognition("BackText", image):
+            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
+            context.run_task("Fight_ReturnMainWindow")
+
         return False
 
     @timing_decorator
@@ -488,6 +495,9 @@ class Mars101(CustomAction):
                 time.sleep(1)
                 context.run_task("Mars_Inter_Confirm")
             return True
+        if context.run_recognition("BackText", image):
+            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
+            context.run_task("Fight_ReturnMainWindow")
         return False
 
     @timing_decorator
@@ -498,6 +508,9 @@ class Mars101(CustomAction):
             context.run_task("Mars_Fight_ClearCurrentLayer")
             time.sleep(1)
             return True
+        if context.run_recognition("BackText", image):
+            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
+            context.run_task("Fight_ReturnMainWindow")
         return False
 
     @timing_decorator
@@ -523,6 +536,9 @@ class Mars101(CustomAction):
                     self.isGetTitanFoot = True
                     # 关闭泰坦
             return True
+        if context.run_recognition("BackText", image):
+            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
+            context.run_task("Fight_ReturnMainWindow")
         return False
 
     @timing_decorator
