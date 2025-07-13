@@ -345,6 +345,7 @@ class Mars101(CustomAction):
         context.run_task("Fight_ReturnMainWindow")
         OpenDetail = context.run_task("Bag_Open")
         if OpenDetail:
+            time.sleep(1)
             fightUtils.findItem("电能试剂", True, context)
         time.sleep(1)
 
@@ -356,6 +357,7 @@ class Mars101(CustomAction):
         context.run_task("Fight_ReturnMainWindow")
         OpenDetail = context.run_task("Bag_Open")
         if OpenDetail:
+            time.sleep(1)
             fightUtils.findItem("能量电池", True, context)
         time.sleep(1)
 
@@ -383,6 +385,7 @@ class Mars101(CustomAction):
         context.run_task("Fight_ReturnMainWindow")
         OpenDetail = context.run_task("Bag_Open")
         if OpenDetail:
+            time.sleep(1)
             for _ in range(2):
                 if fightUtils.findItem("武器大师执照", True, context, threshold=0.8):
                     break
