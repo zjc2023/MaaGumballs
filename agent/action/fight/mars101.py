@@ -276,15 +276,13 @@ class Mars101(CustomAction):
         return True
 
     def handle_EarthGate_event(self, context: Context):
-        if (
-            (self.layers > 50)
-            and (self.layers % 10 == 9)
-            and self.useEarthGate < 2
-            and not context.run_recognition(
-                "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
-            )
+        if (self.layers > 50) and (self.layers % 10 == 9) and self.useEarthGate < 2:
             # 识别释放大地时没有拉绳子的洞
-        ):
+            if context.run_recognition(
+                "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
+            ):
+                logger.info("当前层无法释放大地，跳过")
+                return False
             if fightUtils.check_magic("土", "大地之门", context):
                 fightUtils.cast_magic("气", "静电场", context)
                 if fightUtils.cast_magic("土", "大地之门", context):
