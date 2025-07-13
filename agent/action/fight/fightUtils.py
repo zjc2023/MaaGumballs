@@ -770,7 +770,7 @@ def dragonwish(targetWish: str, context: Context):
             )
             time.sleep(1)
             context.tasker.controller.post_click(center_x, center_y).wait()
-            time.sleep(2)
+        time.sleep(3)
 
         logger.info(f"已点击愿望: {min_index_wish}")
         status = True
@@ -782,7 +782,7 @@ def dragonwish(targetWish: str, context: Context):
                 pipeline_override={
                     "TextReco": {
                         "recognition": "OCR",
-                        "expected": "神龙",
+                        "expected": ["神龙", "神龙冈布奥"],
                         "roi": [21, 217, 682, 762],
                         "action": "DoNothing",
                     },
