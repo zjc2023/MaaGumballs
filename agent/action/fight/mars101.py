@@ -54,7 +54,7 @@ class Mars101(CustomAction):
             if context.tasker.stopping:
                 logger.info("检测到停止任务, 开始退出agent")
                 return False
-            self.layers = tempLayers
+        self.layers = tempLayers
         return True
 
     def Check_DefaultEquipment(self, context: Context):

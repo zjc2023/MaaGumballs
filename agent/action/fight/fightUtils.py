@@ -782,7 +782,7 @@ def dragonwish(targetWish: str, context: Context):
                 pipeline_override={
                     "TextReco": {
                         "recognition": "OCR",
-                        "expected": ["神龙", "神龙冈布奥"],
+                        "expected": ["神龙", "冈布奥"],
                         "roi": [21, 217, 682, 762],
                         "action": "DoNothing",
                     },
