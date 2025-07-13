@@ -11,16 +11,21 @@
     "Select_WorldTree": {
         "recognition": "OCR",
         "roi": [
-            143,
-            1221,
-            150,
-            59
+            12,
+            1127,
+            277,
+            152
         ],
         "expected": "冈布奥",
         "action": "Click",
-        "post_delay": 500,
+        "post_delay": 1500,
         "timeout": 3000,
-        "next": "Select_CharacterIndex"
+        "next": [
+            "Select_WorldTree_SearchButton"
+        ],
+        "interrupt": [
+            "Select_CharacterIndex"
+        ]
     },
     "Select_CharacterIndex": {
         "recognition": "OCR",
@@ -33,10 +38,7 @@
         "expected": "图鉴",
         "action": "Click",
         "post_delay": 500,
-        "timeout": 3000,
-        "next": [
-            "Select_WorldTree_SearchButton"
-        ]
+        "timeout": 3000
     },
     "Select_WorldTree_SearchButton": {
         "recognition": "TemplateMatch",
@@ -51,7 +53,8 @@
         "post_delay": 500,
         "timeout": 2000,
         "next": [
-            "Select_WorldTree_InputBox_Click"
+            "Select_WorldTree_InputBox_Click",
+            "Select_WorldTree_SearchButton"
         ]
     },
     "Select_WorldTree_InputBox_Click": {
@@ -75,8 +78,8 @@
     "Select_WorldTree_InputBox_Text": {
         "recognition": "DirectHit",
         "action": "Text",
-        "input_text": "自然之子",
-        "post_delay": 500,
+        "input_text": "仿生人",
+        "post_delay": 1000,
         "timeout": 3000,
         "next": [
             "Select_WorldTree_Search"
@@ -94,27 +97,44 @@
             80
         ],
         "action": "Click",
-        "post_delay": 1000,
+        "post_delay": 3000,
         "timeout": 3000,
         "next": [
             "Select_WorldTree_InputBox_Success",
-            "Select_WorldTree_InputBox_Fail"
+            "Select_WorldTree_InputBox_Fail_1"
         ]
     },
     "Select_WorldTree_InputBox_Success": {
         "recognition": "OCR",
         "roi": [
-            98,
-            998,
-            71,
-            46
+            242,
+            1124,
+            240,
+            152
         ],
-        "expected": "攻击",
-        "action": "DoNothing",
+        "expected": "出战",
+        "action": "Click",
         "post_delay": 500,
         "timeout": 3000,
         "next": [
-            "Select_Deploy"
+            "ReturnBigMap"
+        ]
+    },
+    "Select_WorldTree_InputBox_Fail_1": {
+        "inverse": true,
+        "recognition": "OCR",
+        "roi": [
+            242,
+            1124,
+            240,
+            152
+        ],
+        "expected": "出战",
+        "action": "Click",
+        "post_delay": 500,
+        "timeout": 3000,
+        "next": [
+            "ReturnBigMap"
         ]
     },
     "Select_WorldTree_InputBox_Fail": {
