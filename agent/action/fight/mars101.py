@@ -297,7 +297,16 @@ class Mars101(CustomAction):
                         time.sleep(1)
 
                     self.handle_clearCurLayer_event(context)
-                    self.handle_postLayers_event(context)
+                    time.sleep(1)
+                    # 不能下楼，因为整个逻辑还在上一层的战后事件中，等待处理完其他战后事件之后离开大地事件再下楼
+                    image = context.tasker.controller.post_screencap().wait().get()
+                    self.handle_MarsBody_event(context, image)
+                    self.handle_MarsStele_event(context, image)
+                    self.handle_MarsStatue_event(context, image)
+                    self.handle_MarsRuinsShop_event(context, image)
+                    self.handle_MarsReward_event(context, image)
+                    self.handle_MarsExchangeShop_event(context, image)
+                    self.handle_SpecialLayer_event(context, image)
                     return True
         return False
 
