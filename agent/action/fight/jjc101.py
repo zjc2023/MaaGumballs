@@ -544,13 +544,13 @@ class Fight_Select(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
-        # logger.info("选择药剂中")
+        logger.info("选择药剂中")
         context.run_task("Select_Drug")
 
-        # logger.info("选择神器中")
+        logger.info("选择神器中")
         context.run_task("Select_Artifact")
 
-        # logger.info("选择自然之子中")
+        logger.info("选择链接角色1")
         context.run_task(
             "Select_Gumball_1",
             pipeline_override={
@@ -558,7 +558,7 @@ class Fight_Select(CustomAction):
             },
         )
 
-        # logger.info("选择贵族")
+        logger.info("选择链接角色2")
         context.run_task(
             "Select_Gumball_2",
             pipeline_override={
@@ -566,6 +566,30 @@ class Fight_Select(CustomAction):
             },
         )
 
+        return CustomAction.RunResult(success=True)
+
+
+@AgentServer.custom_action("Fight_PreWar")
+class Fight_PreWar(CustomAction):
+    # 执行函数
+    def run(
+        self,
+        context: Context,
+        argv: CustomAction.RunArg,
+    ) -> CustomAction.RunResult:
+        # 战前准备
+        context.run_task("Select_MainCharacter")
+
+        logger.info("出来吧，冈布奥！！")
+
+        # 点击进入地图界面
+        start_x, start_y = (
+            argv.box[0] + argv.box[2] // 2,
+            argv.box[1] + argv.box[3] // 2,
+        )
+        context.tasker.controller.post_click(start_x, start_y).wait()
+        logger.info("准备进入迷宫！！！")
+        time.sleep(1)
         return CustomAction.RunResult(success=True)
 
 
@@ -624,9 +648,9 @@ class JJC_CalEarning(CustomAction):
     ) -> CustomAction.RunResult:
         time.sleep(5)
         for _ in range(10):
-            context.tasker.controller.post_click(360, 640)
+            context.tasker.controller.post_click(360, 640).wait()
             time.sleep(0.5)
-            context.tasker.controller.post_click(360, 640)
+            context.tasker.controller.post_click(360, 640).wait()
         image = context.tasker.controller.post_screencap().wait().get()
         if recoDetail := context.run_recognition(
             "CallEarning_Reco",

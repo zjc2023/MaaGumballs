@@ -169,6 +169,9 @@
                 "自动肉鸽时使用钻石购买体力"
             ],
             "pipeline_override": {
+                "Select_WorldTree_InputBox_Text": {
+                    "input_text": "二郎神"
+                },
                 "Select_Drug_Next": {
                     "template": "items/狼人药剂.png"
                 },
@@ -243,6 +246,9 @@
                 "自动肉鸽时使用钻石购买体力"
             ],
             "pipeline_override": {
+                "Select_WorldTree_InputBox_Text": {
+                    "input_text": "仿生人"
+                },
                 "Select_Drug_Next": {
                     "template": "items/电能试剂.png"
                 },
