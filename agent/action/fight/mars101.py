@@ -8,6 +8,7 @@ from action.fight import fightUtils
 from action.fight import fightProcessor
 
 import time
+import json
 
 
 boss_x, boss_y = 360, 800
@@ -276,7 +277,11 @@ class Mars101(CustomAction):
         return True
 
     def handle_EarthGate_event(self, context: Context):
-        if (self.layers > 50) and (self.layers % 10 == 9) and self.useEarthGate < 2:
+        if (
+            ((self.layers > 50) and (self.layers % 10 == 9))
+            # 如果59遇到拉绳子无法大地，那么尝试在61或者62大地
+            or (61 <= self.layers <= 62)
+        ) and self.useEarthGate < 2:
             # 识别释放大地时没有拉绳子的洞
             if context.run_recognition(
                 "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
@@ -592,7 +597,7 @@ class Mars101(CustomAction):
         self.handle_MarsExchangeShop_event(context, image)
         self.handle_SpecialLayer_event(context, image)
         self.handle_EarthGate_event(context)
-        if self.layers >= 117 and context.run_recognition(
+        if self.layers >= self.target_leave_layer_para - 2 and context.run_recognition(
             "Mars_GotoSpecialLayer",
             context.tasker.controller.post_screencap().wait().get(),
         ):
@@ -674,9 +679,12 @@ class Mars101(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
-
+        self.target_leave_layer_para = json.loads(argv.custom_action_param)[
+            "target_leave_layer"
+        ]
         # initialize
         self.initialize(context)
+        logger.info(f"本次任务目标层数: {self.target_leave_layer_para}")
 
         while self.layers <= 120:
             # 检查是否停止任务

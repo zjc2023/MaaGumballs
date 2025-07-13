@@ -71,6 +71,9 @@
         "template": "fight/UniversalUI/MazePackage.png",
         "action": "Custom",
         "custom_action": "Mars101",
+        "custom_action_param": {
+            "target_leave_layer": 89
+        },
         "roi": [
             47,
             1147,

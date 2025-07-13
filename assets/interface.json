@@ -243,7 +243,8 @@
             "repeatable": true,
             "repeat_count": 1,
             "option": [
-                "自动肉鸽时使用钻石购买体力"
+                "自动肉鸽时使用钻石购买体力",
+                "目标出图楼层"
             ],
             "pipeline_override": {
                 "Select_WorldTree_InputBox_Text": {
@@ -504,6 +505,31 @@
                     "pipeline_override": {
                         "PowerBuy": {
                             "enabled": true
+                        }
+                    }
+                }
+            ]
+        },
+        "目标出图楼层": {
+            "default_case": "89",
+            "cases": [
+                {
+                    "name": "89",
+                    "pipeline_override": {
+                        "Mars_Fighting": {
+                            "custom_action_param": {
+                                "target_leave_layer": 89
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "119",
+                    "pipeline_override": {
+                        "Mars_Fighting": {
+                            "custom_action_param": {
+                                "target_leave_layer": 119
+                            }
                         }
                     }
                 }
