@@ -113,6 +113,7 @@
         "next": [
             "MarsBossReward_Select1",
             "MarsBossReward_Select2",
+            "MarsBossReward_Select3",
             "MarsReward_Open"
         ]
     },
@@ -169,6 +170,25 @@
             "fight/Mars/MarsBossReward_Other7.png",
             "fight/Mars/MarsBossReward_Other5.png",
             "fight/Mars/MarsBossReward_Other3.png"
+        ],
+        "roi": [
+            35,
+            463,
+            662,
+            489
+        ],
+        "action": "Click",
+        "timeout": 2000,
+        "next": [
+            "MarsReward_Open"
+        ]
+    },
+    "MarsBossReward_Select3": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/Mars/MarsBossReward_DamageReduction.png",
+            "fight/Mars/MarsBossReward_HP.png",
+            "fight/Mars/MarsBossReward_5w.png"
         ],
         "roi": [
             35,
