@@ -1,3 +1,5 @@
+from doctest import FAIL_FAST
+from re import T
 from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
@@ -277,6 +279,9 @@ class Mars101(CustomAction):
         return True
 
     def handle_EarthGate_event(self, context: Context):
+        """
+        大地成功返回True,否则返回False
+        """
         if (
             ((self.layers > 50) and (self.layers % 10 == 9))
             # 如果59遇到拉绳子无法大地，那么尝试在61或者62大地
@@ -298,21 +303,8 @@ class Mars101(CustomAction):
                         self.Check_CurrentLayers(context)
                         if self.layers != templayer and self.layers != -1:
                             logger.info(f"大地之门特效结束, 当前层数为{self.layers}")
-                            break
+                            return True
                         time.sleep(1)
-
-                    self.handle_clearCurLayer_event(context)
-                    time.sleep(1)
-                    # 不能下楼，因为整个逻辑还在上一层的战后事件中，等待处理完其他战后事件之后离开大地事件再下楼
-                    image = context.tasker.controller.post_screencap().wait().get()
-                    self.handle_MarsBody_event(context, image)
-                    self.handle_MarsStele_event(context, image)
-                    self.handle_MarsStatue_event(context, image)
-                    self.handle_MarsRuinsShop_event(context, image)
-                    self.handle_MarsReward_event(context, image)
-                    self.handle_MarsExchangeShop_event(context, image)
-                    self.handle_SpecialLayer_event(context, image)
-                    return True
         return False
 
     def handle_preLayers_event(self, context: Context):
@@ -479,26 +471,27 @@ class Mars101(CustomAction):
         normalReward = self.layers % 2 == 1
         bossReward = self.layers >= 30 and self.layers % 10 == 0
         if not (normalReward or bossReward):
-            return False
+            return True
 
         if normalReward and context.run_recognition("Mars_Reward", image):
             logger.info("触发Mars奖励事件")
-            context.run_task("Mars_Reward")
+            mars_reward_detail = context.run_task("Mars_Reward")
+            if mars_reward_detail.nodes:
+                for node in mars_reward_detail.nodes:
+                    if node.name == "Mars_Inter_Confirm_Fail":
+                        logger.info("领取Mars奖励失败, 需要重新清理当前层")
+                        return False
             return True
 
         if bossReward and context.run_recognition("Mars_BossReward", image):
             logger.info("触发MarsBoss奖励事件")
             context.run_task("Mars_BossReward")
             return True
-
-        if context.run_recognition("BackText", image):
-            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
-            context.run_task("Fight_ReturnMainWindow")
-
-        return False
+        return True
 
     @timing_decorator
     def handle_MarsBody_event(self, context: Context, image):
+        # 摸金事件卡返回基本只会发生在夹层中
         if bodyRecoDetail := context.run_recognition("Mars_Body", image):
             logger.info("触发Mars摸金事件")
             for body in bodyRecoDetail.filterd_results:
@@ -508,12 +501,17 @@ class Mars101(CustomAction):
                     box[1] + box[3] // 2,
                 ).wait()
                 time.sleep(1)
-                context.run_task("Mars_Inter_Confirm")
+                if context.run_recognition(
+                    "Mars_Inter_Confirm_Success",
+                    context.tasker.controller.post_screencap().wait().get(),
+                ):
+                    context.run_task("Mars_Inter_Confirm_Success")
+                else:
+                    logger.info("可能在夹层中有怪物没有清理")
+                    context.run_task("Mars_Inter_Confirm_Fail")
+                    return False
             return True
-        if context.run_recognition("BackText", image):
-            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
-            context.run_task("Fight_ReturnMainWindow")
-        return False
+        return True
 
     @timing_decorator
     def handle_MarsStele_event(self, context: Context, image):
@@ -523,9 +521,6 @@ class Mars101(CustomAction):
             context.run_task("Mars_Fight_ClearCurrentLayer")
             time.sleep(1)
             return True
-        if context.run_recognition("BackText", image):
-            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
-            context.run_task("Fight_ReturnMainWindow")
         return False
 
     @timing_decorator
@@ -551,9 +546,6 @@ class Mars101(CustomAction):
                     self.isGetTitanFoot = True
                     # 关闭泰坦
             return True
-        if context.run_recognition("BackText", image):
-            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
-            context.run_task("Fight_ReturnMainWindow")
         return False
 
     @timing_decorator
@@ -568,7 +560,8 @@ class Mars101(CustomAction):
             )
         ):
             logger.info("触发Mars休息室事件")
-            self.gotoSpecialLayer(context)
+            if not self.gotoSpecialLayer(context):
+                return False
             context.run_task("Mars_Shower")
             context.run_task("Mars_EatBread")
             # 泡完澡，吃完面包，开始打裸男
@@ -580,7 +573,7 @@ class Mars101(CustomAction):
             self.leaveSpecialLayer(context)
 
             return True
-        return False
+        return True
 
     def handle_postLayers_event(self, context: Context):
         time.sleep(2)
@@ -589,14 +582,22 @@ class Mars101(CustomAction):
         self.Check_DefaultStatus(context)
 
         image = context.tasker.controller.post_screencap().wait().get()
-        self.handle_MarsBody_event(context, image)
+        if not self.handle_MarsBody_event(context, image):
+            # 如果卡剧情(离开),则返回False, 重新清理该层
+            return False
         self.handle_MarsStele_event(context, image)
         self.handle_MarsStatue_event(context, image)
         self.handle_MarsRuinsShop_event(context, image)
-        self.handle_MarsReward_event(context, image)
+        if not self.handle_MarsReward_event(context, image):
+            # 如果卡剧情(离开),则返回False, 重新清理该层
+            return False
         self.handle_MarsExchangeShop_event(context, image)
-        self.handle_SpecialLayer_event(context, image)
-        self.handle_EarthGate_event(context)
+        if not self.handle_SpecialLayer_event(context, image):
+            # 如果卡剧情(离开),则返回False, 重新清理该层
+            return False
+        if self.handle_EarthGate_event(context):
+            # 大地成功,需要回到战前准备开始请层，大地失败则继续往下走
+            return False
         if self.layers >= self.target_leave_layer_para - 2 and context.run_recognition(
             "Mars_GotoSpecialLayer",
             context.tasker.controller.post_screencap().wait().get(),
@@ -604,6 +605,7 @@ class Mars101(CustomAction):
             self.handle_before_leave_maze_event(context)
         else:
             fightUtils.handle_downstair_event(context)
+        return True
 
     @timing_decorator
     def handle_clearCurLayer_event(self, context: Context):
@@ -624,11 +626,11 @@ class Mars101(CustomAction):
     def handle_interrupt_event(self, context: Context):
         image = context.tasker.controller.post_screencap().wait().get()
         if context.run_recognition(
-            "Mars_Inter_Confirm",
+            "Mars_Inter_Confirm_Success",
             image,
         ):
             logger.info("检测到卡剧情, 本层重新探索")
-            context.run_task("Mars_Inter_Confirm")
+            context.run_task("Mars_Inter_Confirm_Success")
             return False
 
         # 检测卡返回
@@ -646,7 +648,12 @@ class Mars101(CustomAction):
             context.tasker.controller.post_screencap().wait().get(),
         ):
 
-            context.run_task("Mars_GotoSpecialLayer")
+            mars_gotoSpecialLayer_detail = context.run_task("Mars_GotoSpecialLayer")
+            if mars_gotoSpecialLayer_detail.nodes:
+                for node in mars_gotoSpecialLayer_detail.nodes:
+                    if node.name == "Mars_Inter_Confirm_Fail":
+                        logger.info("进入休息室失败, 需要重新清理当前层")
+                        return False
             while not context.run_recognition(
                 "Mars_LeaveSpecialLayer",
                 context.tasker.controller.post_screencap().wait().get(),
@@ -654,7 +661,7 @@ class Mars101(CustomAction):
                 time.sleep(1)
             logger.info("进入休息室")
             return True
-        return False
+        return True
 
     def leaveSpecialLayer(self, context: Context):
         context.run_task("Fight_ReturnMainWindow")
@@ -679,9 +686,12 @@ class Mars101(CustomAction):
         context: Context,
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
-        self.target_leave_layer_para = json.loads(argv.custom_action_param)[
-            "target_leave_layer"
-        ]
+        self.target_leave_layer_para = int(
+            context.get_node_data("Mars_Target_Layer_Setting")["recognition"]["param"][
+                "expected"
+            ][0]
+        )
+
         # initialize
         self.initialize(context)
         logger.info(f"本次任务目标层数: {self.target_leave_layer_para}")
@@ -708,9 +718,9 @@ class Mars101(CustomAction):
             if not self.handle_interrupt_event(context):
                 continue
 
-            # 检查是否触发战后事件
-            self.handle_postLayers_event(context)
-
+            # 检查是否触发战后事件, 战后事件是否出现异常
+            if not self.handle_postLayers_event(context):
+                continue
             if self.isLeaveMaze:
                 logger.info(f"current layers {self.layers},出图准备完成,开始退出agent")
                 break

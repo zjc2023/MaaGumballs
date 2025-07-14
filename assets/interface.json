@@ -511,25 +511,20 @@
             ]
         },
         "目标出图楼层": {
-            "default_case": "89",
             "cases": [
                 {
                     "name": "89",
                     "pipeline_override": {
-                        "Mars_Fighting": {
-                            "custom_action_param": {
-                                "target_leave_layer": 89
-                            }
+                        "Mars_Target_Layer_Setting": {
+                            "expected": "89"
                         }
                     }
                 },
                 {
                     "name": "119",
                     "pipeline_override": {
-                        "Mars_Fighting": {
-                            "custom_action_param": {
-                                "target_leave_layer": 119
-                            }
+                        "Mars_Target_Layer_Setting": {
+                            "expected": "119"
                         }
                     }
                 }
