@@ -71,6 +71,9 @@
         "template": "fight/UniversalUI/MazePackage.png",
         "action": "Custom",
         "custom_action": "Mars101",
+        "custom_action_param": {
+            "target_leave_layer": 89
+        },
         "roi": [
             47,
             1147,
@@ -92,7 +95,8 @@
         "timeout": 2000,
         "next": [
             "MarsReward_Select",
-            "MarsReward_Open"
+            "MarsReward_Open",
+            "Mars_Inter_Confirm_Fail"
         ]
     },
     "Mars_BossReward": {
@@ -110,6 +114,7 @@
         "next": [
             "MarsBossReward_Select1",
             "MarsBossReward_Select2",
+            "MarsBossReward_Select3",
             "MarsReward_Open"
         ]
     },
@@ -146,9 +151,8 @@
     "MarsBossReward_Select1": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight/Mars/MarsBossReward_HP.png",
-            "fight/Mars/MarsBossReward_MAG.png",
-            "fight/Mars/MarsBossReward_5w.png"
+            "fight/Mars/MarsBossReward_HPSteal.png",
+            "fight/Mars/MarsBossReward_HP.png"
         ],
         "roi": [
             35,
@@ -165,9 +169,27 @@
     "MarsBossReward_Select2": {
         "recognition": "TemplateMatch",
         "template": [
+            "fight/Mars/MarsBossReward_Other7.png",
+            "fight/Mars/MarsBossReward_Other5.png",
+            "fight/Mars/MarsBossReward_Other3.png"
+        ],
+        "roi": [
+            35,
+            463,
+            662,
+            489
+        ],
+        "action": "Click",
+        "timeout": 2000,
+        "next": [
+            "MarsReward_Open"
+        ]
+    },
+    "MarsBossReward_Select3": {
+        "recognition": "TemplateMatch",
+        "template": [
             "fight/Mars/MarsBossReward_DamageReduction.png",
-            "fight/Mars/MarsBossReward_HPSteal.png",
-            "fight/Mars/MarsBossReward_MP.png"
+            "fight/Mars/MarsBossReward_5w.png"
         ],
         "roi": [
             35,
@@ -201,18 +223,35 @@
         "post_delay": 1000,
         "timeout": 2000,
         "next": [
-            "Mars_Inter_Confirm"
+            "Mars_Inter_Confirm_Success",
+            "Mars_Inter_Confirm_Fail"
         ]
     },
-    "Mars_Inter_Confirm": {
+    "Mars_Inter_Confirm_Success": {
         "recognition": "OCR",
         "expected": [
             "翻找",
-            "离开",
             "打开",
+            "食用",
+            "浸泡",
             "进入",
             "斩断",
             "抄写"
+        ],
+        "roi": [
+            29,
+            545,
+            652,
+            394
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    },
+    "Mars_Inter_Confirm_Fail": {
+        "recognition": "OCR",
+        "expected": [
+            "离开"
         ],
         "roi": [
             29,
@@ -240,7 +279,7 @@
         "post_delay": 1000,
         "timeout": 2000,
         "next": [
-            "Mars_Inter_Confirm"
+            "Mars_Inter_Confirm_Success"
         ]
     },
     "Mars_Stele": {
@@ -258,7 +297,7 @@
         "post_delay": 1000,
         "timeout": 2000,
         "next": [
-            "Mars_Inter_Confirm"
+            "Mars_Inter_Confirm_Success"
         ]
     },
     "Mars_RuinsShop": {
@@ -364,7 +403,8 @@
         "timeout": 2000,
         "next": [
             "Mars_Statue_OpenBagCheck"
-        ]
+        ],
+        "enabled": false
     },
     "Mars_Statue_OpenBagCheck": {
         "recognition": "OCR",
@@ -451,7 +491,7 @@
             217,
             187
         ],
-        "timeout": 2000
+        "timeout": 3000
     },
     "Mars_Exchange_Shop_Add": {
         "recognition": "TemplateMatch",
@@ -538,10 +578,75 @@
             839
         ],
         "action": "Click",
-        "post_delay": 1000,
         "timeout": 2000,
         "next": [
-            "Mars_Inter_Confirm"
+            "Mars_Inter_Confirm_Success",
+            "Mars_Inter_Confirm_Fail"
+        ]
+    },
+    "Mars_LeaveSpecialLayer": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Mars/MarsSpecialLayerExit.png",
+        "roi": [
+            4,
+            182,
+            705,
+            839
+        ],
+        "action": "Click",
+        "timeout": 2000
+    },
+    "Mars_Shower": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Mars/Mars_Bread.png",
+        "roi": [
+            31,
+            649,
+            314,
+            326
+        ],
+        "target_offset": [
+            0,
+            -464,
+            0,
+            0
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "Mars_Inter_Confirm_Success"
+        ]
+    },
+    "Mars_EatBread": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Mars/Mars_Bread.png",
+        "roi": [
+            31,
+            649,
+            314,
+            326
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "next": [
+            "Mars_BreadRecipe_Confirm"
+        ]
+    },
+    "Mars_BreadRecipe_Confirm": {
+        "recognition": "TemplateMatch",
+        "template": "fight/Mars/Mars_BreadRecipe.png",
+        "roi": [
+            21,
+            409,
+            670,
+            368
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "order_by": "Score",
+        "next": [
+            "Mars_Inter_Confirm_Success"
         ]
     },
     "Mars_Android_Skill": {
@@ -655,5 +760,9 @@
         "next": [
             "Fight_ReturnMainWindow"
         ]
+    },
+    "Mars_Target_Layer_Setting": {
+        "recognition": "OCR",
+        "expected": "89"
     }
 }
