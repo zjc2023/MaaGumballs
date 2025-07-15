@@ -461,9 +461,6 @@ class Mars101(CustomAction):
             logger.info("触发Mars商店事件")
             context.run_task("Mars_RuinsShop")
             return True
-        if context.run_recognition("BackText", image):
-            logger.info("检测到卡返回, 回到主页面，确保不会卡死")
-            context.run_task("Fight_ReturnMainWindow")
         return False
 
     @timing_decorator
@@ -631,6 +628,14 @@ class Mars101(CustomAction):
         ):
             logger.info("检测到卡剧情, 本层重新探索")
             context.run_task("Mars_Inter_Confirm_Success")
+            return False
+
+        if context.run_recognition(
+            "Mars_Inter_Confirm_Fail",
+            image,
+        ):
+            logger.info("检测到卡离开, 本层重新探索")
+            context.run_task("Mars_Inter_Confirm_Fail")
             return False
 
         # 检测卡返回
