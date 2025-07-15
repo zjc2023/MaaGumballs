@@ -1,5 +1,3 @@
-from doctest import FAIL_FAST
-from re import T
 from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
@@ -579,15 +577,11 @@ class Mars101(CustomAction):
         self.Check_DefaultStatus(context)
 
         image = context.tasker.controller.post_screencap().wait().get()
-        if not self.handle_MarsBody_event(context, image):
-            # 如果卡剧情(离开),则返回False, 重新清理该层
-            return False
+        self.handle_MarsBody_event(context, image)
         self.handle_MarsStele_event(context, image)
         self.handle_MarsStatue_event(context, image)
         self.handle_MarsRuinsShop_event(context, image)
-        if not self.handle_MarsReward_event(context, image):
-            # 如果卡剧情(离开),则返回False, 重新清理该层
-            return False
+        self.handle_MarsReward_event(context, image)
         self.handle_MarsExchangeShop_event(context, image)
         if not self.handle_SpecialLayer_event(context, image):
             # 如果卡剧情(离开),则返回False, 重新清理该层
@@ -601,6 +595,7 @@ class Mars101(CustomAction):
         ):
             self.handle_before_leave_maze_event(context)
         else:
+            logger.info("触发下楼事件")
             fightUtils.handle_downstair_event(context)
         return True
 
