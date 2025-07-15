@@ -672,5 +672,57 @@
         "timeout": 2000,
         "action": "Custom",
         "custom_action": "JJC_DragonWishTest"
+    },
+    "Fight_PickUpAll": {
+        "action": "MultiSwipe",
+        "swipes": [
+            {
+                "starting": 0,
+                "begin": "Fight_PickUpAll_Emptyfloor",
+                "end": "Fight_PickUpAll_Emptyfloor",
+                "duration": 5000
+            },
+            {
+                "starting": 2500,
+                "begin": "Fight_PickUpAll_OpenedDoor",
+                "end": "Fight_PickUpAll_OpenedDoor"
+            }
+        ]
+    },
+    "Fight_PickUpAll_Emptyfloor": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/UniversalUI/空地.png"
+        ],
+        "roi": [
+            5,
+            122,
+            707,
+            947
+        ],
+        "action": "DoNothing",
+        "threshold": 0.7,
+        "order_by": "Score",
+        "timeout": 3000,
+        "next": "Fight_PickUpAll"
+    },
+    "Fight_PickUpAll_OpenedDoor": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/openedDoor.png",
+            "fight/openedDoor1.png",
+            "fight/openedDoor1_time_stop.png"
+        ],
+        "roi": [
+            5,
+            122,
+            707,
+            947
+        ],
+        "action": "DoNothing",
+        "threshold": 0.7,
+        "order_by": "Score",
+        "timeout": 3000,
+        "next": "Fight_PickUpAll_Emptyfloor"
     }
 }
