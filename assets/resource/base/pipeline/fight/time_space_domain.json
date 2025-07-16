@@ -43,7 +43,7 @@
     },
     "TSD_GetInDomain_Confirm": {
         "recognition": "TemplateMatch",
-        "template": "fight/timeSpaceDomain/wormhole.png",
+        "template": "fight/time_space_domain/wormhole.png",
         "roi": [
             213,
             567,
@@ -68,22 +68,22 @@
     },
     "TSD_ReturnFleet": {
         "next": [
-            "TSD_checkFreeFleet"
+            "TSD_checkTargetFleetFree"
         ],
         "post_delay": 100,
         "timeout": 2000,
         "interrupt": [
-            "TSD_checkTargetFleet",
             "TSD_View",
             "TSD_EndExploit",
             "TSD_WithdrawFleet",
-            "TSD_checkTargetFlying",
             "BackText"
         ]
     },
     "TSD_checkFreeFleet": {
         "recognition": "TemplateMatch",
-        "template": "fight/timeSpaceDomain/fleetFree.png",
+        "template": [
+            "fight/time_space_domain/fleetFree.png"
+        ],
         "roi": [
             130,
             199,
@@ -93,9 +93,12 @@
         "threshold": 0.8,
         "action": "DoNothing"
     },
-    "TSD_checkTargetFleet": {
+    "TSD_checkTargetFleetFree": {
         "recognition": "TemplateMatch",
-        "template": "fight/timeSpaceDomain/fleetFree.png",
+        "template": [
+            "fight/time_space_domain/rocket.png",
+            "fight/time_space_domain/fleetFree.png"
+        ],
         "roi": [
             130,
             199,
@@ -182,7 +185,7 @@
     },
     "TSD_SelectFreeFleetInList": {
         "recognition": "TemplateMatch",
-        "template": "fight/timeSpaceDomain/fleetFreeInList.png",
+        "template": "fight/time_space_domain/fleetFreeInList.png",
         "roi": [
             37,
             167,
@@ -195,7 +198,7 @@
     },
     "TSD_checkTargetFlying": {
         "recognition": "TemplateMatch",
-        "template": "fight/timeSpaceDomain/rocket.png",
+        "template": "fight/time_space_domain/rocket.png",
         "roi": [
             130,
             199,
@@ -206,7 +209,7 @@
     },
     "TSD_closeUnionMsgBox": {
         "recognition": "TemplateMatch",
-        "template": "fight/timeSpaceDomain/unionMsgButton.png",
+        "template": "fight/time_space_domain/unionMsgButton.png",
         "roi": [
             18,
             1027,
@@ -304,8 +307,32 @@
             "TSD_ClickAttackButton"
         ],
         "interrupt": [
-            "TSD_checkTargetFlying",
             "BackText"
         ]
+    },
+    "TSD_CheckTargetFleetRun": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/time_space_domain/rocket.png",
+            "fight/time_space_domain/spade.png",
+            "fight/time_space_domain/tent.png"
+        ],
+        "roi": [
+            130,
+            199,
+            60,
+            51
+        ],
+        "threshold": 0.8,
+        "action": "DoNothing"
+    },
+    "TSD_CheckExploreTask": {
+        "enabled": false
+    },
+    "TSD_CheckMonsterTask": {
+        "enabled": false
+    },
+    "TSD_CheckMonsterBossTask": {
+        "enabled": false
     }
 }

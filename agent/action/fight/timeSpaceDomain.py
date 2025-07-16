@@ -70,7 +70,7 @@ class TSD_explore(CustomAction):
             pipeline_override={
                     "checkAllFleetStatus": {
                         "recognition": "TemplateMatch",
-                        "template": "fight/timeSpaceDomain/fleetFree.png",
+                        "template": "fight/time_space_domain/fleetFree.png",
                         "roi": [109, 182, 397, 95],
                         "threshold": 0.8,
                     }
@@ -106,13 +106,7 @@ class TSD_explore(CustomAction):
                     })
                     context.run_task("TSD_ReturnFleet",
                         pipeline_override={
-                            "TSD_checkFreeFleet":{
-                                "roi": fleetRoiList[key]
-                            },
-                            "TSD_checkTargetFleet":{
-                                "roi": fleetRoiList[key]
-                            },
-                            "TSD_checkTargetFlying":{
+                            "TSD_checkTargetFleetFree":{
                                 "roi": fleetRoiList[key]
                             }
                     })                    
@@ -140,7 +134,7 @@ class TSD_explore(CustomAction):
             pipeline_override={
                     "GetTaskTargetList": {
                         "recognition": "TemplateMatch",
-                        "template": f"fight/timeSpaceDomain/{TargetTemplate[taskType]}.png",
+                        "template": f"fight/time_space_domain/{TargetTemplate[taskType]}.png",
                         "roi": [12, 268, 693, 872],
                         "threshold": 0.91,
                     }
@@ -154,7 +148,7 @@ class TSD_explore(CustomAction):
             return []
     
     # 按列表执行事件
-    def runTask(self, context: Context, taskType: str, exploreList: []) -> bool:
+    def runTask(self, context: Context, taskType: str, exploreList: list[RecognitionDetail] | list) -> bool:
         global exploreNums
         taskEntry: dict = {
             "explore": {
@@ -180,8 +174,8 @@ class TSD_explore(CustomAction):
                     }
                 }
             },
-            "monster_planet":"TSD_ClearMonsterPlanet",
-            "exploit":"TSD_ExploitAllFleet"
+            "monster_planet":"TSD_ClearMonsterPlanet", # 占位，未实现
+            "exploit":"TSD_ExploitAllFleet"  # 占位，未实现
         }
         for explore in exploreList:
             box = explore.box
@@ -216,7 +210,7 @@ class TSD_explore(CustomAction):
             pipeline_override={
                 "GridCheckTargetBoundary":{
                     "recognition": "TemplateMatch",
-                    "template": f"fight/timeSpaceDomain/boundary{direction}.png",
+                    "template": f"fight/time_space_domain/boundary{direction}.png",
                     "roi": boundaryRoiDict[direction],
                     "threshold": 0.92
                 }
@@ -235,7 +229,7 @@ class TSD_explore(CustomAction):
             return True
         else:
             while True: # 将地图移动至左上角
-                tempPath = "fight/timeSpaceDomain/boundaryLeftTop.png"
+                tempPath = "fight/time_space_domain/boundaryLeftTop.png"
                 if self.checkBoundary(context, "LeftTop"):
                     break
                 else:
@@ -289,7 +283,7 @@ class TSD_explore(CustomAction):
             pipeline_override={
                 "checkUnionMsgBox": {
                     "recognition": "TemplateMatch",
-                    "template": "fight/timeSpaceDomain/unionMsgOpened.png",
+                    "template": "fight/time_space_domain/unionMsgOpened.png",
                     "roi": [91, 1042, 80, 80],
                     "threshold": 0.8
                 }
@@ -307,21 +301,28 @@ class TSD_explore(CustomAction):
         global exploreNums
         
         taskList:dict = {
-            "explore": json.loads(argv.custom_action_param)["explore"],
-            "monster": json.loads(argv.custom_action_param)["monster"],
-            "monster_boss": json.loads(argv.custom_action_param)["monster_boss"],
-            # "monster_planet": json.loads(argv.custom_action_param)["monster_planet"],
-            # "exploit": json.loads(argv.custom_action_param)["exploit"]
+            "explore": {
+              "name": "探索废墟",
+              "enabled": context.get_node_data("TSD_CheckExploreTask")["enabled"]
+            },
+            "monster": {
+              "name": "清理主地图小怪",
+              "enabled": context.get_node_data("TSD_CheckMonsterTask")["enabled"]
+            },
+            "monster_boss": {
+              "name": "清理主地图Boss",
+              "enabled": context.get_node_data("TSD_CheckMonsterBossTask")["enabled"]
+            },
+            # "monster_planet": json.loads(argv.custom_action_param)["monster_planet"], # 占位
+            # "exploit": json.loads(argv.custom_action_param)["exploit"] # 占位
         }
-        
-        logger.info(taskList)
         
         # 先关闭联盟聊天窗口，避免干扰
         self.closeUnionMsgBox(context)
         
         # 获取所有舰队战力
         powerList = self.getAllFleetPower(context)
-        logger.info(f"当前探索战力：{powerList}，最高战力舰队：{highestFleet}")
+        logger.info(f"当前探索战力：{ powerList }，最高战力舰队：{ highestFleet }")
         
         
         # 所有舰队返回
@@ -329,13 +330,13 @@ class TSD_explore(CustomAction):
         
         # # 开始探索
         for key in taskList:
-            if taskList[key] == True:
-                logger.info(f"开始执行{key}任务")
+            if taskList[key]["enabled"] == True:
+                logger.info(f"开始执行【{ taskList[key]['name'] }】任务")
                 while self.checkTargetExist(context, key) :
-                    lists = self.GetTaskTargetList(context, key)
+                    lists = self.GetTaskTargetList(context, key) 
                     self.runTask(context, key, lists)
             else:
-                logger.info(f"未开启{key}任务")
+                logger.info(f"未开启【{ taskList[key]['name'] }】任务")
                 continue
         
         logger.info("所有任务完成！")
