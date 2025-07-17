@@ -239,6 +239,7 @@ class FightProcessor:
             return 0
 
     def checkMonster(self, context: Context) -> bool:
+        logger.info(f"{self.visited}")
         img = context.tasker.controller.post_screencap().wait().get()
 
         # 检测是否有怪物并攻击
@@ -259,6 +260,7 @@ class FightProcessor:
                     context,
                 ):
                     self.visited[r][c] += 1
+                    logger.info(f"检测({r + 1},{c + 1})有怪物: {x}, {y}, {w}, {h}")
                     for _ in range(self.hit_monster_count):
                         context.tasker.controller.post_click(
                             x + w // 2, y + h // 2
