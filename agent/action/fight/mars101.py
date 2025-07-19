@@ -301,6 +301,8 @@ class Mars101(CustomAction):
             ):
                 logger.info("当前层无法释放大地，跳过")
                 return False
+            time.sleep(1)
+            context.run_task("Fight_ReturnMainWindow")
             if fightUtils.check_magic("土", "大地之门", context):
                 fightUtils.cast_magic("气", "静电场", context)
                 if fightUtils.cast_magic("土", "大地之门", context):
