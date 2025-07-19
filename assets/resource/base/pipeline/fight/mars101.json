@@ -135,7 +135,10 @@
     },
     "MarsReward_Select": {
         "recognition": "TemplateMatch",
-        "template": "fight/Mars/MarsDagger.png",
+        "template": [
+            "fight/Mars/MarsDagger.png",
+            "fight/Mars/MarsShieldNecklace.png"
+        ],
         "roi": [
             35,
             463,
@@ -169,9 +172,9 @@
     "MarsBossReward_Select2": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight/Mars/MarsBossReward_Other7.png",
-            "fight/Mars/MarsBossReward_Other5.png",
-            "fight/Mars/MarsBossReward_Other3.png"
+            "fight/Mars/MarsBossReward_DamageReduction.png",
+            "fight/Mars/MarsBossReward_Other2.png",
+            "fight/Mars/MarsBossReward_Other6.png"
         ],
         "roi": [
             35,
@@ -188,7 +191,6 @@
     "MarsBossReward_Select3": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight/Mars/MarsBossReward_DamageReduction.png",
             "fight/Mars/MarsBossReward_5w.png"
         ],
         "roi": [

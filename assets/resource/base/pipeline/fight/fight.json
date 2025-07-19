@@ -197,8 +197,7 @@
             327,
             137
         ],
-        "action": "Custom",
-        "custom_action": "SkillShop_Shopping",
+        "action": "DoNothing",
         "post_delay": 200,
         "timeout": 2000
     },
@@ -690,21 +689,28 @@
         ]
     },
     "Fight_PickUpAll_Emptyfloor": {
-        "recognition": "TemplateMatch",
-        "template": [
-            "fight/UniversalUI/空地.png"
-        ],
+        "action": "LongPress",
+        "recognition": "ColorMatch",
         "roi": [
             5,
             122,
             707,
             947
         ],
-        "action": "DoNothing",
-        "threshold": 0.7,
-        "order_by": "Score",
-        "timeout": 3000,
-        "next": "Fight_PickUpAll"
+        "upper": [
+            52,
+            48,
+            48
+        ],
+        "lower": [
+            39,
+            37,
+            32
+        ],
+        "count": 1000,
+        "connected": true,
+        "duration": 5000,
+        "next": "Fight_PickUpAll_OpenedDoor"
     },
     "Fight_PickUpAll_OpenedDoor": {
         "recognition": "TemplateMatch",
@@ -723,6 +729,6 @@
         "threshold": 0.7,
         "order_by": "Score",
         "timeout": 3000,
-        "next": "Fight_PickUpAll_Emptyfloor"
+        "next": "Fight_PickUpAll"
     }
 }
