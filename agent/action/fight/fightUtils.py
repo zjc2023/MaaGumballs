@@ -1058,6 +1058,43 @@ def handle_downstair_event(context: Context):
     return True
 
 
+def handle_skillShop_event(
+    context: Context, target_skill=["火球术", "闪电术", "死亡波纹"]
+):
+    # 打开技能商店
+    if context.run_recognition(
+        "Fight_SkillShop", context.tasker.controller.post_screencap().wait().get()
+    ):
+        logger.info("打开技能商店")
+        context.run_task("Fight_SkillShop")
+        # 拼凑技能路径
+        template_path = ["items/scroll/%s.png" % skill for skill in target_skill]
+        # 技能商店开始购物
+        if recoDetail := context.run_recognition(
+            "SkillShop_Reco",
+            context.tasker.controller.post_screencap().wait().get(),
+            pipeline_override={
+                "SkillShop_Reco": {
+                    "recognition": "TemplateMatch",
+                    "template": template_path,
+                    "roi": [65, 334, 610, 686],
+                    "threshold": 0.8,
+                }
+            },
+        ):
+            logger.info(f"找到商品{len(recoDetail.filterd_results)}个, 开始购物")
+            for result in recoDetail.filterd_results:
+                if result.score < 0.8:
+                    continue
+                box = result.box
+                context.tasker.controller.post_click(
+                    box[0] + box[2] // 2, box[1] + box[3] // 2
+                )
+                time.sleep(0.5)
+                context.run_task("ConfirmButton_500ms")
+        context.run_task("Fight_ReturnMainWindow")
+
+
 # 存储函数执行时间的全局变量
 function_time_records = {}
 
