@@ -692,9 +692,9 @@
         "recognition": "ColorMatch",
         "roi": [
             5,
-            122,
-            707,
-            947
+            175,
+            714,
+            816
         ],
         "upper": [
             52,
@@ -706,8 +706,9 @@
             37,
             32
         ],
-        "count": 1000,
+        "count": 10000,
         "connected": true,
+        "order_by": "Score",
         "duration": 5000,
         "next": "Fight_PickUpAll_OpenedDoor"
     },
