@@ -5,6 +5,7 @@ from utils import logger
 
 from action.fight import fightUtils
 from action.fight import fightProcessor
+from action.fight.fightUtils import timing_decorator
 
 import time
 
@@ -211,6 +212,7 @@ class JJC101(CustomAction):
 
         return True
 
+    @timing_decorator
     def handle_abattoir_event(self, context: Context):
         image = context.tasker.controller.post_screencap().wait().get()
         if (self.layers % 10 == 5 or self.layers % 10 == 4) and context.run_recognition(
@@ -384,6 +386,7 @@ class JJC101(CustomAction):
         self.handle_abattoir_event(context)
         return True
 
+    @timing_decorator
     def handle_perfect_event(self, context: Context):
         # 检测完美击败
         if not self.isHaveSpartanHat and context.run_recognition(
@@ -396,6 +399,7 @@ class JJC101(CustomAction):
             ):
                 pass
 
+    @timing_decorator
     def handle_sparta_event(self, context: Context):
         # 寻找斯巴达头盔
         if not self.isHaveSpartanHat:
@@ -409,6 +413,7 @@ class JJC101(CustomAction):
                     logger.info("已有斯巴达头盔，或找到斯巴达头盔了！！")
                     break
 
+    @timing_decorator
     def handle_skillShop_event(self, context: Context):
         # 打开技能商店
         if self.layers >= 40:
@@ -418,6 +423,7 @@ class JJC101(CustomAction):
             logger.info("打开技能商店")
             context.run_task("Fight_SkillShop")
 
+    @timing_decorator
     def handle_stone_event(self, context: Context):
         if self.layers <= 29 and context.run_recognition(
             "JJC_StoneChest", context.tasker.controller.post_screencap().wait().get()
@@ -433,6 +439,7 @@ class JJC101(CustomAction):
         self.handle_skillShop_event(context)
         fightUtils.handle_downstair_event(context)
 
+    @timing_decorator
     def handle_clearCurLayer_event(self, context: Context):
         # boss层开始探索
         if self.layers >= 30 and self.layers % 10 == 0:
@@ -455,6 +462,7 @@ class JJC101(CustomAction):
 
         return True
 
+    @timing_decorator
     def handle_interrupt_event(self, context: Context):
         # 检测卡剧情
         image = context.tasker.controller.post_screencap().wait().get()
@@ -516,6 +524,13 @@ class JJC101(CustomAction):
 
         logger.info(f"竞技场探索结束，当前到达{self.layers}层")
         context.run_task("Fight_LeaveMaze")
+
+        # 获取并打印统计信息
+        stats = fightUtils.get_time_statistics()
+        for func_name, data in stats.items():
+            logger.info(
+                f"{func_name} 执行 {data['count']} 次，总耗时: {data['total_time']:.4f}秒"
+            )
         return CustomAction.RunResult(success=True)
 
 
