@@ -32,9 +32,9 @@ class FightProcessor:
             self._grid_upper = [170, 175, 183]
             self._grid_count = 10
             self._hit_monster_count = 3
-            self.max_grid_loop = 18
-            self.max_monster_loop_fail = 5
-            self.max_grid_loop_fail = 3
+            self.max_grid_loop = 25
+            self.max_monster_loop_fail = 4
+            self.max_grid_loop_fail = 4
             self.isCheckDragon = False
             self.targetWish = "工资"
 
@@ -250,7 +250,9 @@ class FightProcessor:
                 # 计算 ROI 区域
                 x, y, w, h = self.roi_matrix[r][c]
                 roi_image = img[y : y + h, x : x + w]
-                left_bottom_img = roi_image[0:60, 0:60].copy()  # 提取左下角 20x20 区域
+                left_bottom_img = roi_image[0:60, 0:60].copy()
+
+                # 检测左上角区块是否存在血条
                 if left_detected := self.bgrColorMatch(
                     left_bottom_img,
                     self.monster_lower,
@@ -263,8 +265,7 @@ class FightProcessor:
                         context.tasker.controller.post_click(
                             x + w // 2, y + h // 2
                         ).wait()
-                        time.sleep(0.1)
-                    time.sleep(0.1)
+                        time.sleep(0.05)
 
         return True
 
@@ -338,7 +339,7 @@ class FightProcessor:
                     context.tasker.controller.post_click(x + w // 2, y + h // 2).wait()
                     self.visited[r][c] += 1
                     checkGridCnt += 1
-                    time.sleep(0.1)
+                    time.sleep(0.03)
         return checkGridCnt
 
     def handle_dragon_encounter(self, context: Context, img):
