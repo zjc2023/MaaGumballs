@@ -75,7 +75,7 @@
     },
     "SkyExplore_Start_Autosky": {
         "recognition": "OCR",
-        "doc": "这一步是在快捷探索界面点击自动探索按钮",
+        "doc": "这一步是在快捷探索界面点击自动探索按钮,如果超时仍找不到下一步，默认是能量不足或无法显示更多目标，则停止任务",
         "expected": "自动探索",
         "post_delay": 1000,
         "timeout": 2000,
@@ -89,7 +89,10 @@
         "next": [
             "SkyExplore_LackOfEnergy_Autosky",
             "SkyExplore_LackOfBox_Autosky",
-            "SkyExplore_Finish_Autosky"
+            "SkyExplore_Confirm_Finish_Autosky"
+        ],
+            "on_error": [
+            "StopCureentTask"
         ]
     },
     "SkyExplore_LackOfEnergy_Autosky": {
@@ -122,6 +125,23 @@
         "timeout": 2000,
         "next": [
             "StopCureentTask"
+        ]
+    },
+    "SkyExplore_Confirm_Finish_Autosky": {
+        "recognition": "TemplateMatch",
+        "doc": "这里必须加一步确认，因为如果开了游戏加速，前两个识别可能识别不到",
+        "template": "dailyTask/SkyExplore_Confirm_Finish_Autosky.png",
+        "roi": [
+            303,
+            240,
+            106,
+            86
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 5000,
+        "next": [
+            "SkyExplore_Finish_Autosky"
         ]
     },
     "SkyExplore_Finish_Autosky": {
