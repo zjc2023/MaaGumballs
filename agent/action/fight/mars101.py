@@ -12,19 +12,22 @@ import json
 
 
 boss_x, boss_y = 360, 800
+boss_slave_1_x, boss_slave_1_y = 100, 660
+boss_slave_2_x, boss_slave_2_y = 640, 660
 
 
 @AgentServer.custom_action("Mars101")
 class Mars101(CustomAction):
     def __init__(self):
         super().__init__()
-        self.isTitle_L5 = False
+        self.isTitle_L1 = False
         self.isTitle_L58 = False
         self.isTitle_L76 = False
         self.useEarthGate = 0
         self.isGetTitanFoot = False
         self.is_android_skill_enabled = False
         self.isLeaveMaze = False
+        self.isAutoPickup = False
         self.layers = 1
 
     def initialize(self, context: Context):
@@ -88,18 +91,15 @@ class Mars101(CustomAction):
         1. 检查58层的称号: 位面点满即可
         3. 检查76层的称号: 位面，大铸剑师，大剑师都点满
         """
-        if (self.layers == 5 or self.layers == 6) and self.isTitle_L5 == False:
+        if (self.layers == 1 or self.layers == 2) and self.isTitle_L1 == False:
             fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
-            fightUtils.title_learn("冒险", 1, "寻宝者", 1, context)
-            fightUtils.title_learn("冒险", 2, "勘探家", 1, context)
-            fightUtils.title_learn("冒险", 3, "符文师", 3, context)
             context.run_task("Fight_ReturnMainWindow")
-            self.isTitle_L5 = True
+            self.isTitle_L1 = True
             return True
 
         elif (self.layers >= 58 and self.layers <= 68) and self.isTitle_L58 == False:
             fightUtils.title_learn("魔法", 1, "魔法学徒", 3, context)
-            fightUtils.title_learn("魔法", 2, "黑袍法师", 1, context)
+            fightUtils.title_learn("魔法", 2, "黑袍法师", 3, context)
             fightUtils.title_learn("魔法", 3, "咒术师", 1, context)
             fightUtils.title_learn("魔法", 4, "土系大师", 1, context)
             fightUtils.title_learn("魔法", 5, "位面先知", 1, context)
@@ -109,7 +109,6 @@ class Mars101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
 
             # 如果探索点足够,则把土系大师也学习了
-            fightUtils.title_learn("魔法", 4, "土系大师", 3, context)
             context.run_task("Fight_ReturnMainWindow")
             context.run_task("Save_Status")
             context.run_task("Fight_ReturnMainWindow")
@@ -122,11 +121,11 @@ class Mars101(CustomAction):
             fightUtils.title_learn("战斗", 3, "剑舞者", 3, context)
             fightUtils.title_learn("战斗", 4, "大剑师", 3, context)
             fightUtils.title_learn("魔法", 2, "黑袍法师", 3, context)
-            fightUtils.title_learn("魔法", 3, "咒术师", 3, context)
-            fightUtils.title_learn("魔法", 4, "土系大师", 3, context)
+            # fightUtils.title_learn("魔法", 3, "咒术师", 3, context)
+            # fightUtils.title_learn("魔法", 4, "土系大师", 3, context)
             fightUtils.title_learn("冒险", 1, "寻宝者", 3, context)
             fightUtils.title_learn("冒险", 2, "勘探家", 3, context)
-            fightUtils.title_learn("冒险", 3, "符文师", 3, context)
+            fightUtils.title_learn("冒险", 3, "锻造师", 3, context)
             fightUtils.title_learn("冒险", 4, "武器大师", 3, context)
             fightUtils.title_learn("冒险", 5, "大铸剑师", 1, context)
             fightUtils.title_learn_branch("冒险", 5, "攻击强化", 3, context)
@@ -146,6 +145,9 @@ class Mars101(CustomAction):
         if (
             (11 <= self.layers <= 79) and (tempNum == 1 or tempNum == 5 or tempNum == 9)
         ) or self.layers >= 80:
+            # 如果大地回来，低于50层就不检查状态
+            if (11 <= self.layers <= 49) and self.useEarthGate > 0:
+                return True
             StatusDetail: dict = fightUtils.checkGumballsStatusV2(context)
             CurrentHP = float(StatusDetail["当前生命值"])
             MaxHp = float(StatusDetail["最大生命值"])
@@ -219,8 +221,16 @@ class Mars101(CustomAction):
         ):
             context.run_task("Fight_OpenedDoor")
         else:
-            for _ in range(3):
-                fightUtils.cast_magic_special("生命颂歌", context)
+            time.sleep(6)
+            fightUtils.cast_magic_special("生命颂歌", context)
+            fightUtils.cast_magic("光", "祝福术", context)
+            context.tasker.controller.post_click(boss_slave_1_x, boss_slave_1_y).wait()
+            time.sleep(3)
+            context.tasker.controller.post_click(boss_slave_2_x, boss_slave_2_y).wait()
+            time.sleep(1)
+            fightUtils.cast_magic_special("生命颂歌", context)
+            fightUtils.cast_magic_special("生命颂歌", context)
+
             actions = []
             if self.layers <= 60:
                 actions = [
@@ -252,7 +262,7 @@ class Mars101(CustomAction):
             for _ in range(10):
                 # 执行当前动作
                 actions[index]()
-                time.sleep(0.5)
+                time.sleep(1)
 
                 # 检查boss是否存在
                 if context.run_recognition(
@@ -284,13 +294,15 @@ class Mars101(CustomAction):
             ((self.layers > 50) and (self.layers % 10 == 9))
             # 如果59遇到拉绳子无法大地，那么尝试在61或者62大地
             or (61 <= self.layers <= 62)
-        ) and self.useEarthGate < 2:
+        ) and self.useEarthGate < 1:
             # 识别释放大地时没有拉绳子的洞
             if context.run_recognition(
                 "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
             ):
                 logger.info("当前层无法释放大地，跳过")
                 return False
+            time.sleep(1)
+            context.run_task("Fight_ReturnMainWindow")
             if fightUtils.check_magic("土", "大地之门", context):
                 fightUtils.cast_magic("气", "静电场", context)
                 if fightUtils.cast_magic("土", "大地之门", context):
@@ -371,11 +383,6 @@ class Mars101(CustomAction):
         if fightUtils.title_check("巨龙", context):
             fightUtils.title_learn("巨龙", 1, "亚龙血统", 3, context)
             fightUtils.title_learn("巨龙", 2, "初级龙族血统", 3, context)
-            fightUtils.title_learn("巨龙", 3, "中级龙族血统", 3, context)
-            fightUtils.title_learn("巨龙", 4, "高级龙族血统", 3, context)
-            fightUtils.title_learn("巨龙", 5, "邪龙血统", 1, context)
-            fightUtils.title_learn_branch("巨龙", 5, "生命强化", 3, context)
-            fightUtils.title_learn_branch("巨龙", 5, "攻击强化", 3, context)
         context.run_task("Fight_ReturnMainWindow")
 
         fightUtils.title_learn("战斗", 5, "剑圣", 1, context)
@@ -545,7 +552,7 @@ class Mars101(CustomAction):
 
     @timing_decorator
     def handle_SpecialLayer_event(self, context: Context, image):
-        # 不放柱子，80层之后不打裸男
+        # 不放柱子，不打裸男
         if (
             (30 <= self.layers + 1 <= 100)
             and ((self.layers + 1) % 10 == 0)
@@ -559,16 +566,16 @@ class Mars101(CustomAction):
                 return False
             context.run_task("Mars_Shower")
             context.run_task("Mars_EatBread")
-            # 泡完澡，吃完面包，开始打裸男
-            if self.layers <= 79:
-                fightUtils.cast_magic("暗", "死亡波纹", context)
-                fightUtils.cast_magic("光", "祝福术", context)
-                self.handle_clearCurLayer_event(context)
             context.run_task("Fight_ReturnMainWindow")
             self.leaveSpecialLayer(context)
 
             return True
         return True
+
+    def handle_auto_pickup_event(self, context: Context):
+        logger.info("开启自动拾取, 等待动画结束")
+        context.run_task("Fight_PickUpAll_Emptyfloor")
+        self.isAutoPickup = True
 
     def handle_postLayers_event(self, context: Context):
         time.sleep(2)
@@ -595,8 +602,12 @@ class Mars101(CustomAction):
         ):
             self.handle_before_leave_maze_event(context)
         else:
-            logger.info("触发下楼事件")
-            fightUtils.handle_downstair_event(context)
+            if self.isAutoPickup:
+                logger.info("触发下楼事件")
+                fightUtils.handle_downstair_event(context)
+            else:
+                logger.info("触发开启自动拾取事件")
+                self.handle_auto_pickup_event(context)
         return True
 
     @timing_decorator
@@ -604,7 +615,6 @@ class Mars101(CustomAction):
         # boss层开始探索
         if self.layers >= 30 and self.layers % 10 == 0:
             # boss召唤动作
-            time.sleep(6)
             self.handle_boss_event(context)
             fightUtils.handle_dragon_event("马尔斯", context)
             return False

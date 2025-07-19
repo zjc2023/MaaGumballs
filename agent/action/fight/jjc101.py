@@ -418,10 +418,20 @@ class JJC101(CustomAction):
         # 打开技能商店
         if self.layers >= 40:
             return True
-        image = context.tasker.controller.post_screencap().wait().get()
-        if context.run_recognition("Fight_SkillShop", image):
-            logger.info("打开技能商店")
-            context.run_task("Fight_SkillShop")
+        fightUtils.handle_skillShop_event(
+            context,
+            target_skill=[
+                "石肤术",
+                "地震术",
+                "静电场",
+                "毁灭之刃",
+                "瓦解射线",
+                "失明术",
+                "治疗术",
+                "寒冰护盾",
+                "死亡波纹",
+            ],
+        )
 
     @timing_decorator
     def handle_stone_event(self, context: Context):

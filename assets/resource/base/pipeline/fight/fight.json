@@ -197,8 +197,7 @@
             327,
             137
         ],
-        "action": "Custom",
-        "custom_action": "SkillShop_Shopping",
+        "action": "DoNothing",
         "post_delay": 200,
         "timeout": 2000
     },
@@ -622,7 +621,6 @@
         ],
         "action": "DoNothing",
         "post_delay": 500,
-        "threshold": 0.8,
         "timeout": 2000
     },
     "Fight_FindDragon_Next": {
@@ -672,5 +670,65 @@
         "timeout": 2000,
         "action": "Custom",
         "custom_action": "JJC_DragonWishTest"
+    },
+    "Fight_PickUpAll": {
+        "action": "MultiSwipe",
+        "swipes": [
+            {
+                "starting": 0,
+                "begin": "Fight_PickUpAll_Emptyfloor",
+                "end": "Fight_PickUpAll_Emptyfloor",
+                "duration": 5000
+            },
+            {
+                "starting": 2500,
+                "begin": "Fight_PickUpAll_OpenedDoor",
+                "end": "Fight_PickUpAll_OpenedDoor"
+            }
+        ]
+    },
+    "Fight_PickUpAll_Emptyfloor": {
+        "action": "LongPress",
+        "recognition": "ColorMatch",
+        "roi": [
+            5,
+            175,
+            714,
+            816
+        ],
+        "upper": [
+            52,
+            48,
+            48
+        ],
+        "lower": [
+            39,
+            37,
+            32
+        ],
+        "count": 10000,
+        "connected": true,
+        "order_by": "Score",
+        "duration": 5000,
+        "next": "Fight_PickUpAll_OpenedDoor"
+    },
+    "Fight_PickUpAll_OpenedDoor": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "fight/openedDoor.png",
+            "fight/openedDoor1.png",
+            "fight/openedDoor1_time_stop.png"
+        ],
+        "roi": [
+            5,
+            122,
+            707,
+            947
+        ],
+        "action": "DoNothing",
+        "threshold": 0.7,
+        "order_by": "Score",
+        "timeout": 3000,
+        "next": "Fight_PickUpAll"
     }
 }
