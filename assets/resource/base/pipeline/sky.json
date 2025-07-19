@@ -91,7 +91,7 @@
             "SkyExplore_LackOfBox_Autosky",
             "SkyExplore_Confirm_Finish_Autosky"
         ],
-            "on_error": [
+        "on_error": [
             "StopCureentTask"
         ]
     },

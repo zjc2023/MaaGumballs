@@ -24,7 +24,9 @@ class Autosky(CustomAction):
         self.context = context
         logger.info("Autosky: 初始化完毕，准备开始天空探索任务。")
 
-    def _run_task(self, task_name: str, task_description: str = "", fail_on_error: bool = True) -> bool:
+    def _run_task(
+        self, task_name: str, task_description: str = "", fail_on_error: bool = True
+    ) -> bool:
         """
         封装执行单个Maa Pipeline任务的逻辑，包括日志、停止检查和结果判断。
         :param task_name: 要执行的Maa Pipeline节点名称。
@@ -32,13 +34,17 @@ class Autosky(CustomAction):
         :param fail_on_error: 是否在任务失败时立即返回False。某些任务（如能量不足提示）失败是预期行为。
         :return: 如果任务成功则返回True，否则返回False。
         """
-        full_description = f"{task_description} ({task_name})" if task_description else task_name
+        full_description = (
+            f"{task_description} ({task_name})" if task_description else task_name
+        )
         logger.info(f"Autosky: 正在执行任务 - {full_description}...")
 
         # 检查是否收到停止任务的请求
         if self.context.tasker.stopping:
-            logger.info(f"Autosky: 检测到停止任务请求，在执行 {full_description} 前退出。")
-            return False # 返回False表示任务未完成，以便上层逻辑能够中止
+            logger.info(
+                f"Autosky: 检测到停止任务请求，在执行 {full_description} 前退出。"
+            )
+            return False  # 返回False表示任务未完成，以便上层逻辑能够中止
 
         run_result_detail = self.context.run_task(task_name)
 
@@ -49,12 +55,18 @@ class Autosky(CustomAction):
 
         if not task_successful:
             if fail_on_error:
-                logger.error(f"Autosky: 任务 '{full_description}' 执行失败或未达到成功条件！")
+                logger.error(
+                    f"Autosky: 任务 '{full_description}' 执行失败或未达到成功条件！"
+                )
                 return False
             else:
                 # 预期失败的情况，例如识别到“能量不足”或“无法显示更多目标”
-                logger.warning(f"Autosky: 任务 '{full_description}' 未找到匹配，按预期处理。")
-                return True # 虽然没找到匹配，但我们认为这是成功处理了一种情况，让流程继续
+                logger.warning(
+                    f"Autosky: 任务 '{full_description}' 未找到匹配，按预期处理。"
+                )
+                return (
+                    True  # 虽然没找到匹配，但我们认为这是成功处理了一种情况，让流程继续
+                )
         else:
             logger.info(f"Autosky: 任务 '{full_description}' 执行成功。")
             time.sleep(1)  # 模拟用户操作间隔
@@ -79,19 +91,29 @@ class Autosky(CustomAction):
 
         # --- 循环探索批次 ---
         for i in range(1, self.total_batches + 1):
-            logger.info(f"Autosky: 开始第 {i} 个探索批次（共 {self.total_batches} 批次）。")
+            logger.info(
+                f"Autosky: 开始第 {i} 个探索批次（共 {self.total_batches} 批次）。"
+            )
 
             # 检查停止请求
             if self.context.tasker.stopping:
-                logger.info(f"Autosky: 检测到停止任务请求，在第 {i} 批次开始前退出。任务被手动停止。")
+                logger.info(
+                    f"Autosky: 检测到停止任务请求，在第 {i} 批次开始前退出。任务被手动停止。"
+                )
                 return CustomAction.RunResult(success=False)
 
             # 执行 X 次浮岛探索/战斗尝试
             for attempt_num in range(1, self.explore_attempts_per_batch + 1):
-                logger.info(f"Autosky: 第 {i} 批次，进行第 {attempt_num}/{self.explore_attempts_per_batch} 次浮岛探索/战斗尝试。")
+                logger.info(
+                    f"Autosky: 第 {i} 批次，进行第 {attempt_num}/{self.explore_attempts_per_batch} 次浮岛探索/战斗尝试。"
+                )
 
-                if not self._run_task("ChangeTarget0_Autosky", "尝试切换浮岛并探索/战斗"):
-                    logger.warning(f"Autosky: 第 {i} 批次，第 {attempt_num} 次浮岛探索尝试的启动节点失败。可能没有可点击目标，将继续下一个尝试。")
+                if not self._run_task(
+                    "ChangeTarget0_Autosky", "尝试切换浮岛并探索/战斗"
+                ):
+                    logger.warning(
+                        f"Autosky: 第 {i} 批次，第 {attempt_num} 次浮岛探索尝试的启动节点失败。可能没有可点击目标，将继续下一个尝试。"
+                    )
                     # 这里保持 `pass` 策略，允许继续尝试其他浮岛
                     pass
 
@@ -103,7 +125,9 @@ class Autosky(CustomAction):
             # 进行一次自动探索消耗能量
             # 如果未能点击自动探索按钮，则认为是任务进入异常状态
             if not self._run_task("SkyExplore_Start_Autosky", "点击自动探索按钮"):
-                logger.error("Autosky: 未能点击自动探索按钮，任务可能陷入异常状态，终止。")
+                logger.error(
+                    "Autosky: 未能点击自动探索按钮，任务可能陷入异常状态，终止。"
+                )
                 return CustomAction.RunResult(success=False)
 
             # 关键：如果 SkyExplore_Start_Autosky 成功点击后，Maa Pipeline 自动进入了
@@ -112,5 +136,7 @@ class Autosky(CustomAction):
             # 如果当前 CustomAction 没有终止，就意味着自动探索成功并返回到了雷达界面，可以继续下一个批次。
             # 因此，这里不需要额外的 `if` 判断。
 
-        logger.info(f"Autosky: 所有 {self.total_batches} 个批次的探索任务执行完毕。任务执行成功。")
+        logger.info(
+            f"Autosky: 所有 {self.total_batches} 个批次的探索任务执行完毕。任务执行成功。"
+        )
         return CustomAction.RunResult(success=True)
