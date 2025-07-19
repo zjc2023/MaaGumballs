@@ -621,7 +621,6 @@
         ],
         "action": "DoNothing",
         "post_delay": 500,
-        "threshold": 0.8,
         "timeout": 2000
     },
     "Fight_FindDragon_Next": {
