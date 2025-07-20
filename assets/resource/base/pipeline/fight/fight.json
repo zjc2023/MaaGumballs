@@ -678,7 +678,7 @@
                 "starting": 0,
                 "begin": "Fight_PickUpAll_Emptyfloor",
                 "end": "Fight_PickUpAll_Emptyfloor",
-                "duration": 5000
+                "duration": 10000
             },
             {
                 "starting": 2500,
