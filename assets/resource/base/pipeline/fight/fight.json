@@ -136,6 +136,7 @@
             77
         ],
         "action": "DoNothing",
+        "order_by": "Vertical",
         "post_delay": 200,
         "timeout": 2000
     },
