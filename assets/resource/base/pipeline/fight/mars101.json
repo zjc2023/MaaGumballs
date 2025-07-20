@@ -148,7 +148,8 @@
         "action": "Click",
         "timeout": 2000,
         "next": [
-            "MarsReward_Open"
+            "MarsReward_Open",
+            "Mars_Inter_Confirm_Fail"
         ]
     },
     "MarsBossReward_Select1": {
