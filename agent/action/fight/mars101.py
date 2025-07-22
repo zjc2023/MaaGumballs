@@ -565,7 +565,7 @@ class Mars101(CustomAction):
         self.isAutoPickup = True
 
     def handle_postLayers_event(self, context: Context):
-        time.sleep(1)
+        time.sleep(2)
         # self.handle_perfect_event(context)
         fightUtils.handle_dragon_event("马尔斯", context)
         self.Check_DefaultStatus(context)
@@ -575,6 +575,8 @@ class Mars101(CustomAction):
         self.handle_MarsStele_event(context, image)
         self.handle_MarsStatue_event(context, image)
         self.handle_MarsRuinsShop_event(context, image)
+        # 避免mars奖励被"完美击败"遮挡，重新截一张图
+        image = context.tasker.controller.post_screencap().wait().get()
         self.handle_MarsReward_event(context, image)
         self.handle_MarsExchangeShop_event(context, image)
         # 点称号挪到战后，确保购买战利品有足够的探索点
