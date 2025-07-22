@@ -1036,7 +1036,7 @@ def handle_dragon_event(map_str: str, context: Context):
         logger.info("神龙带肥家lo~")
 
 
-def handle_getlayernumber_event(context: Context):
+def handle_currentlayer_event(context: Context):
     context.run_task("Fight_ReturnMainWindow")
     tempLayers = -1
     while tempLayers <= 0 and (
@@ -1053,7 +1053,7 @@ def handle_getlayernumber_event(context: Context):
 
 
 def handle_downstair_event(context: Context):
-    temp_layer = handle_getlayernumber_event(context)
+    temp_layer = handle_currentlayer_event(context)
     recoDetail = context.run_task("Fight_OpenedDoor")
     if not recoDetail.nodes and context.run_recognition(
         "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
@@ -1074,7 +1074,7 @@ def handle_downstair_event(context: Context):
         context.run_task("Fight_OpenedDoor")
     # 确认层数更换再返回
     for _ in range(5):
-        current_layer = handle_getlayernumber_event(context)
+        current_layer = handle_currentlayer_event(context)
         if temp_layer != current_layer and current_layer != -1:
             return True
         time.sleep(1)

@@ -45,7 +45,7 @@ class Mars101(CustomAction):
         logger.info(f"当前层数: {self.layers}, 进入地图初始化")
 
     def Check_CurrentLayers(self, context: Context):
-        tempLayers = fightUtils.handle_getlayernumber_event(context)
+        tempLayers = fightUtils.handle_currentlayer_event(context)
         self.layers = tempLayers
         return True
 
