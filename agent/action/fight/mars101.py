@@ -566,7 +566,7 @@ class Mars101(CustomAction):
 
     def handle_postLayers_event(self, context: Context):
         time.sleep(1)
-        self.handle_perfect_event(context)
+        # self.handle_perfect_event(context)
         fightUtils.handle_dragon_event("马尔斯", context)
         self.Check_DefaultStatus(context)
 
