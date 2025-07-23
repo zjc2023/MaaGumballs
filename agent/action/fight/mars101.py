@@ -45,18 +45,7 @@ class Mars101(CustomAction):
         logger.info(f"当前层数: {self.layers}, 进入地图初始化")
 
     def Check_CurrentLayers(self, context: Context):
-        context.run_task("Fight_ReturnMainWindow")
-        tempLayers = -1
-        while tempLayers <= 0 and (
-            RunResult := context.run_recognition(
-                "Fight_CheckLayer",
-                context.tasker.controller.post_screencap().wait().get(),
-            )
-        ):
-            tempLayers = fightUtils.extract_num_layer(RunResult.best_result.text)
-            if context.tasker.stopping:
-                logger.info("检测到停止任务, 开始退出agent")
-                return False
+        tempLayers = fightUtils.handle_currentlayer_event(context)
         self.layers = tempLayers
         return True
 
@@ -320,8 +309,6 @@ class Mars101(CustomAction):
     def handle_preLayers_event(self, context: Context):
         self.handle_android_skill_event(context)
         self.Check_DefaultEquipment(context)
-        self.Check_DefaultTitle(context)
-
         return True
 
     def handle_perfect_event(self, context: Context):
@@ -579,7 +566,7 @@ class Mars101(CustomAction):
 
     def handle_postLayers_event(self, context: Context):
         time.sleep(2)
-        self.handle_perfect_event(context)
+        # self.handle_perfect_event(context)
         fightUtils.handle_dragon_event("马尔斯", context)
         self.Check_DefaultStatus(context)
 
@@ -588,8 +575,12 @@ class Mars101(CustomAction):
         self.handle_MarsStele_event(context, image)
         self.handle_MarsStatue_event(context, image)
         self.handle_MarsRuinsShop_event(context, image)
+        # 避免mars奖励被"完美击败"遮挡，重新截一张图
+        image = context.tasker.controller.post_screencap().wait().get()
         self.handle_MarsReward_event(context, image)
         self.handle_MarsExchangeShop_event(context, image)
+        # 点称号挪到战后，确保购买战利品有足够的探索点
+        self.Check_DefaultTitle(context)
         if not self.handle_SpecialLayer_event(context, image):
             # 如果卡剧情(离开),则返回False, 重新清理该层
             return False
