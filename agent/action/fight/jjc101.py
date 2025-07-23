@@ -2,6 +2,7 @@ from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
 from utils import logger
+from utils import message
 
 from action.fight import fightUtils
 from action.fight import fightProcessor
@@ -414,12 +415,12 @@ class JJC101(CustomAction):
                     break
 
     @timing_decorator
-    def handle_skillShop_event(self, context: Context,image):
+    def handle_skillShop_event(self, context: Context, image):
         # 打开技能商店
         if self.layers >= 40:
             return True
         # 打开技能商店
-        if context.run_recognition("Fight_SkillShop",image):
+        if context.run_recognition("Fight_SkillShop", image):
             fightUtils.handle_skillShop_event(
                 context,
                 target_skill=[
@@ -437,16 +438,14 @@ class JJC101(CustomAction):
 
     @timing_decorator
     def handle_stone_event(self, context: Context, image):
-        if self.layers <= 29 and context.run_recognition(
-            "JJC_StoneChest", image
-        ):
+        if self.layers <= 29 and context.run_recognition("JJC_StoneChest", image):
             context.run_task("JJC_StoneChest")
-    
+
     def handle_auto_pickup_event(self, context: Context):
         logger.info("开启自动拾取, 等待动画结束")
         context.run_task("Fight_PickUpAll_Emptyfloor")
         self.isAutoPickup = True
-    
+
     def handle_postLayers_event(self, context: Context):
         self.handle_perfect_event(context)
         self.Check_DefaultStatus(context)
@@ -454,8 +453,8 @@ class JJC101(CustomAction):
         image = context.tasker.controller.post_screencap().wait().get()
         self.handle_stone_event(context, image)
         self.handle_skillShop_event(context, image)
-        self.handle_sparta_event(context)   
-        
+        self.handle_sparta_event(context)
+
         if self.isAutoPickup:
             logger.info("触发下楼事件")
             fightUtils.handle_downstair_event(context)
@@ -555,6 +554,7 @@ class JJC101(CustomAction):
             logger.info(
                 f"{func_name} 执行 {data['count']} 次，总耗时: {data['total_time']:.4f}秒"
             )
+        message.send_message(f"MaaGB", f"竞技场探索结束，当前到达{self.layers}层")
         return CustomAction.RunResult(success=True)
 
 

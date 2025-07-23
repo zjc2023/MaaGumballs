@@ -1,5 +1,6 @@
 from maa.context import Context
 from utils import logger
+from utils import message
 from plyer import notification
 
 import math
@@ -1034,6 +1035,7 @@ def handle_dragon_event(map_str: str, context: Context):
         logger.info("是神龙,俺,俺们有救了！！！")
         dragonwish(map_str, context)
         logger.info("神龙带肥家lo~")
+        message.send_message(f"MaaGB", "是神龙,俺,俺们有救了！！！")
 
 
 def handle_currentlayer_event(context: Context):
@@ -1060,6 +1062,8 @@ def handle_downstair_event(context: Context):
     ):
         logger.warning("检查到神秘的洞穴捏，请冒险者大人检查！！")
         send_alert("洞穴警告", "发现神秘洞穴，请及时处理！")
+
+        message.send_message(f"MaaGB", "发现神秘洞穴，请及时处理")
 
         while not context.run_recognition(
             "Fight_OpenedDoor",
