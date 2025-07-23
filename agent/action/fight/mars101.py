@@ -313,7 +313,7 @@ class Mars101(CustomAction):
 
     def handle_perfect_event(self, context: Context):
         # 检测完美击败
-        if context.run_recognition(
+        if (self.layers % 2 == 1) and context.run_recognition(
             "Fight_Perfect", context.tasker.controller.post_screencap().wait().get()
         ):
             logger.info(f"第{self.layers} 完美击败")
@@ -322,19 +322,6 @@ class Mars101(CustomAction):
                 context.tasker.controller.post_screencap().wait().get(),
             ):
                 pass
-        else:
-            context.run_task("Mars_Fight_ClearCurrentLayer")
-            time.sleep(1)
-            if context.run_recognition(
-                "Fight_Perfect", context.tasker.controller.post_screencap().wait().get()
-            ):
-                logger.info(f"第{self.layers} 完美击败")
-                while context.run_recognition(
-                    "Fight_Perfect",
-                    context.tasker.controller.post_screencap().wait().get(),
-                ):
-                    pass
-        return True
 
     def handle_before_leave_maze_event(self, context: Context):
         logger.info("触发Mars结算事件")
@@ -565,8 +552,7 @@ class Mars101(CustomAction):
         self.isAutoPickup = True
 
     def handle_postLayers_event(self, context: Context):
-        time.sleep(2)
-        # self.handle_perfect_event(context)
+        self.handle_perfect_event(context)
         fightUtils.handle_dragon_event("马尔斯", context)
         self.Check_DefaultStatus(context)
 
