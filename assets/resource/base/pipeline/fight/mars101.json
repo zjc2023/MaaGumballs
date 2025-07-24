@@ -796,5 +796,9 @@
     "Mars_Target_Layer_Setting": {
         "recognition": "OCR",
         "expected": "89"
+    },
+    "Mars_Target_Earthgate_Setting": {
+        "recognition": "OCR",
+        "expected": "1"
     }
 }

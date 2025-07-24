@@ -244,7 +244,8 @@
             "repeat_count": 1,
             "option": [
                 "自动肉鸽时使用钻石购买体力",
-                "目标出图楼层"
+                "目标出图楼层",
+                "目标大地数量"
             ],
             "pipeline_override": {
                 "Select_WorldTree_InputBox_Text": {
@@ -532,6 +533,26 @@
                     "pipeline_override": {
                         "Mars_Target_Layer_Setting": {
                             "expected": "99"
+                        }
+                    }
+                }
+            ]
+        },
+        "目标大地数量": {
+            "cases": [
+                {
+                    "name": "1",
+                    "pipeline_override": {
+                        "Mars_Target_Earthgate_Setting": {
+                            "expected": "1"
+                        }
+                    }
+                },
+                {
+                    "name": "2",
+                    "pipeline_override": {
+                        "Mars_Target_Earthgate_Setting": {
+                            "expected": "2"
                         }
                     }
                 }

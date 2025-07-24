@@ -223,14 +223,12 @@ class Mars101(CustomAction):
             actions = []
             if self.layers <= 60:
                 actions = [
-                    lambda: fightUtils.cast_magic("光", "祝福术", context),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                 ]
             elif self.layers >= 70 and self.layers <= 90:
                 actions = [
-                    lambda: fightUtils.cast_magic("光", "祝福术", context),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: fightUtils.cast_magic("水", "冰锥术", context),
@@ -239,8 +237,6 @@ class Mars101(CustomAction):
                 ]
             elif self.layers >= 100 and self.layers <= 120:
                 actions = [
-                    lambda: fightUtils.cast_magic("气", "静电场", context),
-                    lambda: fightUtils.cast_magic("光", "祝福术", context),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: fightUtils.cast_magic("水", "冰锥术", context),
@@ -283,7 +279,7 @@ class Mars101(CustomAction):
             ((self.layers > 50) and (self.layers % 10 == 9))
             # 如果59遇到拉绳子无法大地，那么尝试在61或者62大地
             or (61 <= self.layers <= 62)
-        ) and self.useEarthGate < 1:
+        ) and self.useEarthGate < self.target_earthgate_para:
             # 识别释放大地时没有拉绳子的洞
             if context.run_recognition(
                 "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
@@ -677,6 +673,11 @@ class Mars101(CustomAction):
             context.get_node_data("Mars_Target_Layer_Setting")["recognition"]["param"][
                 "expected"
             ][0]
+        )
+        self.target_earthgate_para = int(
+            context.get_node_data("Mars_Target_Earthgate_Setting")["recognition"][
+                "param"
+            ]["expected"][0]
         )
 
         # initialize
