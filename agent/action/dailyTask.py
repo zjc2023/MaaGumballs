@@ -3,7 +3,6 @@ from maa.context import Context
 from maa.custom_action import CustomAction
 from utils import logger
 
-import json
 import time
 
 
@@ -12,8 +11,6 @@ class DailyTask(CustomAction):
     def run(
         self, context: Context, argv: CustomAction.RunArg
     ) -> CustomAction.RunResult:
-        taskList: dict = json.loads(argv.custom_action_param)
-        logger.info(taskList)
 
         custom_order = [
             "DailySignIn",  # 每日签到
@@ -30,18 +27,23 @@ class DailyTask(CustomAction):
             if context.tasker.stopping:
                 logger.info("检测到停止任务, 开始退出agent")
                 return CustomAction.RunResult(success=False)
+            # 检查任务是否开启
+            
+            nodeDetail = context.get_node_data(f"{key}")
+            if not nodeDetail or not nodeDetail.get("enabled", False):
+                logger.info(f"任务: {key} 已禁用, 跳过该任务")
+                continue
 
-            if taskList.get(key) == 1:
-                # 生成任务执行逻辑框架
-                logger.info(f"执行任务: {key}")
-                image = context.tasker.controller.post_screencap().wait().get()
-                if context.run_recognition(key, image):
-                    context.run_task(key)
-                    logger.info(f"完成任务: {key}")
-                else:
-                    logger.warning(f"任务: {key} 识别失败, 跳过该任务")
-                context.run_task("ReturnHall")
 
-                time.sleep(2)
+            logger.info(f"执行任务: {key}")
+            image = context.tasker.controller.post_screencap().wait().get()
+            if context.run_recognition(key, image):
+                context.run_task(key)
+                logger.info(f"完成任务: {key}")
+            else:
+                logger.warning(f"任务: {key} 识别失败, 跳过该任务")
+            context.run_task("ReturnHall")
+
+            time.sleep(1)
 
         return CustomAction.RunResult(success=True)

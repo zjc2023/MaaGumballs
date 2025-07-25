@@ -129,18 +129,19 @@
             "name": "每日收菜",
             "entry": "DailyTask",
             "option": [
-                "扫荡时使用钻石购买体力"
+                "扫荡时使用钻石购买体力",
+                "开启每日签到",
+                "开启荒野探索",
+                "开启马戏团任务",
+                "开启每日扫荡",
+                "开启派遣魔蜥",
+                "开启领取炼金招牌",
+                "开启天空扫荡",
+                "开启遗迹扫荡"
             ],
             "doc": [
                 "### 每日收菜注意事项",
-                "   - 每日签到  ",
-                "   - 荒野探索  ",
-                "   - 马戏团任务  ",
-                "   - 每日扫荡  ",
-                "   - 派遣蜥蜴  ",
-                "   - 炼金招牌  ",
-                "   - 天空探索  ",
-                "   - 遗迹探索  "
+                "  - 如果需要使用钻石购买体力，请确保账户有足够的钻石余额"
             ]
         },
         {
@@ -456,6 +457,174 @@
                             "custom_action_param": {
                                 "accept_sunlight": false
                             }
+                        }
+                    }
+                }
+            ]
+        }, 
+        "开启每日签到": {
+            "default_case": "yes",
+            "cases": [
+                {
+                    "name": "no",
+                    "pipeline_override": {
+                        "DailySignIn": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "yes",
+                    "pipeline_override": {
+                        "DailySignIn": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        },        
+        "开启荒野探索": {
+            "default_case": "yes",
+            "cases": [
+                {
+                    "name": "no",
+                    "pipeline_override": {
+                        "WildernessExplore": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "yes",
+                    "pipeline_override": {
+                        "WildernessExplore": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        },        
+        "开启马戏团任务": {
+            "default_case": "yes",
+            "cases": [
+                {
+                    "name": "no",
+                    "pipeline_override": {
+                        "CircusTask": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "yes",
+                    "pipeline_override": {
+                        "CircusTask": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        },        
+        "开启每日扫荡": {
+            "default_case": "yes",
+            "cases": [
+                {
+                    "name": "no",
+                    "pipeline_override": {
+                        "DailySweep": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "yes",
+                    "pipeline_override": {
+                        "DailySweep": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        },        
+        "开启派遣魔蜥": {
+            "default_case": "yes",
+            "cases": [
+                {
+                    "name": "no",
+                    "pipeline_override": {
+                        "SendLizards": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "yes",
+                    "pipeline_override": {
+                        "SendLizards": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        },        
+        "开启领取炼金招牌": {
+            "default_case": "yes",
+            "cases": [
+                {
+                    "name": "no",
+                    "pipeline_override": {
+                        "AlchemySignboard": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "yes",
+                    "pipeline_override": {
+                        "AlchemySignboard": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        },        
+        "开启天空扫荡": {
+            "default_case": "yes",
+            "cases": [
+                {
+                    "name": "no",
+                    "pipeline_override": {
+                        "SkyExplore": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "yes",
+                    "pipeline_override": {
+                        "SkyExplore": {
+                            "enabled": true
+                        }
+                    }
+                }
+            ]
+        },        
+        "开启遗迹扫荡": {
+            "default_case": "yes",
+            "cases": [
+                {
+                    "name": "no",
+                    "pipeline_override": {
+                        "RuinsExplore": {
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "name": "yes",
+                    "pipeline_override": {
+                        "RuinsExplore": {
+                            "enabled": true
                         }
                     }
                 }

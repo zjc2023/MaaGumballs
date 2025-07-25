@@ -75,16 +75,6 @@
         "recognition": "DirectHit",
         "action": "Custom",
         "custom_action": "DailyTaskSelect",
-        "custom_action_param": {
-            "DailySweep": 1,
-            "WildernessExplore": 1,
-            "SendLizards": 1,
-            "AlchemySignboard": 1,
-            "DailySignIn": 1,
-            "SkyExplore": 1,
-            "RuinsExplore": 1,
-            "CircusTask": 1
-        },
         "next": [
             "ReturnBigMap"
         ],
