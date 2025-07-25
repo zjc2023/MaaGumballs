@@ -703,6 +703,12 @@ class JJC_CalEarning(CustomAction):
             },
         ):
             EarningDetail = fightUtils.pair_by_distance(recoDetail.all_results, 400)
+            if EarningDetail["获得金币"]:
+                temp = int(EarningDetail["获得金币"]) // 10000
+                message.send_message(
+                    f"MaaGB",
+                    f"获得金币: {temp}w",
+                )
             logger.info(EarningDetail)
 
         context.run_task("ReturnBigMap")

@@ -793,7 +793,7 @@ def dragonwish(targetWish: str, context: Context):
             if TextRecoDetail:
                 center_x, center_y = (
                     TextRecoDetail.box[0] + TextRecoDetail.box[2] // 2,
-                    TextRecoDetail.box[1] + TextRecoDetail.box[3] // 2,
+                    TextRecoDetail.box[1] + TextRecoDetail.box[3] // 2 + 10,
                 )
                 context.tasker.controller.post_click(center_x, center_y).wait()
                 time.sleep(1)

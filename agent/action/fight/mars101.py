@@ -77,7 +77,7 @@ class Mars101(CustomAction):
     def Check_DefaultTitle(self, context: Context):
         """
         检查默认称号
-        1. 检查5层的称号: 魔法学徒和符文师点满
+        1. 检查1层的称号: 魔法学徒点满
         1. 检查58层的称号: 位面点满即可
         3. 检查76层的称号: 位面，大铸剑师，大剑师都点满
         """
@@ -224,14 +224,12 @@ class Mars101(CustomAction):
             actions = []
             if self.layers <= 60:
                 actions = [
-                    lambda: fightUtils.cast_magic("光", "祝福术", context),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                 ]
             elif self.layers >= 70 and self.layers <= 90:
                 actions = [
-                    lambda: fightUtils.cast_magic("光", "祝福术", context),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: fightUtils.cast_magic("水", "冰锥术", context),
@@ -240,8 +238,6 @@ class Mars101(CustomAction):
                 ]
             elif self.layers >= 100 and self.layers <= 120:
                 actions = [
-                    lambda: fightUtils.cast_magic("气", "静电场", context),
-                    lambda: fightUtils.cast_magic("光", "祝福术", context),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: context.tasker.controller.post_click(boss_x, boss_y).wait(),
                     lambda: fightUtils.cast_magic("水", "冰锥术", context),
@@ -284,7 +280,7 @@ class Mars101(CustomAction):
             ((self.layers > 50) and (self.layers % 10 == 9))
             # 如果59遇到拉绳子无法大地，那么尝试在61或者62大地
             or (61 <= self.layers <= 62)
-        ) and self.useEarthGate < 1:
+        ) and self.useEarthGate < self.target_earthgate_para:
             # 识别释放大地时没有拉绳子的洞
             if context.run_recognition(
                 "FindKeyHole", context.tasker.controller.post_screencap().wait().get()
@@ -358,6 +354,8 @@ class Mars101(CustomAction):
         if fightUtils.title_check("巨龙", context):
             fightUtils.title_learn("巨龙", 1, "亚龙血统", 3, context)
             fightUtils.title_learn("巨龙", 2, "初级龙族血统", 3, context)
+            fightUtils.title_learn("巨龙", 3, "中级龙族血统", 3, context)
+            fightUtils.title_learn("巨龙", 4, "高级龙族血统", 3, context)
         context.run_task("Fight_ReturnMainWindow")
 
         fightUtils.title_learn("战斗", 5, "剑圣", 1, context)
@@ -562,8 +560,6 @@ class Mars101(CustomAction):
         self.handle_MarsStele_event(context, image)
         self.handle_MarsStatue_event(context, image)
         self.handle_MarsRuinsShop_event(context, image)
-        # 避免mars奖励被"完美击败"遮挡，重新截一张图
-        image = context.tasker.controller.post_screencap().wait().get()
         self.handle_MarsReward_event(context, image)
         self.handle_MarsExchangeShop_event(context, image)
         # 点称号挪到战后，确保购买战利品有足够的探索点
@@ -679,6 +675,11 @@ class Mars101(CustomAction):
                 "expected"
             ][0]
         )
+        self.target_earthgate_para = int(
+            context.get_node_data("Mars_Target_Earthgate_Setting")["recognition"][
+                "param"
+            ]["expected"][0]
+        )
 
         # initialize
         self.initialize(context)
@@ -722,7 +723,7 @@ class Mars101(CustomAction):
             logger.info(
                 f"{func_name} 执行 {data['count']} 次，总耗时: {data['total_time']:.4f}秒"
             )
-        message.send_message(f"MaaGB", "马尔斯探索结束，当前到达{self.layers}层")
+        message.send_message(f"MaaGB", f"马尔斯探索结束，当前到达{self.layers}层")
         return CustomAction.RunResult(success=True)
 
 

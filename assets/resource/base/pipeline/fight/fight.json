@@ -70,7 +70,8 @@
     "Fight_CalEarning": {
         "recognition": "OCR",
         "expected": [
-            "迷宫结算"
+            "迷宫结算",
+            "战利品"
         ],
         "roi": [
             175,
