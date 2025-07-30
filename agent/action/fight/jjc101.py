@@ -380,6 +380,7 @@ class JJC101(CustomAction):
                 return False
         return True
 
+    @timing_decorator
     def handle_preLayers_event(self, context: Context):
         self.Check_DefaultEquipment(context)
         self.Check_DefaultTitle(context)
