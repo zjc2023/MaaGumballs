@@ -70,6 +70,7 @@ class JJC101(CustomAction):
         self.layers = tempLayers
         return True
 
+    @timing_decorator
     def Check_DefaultEquipment(self, context: Context):
         """
         检查默认装备
@@ -92,21 +93,16 @@ class JJC101(CustomAction):
             else:
                 logger.info("背包打开失败")
                 return False
-        elif self.layers >= 30 and self.layers % 10 == 1:  # 装备土系魔法书
+        elif self.layers >= 50 and self.layers % 10 == 1:
             OpenDetail = context.run_task("Bag_Open")
             if OpenDetail.nodes:
 
-                # if not fightUtils.checkEquipment("宝物", 6, "土系魔法书", context):
-                #     fightUtils.findEquipment(6, "土系魔法书", True, context)
+                if not fightUtils.checkEquipment("宝物", 6, "土系魔法书", context):
+                    fightUtils.findEquipment(6, "土系魔法书", True, context)
 
                 if not fightUtils.checkEquipment("盔甲", 6, "执政官铠甲", context):
                     fightUtils.findEquipment(6, "执政官铠甲", True, context)
 
-                # if not fightUtils.checkEquipment("鞋子", 6, "次元靴", context):
-                #     fightUtils.findEquipment(6, "次元靴", True, context)
-
-                # if not fightUtils.checkEquipment("项链", 6, "星月教挂坠", context):
-                #     fightUtils.findEquipment(6, "星月教挂坠", True, context)
                 context.run_task("Fight_ReturnMainWindow")
                 logger.info(f"current layers {self.layers},装备检查完成")
             else:
@@ -124,6 +120,7 @@ class JJC101(CustomAction):
 
         return True
 
+    @timing_decorator
     def Check_DefaultTitle(self, context: Context):
         """
         检查默认称号
@@ -169,6 +166,7 @@ class JJC101(CustomAction):
             context.run_task("Fight_ReturnMainWindow")
         return True
 
+    @timing_decorator
     def Check_DefaultStatus(self, context: Context):
 
         # 检查冈布奥状态
