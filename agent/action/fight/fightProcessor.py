@@ -268,7 +268,6 @@ class FightProcessor:
                             x + w // 2, y + h // 2
                         ).wait()
                         time.sleep(0.05)
-        time.sleep(0.15)
         return True
 
     def checkClosedDoor(self, context: Context) -> tuple[int, int]:
