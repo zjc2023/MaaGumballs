@@ -596,7 +596,8 @@
     "Fight_CheckDragonBall": {
         "recognition": "TemplateMatch",
         "template": [
-            "fight/UniversalUI/DragonBall_6.png"
+            "fight/UniversalUI/DragonBall_6.png",
+            "fight/UniversalUI/DragonBall_7.png"
         ],
         "roi": [
             262,

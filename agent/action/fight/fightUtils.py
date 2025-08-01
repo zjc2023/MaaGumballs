@@ -1030,10 +1030,15 @@ def Saveyourlife(context: Context):
 def handle_dragon_event(map_str: str, context: Context):
     # 检测神龙
     img = context.tasker.controller.post_screencap().wait().get()
+    if not context.run_recognition("Fight_CheckDragonBall", img):
+        return False
+
     if context.run_recognition("Fight_FindDragon", img):
         logger.info("是神龙,俺,俺们有救了！！！")
         dragonwish(map_str, context)
         logger.info("神龙带肥家lo~")
+        return True
+    return False
 
 
 def handle_currentlayer_event(context: Context):

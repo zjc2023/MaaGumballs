@@ -452,6 +452,7 @@ class JJC101(CustomAction):
         self.handle_stone_event(context, image)
         self.handle_skillShop_event(context, image)
         self.handle_sparta_event(context)
+        fightUtils.handle_dragon_event("工资", context)
 
         if self.isAutoPickup:
             logger.info("触发下楼事件")
