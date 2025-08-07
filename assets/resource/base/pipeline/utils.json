@@ -282,6 +282,9 @@
         "action": "DoNothing",
         "timeout": 2000
     },
+    "Enabled_Qmsg": {
+        "enabled": false
+    },
     "TaskFailNotify": {
         "focus": {
             "succeeded": "[color:Tomato]识别错误,请冒险者大人来看看哦~[/color]"

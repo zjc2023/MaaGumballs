@@ -553,7 +553,6 @@ class JJC101(CustomAction):
             logger.info(
                 f"{func_name} 执行 {data['count']} 次，总耗时: {data['total_time']:.4f}秒"
             )
-        send_message(f"MaaGB", f"竞技场探索结束，当前到达{self.layers}层")
         return CustomAction.RunResult(success=True)
 
 
