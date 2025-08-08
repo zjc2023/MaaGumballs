@@ -23,7 +23,7 @@ class AutoCdk(CustomAction):
             return CustomAction.RunResult(success=False)
 
         # cdk_str = "123,456".strip()
-        cdk_str = source_data.get("expected", "").strip()
+        cdk_str = source_data.get("focus", "").strip()
         if not cdk_str:
             logger.error(f"傀儡节点 {source_node} 中未配置兑换码字符串")
             return CustomAction.RunResult(success=False)

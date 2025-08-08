@@ -383,7 +383,7 @@
         {
             "name": "自动兑换密令",
             "entry": "AutoCdk",
-            "advanced": "AutoCdk",
+            "advanced": "AutoCdkText",
             "doc": [
                 "### 自动兑换密令",
                 "   - 该功能目前测试中，暂无.py文件内容，也没有log输出"
@@ -396,7 +396,7 @@
         }
     ],
     "advanced": {
-        "AutoCdk": {
+        "AutoCdkText": {
             "field": [
                 "密令文本"
             ],
@@ -405,10 +405,8 @@
             ],
             "doc": "自动兑换密令功能,输入兑换码兑换码之间使用, ; / 分开",
             "pipeline_override": {
-                "CDK_InputTexts": {
-                    "expected": [
-                        "{密令文本}"
-                    ]
+                "Cdk_Sources": {
+                    "focus": "{密令文本}"
                 }
             }
         }
@@ -1059,13 +1057,13 @@
                 }
             ]
         },
-        "出战舰队数量":{
+        "出战舰队数量": {
             "default_case": "1",
-            "cases":[
+            "cases": [
                 {
                     "name": "1",
                     "pipeline_override": {
-                        "TSD_Explore":{
+                        "TSD_Explore": {
                             "custom_action_param": {
                                 "fleet_nums": 1
                             }
@@ -1075,7 +1073,7 @@
                 {
                     "name": "2",
                     "pipeline_override": {
-                        "TSD_Explore":{
+                        "TSD_Explore": {
                             "custom_action_param": {
                                 "fleet_nums": 2
                             }
@@ -1085,7 +1083,7 @@
                 {
                     "name": "3",
                     "pipeline_override": {
-                        "TSD_Explore":{
+                        "TSD_Explore": {
                             "custom_action_param": {
                                 "fleet_nums": 3
                             }
@@ -1095,14 +1093,14 @@
                 {
                     "name": "4",
                     "pipeline_override": {
-                        "TSD_Explore":{
+                        "TSD_Explore": {
                             "custom_action_param": {
                                 "fleet_nums": 4
                             }
                         }
                     }
                 }
-            ]    
+            ]
         }
     }
 }
