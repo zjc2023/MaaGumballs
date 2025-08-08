@@ -5,7 +5,7 @@
   },
   "Cdk_Start": {
     "next": [
-      "Cdk_Window",
+      "Cdk_Select_CdkEntrance",
       "Cdk_MainSettingsEntrance"
     ],
     "interrupt": [
