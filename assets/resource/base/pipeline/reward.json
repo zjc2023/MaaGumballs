@@ -199,5 +199,163 @@
         ],
         "post_delay": 1000,
         "timeout": 2000
+    },
+    "AutoCdk": {
+        "action": "Custom",
+        "custom_action": "AutoCdk"
+    },
+    "Cdk_Start": {
+        "next": [
+            "Cdk_Select_CdkEntrance",
+            "Cdk_MainSettingsEntrance"
+        ],
+        "interrupt": [
+            "ReturnBigMap"
+        ],
+        "post_delay": 1000
+    },
+    "Cdk_MainSettingsEntrance": {
+        "template": "utils/MainSettingsEntrance.png",
+        "recognition": "TemplateMatch",
+        "threshold": 0.8,
+        "roi": [
+            486,
+            0,
+            233,
+            189
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Cdk_Select_CdkEntrance"
+        ],
+        "interrupt": [
+            "BackText"
+        ]
+    },
+    "Cdk_Select_CdkEntrance": {
+        "template": "utils/CdkEntrance.png",
+        "recognition": "TemplateMatch",
+        "threshold": 0.8,
+        "roi": [
+            82,
+            484,
+            561,
+            514
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Cdk_Window"
+        ],
+        "interrupt": [
+            "BackText"
+        ]
+    },
+    "Cdk_Window": {
+        "recognition": "OCR",
+        "expected": "冈布奥密令",
+        "roi": [
+            128,
+            182,
+            481,
+            491
+        ],
+        "post_delay": 500,
+        "timeout": 2000,
+        "next": [
+            "Cdk_Select_Textbox"
+        ],
+        "interrupt": [
+            "BackText",
+            "Cdk_Select_CdkEntrance"
+        ]
+    },
+    "Cdk_Select_Textbox": {
+        "recognition": "OCR",
+        "expected": [
+            "请输入密令"
+        ],
+        "roi": [
+            128,
+            832,
+            460,
+            138
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 3000,
+        "next": [
+            "Cdk_TextInputAction"
+        ],
+        "interrupt": [
+            "BackText",
+            "Cdk_Select_CdkEntrance"
+        ]
+    },
+    "Cdk_TextInputAction": {
+        "action": "InputText",
+        "input_text": "山山子大人驾到！",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "Cdk_Text_Confirm"
+        ],
+        "interrupt": [
+            "BackText",
+            "Cdk_Select_CdkEntrance"
+        ]
+    },
+    "Cdk_Text_Confirm": {
+        "recognition": "OCR",
+        "expected": [
+            "确定",
+            "确认"
+        ],
+        "roi": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "action": "Click",
+        "post_delay": 2500,
+        "timeout": 10000,
+        "next": [
+            "ConfirmButton",
+            "Cdk_CheckResult_False"
+        ],
+        "interrupt": [
+            "Cdk_Select_CdkEntrance",
+            "BackText"
+        ]
+    },
+    "Cdk_CheckResult_False": {
+        "recognition": "OCR",
+        "expected": [
+            "口令错误",
+            "再回去想想",
+            "聊天机器人",
+            "这里行不通",
+            "口令很陌生"
+        ],
+        "roi": [
+            128,
+            526,
+            395,
+            107
+        ],
+        "post_delay": 2500,
+        "timeout": 2000,
+        "action": "StopTask",
+        "focus": {
+            "succeeded": "[color:Tomato]识别错误,请冒险者大人来看看哦~[/color]"
+        }
+    },
+    "Cdk_Sources": {
+        "doc": "这里默认为空，需要用户输入兑换码兑换码之间使用, ; / 分开",
+        "focus": ""
     }
 }
