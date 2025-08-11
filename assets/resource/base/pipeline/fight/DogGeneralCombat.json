@@ -1,0 +1,6 @@
+    {
+        "DogGeneralCombat": {
+            "action": "Custom",
+            "custom_action": "DogGeneralCombat"
+        }
+    }

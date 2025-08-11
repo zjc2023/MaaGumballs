@@ -28,6 +28,13 @@
         "editor.indentSize": "tabSize"
     },
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    }
+        "editor.defaultFormatter": "mikoz.black-py"
+    },
+    // ====== 新增的 Python 路径配置 ======
+    "python.analysis.extraPaths": [
+        "agent"  // 添加项目中的 agent 目录到解析路径
+    ],
+    "python.autoComplete.extraPaths": [
+        "agent"  // 确保自动补全能识别 agent 目录
+    ]
 }
