@@ -98,7 +98,7 @@
     },
     "Select_WorldTree_InputBox_Text": {
         "recognition": "DirectHit",
-        "action": "Text",
+        "action": "InputText",
         "input_text": "二郎神",
         "post_delay": 1000,
         "timeout": 3000,
@@ -222,7 +222,7 @@
     },
     "select_InputBox_Text1": {
         "recognition": "DirectHit",
-        "action": "Text",
+        "action": "InputText",
         "input_text": "自然之子",
         "post_delay": 500,
         "timeout": 2000,
@@ -232,7 +232,7 @@
     },
     "select_InputBox_Text2": {
         "recognition": "DirectHit",
-        "action": "Text",
+        "action": "InputText",
         "input_text": "贵族",
         "post_delay": 500,
         "timeout": 2000,
