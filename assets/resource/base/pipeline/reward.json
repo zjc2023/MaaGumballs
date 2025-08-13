@@ -297,7 +297,7 @@
     },
     "Cdk_TextInputAction": {
         "action": "InputText",
-        "input_text": "山山子大人驾到！",
+        "input_text": "山山子来啦！",
         "post_delay": 1000,
         "timeout": 2000,
         "next": [
