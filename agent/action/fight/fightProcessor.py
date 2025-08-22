@@ -34,7 +34,7 @@ class FightProcessor:
             self._hit_monster_count = 3
             self.max_grid_loop = 20
             self.max_monster_loop_fail = 4
-            self.max_grid_loop_fail = 5
+            self.max_grid_loop_fail = 3
             self.isCheckDragon = False
             self.targetWish = "工资"
 
@@ -241,6 +241,7 @@ class FightProcessor:
     def checkMonster(self, context: Context) -> bool:
         logger.debug(f"{self.visited}")
         img = context.tasker.controller.post_screencap().wait().get()
+        monster_count = 0
 
         # 检测是否有怪物并攻击
         for r in range(self.rows):
@@ -262,13 +263,14 @@ class FightProcessor:
                     context,
                 ):
                     self.visited[r][c] += 1
+                    monster_count += 1
                     logger.debug(f"检测({r + 1},{c + 1})有怪物: {x}, {y}, {w}, {h}")
                     for _ in range(self.hit_monster_count):
                         context.tasker.controller.post_click(
                             x + w // 2, y + h // 2
                         ).wait()
                         time.sleep(0.05)
-        return True
+        return monster_count > 0
 
     def checkClosedDoor(self, context: Context) -> tuple[int, int]:
         if recoDetail := context.run_recognition(
@@ -353,7 +355,7 @@ class FightProcessor:
             return True
         return False
 
-    def clearCurrentLayer(self, context: Context):
+    def clearCurrentLayer(self, context: Context, isclearall: bool = False):
         # 初始化
         fail_check_grid_cnt = 0
         fail_check_monster_cnt = 0
@@ -379,13 +381,24 @@ class FightProcessor:
             # 检测grid还能不能找到, 累计几次找不到则退出
             if not self.detect_and_click_grid(context, img):
                 fail_check_grid_cnt += 1
+            else:
+                fail_check_grid_cnt = 0
 
             # 检测怪物并进行攻击
             if not self.checkMonster(context):
                 fail_check_monster_cnt += 1
+            else:
+                fail_check_monster_cnt = 0
 
+            if isclearall:
+                # 需要地板怪物全清
+                if (
+                    fail_check_monster_cnt >= self.max_monster_loop_fail
+                    and fail_check_grid_cnt >= self.max_grid_loop_fail
+                ):
+                    break
             # 如果提前清理完该层，那么不需要继续等待，可以提前退出
-            if (
+            elif (
                 fail_check_monster_cnt >= self.max_monster_loop_fail
                 or fail_check_grid_cnt >= self.max_grid_loop_fail
             ):

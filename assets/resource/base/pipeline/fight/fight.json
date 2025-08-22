@@ -22,7 +22,8 @@
             "ConfirmButton"
         ],
         "post_delay": 500,
-        "timeout": 3000
+        "timeout": 3000,
+        "order_by": "Score"
     },
     "Fight_ClosedDoor": {
         "recognition": "TemplateMatch",
@@ -39,7 +40,8 @@
         "action": "Click",
         "threshold": 0.7,
         "post_delay": 700,
-        "timeout": 2000
+        "timeout": 2000,
+        "order_by": "Score"
     },
     "Fight_DownStaris_Loading": {
         "recognition": "OCR",
@@ -420,7 +422,7 @@
         ],
         "action": "Click",
         "post_delay": 100,
-        "timeout": 2000,
+        "timeout": 3000,
         "next": [
             "Fight_ClickMagic"
         ]

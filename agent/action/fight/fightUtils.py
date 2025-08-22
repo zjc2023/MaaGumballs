@@ -182,7 +182,7 @@ def cast_magic_special(MagicName: str, context: Context):
     context.run_task("Fight_Magic_Special")
     # 多尝试几页，来适配更多类型特殊魔法
     count = 0
-    while count < 3:
+    while count <= 3:
         image = context.tasker.controller.post_screencap().wait().get()
         if context.run_recognition(
             "Fight_Magic_Special_Cast",
@@ -196,9 +196,10 @@ def cast_magic_special(MagicName: str, context: Context):
             logger.info(f"施放魔法:{MagicName}")
             return True
         else:
-            x, y = magic_special_type[count]
-            context.tasker.controller.post_click(x, y).wait()
-            time.sleep(1)
+            if count < 3:
+                x, y = magic_special_type[count]
+                context.tasker.controller.post_click(x, y).wait()
+                time.sleep(1)
         count += 1
     logger.info(f"没有找到对应的魔法:{MagicName}")
     context.run_task("BackText")
@@ -225,7 +226,7 @@ def check_magic_special(MagicName: str, context: Context):
     context.run_task("Fight_Magic_Special")
     # 多尝试几页，来适配更多类型特殊魔法
     count = 0
-    while count < 3:
+    while count <= 3:
         image = context.tasker.controller.post_screencap().wait().get()
         if context.run_recognition(
             "Fight_Magic_Special_Cast",
@@ -236,9 +237,10 @@ def check_magic_special(MagicName: str, context: Context):
             context.run_task("BackText")
             return True
         else:
-            x, y = magic_special_type[count]
-            context.tasker.controller.post_click(x, y).wait()
-            time.sleep(1)
+            if count < 3:
+                x, y = magic_special_type[count]
+                context.tasker.controller.post_click(x, y).wait()
+                time.sleep(1)
         count += 1
     logger.info(f"没有找到对应的魔法:{MagicName}")
     context.run_task("BackText")
@@ -307,13 +309,14 @@ def title_check(titleType: str, context: Context):
             },
         ):
             isSuccess = True
+            context.run_task("Fight_ReturnMainWindow")
             break
 
         else:
             context.tasker.controller.post_click(433, 1037).wait()
             checkcount += 1
-            time.sleep(0.5)
-        context.run_task("Fight_ReturnMainWindow")
+            time.sleep(1)
+    context.run_task("Fight_ReturnMainWindow")
     return isSuccess
 
 

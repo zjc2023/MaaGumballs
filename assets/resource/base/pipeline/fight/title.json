@@ -33,6 +33,9 @@
         "next": [
             "TitlePanel_Series",
             "TitlePanel_Open"
+        ],
+        "interrupt": [
+            "TitlePanel_Series_ChangePage"
         ]
     },
     "TitlePanel_Series": {
@@ -46,7 +49,17 @@
         ],
         "action": "Click",
         "post_delay": 500,
-        "timeout": 2000
+        "timeout": 3000
+    },
+    "TitlePanel_Series_ChangePage": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            433,
+            1037,
+            10,
+            10
+        ]
     },
     "TitlePanel_ReturnPanel": {
         "next": [
