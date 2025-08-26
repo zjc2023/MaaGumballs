@@ -25,7 +25,11 @@
         "timeout": 2000,
         "next": [
             "Autofeed_Check_Weapon",
+            "Autofeed_Check_Certificate",
             "Autofeed_Check_Food"
+        ],
+        "on_error": [
+            "ReturnBigMap"
         ]
     },
     "Autofeed_Check_Weapon": {
@@ -41,10 +45,26 @@
         "action": "Click",
         "timeout": 1000,
         "next": [
-            "Autofeed_Equip_Weapon"
+            "Autofeed_Equip_WeaponOrCertificate"
         ]
     },
-    "Autofeed_Equip_Weapon": {
+    "Autofeed_Check_Certificate": {
+        "doc": "检查证件位置是否存在黄色的加号，和武器位置加号用同一个识别素材",
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/Autofeed_Check_Weapon.png",
+        "roi": [
+            132,
+            742,
+            88,
+            89
+        ],
+        "action": "Click",
+        "timeout": 1000,
+        "next": [
+            "Autofeed_Equip_WeaponOrCertificate"
+        ]
+    },
+    "Autofeed_Equip_WeaponOrCertificate": {
         "doc": "合成并装备,如果超时了还没有发现需要喂食，就换一个角色",
         "recognition": "OCR",
         "expected": "合成并佩戴",
@@ -57,7 +77,7 @@
         "action": "Click",
         "timeout": 1000,
         "next": [
-            "Autofeed_Check_Food"
+            "Autofeed"
         ],
         "on_error": [
             "Autofeed_Start"
@@ -77,6 +97,9 @@
         "timeout": 1000,
         "next": [
             "Autofeed_OneClickFeeding"
+        ],
+        "on_error": [
+            "Autofeed_Start"
         ]
     },
     "Autofeed_OneClickFeeding": {
