@@ -192,11 +192,14 @@ class Autosky(CustomAction):
         if self._encountered_unbeatable:
             logger.info("Autosky 任务因遇到打不过的敌人而终止。")
             send_message("MaaGB", "天空探索：遇到打不过的敌人，任务终止。")
+            context.run_task("BackText_500ms")
+            context.run_task("Autosky_Exit_Radar_Interface")
             context.run_task("ReturnBigMap") #这里实际上是有问题的，因为先得从打不过的状态退出到雷达界面，再从雷达界面退出到伊甸大厅，再从伊甸大厅退出到伊甸，最后从伊甸退出到大地图。
             return CustomAction.RunResult(success=False)
         elif self._completed_exploration_rounds >= self._target_exploration_rounds:
             logger.info(f"Autosky 任务已成功完成全部 {self._target_exploration_rounds} 轮探索。")
             send_message("MaaGB", f"天空探索：已完成全部 {self._target_exploration_rounds} 轮探索。")
+            context.run_task("Autosky_Exit_Radar_Interface")
             context.run_task("ReturnBigMap") #这里实际上是有问题的
             return CustomAction.RunResult(success=True)
         else:
