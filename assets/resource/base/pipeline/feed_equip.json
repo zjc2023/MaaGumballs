@@ -127,7 +127,11 @@
             538,
             688
         ],
-        "action": "Click"
+        "action": "Click",
+        "timeout": 1000,
+        "on_error": [
+            "Autofeed_Start"
+        ]
     },
     "Autofeed_Making_Food": {
         "doc": "点击红色问号之后，这里点击左下角快速合成",
