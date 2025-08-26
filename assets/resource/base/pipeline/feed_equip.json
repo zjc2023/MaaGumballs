@@ -93,6 +93,9 @@
         "timeout": 1000,
         "next": [
             "Autofeed_Check_Food_QuestionMark"
+        ],
+        "on_error": [
+            "Autofeed_Start"
         ]
     },
     "Autofeed_Check_Food_QuestionMark": {
