@@ -242,7 +242,8 @@
         "post_delay": 200,
         "timeout": 10000,
         "next": [
-            "Autosky_SkipDetection"
+            "Autosky_SkipDetection",
+            "Autosky_Lost"
         ]
     },
     "Autosky_SkipDetection": {
