@@ -132,6 +132,7 @@ class Autosky(CustomAction):
                         logger.warning(
                             "识别到 '继续袭击' 界面，判断为遇到打不过的敌人，本轮手动探索中断。"
                         )
+                        time.sleep(2)
                         context.run_task("BackText_500ms")  # 离开继续袭击界面
                         self._encountered_unbeatable = True  # 设置标志位
 
@@ -140,6 +141,7 @@ class Autosky(CustomAction):
                         logger.warning(
                             "识别到克隆体战损，判断为遇到打不过的敌人，本轮手动探索中断。"
                         )
+                        time.sleep(2)
                         context.run_task(
                             "Autosky_TroopLoss_Backtext"
                         )  # 离开克隆体战损界面
