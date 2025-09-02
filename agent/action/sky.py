@@ -5,22 +5,37 @@ from typing import Optional, Dict
 from maa.agent.agent_server import AgentServer
 from maa.custom_action import CustomAction
 from maa.context import Context
-from utils import logger, send_message  # False设这些已定义
+from utils import logger  # 移除 send_message
 
 # 定义目标探索轮次，先内置为5 因为我还没学会怎么从interface修改
 TARGET_EXPLORATION_ROUNDS = 5
 MAX_RETRY_ATTEMPTS = 3  # 定义最大重试次数
 
 
-@AgentServer.custom_action("Autosky")
-class Autosky(CustomAction):
+@AgentServer.custom_action("AutoSky")  # Sky
+class AutoSky(CustomAction):  # Sky
     _completed_exploration_rounds: int
-    _encountered_unbeatable: bool  #
+    _encountered_unbeatable: bool  # 记录是否遇到打不过的敌人
     _TroopLoss: bool  # 记录是否出现克隆体战损
     _target_exploration_rounds: int
 
     def __init__(self):
         super().__init__()
+        # 在 __init__ 中调用 resetParam，确保实例创建时有初始状态
+        self.resetParam()
+        logger.info("AutoSky 实例已创建并初始化默认参数。")  # Sky
+
+    def resetParam(self):
+        """
+        重置所有任务相关的参数到初始状态。
+        """
+        self._completed_exploration_rounds = 0
+        self._encountered_unbeatable = False
+        self._TroopLoss = False
+        self._target_exploration_rounds = TARGET_EXPLORATION_ROUNDS
+        logger.info(
+            f"AutoSky 任务参数已重置，目标探索轮次: {self._target_exploration_rounds}。"  # Sky
+        )
 
     def run(
         self,
@@ -28,27 +43,27 @@ class Autosky(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
 
-        self._completed_exploration_rounds = 0
-        self._encountered_unbeatable = False
-        self._TroopLoss = False
-        self._target_exploration_rounds = TARGET_EXPLORATION_ROUNDS
+        # 每次 run 方法执行前，再次调用 resetParam，确保任务状态完全重置
+        self.resetParam()
         logger.info(
-            f"Autosky 自定义动作初始化完成，目标探索轮次: {self._target_exploration_rounds}。"
+            f"AutoSky 自定义动作开始执行，目标探索轮次: {self._target_exploration_rounds}。"  # Sky
         )
 
         # 1. 任务起始：尝试进入伊甸并到达天空探索雷达界面
         logger.info("尝试进入天空探索雷达界面...")
-        initial_entry_result = context.run_task("Autosky_Start")
+        initial_entry_result = context.run_task("AutoSky_Start")  # Sky
         if not initial_entry_result:
-            logger.error("未能成功进入天空探索雷达界面，Autosky 任务终止。")
-            send_message("MaaGB", "天空探索：未能进入雷达界面，任务终止。")
+            logger.error("未能成功进入天空探索雷达界面，AutoSky 任务终止。")  # Sky
+            # send_message("MaaGB", "天空探索：未能进入雷达界面，任务终止。") # 移除
             return CustomAction.RunResult(success=False)
 
         # 验证是否真的在探索界面
         current_img = context.tasker.controller.post_screencap().wait().get()
-        if not context.run_recognition("Autosky_CheckExplorationInfo", current_img):
-            logger.error("任务开始后未能识别到探索信息界面，Autosky 任务终止。")
-            send_message("MaaGB", "天空探索：未能在探索界面启动，任务终止。")
+        if not context.run_recognition(
+            "AutoSky_CheckExplorationInfo", current_img
+        ):  # Sky
+            logger.error("任务开始后未能识别到探索信息界面，AutoSky 任务终止。")  # Sky
+            # send_message("MaaGB", "天空探索：未能在探索界面启动，任务终止。") # 移除
             return CustomAction.RunResult(success=False)
         logger.info("已成功进入天空探索雷达界面。")
 
@@ -61,8 +76,8 @@ class Autosky(CustomAction):
 
             # 2. 定期检查停止请求 (在每轮开始和内部操作前检查)
             if context.tasker.stopping:
-                logger.info("检测到停止任务请求，Autosky 任务终止。")
-                send_message("MaaGB", "天空探索：任务被用户停止。")
+                logger.info("检测到停止任务请求，AutoSky 任务终止。")  # Sky
+                # send_message("MaaGB", "天空探索：任务被用户停止。") # 移除
                 return CustomAction.RunResult(success=False)
 
             # --- 开始一轮完整的探索 ---
@@ -72,7 +87,7 @@ class Autosky(CustomAction):
             # 3. 获取当前目标数，确定本次手动探索的上限
             current_img = context.tasker.controller.post_screencap().wait().get()
             target_num_reco = context.run_recognition(
-                "Autosky_CheckTargetNum", current_img
+                "AutoSky_CheckTargetNum", current_img  # Sky
             )
 
             max_manual_attempts = 7  # 默认尝试7次 为什么是7呢，因为ocr容易把7识别成门
@@ -101,32 +116,38 @@ class Autosky(CustomAction):
             ):  # 这个是内层的while 用于控制雷达界面的探索次数
                 # 检查停止请求 (循环内部的快速退出)
                 if context.tasker.stopping:
-                    logger.info("检测到停止任务请求（手动探索中），Autosky 任务终止。")
-                    send_message("MaaGB", "天空探索：任务被用户停止（手动探索）。")
+                    logger.info(
+                        "检测到停止任务请求（手动探索中），AutoSky 任务终止。"
+                    )  # Sky
+                    # send_message("MaaGB", "天空探索：任务被用户停止（手动探索）。") # 移除
                     return CustomAction.RunResult(success=False)
 
-                context.run_action("Autosky_ChangeTarget")  # 切换目标
+                context.run_action("AutoSky_ChangeTarget")  # Sky 切换目标
                 manual_attempts_done += 1
                 time.sleep(0.5)  # 延迟0.5秒后，重复第二步
 
                 current_img = context.tasker.controller.post_screencap().wait().get()
                 is_rift = context.run_recognition(
-                    "Autosky_RiftDetection", current_img
+                    "AutoSky_RiftDetection", current_img  # Sky
                 )  # 检查是否为裂隙
 
                 if not is_rift:
                     logger.info(
                         f"在第 {manual_attempts_done} 次尝试中找到非裂隙目标，执行事件。"
                     )
-                    context.run_task("Autosky_EventDetection")  # 会自动完成战斗或探索
+                    context.run_task(
+                        "AutoSky_EventDetection"
+                    )  # Sky 会自动完成战斗或探索
 
                     # 检查是否打不过 是否出现克隆体战损
                     current_img = (
                         context.tasker.controller.post_screencap().wait().get()
                     )
-                    lost_result = context.run_recognition("Autosky_Lost", current_img)
+                    lost_result = context.run_recognition(
+                        "AutoSky_Lost", current_img
+                    )  # Sky
                     trooploss_result = context.run_recognition(
-                        "Autosky_TroopLoss", current_img
+                        "AutoSky_TroopLoss", current_img  # Sky
                     )
                     if lost_result:
                         logger.warning(
@@ -143,7 +164,7 @@ class Autosky(CustomAction):
                         )
                         time.sleep(2)
                         context.run_task(
-                            "Autosky_TroopLoss_Backtext"
+                            "AutoSky_TroopLoss_Backtext"  # Sky
                         )  # 离开克隆体战损界面
                         self._TroopLoss = True  # 设置标志位
                         break  # 立即中断雷达探索部分
@@ -164,13 +185,12 @@ class Autosky(CustomAction):
             hasLeftRadar = False
             auto_explore_successful = False
 
-            auto_explore_successful = False
             for retry_count in range(MAX_RETRY_ATTEMPTS):
                 if context.tasker.stopping:  # 重试前再次检查停止请求
                     logger.info(
-                        f"检测到停止任务请求（自动探索重试 {retry_count+1} 中），Autosky 任务终止。"
+                        f"检测到停止任务请求（自动探索重试 {retry_count+1} 中），AutoSky 任务终止。"  # Sky
                     )
-                    send_message("MaaGB", "天空探索：任务被用户停止（自动探索重试）。")
+                    # send_message("MaaGB", "天空探索：任务被用户停止（自动探索重试）。") # 移除
                     return CustomAction.RunResult(success=False)
 
                 # 确保在雷达界面，如果不是，说明出现了异常情况
@@ -179,7 +199,7 @@ class Autosky(CustomAction):
                         context.tasker.controller.post_screencap().wait().get()
                     )
                     if context.run_recognition(
-                        "Autosky_CheckExplorationInfo", current_img
+                        "AutoSky_CheckExplorationInfo", current_img  # Sky
                     ):
                         logger.info(f"确认目前处于雷达界面")
 
@@ -189,12 +209,12 @@ class Autosky(CustomAction):
 
                 # 尝试离开雷达界面
                 if hasLeftRadar == False:
-                    context.run_task("Autosky_Exit_Radar_Interface")  # 离开雷达界面
+                    context.run_task("AutoSky_Exit_Radar_Interface")  # Sky 离开雷达界面
 
                 # 检查是否成功离开了雷达界面 (例如，雷达界面图标消失)
                 current_img = context.tasker.controller.post_screencap().wait().get()
                 if context.run_recognition(
-                    "Autosky_CheckExplorationInfo", current_img
+                    "AutoSky_CheckExplorationInfo", current_img  # Sky
                 ):  # 如果还识别到探索信息，说明没离开成功
                     logger.warning("未能成功离开雷达界面，重新尝试。")
                     time.sleep(2)  # 失败后等待一下
@@ -203,7 +223,7 @@ class Autosky(CustomAction):
                     hasLeftRadar = True
                     time.sleep(1)
                 sky_explore_start_result = context.run_task(
-                    "Autosky_SkyExplore_Start"
+                    "AutoSky_SkyExplore_Start"  # Sky
                 )  # 开始自动探索
 
                 if sky_explore_start_result:  # 如果任务流成功触发（不代表探索完成）
@@ -216,9 +236,9 @@ class Autosky(CustomAction):
 
             if not auto_explore_successful:
                 logger.error(
-                    f"达到最大重试次数 ({MAX_RETRY_ATTEMPTS})，未能成功触发自动探索。Autosky 任务终止。"
+                    f"达到最大重试次数 ({MAX_RETRY_ATTEMPTS})，未能成功触发自动探索。AutoSky 任务终止。"  # Sky
                 )
-                send_message("MaaGB", "天空探索：自动探索启动失败，任务终止。")
+                # send_message("MaaGB", "天空探索：自动探索启动失败，任务终止。") # 移除
                 return CustomAction.RunResult(success=False)
             # --- 重试逻辑结束 ---
 
@@ -227,7 +247,7 @@ class Autosky(CustomAction):
             # 检查自动探索结果
             current_img = context.tasker.controller.post_screencap().wait().get()
             result = context.run_recognition(
-                "Autosky_SkyExplore_Confirm_Finish", current_img
+                "AutoSky_SkyExplore_Confirm_Finish", current_img  # Sky
             )
 
             if not result:
@@ -238,29 +258,29 @@ class Autosky(CustomAction):
             else:
                 logger.info("自动探索成功，消耗了能量。")
                 context.run_task(
-                    "Autosky_SkyExplore_Confirm_Finish"
+                    "AutoSky_SkyExplore_Confirm_Finish"  # Sky
                 )  # 确认完成，并自动回到雷达界面
                 # 继续下一轮主循环（如果没有达到目标轮次且没有遇到打不过的敌人）
 
         # 主循环结束后的最终处理
         if self._encountered_unbeatable:
-            logger.info("Autosky 任务因遇到打不过的敌人而终止。自动回到大地图")
-            context.run_task("Autosky_ReturnBigMap")
+            logger.info("AutoSky 任务因遇到打不过的敌人而终止。自动回到大地图")  # Sky
+            context.run_task("AutoSky_ReturnBigMap")  # Sky
             return CustomAction.RunResult(success=False)
         elif self._TroopLoss:
-            logger.info("Autosky 任务因遇到克隆体战损而终止。自动回到大地图")
-            context.run_task("Autosky_ReturnBigMap")
+            logger.info("AutoSky 任务因遇到克隆体战损而终止。自动回到大地图")  # Sky
+            context.run_task("AutoSky_ReturnBigMap")  # Sky
             return CustomAction.RunResult(success=False)
         elif self._completed_exploration_rounds >= self._target_exploration_rounds:
             logger.info(
-                f"Autosky 任务已成功完成全部 {self._target_exploration_rounds} 轮探索。自动回到大地图"
+                f"AutoSky 任务已成功完成全部 {self._target_exploration_rounds} 轮探索。自动回到大地图"  # Sky
             )
-            send_message(
-                "MaaGB",
-                f"天空探索：已完成全部 {self._target_exploration_rounds} 轮探索。",
-            )
-            context.run_task("Autosky_ReturnBigMap")
+            # send_message(
+            #     "MaaGB",
+            #     f"天空探索：已完成全部 {self._target_exploration_rounds} 轮探索。",
+            # ) # 移除
+            context.run_task("AutoSky_ReturnBigMap")  # Sky
             return CustomAction.RunResult(success=True)
         else:
-            logger.error("Autosky 任务意外退出")
+            logger.error("AutoSky 任务意外退出")  # Sky
             return CustomAction.RunResult(success=False)

@@ -1,21 +1,21 @@
 {
-    "Autosky_Start": {
+    "AutoSky_Start": {
         "doc": "如果在外面，就进伊甸,如果已经在后续循环，可能处于其他位置，都检查一遍",
         "post_delay": 500,
         "timeout": 2000,
         "next": [
-            "Autosky_EntryEden",
-            "Autosky_EntryHall2",
-            "Autosky_EntryHall",
-            "Autosky_SkyExplore",
-            "Autosky_Enter_Radar_Interface",
-            "Autosky_CheckExplorationInfo"
+            "AutoSky_EntryEden",
+            "AutoSky_EntryHall2",
+            "AutoSky_EntryHall",
+            "AutoSky_SkyExplore",
+            "AutoSky_Enter_Radar_Interface",
+            "AutoSky_CheckExplorationInfo"
         ],
         "on_error": [
             "TaskFailNotify"
         ]
     },
-    "Autosky_EntryEden": {
+    "AutoSky_EntryEden": {
         "post_delay": 500,
         "timeout": 2000,
         "threshold": 0.8,
@@ -31,11 +31,11 @@
         ],
         "action": "Click",
         "next": [
-            "Autosky_EntryHall",
-            "Autosky_EntryHall2"
+            "AutoSky_EntryHall",
+            "AutoSky_EntryHall2"
         ]
     },
-    "Autosky_EntryHall2": {
+    "AutoSky_EntryHall2": {
         "post_delay": 500,
         "timeout": 2000,
         "recognition": "OCR",
@@ -56,10 +56,10 @@
             -63
         ],
         "next": [
-            "Autosky_SkyExplore"
+            "AutoSky_SkyExplore"
         ]
     },
-    "Autosky_EntryHall": {
+    "AutoSky_EntryHall": {
         "recognition": "TemplateMatch",
         "template": "dailyTask/Entryhall.png",
         "roi": [
@@ -72,10 +72,10 @@
         "post_delay": 500,
         "timeout": 2000,
         "next": [
-            "Autosky_SkyExplore"
+            "AutoSky_SkyExplore"
         ]
     },
-    "Autosky_SkyExplore": {
+    "AutoSky_SkyExplore": {
         "recognition": "TemplateMatch",
         "doc": "这一步是点击战术大厅里的飞艇图案进入快捷探索界面,下一步直接进入雷达界面",
         "template": "dailyTask/SkyExplore.png",
@@ -83,10 +83,10 @@
         "post_delay": 500,
         "timeout": 2000,
         "next": [
-            "Autosky_Enter_Radar_Interface"
+            "AutoSky_Enter_Radar_Interface"
         ]
     },
-    "Autosky_SkyExplore_Start": {
+    "AutoSky_SkyExplore_Start": {
         "recognition": "OCR",
         "doc": "这一步是在快捷探索界面点击自动探索按钮",
         "expected": "自动探索",
@@ -101,10 +101,10 @@
         ],
         "next": []
     },
-    "Autosky_SkyExplore_Confirm_Finish": {
+    "AutoSky_SkyExplore_Confirm_Finish": {
         "recognition": "TemplateMatch",
         "doc": "这里加一步确认",
-        "template": "dailyTask/Autosky_SkyExplore_Confirm_Finish.png",
+        "template": "dailyTask/AutoSky_SkyExplore_Confirm_Finish.png",
         "roi": [
             303,
             240,
@@ -115,10 +115,10 @@
         "post_delay": 500,
         "timeout": 5000,
         "next": [
-            "Autosky_SkyExplore_Finish"
+            "AutoSky_SkyExplore_Finish"
         ]
     },
-    "Autosky_SkyExplore_Finish": {
+    "AutoSky_SkyExplore_Finish": {
         "recognition": "OCR",
         "doc": "识别到返回，说明本次自动探索消耗了能量，需要再次进入雷达界面检测一下有没有可以打的",
         "expected": "返回",
@@ -132,16 +132,16 @@
         "timeout": 2000,
         "action": "Click",
         "next": [
-            "Autosky_Enter_Radar_Interface"
+            "AutoSky_Enter_Radar_Interface"
         ],
         "interrupt": [
             "BackText"
         ]
     },
-    "Autosky_Enter_Radar_Interface": {
+    "AutoSky_Enter_Radar_Interface": {
         "recognition": "TemplateMatch",
         "doc": "点击这个小按钮进入雷达界面",
-        "template": "dailyTask/Autosky_Enter_Radar_Interface.png",
+        "template": "dailyTask/AutoSky_Enter_Radar_Interface.png",
         "roi": [
             589,
             495,
@@ -153,10 +153,10 @@
         "post_delay": 500,
         "timeout": 2000,
         "next": [
-            "Autosky_CheckExplorationInfo"
+            "AutoSky_CheckExplorationInfo"
         ]
     },
-    "Autosky_CheckExplorationInfo": {
+    "AutoSky_CheckExplorationInfo": {
         "recognition": "OCR",
         "doc": "确定已经来到了雷达界面",
         "expected": "探索信息",
@@ -170,7 +170,7 @@
         "timeout": 5000,
         "next": []
     },
-    "Autosky_ChangeTarget": {
+    "AutoSky_ChangeTarget": {
         "recognition": "DirectHit",
         "action": "Click",
         "target": [
@@ -182,10 +182,10 @@
         "post_delay": 200,
         "timeout": 1000,
         "next": [
-            "Autosky_RiftDetection"
+            "AutoSky_RiftDetection"
         ]
     },
-    "Autosky_RiftDetection": {
+    "AutoSky_RiftDetection": {
         "recognition": "OCR",
         "expected": "时空裂痕",
         "roi": [
@@ -198,7 +198,7 @@
         "timeout": 500,
         "next": []
     },
-    "Autosky_EventDetection": {
+    "AutoSky_EventDetection": {
         "recognition": "OCR",
         "expected": [
             "探索",
@@ -212,11 +212,11 @@
         ],
         "timeout": 1000,
         "next": [
-            "Autosky_ExploreEventDetection",
-            "Autosky_CombatEventDetection"
+            "AutoSky_ExploreEventDetection",
+            "AutoSky_CombatEventDetection"
         ]
     },
-    "Autosky_ExploreEventDetection": {
+    "AutoSky_ExploreEventDetection": {
         "recognition": "OCR",
         "expected": "探索",
         "roi": [
@@ -229,7 +229,7 @@
         "post_delay": 200,
         "timeout": 5000
     },
-    "Autosky_CombatEventDetection": {
+    "AutoSky_CombatEventDetection": {
         "recognition": "OCR",
         "expected": "袭击",
         "roi": [
@@ -242,11 +242,11 @@
         "post_delay": 200,
         "timeout": 10000,
         "next": [
-            "Autosky_SkipDetection",
-            "Autosky_Lost"
+            "AutoSky_SkipDetection",
+            "AutoSky_Lost"
         ]
     },
-    "Autosky_SkipDetection": {
+    "AutoSky_SkipDetection": {
         "recognition": "OCR",
         "doc": "这一步是跳过飞艇战斗，但不能放在interrupt里面，否则可能会多点导致退出雷达界面,点击跳过后检查是否有战死的克隆体",
         "expected": "跳过",
@@ -260,14 +260,14 @@
         "post_delay": 200,
         "timeout": 5000,
         "next": [
-            "Autosky_TroopLoss",
-            "Autosky_CheckExplorationInfo"
+            "AutoSky_TroopLoss",
+            "AutoSky_CheckExplorationInfo"
         ],
         "interrupt": [
             "ClickCenter_200ms"
         ]
     },
-    "Autosky_Lost": {
+    "AutoSky_Lost": {
         "recognition": "OCR",
         "doc": "出现这个界面，说明遇到打不过的了要用logger给用户提示并退出任务",
         "expected": "继续袭击",
@@ -283,7 +283,7 @@
             "StopCureentTask"
         ]
     },
-    "Autosky_TroopLoss": {
+    "AutoSky_TroopLoss": {
         "recognition": "OCR",
         "doc": "出现这个界面，说明克隆体死了，要用logger给用户提示并退出任务",
         "expected": "克隆体战损",
@@ -299,7 +299,7 @@
             "StopCureentTask"
         ]
     },
-    "Autosky_TroopLoss_Backtext": {
+    "AutoSky_TroopLoss_Backtext": {
         "recognition": "OCR",
         "doc": "点击退出克隆体战损界面，这个roi我设置的很大，从屏幕中间一直到最底下，因为我不知道如果死的多了这个“取消结算”按钮的位置会不会变得靠下",
         "expected": "取消结算",
@@ -314,10 +314,10 @@
         "timeout": 1000,
         "next": []
     },
-    "Autosky_Exit_Radar_Interface": {
+    "AutoSky_Exit_Radar_Interface": {
         "recognition": "TemplateMatch",
         "doc": "点击这个小按钮进离开雷达界面",
-        "template": "dailyTask/Autosky_Exit_Radar_Interface.png",
+        "template": "dailyTask/AutoSky_Exit_Radar_Interface.png",
         "roi": [
             606,
             1203,
@@ -328,11 +328,11 @@
         "post_delay": 200,
         "timeout": 2000
     },
-    "Autosky": {
+    "AutoSky": {
         "action": "Custom",
-        "custom_action": "Autosky"
+        "custom_action": "AutoSky"
     },
-    "Autosky_CheckTargetNum": {
+    "AutoSky_CheckTargetNum": {
         "doc": "检测右下角目标数",
         "recognition": "OCR",
         "expected": "\\d+",
@@ -346,16 +346,16 @@
         "post_delay": 200,
         "timeout": 2000
     },
-    "Autosky_ReturnBigMap": {
+    "AutoSky_ReturnBigMap": {
         "doc": "自动天空特别定制的返回大地图,添加了取消了点击确定按钮",
         "recognition": "DirectHit",
         "next": [
             "CheckBigMap"
         ],
         "interrupt": [
-            "Autosky_TroopLoss_Backtext",
+            "AutoSky_TroopLoss_Backtext",
             "BackText",
-            "Autosky_Exit_Radar_Interface",
+            "AutoSky_Exit_Radar_Interface",
             "Communicating"
         ]
     },
