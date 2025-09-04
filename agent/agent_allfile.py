@@ -9,5 +9,6 @@ from action import dailyTask
 from action import reward
 from action import shopping
 from action import ppOverride
+from action import Sky
 
 from action.divineForgeLand import someTrick
