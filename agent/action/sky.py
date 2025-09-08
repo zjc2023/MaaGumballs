@@ -14,6 +14,7 @@ class AutoSky(CustomAction):
     _encountered_unbeatable: bool  # 记录是否遇到打不过的敌人
     _troopLoss: bool  # 记录是否出现克隆体战损
     _target_round: int
+    _clone_enabled: bool  # 记录克隆体是否启用
 
     def __init__(self):
         super().__init__()
@@ -28,6 +29,7 @@ class AutoSky(CustomAction):
         self._encountered_unbeatable = False
         self._troopLoss = False
         self._target_round = 5
+        self._clone_enabled = True  # 默认启用克隆体检查
 
     def run(
         self,
@@ -35,6 +37,7 @@ class AutoSky(CustomAction):
         argv: CustomAction.RunArg,
     ) -> CustomAction.RunResult:
 
+        # 0. 重置参数
         self.resetParam()
         logger.info(f"AutoSky 自定义动作开始执行，目标探索轮次: {self._target_round}。")
 
@@ -53,24 +56,24 @@ class AutoSky(CustomAction):
 
         # 1.1 进入克隆体界面, 默认关闭克隆体
         context.run_task("AutoSky_Enter_Clone")
+        self._clone_enabled = False  # 进入克隆体界面说明克隆体被禁用
 
-        # 2. 探索目标轮数
+        # 2. 探索目标轮数, 这个是外层的while 用于控制探索轮次（进雷达界面扫一圈+自动探索=完整的一轮）
         while (
             not self._encountered_unbeatable
             and not self._troopLoss
             and self._current_round < self._target_round
-        ):  # 这个是外层的while 用于控制探索轮次（进雷达界面扫一圈+自动探索=完整的一轮）
-
+        ):
             if context.tasker.stopping:
-                logger.info("检测到停止任务请求，AutoSky 任务终止。")
+                logger.info("检测到停止任务请求, AutoSky 任务终止。")
                 return CustomAction.RunResult(success=False)
 
             # 开始探索
             self._current_round += 1
             logger.info(f"开始第 {self._current_round}/ {self._target_round} 轮探索")
 
-            # 2.1 获取当前目标数，确定本次手动探索的次数
-            max_manual_attempts = 7  # 默认尝试7次 为什么是7呢，因为ocr容易把7识别成门
+            # 2.1 获取当前目标数，确定本次手动探索的次数，默认尝试7次 为什么是7呢，因为ocr容易把7识别成门
+            max_manual_attempts = 7
             if target_num_reco := context.run_recognition(
                 "AutoSky_CheckTargetNum",
                 context.tasker.controller.post_screencap().wait().get(),
@@ -102,34 +105,31 @@ class AutoSky(CustomAction):
                     "AutoSky_RiftDetection",
                     context.tasker.controller.post_screencap().wait().get(),
                 ):
-                    logger.debug(
+                    logger.info(
                         f"当前目标为时空裂痕，继续切换 ({manual_attempts_done}/{max_manual_attempts} 次尝试)。"
                     )
                 else:
                     logger.info(f"发现战斗目标~~")
                     context.run_task("AutoSky_EventDetection")  # 会自动完成战斗或探索
 
-                    # 检查是否打不过 是否出现克隆体战损
                     current_img = (
                         context.tasker.controller.post_screencap().wait().get()
                     )
-
-                    lost_result = context.run_recognition("AutoSky_Lost", current_img)
-                    trooploss_result = context.run_recognition(
-                        "AutoSky_TroopLoss", current_img
-                    )
-                    if lost_result:
+                    if context.run_recognition("AutoSky_Lost", current_img):
                         logger.warning("遇到打不过的敌人，本轮探索结束")
                         time.sleep(2)
                         context.run_task("BackText_500ms")
                         self._encountered_unbeatable = True
                         break
-                    elif trooploss_result:
-                        logger.warning("识别到克隆体战损，本轮探索结束。")
-                        time.sleep(2)
-                        context.run_task("AutoSky_TroopLoss_Backtext")
-                        self._troopLoss = True
-                        break
+
+                    # 只有在克隆体启用时才检查克隆体阵亡
+                    if self._clone_enabled:
+                        if context.run_recognition("AutoSky_TroopLoss", current_img):
+                            logger.warning("识别到克隆体战损，本轮探索结束。")
+                            time.sleep(2)
+                            context.run_task("AutoSky_TroopLoss_Backtext")
+                            self._troopLoss = True
+                            break
 
             # 2.3 自动探索
             logger.info("开始本轮的自动探索环节。")
@@ -139,7 +139,7 @@ class AutoSky(CustomAction):
             auto_explore_successful = False
 
             for retry_count in range(MAX_RETRY_ATTEMPTS):
-                if context.tasker.stopping:  # 重试前再次检查停止请求
+                if context.tasker.stopping:
                     logger.info(
                         f"检测到停止任务请求（自动探索重试 {retry_count+1} 中), AutoSky 任务终止。"
                     )
@@ -151,14 +151,13 @@ class AutoSky(CustomAction):
                     context.tasker.controller.post_screencap().wait().get(),
                 ):
                     logger.info(f"确认目前处于雷达界面")
-                    context.run_task("AutoSky_Exit_Radar_Interface")  # 离开雷达界面
-                    # 检查是否成功离开了雷达界面 (例如，雷达界面图标消失)
+                    context.run_task("AutoSky_Exit_Radar_Interface")
                     if context.run_recognition(
                         "AutoSky_CheckExplorationInfo",
                         context.tasker.controller.post_screencap().wait().get(),
                     ):
                         logger.warning("未能成功离开雷达界面，重新尝试。")
-                        time.sleep(2)  # 失败后等待一下
+                        time.sleep(2)
                         continue  # 继续下一次重试
                     else:
                         hasLeftRadar = True
