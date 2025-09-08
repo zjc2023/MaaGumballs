@@ -1,4 +1,8 @@
 {
+    "AutoSky": {
+        "action": "Custom",
+        "custom_action": "AutoSky"
+    },
     "AutoSky_Start": {
         "doc": "如果在外面，就进伊甸,如果已经在后续循环，可能处于其他位置，都检查一遍",
         "post_delay": 500,
@@ -161,10 +165,10 @@
         "doc": "确定已经来到了雷达界面",
         "expected": "探索信息",
         "roi": [
-            11,
-            724,
-            134,
-            56
+            0,
+            649,
+            193,
+            159
         ],
         "post_delay": 500,
         "timeout": 5000,
@@ -179,24 +183,20 @@
             106,
             39
         ],
-        "post_delay": 200,
-        "timeout": 1000,
-        "next": [
-            "AutoSky_RiftDetection"
-        ]
+        "post_delay": 2000,
+        "timeout": 2000
     },
     "AutoSky_RiftDetection": {
         "recognition": "OCR",
         "expected": "时空裂痕",
         "roi": [
             0,
-            327,
-            119,
-            53
+            265,
+            184,
+            240
         ],
         "post_delay": 200,
-        "timeout": 500,
-        "next": []
+        "timeout": 1000
     },
     "AutoSky_EventDetection": {
         "recognition": "OCR",
@@ -205,12 +205,12 @@
             "袭击"
         ],
         "roi": [
-            585,
-            296,
-            102,
-            57
+            470,
+            203,
+            249,
+            317
         ],
-        "timeout": 1000,
+        "timeout": 2000,
         "next": [
             "AutoSky_ExploreEventDetection",
             "AutoSky_CombatEventDetection"
@@ -220,10 +220,10 @@
         "recognition": "OCR",
         "expected": "探索",
         "roi": [
-            585,
-            296,
-            102,
-            57
+            470,
+            203,
+            249,
+            317
         ],
         "action": "Click",
         "post_delay": 200,
@@ -233,13 +233,13 @@
         "recognition": "OCR",
         "expected": "袭击",
         "roi": [
-            585,
-            296,
-            102,
-            57
+            470,
+            203,
+            249,
+            317
         ],
         "action": "Click",
-        "post_delay": 200,
+        "post_delay": 3500,
         "timeout": 10000,
         "next": [
             "AutoSky_SkipDetection",
@@ -251,13 +251,13 @@
         "doc": "这一步是跳过飞艇战斗，但不能放在interrupt里面，否则可能会多点导致退出雷达界面,点击跳过后检查是否有战死的克隆体",
         "expected": "跳过",
         "roi": [
-            556,
-            1185,
-            109,
-            50
+            482,
+            1101,
+            230,
+            168
         ],
         "action": "Click",
-        "post_delay": 200,
+        "post_delay": 500,
         "timeout": 5000,
         "next": [
             "AutoSky_TroopLoss",
@@ -278,10 +278,7 @@
             42
         ],
         "post_delay": 1000,
-        "timeout": 5000,
-        "next": [
-            "StopCureentTask"
-        ]
+        "timeout": 5000
     },
     "AutoSky_TroopLoss": {
         "recognition": "OCR",
@@ -294,10 +291,7 @@
             71
         ],
         "post_delay": 1000,
-        "timeout": 3000,
-        "next": [
-            "StopCureentTask"
-        ]
+        "timeout": 3000
     },
     "AutoSky_TroopLoss_Backtext": {
         "recognition": "OCR",
@@ -311,8 +305,7 @@
         ],
         "action": "Click",
         "post_delay": 500,
-        "timeout": 1000,
-        "next": []
+        "timeout": 1000
     },
     "AutoSky_Exit_Radar_Interface": {
         "recognition": "TemplateMatch",
@@ -327,10 +320,6 @@
         "action": "Click",
         "post_delay": 200,
         "timeout": 2000
-    },
-    "AutoSky": {
-        "action": "Custom",
-        "custom_action": "AutoSky"
     },
     "AutoSky_CheckTargetNum": {
         "doc": "检测右下角目标数",
@@ -358,5 +347,5 @@
             "AutoSky_Exit_Radar_Interface",
             "Communicating"
         ]
-    },
+    }
 }
