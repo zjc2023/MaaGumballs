@@ -50,6 +50,10 @@ class AutoSky(CustomAction):
             return CustomAction.RunResult(success=False)
 
         logger.info("已成功进入天空探索雷达界面。")
+
+        # 1.1 进入克隆体界面, 默认关闭克隆体
+        context.run_task("AutoSky_Enter_Clone")
+
         # 2. 探索目标轮数
         while (
             not self._encountered_unbeatable

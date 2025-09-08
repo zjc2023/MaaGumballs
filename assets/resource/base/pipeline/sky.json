@@ -19,6 +19,19 @@
             "TaskFailNotify"
         ]
     },
+    "AutoSky_ReturnBigMap": {
+        "doc": "自动天空特别定制的返回大地图,添加了取消了点击确定按钮",
+        "recognition": "DirectHit",
+        "next": [
+            "CheckBigMap"
+        ],
+        "interrupt": [
+            "AutoSky_TroopLoss_Backtext",
+            "BackText",
+            "AutoSky_Exit_Radar_Interface",
+            "Communicating"
+        ]
+    },
     "AutoSky_EntryEden": {
         "post_delay": 500,
         "timeout": 2000,
@@ -335,17 +348,58 @@
         "post_delay": 200,
         "timeout": 2000
     },
-    "AutoSky_ReturnBigMap": {
-        "doc": "自动天空特别定制的返回大地图,添加了取消了点击确定按钮",
-        "recognition": "DirectHit",
+    "AutoSky_Enter_Clone": {
         "next": [
-            "CheckBigMap"
+            "AutoSky_Enter_Clone_Start"
+        ]
+    },
+    "AutoSky_Enter_Clone_Start": {
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/AutoSky_Enter_Clone.png",
+        "roi": [
+            432,
+            1116,
+            261,
+            154
         ],
-        "interrupt": [
-            "AutoSky_TroopLoss_Backtext",
-            "BackText",
-            "AutoSky_Exit_Radar_Interface",
-            "Communicating"
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "AutoSky_Enter_CloneClosed",
+            "AutoSky_Enter_CloneOpened"
+        ]
+    },
+    "AutoSky_Enter_CloneClosed": {
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/ClosedButton.png",
+        "roi": [
+            432,
+            746,
+            228,
+            280
+        ],
+        "action": "DoNothing",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "BackText_500ms"
+        ]
+    },
+    "AutoSky_Enter_CloneOpened": {
+        "recognition": "TemplateMatch",
+        "template": "dailyTask/OpenButton.png",
+        "roi": [
+            432,
+            746,
+            228,
+            280
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000,
+        "next": [
+            "BackText_500ms"
         ]
     }
 }
