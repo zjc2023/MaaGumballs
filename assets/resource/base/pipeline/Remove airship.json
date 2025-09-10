@@ -1,0 +1,49 @@
+{
+    "Remove_Airship_Start": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            136,
+            582,
+            26,
+            27
+        ],
+        "post_delay": 500,
+        "timeout": 1000,
+        "next": [
+            "Remove_Airship_Click"
+        ]
+    },
+    "Remove_Airship_Click": {
+        "recognition": "OCR",
+        "expected": "下阵",
+        "roi": [
+            72,
+            1182,
+            125,
+            62
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 3000,
+        "next": [
+            "Remove_Airship_Start"
+        ],
+        "interrupt": [
+            "Remove_Airship_Confirm"
+        ]
+    },
+    "Remove_Airship_Confirm": {
+        "recognition": "OCR",
+        "expected": "确定",
+        "roi": [
+            153,
+            708,
+            117,
+            64
+        ],
+        "action": "Click",
+        "post_delay": 1000,
+        "timeout": 2000
+    }
+}
